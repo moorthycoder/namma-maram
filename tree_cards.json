@@ -1,0 +1,3762 @@
+[
+    {
+        "treeId": "625001-06-0001",
+        "scientificName": "Azadirachta indica",
+        "englishName": "Neem Tree",
+        "localName": "வேம்பு",
+        "latitude": 9.9784,
+        "longitude": 77.9876,
+        "address": "Mettupatti Sugar Mill School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "06",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#4a7c2f)",
+        "care-giver": "Ravi K.",
+        "ttr": "Selvam",
+        "encounter": {
+            "1": {
+                "registeredBy": "Selvam",
+                "registererId": "GRR-2024-081",
+                "registeredDate": "2026-01-15",
+                "status": {
+                    "health": "dead",
+                    "diameter": "15cm",
+                    "height": "7.1m"
+                },
+                "photos": [
+                    "625001-06-0001-1-20260115000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625001-06-0002",
+        "scientificName": "Ficus benghalensis",
+        "englishName": "Banyan Tree",
+        "localName": "ஆலமரம்",
+        "latitude": 9.9792,
+        "longitude": 77.99,
+        "address": "Mettupatti Sugar Mill School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "06",
+        "LocalSlNo": "0002",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Priya S.",
+        "ttr": "Raj Kumar",
+        "encounter": {
+            "1": {
+                "registeredBy": "Raj Kumar",
+                "registererId": "GRR-2024-082",
+                "registeredDate": "2026-01-22",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "38cm",
+                    "height": "12.2m"
+                },
+                "photos": [
+                    "625001-06-0002-1-20260122000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-06-0003",
+        "scientificName": "Tamarindus indica",
+        "englishName": "Tamarind Tree",
+        "localName": "புளியமரம்",
+        "latitude": 9.98,
+        "longitude": 77.9924,
+        "address": "Mettupatti Sugar Mill School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "06",
+        "LocalSlNo": "0003",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Madhavi I.",
+        "ttr": "Muthu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Muthu",
+                "registererId": "GRR-2024-083",
+                "registeredDate": "2026-01-29",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "28cm",
+                    "height": "10.1m"
+                },
+                "photos": [
+                    "625001-06-0003-1-20260129000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-11-0001",
+        "scientificName": "Delonix regia",
+        "englishName": "Gulmohar Tree",
+        "localName": "மயில்கொம்பு",
+        "latitude": 9.9808,
+        "longitude": 77.9892,
+        "address": "Mettupatti Govt Boys School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "11",
+        "LocalSlNo": "0001",
+        "emoji": "🌸",
+        "encounters": 4,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Arun R.",
+        "ttr": "Kannan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kannan",
+                "registererId": "GRR-2024-084",
+                "registeredDate": "2026-02-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "6.2m"
+                },
+                "photos": [
+                    "625001-11-0001-1-20260205000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "2": {
+                "updatedBy": "Kannan",
+                "updaterId": "GRR-2024-084",
+                "updatedDate": "2026-02-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "6.2m"
+                },
+                "photos": [
+                    "625001-11-0001-2-20260205000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "3": {
+                "updatedBy": "Kannan",
+                "updaterId": "GRR-2024-084",
+                "updatedDate": "2026-02-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "6.2m"
+                },
+                "photos": [
+                    "625001-11-0001-3-20260205000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "4": {
+                "updatedBy": "Kannan",
+                "updaterId": "GRR-2024-084",
+                "updatedDate": "2026-02-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "6.2m"
+                },
+                "photos": [
+                    "625001-11-0001-4-20260205000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-11-0002",
+        "scientificName": "Cocos nucifera",
+        "englishName": "Coconut Palm",
+        "localName": "தென்னை",
+        "latitude": 9.9816,
+        "longitude": 77.9916,
+        "address": "Mettupatti Govt Boys School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "11",
+        "LocalSlNo": "0002",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Lakshmi P.",
+        "ttr": "Vijay",
+        "encounter": {
+            "1": {
+                "registeredBy": "Vijay",
+                "registererId": "GRR-2024-085",
+                "registeredDate": "2026-02-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "8.8m"
+                },
+                "photos": [
+                    "625001-11-0002-1-20260212000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-12-0001",
+        "scientificName": "Mangifera indica",
+        "englishName": "Mango Tree",
+        "localName": "மாமரம்",
+        "latitude": 9.9784,
+        "longitude": 77.9884,
+        "address": "Mettupatti Govt Girls School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "12",
+        "LocalSlNo": "0001",
+        "emoji": "🥭",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Suresh M.",
+        "ttr": "Anbu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Anbu",
+                "registererId": "GRR-2024-086",
+                "registeredDate": "2026-02-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "6.2m"
+                },
+                "photos": [
+                    "625001-12-0001-1-20260219000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-13-0001",
+        "scientificName": "Ficus religiosa",
+        "englishName": "Peepal Tree",
+        "localName": "அரசமரம்",
+        "latitude": 9.9792,
+        "longitude": 77.9908,
+        "address": "Mettupatti Primary School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "13",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Kavitha N.",
+        "ttr": "Kamal",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kamal",
+                "registererId": "GRR-2024-087",
+                "registeredDate": "2026-02-26",
+                "status": {
+                    "health": "sick",
+                    "diameter": "14cm",
+                    "height": "7.2m"
+                },
+                "photos": [
+                    "625001-13-0001-1-20260226000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625001-13-0002",
+        "scientificName": "Phyllanthus emblica",
+        "englishName": "Amla Tree",
+        "localName": "நெல்லி",
+        "latitude": 9.98,
+        "longitude": 77.9876,
+        "address": "Mettupatti Primary School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "13",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Venkat G.",
+        "ttr": "Devi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Devi",
+                "registererId": "GRR-2024-088",
+                "registeredDate": "2026-03-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "9cm",
+                    "height": "4.9m"
+                },
+                "photos": [
+                    "625001-13-0002-1-20260305000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-13-0003",
+        "scientificName": "Artocarpus heterophyllus",
+        "englishName": "Jackfruit Tree",
+        "localName": "பலாமரம்",
+        "latitude": 9.9808,
+        "longitude": 77.99,
+        "address": "Mettupatti Primary School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "13",
+        "LocalSlNo": "0003",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#2d5a1b)",
+        "care-giver": "Deepa V.",
+        "ttr": "Pandian",
+        "encounter": {
+            "1": {
+                "registeredBy": "Pandian",
+                "registererId": "GRR-2024-089",
+                "registeredDate": "2026-03-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "22cm",
+                    "height": "7.3m"
+                },
+                "photos": [
+                    "625001-13-0003-1-20260312000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-14-0001",
+        "scientificName": "Samanea saman",
+        "englishName": "Rain Tree",
+        "localName": "தூங்குமூஞ்சி",
+        "latitude": 9.9816,
+        "longitude": 77.9924,
+        "address": "Mettupatti Middle School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "14",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Murugan T.",
+        "ttr": "Govindan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Govindan",
+                "registererId": "GRR-2024-090",
+                "registeredDate": "2026-03-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "25cm",
+                    "height": "8.9m"
+                },
+                "photos": [
+                    "625001-14-0001-1-20260319000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-15-0001",
+        "scientificName": "Grevillea robusta",
+        "englishName": "Silver Oak",
+        "localName": "வெள்ளிக் கொன்றை",
+        "latitude": 9.9784,
+        "longitude": 77.9892,
+        "address": "Mettupatti Higher Secondary School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "15",
+        "LocalSlNo": "0001",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Selvi B.",
+        "ttr": "Mahesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Mahesh",
+                "registererId": "GRR-2024-091",
+                "registeredDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "26cm",
+                    "height": "11.5m"
+                },
+                "photos": [
+                    "625001-15-0001-1-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625001-15-0002",
+        "scientificName": "Pongamia pinnata",
+        "englishName": "Pongam Tree",
+        "localName": "புங்கை",
+        "latitude": 9.9792,
+        "longitude": 77.9916,
+        "address": "Mettupatti Higher Secondary School, 625001, Tamil Nadu",
+        "pincode": "625001",
+        "collegeCode": "15",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Ganesh A.",
+        "ttr": "Saraswathi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Saraswathi",
+                "registererId": "GRR-2024-092",
+                "registeredDate": "2026-04-02",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "6.6m"
+                },
+                "photos": [
+                    "625001-15-0002-1-20260402000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-07-0001",
+        "scientificName": "Millettia pinnata",
+        "englishName": "Indian Beech",
+        "localName": "புங்கு",
+        "latitude": 9.95,
+        "longitude": 78.0184,
+        "address": "Muduvarpatti Govt School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "07",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 5,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Jyothi D.",
+        "ttr": "Bala",
+        "encounter": {
+            "1": {
+                "registeredBy": "Bala",
+                "registererId": "GRR-2024-093",
+                "registeredDate": "2026-04-09",
+                "status": {
+                    "health": "dead",
+                    "diameter": "12cm",
+                    "height": "5.4m"
+                },
+                "photos": [
+                    "625002-07-0001-1-20260409000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            },
+            "2": {
+                "updatedBy": "Bala",
+                "updaterId": "GRR-2024-093",
+                "updatedDate": "2026-04-09",
+                "status": {
+                    "health": "dead",
+                    "diameter": "12cm",
+                    "height": "5.4m"
+                },
+                "photos": [
+                    "625002-07-0001-2-20260409000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            },
+            "3": {
+                "updatedBy": "Bala",
+                "updaterId": "GRR-2024-093",
+                "updatedDate": "2026-04-09",
+                "status": {
+                    "health": "dead",
+                    "diameter": "12cm",
+                    "height": "5.4m"
+                },
+                "photos": [
+                    "625002-07-0001-3-20260409000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            },
+            "4": {
+                "updatedBy": "Bala",
+                "updaterId": "GRR-2024-093",
+                "updatedDate": "2026-04-09",
+                "status": {
+                    "health": "dead",
+                    "diameter": "12cm",
+                    "height": "5.4m"
+                },
+                "photos": [
+                    "625002-07-0001-4-20260409000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            },
+            "5": {
+                "updatedBy": "Bala",
+                "updaterId": "GRR-2024-093",
+                "updatedDate": "2026-04-09",
+                "status": {
+                    "health": "dead",
+                    "diameter": "12cm",
+                    "height": "5.4m"
+                },
+                "photos": [
+                    "625002-07-0001-5-20260409000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625002-07-0002",
+        "scientificName": "Syzygium cumini",
+        "englishName": "Jamun Tree",
+        "localName": "நாவல்மரம்",
+        "latitude": 9.9508,
+        "longitude": 78.0208,
+        "address": "Muduvarpatti Govt School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "07",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Senthil K.",
+        "ttr": "Ramesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Ramesh",
+                "registererId": "GRR-2024-094",
+                "registeredDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "24cm",
+                    "height": "8.6m"
+                },
+                "photos": [
+                    "625002-07-0002-1-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-07-0003",
+        "scientificName": "Swietenia mahagoni",
+        "englishName": "Mahogany Tree",
+        "localName": "மஹோகனி",
+        "latitude": 9.9516,
+        "longitude": 78.0176,
+        "address": "Muduvarpatti Govt School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "07",
+        "LocalSlNo": "0003",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Gomathi R.",
+        "ttr": "Chandran",
+        "encounter": {
+            "1": {
+                "registeredBy": "Chandran",
+                "registererId": "GRR-2024-095",
+                "registeredDate": "2026-04-23",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "37cm",
+                    "height": "11.7m"
+                },
+                "photos": [
+                    "625002-07-0003-1-20260423000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-16-0001",
+        "scientificName": "Tectona grandis",
+        "englishName": "Teak Tree",
+        "localName": "தேக்கு",
+        "latitude": 9.9484,
+        "longitude": 78.02,
+        "address": "Muduvarpatti Govt Boys School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "16",
+        "LocalSlNo": "0001",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Ravi K.",
+        "ttr": "Selvam",
+        "encounter": {
+            "1": {
+                "registeredBy": "Selvam",
+                "registererId": "GRR-2024-081",
+                "registeredDate": "2026-01-15",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "12.6m"
+                },
+                "photos": [
+                    "625002-16-0001-1-20260115000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-16-0002",
+        "scientificName": "Anacardium occidentale",
+        "englishName": "Cashew Tree",
+        "localName": "முந்திரி",
+        "latitude": 9.9492,
+        "longitude": 78.0224,
+        "address": "Muduvarpatti Govt Boys School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "16",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Priya S.",
+        "ttr": "Raj Kumar",
+        "encounter": {
+            "1": {
+                "registeredBy": "Raj Kumar",
+                "registererId": "GRR-2024-082",
+                "registeredDate": "2026-01-22",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "5.9m"
+                },
+                "photos": [
+                    "625002-16-0002-1-20260122000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-16-0003",
+        "scientificName": "Peltophorum pterocarpum",
+        "englishName": "Copper Pod",
+        "localName": "கொடித் தலை",
+        "latitude": 9.95,
+        "longitude": 78.0192,
+        "address": "Muduvarpatti Govt Boys School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "16",
+        "LocalSlNo": "0003",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Madhavi I.",
+        "ttr": "Muthu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Muthu",
+                "registererId": "GRR-2024-083",
+                "registeredDate": "2026-01-29",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "6.5m"
+                },
+                "photos": [
+                    "625002-16-0003-1-20260129000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-16-0004",
+        "scientificName": "Cassia fistula",
+        "englishName": "Indian Laburnum",
+        "localName": "கனிக்கொன்றை",
+        "latitude": 9.9508,
+        "longitude": 78.0216,
+        "address": "Muduvarpatti Govt Boys School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "16",
+        "LocalSlNo": "0004",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Arun R.",
+        "ttr": "Kannan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kannan",
+                "registererId": "GRR-2024-084",
+                "registeredDate": "2026-02-05",
+                "status": {
+                    "health": "sick",
+                    "diameter": "11cm",
+                    "height": "5.4m"
+                },
+                "photos": [
+                    "625002-16-0004-1-20260205000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625002-17-0001",
+        "scientificName": "Manilkara zapota",
+        "englishName": "Sapota Tree",
+        "localName": "சப்போட்டா",
+        "latitude": 9.9516,
+        "longitude": 78.0184,
+        "address": "Muduvarpatti Govt Girls School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "17",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Lakshmi P.",
+        "ttr": "Vijay",
+        "encounter": {
+            "1": {
+                "registeredBy": "Vijay",
+                "registererId": "GRR-2024-085",
+                "registeredDate": "2026-02-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "5.5m"
+                },
+                "photos": [
+                    "625002-17-0001-1-20260212000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-17-0002",
+        "scientificName": "Bambusa vulgaris",
+        "englishName": "Bamboo",
+        "localName": "மூங்கில்",
+        "latitude": 9.9484,
+        "longitude": 78.0208,
+        "address": "Muduvarpatti Govt Girls School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "17",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Suresh M.",
+        "ttr": "Anbu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Anbu",
+                "registererId": "GRR-2024-086",
+                "registeredDate": "2026-02-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "5cm",
+                    "height": "8.2m"
+                },
+                "photos": [
+                    "625002-17-0002-1-20260219000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-18-0001",
+        "scientificName": "Borassus flabellifer",
+        "englishName": "Palmyra Palm",
+        "localName": "பனை",
+        "latitude": 9.9492,
+        "longitude": 78.0176,
+        "address": "Muduvarpatti Primary School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "18",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 3,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Kavitha N.",
+        "ttr": "Kamal",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kamal",
+                "registererId": "GRR-2024-087",
+                "registeredDate": "2026-02-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "11.0m"
+                },
+                "photos": [
+                    "625002-18-0001-1-20260226000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "2": {
+                "updatedBy": "Kamal",
+                "updaterId": "GRR-2024-087",
+                "updatedDate": "2026-02-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "11.0m"
+                },
+                "photos": [
+                    "625002-18-0001-2-20260226000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "3": {
+                "updatedBy": "Kamal",
+                "updaterId": "GRR-2024-087",
+                "updatedDate": "2026-02-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "11.0m"
+                },
+                "photos": [
+                    "625002-18-0001-3-20260226000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625002-19-0001",
+        "scientificName": "Areca catechu",
+        "englishName": "Areca Palm",
+        "localName": "பாக்கு",
+        "latitude": 9.95,
+        "longitude": 78.02,
+        "address": "Muduvarpatti Middle School, 625002, Tamil Nadu",
+        "pincode": "625002",
+        "collegeCode": "19",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Venkat G.",
+        "ttr": "Devi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Devi",
+                "registererId": "GRR-2024-088",
+                "registeredDate": "2026-03-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "7.3m"
+                },
+                "photos": [
+                    "625002-19-0001-1-20260305000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-08-0001",
+        "scientificName": "Aegle marmelos",
+        "englishName": "Bael Tree",
+        "localName": "வில்வம்",
+        "latitude": 10.0108,
+        "longitude": 77.9724,
+        "address": "Pudupatti Primary School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "08",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Deepa V.",
+        "ttr": "Pandian",
+        "encounter": {
+            "1": {
+                "registeredBy": "Pandian",
+                "registererId": "GRR-2024-089",
+                "registeredDate": "2026-03-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "26cm",
+                    "height": "8.4m"
+                },
+                "photos": [
+                    "625004-08-0001-1-20260312000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-08-0002",
+        "scientificName": "Limonia acidissima",
+        "englishName": "Wood Apple",
+        "localName": "விளா",
+        "latitude": 10.0116,
+        "longitude": 77.9692,
+        "address": "Pudupatti Primary School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "08",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Murugan T.",
+        "ttr": "Govindan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Govindan",
+                "registererId": "GRR-2024-090",
+                "registeredDate": "2026-03-19",
+                "status": {
+                    "health": "dead",
+                    "diameter": "22cm",
+                    "height": "6.5m"
+                },
+                "photos": [
+                    "625004-08-0002-1-20260319000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625004-20-0001",
+        "scientificName": "Terminalia arjuna",
+        "englishName": "Arjun Tree",
+        "localName": "வெள்ளை மருது",
+        "latitude": 10.0084,
+        "longitude": 77.9716,
+        "address": "Pudupatti Govt Boys School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "20",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#3B6D11)",
+        "care-giver": "Selvi B.",
+        "ttr": "Mahesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Mahesh",
+                "registererId": "GRR-2024-091",
+                "registeredDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "38cm",
+                    "height": "16.0m"
+                },
+                "photos": [
+                    "625004-20-0001-1-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-20-0002",
+        "scientificName": "Punica granatum",
+        "englishName": "Pomegranate",
+        "localName": "மாதுளை",
+        "latitude": 10.0092,
+        "longitude": 77.9684,
+        "address": "Pudupatti Govt Boys School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "20",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Ganesh A.",
+        "ttr": "Saraswathi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Saraswathi",
+                "registererId": "GRR-2024-092",
+                "registeredDate": "2026-04-02",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "6cm",
+                    "height": "3.8m"
+                },
+                "photos": [
+                    "625004-20-0002-1-20260402000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-20-0003",
+        "scientificName": "Psidium guajava",
+        "englishName": "Guava Tree",
+        "localName": "கொய்யா",
+        "latitude": 10.01,
+        "longitude": 77.9708,
+        "address": "Pudupatti Govt Boys School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "20",
+        "LocalSlNo": "0003",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Jyothi D.",
+        "ttr": "Bala",
+        "encounter": {
+            "1": {
+                "registeredBy": "Bala",
+                "registererId": "GRR-2024-093",
+                "registeredDate": "2026-04-09",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "10cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625004-20-0003-1-20260409000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-21-0001",
+        "scientificName": "Santalum album",
+        "englishName": "Sandalwood",
+        "localName": "சந்தனம்",
+        "latitude": 10.0108,
+        "longitude": 77.9676,
+        "address": "Pudupatti Govt Girls School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "21",
+        "LocalSlNo": "0001",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Senthil K.",
+        "ttr": "Ramesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Ramesh",
+                "registererId": "GRR-2024-094",
+                "registeredDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "9.2m"
+                },
+                "photos": [
+                    "625004-21-0001-1-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-21-0002",
+        "scientificName": "Erythrina variegata",
+        "englishName": "Coral Tree",
+        "localName": "முருக்கு",
+        "latitude": 10.0116,
+        "longitude": 77.97,
+        "address": "Pudupatti Govt Girls School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "21",
+        "LocalSlNo": "0002",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Gomathi R.",
+        "ttr": "Chandran",
+        "encounter": {
+            "1": {
+                "registeredBy": "Chandran",
+                "registererId": "GRR-2024-095",
+                "registeredDate": "2026-04-23",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "8.0m"
+                },
+                "photos": [
+                    "625004-21-0002-1-20260423000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-22-0001",
+        "scientificName": "Morus alba",
+        "englishName": "Mulberry",
+        "localName": "மல்பெரி",
+        "latitude": 10.0084,
+        "longitude": 77.9724,
+        "address": "Pudupatti Middle School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "22",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 6,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Ravi K.",
+        "ttr": "Selvam",
+        "encounter": {
+            "1": {
+                "registeredBy": "Selvam",
+                "registererId": "GRR-2024-081",
+                "registeredDate": "2026-01-15",
+                "status": {
+                    "health": "sick",
+                    "diameter": "5cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625004-22-0001-1-20260115000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            },
+            "2": {
+                "updatedBy": "Selvam",
+                "updaterId": "GRR-2024-081",
+                "updatedDate": "2026-01-15",
+                "status": {
+                    "health": "sick",
+                    "diameter": "5cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625004-22-0001-2-20260115000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            },
+            "3": {
+                "updatedBy": "Selvam",
+                "updaterId": "GRR-2024-081",
+                "updatedDate": "2026-01-15",
+                "status": {
+                    "health": "sick",
+                    "diameter": "5cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625004-22-0001-3-20260115000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            },
+            "4": {
+                "updatedBy": "Selvam",
+                "updaterId": "GRR-2024-081",
+                "updatedDate": "2026-01-15",
+                "status": {
+                    "health": "sick",
+                    "diameter": "5cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625004-22-0001-4-20260115000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            },
+            "5": {
+                "updatedBy": "Selvam",
+                "updaterId": "GRR-2024-081",
+                "updatedDate": "2026-01-15",
+                "status": {
+                    "health": "sick",
+                    "diameter": "5cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625004-22-0001-5-20260115000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            },
+            "6": {
+                "updatedBy": "Selvam",
+                "updaterId": "GRR-2024-081",
+                "updatedDate": "2026-01-15",
+                "status": {
+                    "health": "sick",
+                    "diameter": "5cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625004-22-0001-6-20260115000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625004-22-0002",
+        "scientificName": "Eucalyptus globulus",
+        "englishName": "Eucalyptus",
+        "localName": "தைலமரம்",
+        "latitude": 10.0092,
+        "longitude": 77.9692,
+        "address": "Pudupatti Middle School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "22",
+        "LocalSlNo": "0002",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Priya S.",
+        "ttr": "Raj Kumar",
+        "encounter": {
+            "1": {
+                "registeredBy": "Raj Kumar",
+                "registererId": "GRR-2024-082",
+                "registeredDate": "2026-01-22",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "33cm",
+                    "height": "22.6m"
+                },
+                "photos": [
+                    "625004-22-0002-1-20260122000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625004-23-0001",
+        "scientificName": "Terminalia catappa",
+        "englishName": "Indian Almond",
+        "localName": "வாதுமை",
+        "latitude": 10.01,
+        "longitude": 77.9716,
+        "address": "Pudupatti Higher Secondary School, 625004, Tamil Nadu",
+        "pincode": "625004",
+        "collegeCode": "23",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Madhavi I.",
+        "ttr": "Muthu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Muthu",
+                "registererId": "GRR-2024-083",
+                "registeredDate": "2026-01-29",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "12.2m"
+                },
+                "photos": [
+                    "625004-23-0001-1-20260129000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-09-0001",
+        "scientificName": "Thespesia populnea",
+        "englishName": "Indian Tulip Tree",
+        "localName": "பூவரசு",
+        "latitude": 9.9208,
+        "longitude": 78.0384,
+        "address": "Vellalur Govt School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "09",
+        "LocalSlNo": "0001",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Arun R.",
+        "ttr": "Kannan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kannan",
+                "registererId": "GRR-2024-084",
+                "registeredDate": "2026-02-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "10.0m"
+                },
+                "photos": [
+                    "625006-09-0001-1-20260205000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-09-0002",
+        "scientificName": "Phoenix sylvestris",
+        "englishName": "Indian Date Palm",
+        "localName": "பேரீச்சை",
+        "latitude": 9.9216,
+        "longitude": 78.0408,
+        "address": "Vellalur Govt School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "09",
+        "LocalSlNo": "0002",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Lakshmi P.",
+        "ttr": "Vijay",
+        "encounter": {
+            "1": {
+                "registeredBy": "Vijay",
+                "registererId": "GRR-2024-085",
+                "registeredDate": "2026-02-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "34cm",
+                    "height": "12.8m"
+                },
+                "photos": [
+                    "625006-09-0002-1-20260212000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-09-0003",
+        "scientificName": "Azadirachta indica",
+        "englishName": "Neem Tree",
+        "localName": "வேம்பு",
+        "latitude": 9.9184,
+        "longitude": 78.0376,
+        "address": "Vellalur Govt School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "09",
+        "LocalSlNo": "0003",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#4a7c2f)",
+        "care-giver": "Suresh M.",
+        "ttr": "Anbu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Anbu",
+                "registererId": "GRR-2024-086",
+                "registeredDate": "2026-02-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "15cm",
+                    "height": "8.0m"
+                },
+                "photos": [
+                    "625006-09-0003-1-20260219000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-24-0001",
+        "scientificName": "Ficus benghalensis",
+        "englishName": "Banyan Tree",
+        "localName": "ஆலமரம்",
+        "latitude": 9.9192,
+        "longitude": 78.04,
+        "address": "Vellalur Govt Boys School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "24",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Kavitha N.",
+        "ttr": "Kamal",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kamal",
+                "registererId": "GRR-2024-087",
+                "registeredDate": "2026-02-26",
+                "status": {
+                    "health": "dead",
+                    "diameter": "38cm",
+                    "height": "11.9m"
+                },
+                "photos": [
+                    "625006-24-0001-1-20260226000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625006-24-0002",
+        "scientificName": "Tamarindus indica",
+        "englishName": "Tamarind Tree",
+        "localName": "புளியமரம்",
+        "latitude": 9.92,
+        "longitude": 78.0424,
+        "address": "Vellalur Govt Boys School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "24",
+        "LocalSlNo": "0002",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Venkat G.",
+        "ttr": "Devi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Devi",
+                "registererId": "GRR-2024-088",
+                "registeredDate": "2026-03-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "28cm",
+                    "height": "9.8m"
+                },
+                "photos": [
+                    "625006-24-0002-1-20260305000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-25-0001",
+        "scientificName": "Delonix regia",
+        "englishName": "Gulmohar Tree",
+        "localName": "மயில்கொம்பு",
+        "latitude": 9.9208,
+        "longitude": 78.0392,
+        "address": "Vellalur Govt Girls School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "25",
+        "LocalSlNo": "0001",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Deepa V.",
+        "ttr": "Pandian",
+        "encounter": {
+            "1": {
+                "registeredBy": "Pandian",
+                "registererId": "GRR-2024-089",
+                "registeredDate": "2026-03-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "5.9m"
+                },
+                "photos": [
+                    "625006-25-0001-1-20260312000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-25-0002",
+        "scientificName": "Cocos nucifera",
+        "englishName": "Coconut Palm",
+        "localName": "தென்னை",
+        "latitude": 9.9216,
+        "longitude": 78.0416,
+        "address": "Vellalur Govt Girls School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "25",
+        "LocalSlNo": "0002",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Murugan T.",
+        "ttr": "Govindan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Govindan",
+                "registererId": "GRR-2024-090",
+                "registeredDate": "2026-03-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "9.7m"
+                },
+                "photos": [
+                    "625006-25-0002-1-20260319000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-25-0003",
+        "scientificName": "Mangifera indica",
+        "englishName": "Mango Tree",
+        "localName": "மாமரம்",
+        "latitude": 9.9184,
+        "longitude": 78.0384,
+        "address": "Vellalur Govt Girls School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "25",
+        "LocalSlNo": "0003",
+        "emoji": "🥭",
+        "encounters": 2,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Selvi B.",
+        "ttr": "Mahesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Mahesh",
+                "registererId": "GRR-2024-091",
+                "registeredDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "5.9m"
+                },
+                "photos": [
+                    "625006-25-0003-1-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "2": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "5.9m"
+                },
+                "photos": [
+                    "625006-25-0003-2-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-26-0001",
+        "scientificName": "Ficus religiosa",
+        "englishName": "Peepal Tree",
+        "localName": "அரசமரம்",
+        "latitude": 9.9192,
+        "longitude": 78.0408,
+        "address": "Vellalur Primary School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "26",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Ganesh A.",
+        "ttr": "Saraswathi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Saraswathi",
+                "registererId": "GRR-2024-092",
+                "registeredDate": "2026-04-02",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "6.9m"
+                },
+                "photos": [
+                    "625006-26-0001-1-20260402000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-26-0002",
+        "scientificName": "Phyllanthus emblica",
+        "englishName": "Amla Tree",
+        "localName": "நெல்லி",
+        "latitude": 9.92,
+        "longitude": 78.0376,
+        "address": "Vellalur Primary School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "26",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Jyothi D.",
+        "ttr": "Bala",
+        "encounter": {
+            "1": {
+                "registeredBy": "Bala",
+                "registererId": "GRR-2024-093",
+                "registeredDate": "2026-04-09",
+                "status": {
+                    "health": "sick",
+                    "diameter": "9cm",
+                    "height": "4.6m"
+                },
+                "photos": [
+                    "625006-26-0002-1-20260409000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625006-27-0001",
+        "scientificName": "Artocarpus heterophyllus",
+        "englishName": "Jackfruit Tree",
+        "localName": "பலாமரம்",
+        "latitude": 9.9208,
+        "longitude": 78.04,
+        "address": "Vellalur Middle School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "27",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#2d5a1b)",
+        "care-giver": "Senthil K.",
+        "ttr": "Ramesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Ramesh",
+                "registererId": "GRR-2024-094",
+                "registeredDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "22cm",
+                    "height": "8.2m"
+                },
+                "photos": [
+                    "625006-27-0001-1-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-28-0001",
+        "scientificName": "Samanea saman",
+        "englishName": "Rain Tree",
+        "localName": "தூங்குமூஞ்சி",
+        "latitude": 9.9216,
+        "longitude": 78.0424,
+        "address": "Vellalur Higher Secondary School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "28",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Gomathi R.",
+        "ttr": "Chandran",
+        "encounter": {
+            "1": {
+                "registeredBy": "Chandran",
+                "registererId": "GRR-2024-095",
+                "registeredDate": "2026-04-23",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "25cm",
+                    "height": "8.6m"
+                },
+                "photos": [
+                    "625006-28-0001-1-20260423000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625006-28-0002",
+        "scientificName": "Grevillea robusta",
+        "englishName": "Silver Oak",
+        "localName": "வெள்ளிக் கொன்றை",
+        "latitude": 9.9184,
+        "longitude": 78.0392,
+        "address": "Vellalur Higher Secondary School, 625006, Tamil Nadu",
+        "pincode": "625006",
+        "collegeCode": "28",
+        "LocalSlNo": "0002",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Ravi K.",
+        "ttr": "Selvam",
+        "encounter": {
+            "1": {
+                "registeredBy": "Selvam",
+                "registererId": "GRR-2024-081",
+                "registeredDate": "2026-01-15",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "26cm",
+                    "height": "11.2m"
+                },
+                "photos": [
+                    "625006-28-0002-1-20260115000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-01-0001",
+        "scientificName": "Pongamia pinnata",
+        "englishName": "Pongam Tree",
+        "localName": "புங்கை",
+        "latitude": 9.9692,
+        "longitude": 78.0316,
+        "address": "Alangallur Govt Boys School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "01",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Priya S.",
+        "ttr": "Raj Kumar",
+        "encounter": {
+            "1": {
+                "registeredBy": "Raj Kumar",
+                "registererId": "GRR-2024-082",
+                "registeredDate": "2026-01-22",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "6.3m"
+                },
+                "photos": [
+                    "625008-01-0001-1-20260122000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-01-0002",
+        "scientificName": "Millettia pinnata",
+        "englishName": "Indian Beech",
+        "localName": "புங்கு",
+        "latitude": 9.97,
+        "longitude": 78.0284,
+        "address": "Alangallur Govt Boys School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "01",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Madhavi I.",
+        "ttr": "Muthu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Muthu",
+                "registererId": "GRR-2024-083",
+                "registeredDate": "2026-01-29",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "12cm",
+                    "height": "6.3m"
+                },
+                "photos": [
+                    "625008-01-0002-1-20260129000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-01-0003",
+        "scientificName": "Syzygium cumini",
+        "englishName": "Jamun Tree",
+        "localName": "நாவல்மரம்",
+        "latitude": 9.9708,
+        "longitude": 78.0308,
+        "address": "Alangallur Govt Boys School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "01",
+        "LocalSlNo": "0003",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Arun R.",
+        "ttr": "Kannan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kannan",
+                "registererId": "GRR-2024-084",
+                "registeredDate": "2026-02-05",
+                "status": {
+                    "health": "dead",
+                    "diameter": "24cm",
+                    "height": "8.3m"
+                },
+                "photos": [
+                    "625008-01-0003-1-20260205000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625008-01-0004",
+        "scientificName": "Swietenia mahagoni",
+        "englishName": "Mahogany Tree",
+        "localName": "மஹோகனி",
+        "latitude": 9.9716,
+        "longitude": 78.0276,
+        "address": "Alangallur Govt Boys School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "01",
+        "LocalSlNo": "0004",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Lakshmi P.",
+        "ttr": "Vijay",
+        "encounter": {
+            "1": {
+                "registeredBy": "Vijay",
+                "registererId": "GRR-2024-085",
+                "registeredDate": "2026-02-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "37cm",
+                    "height": "11.4m"
+                },
+                "photos": [
+                    "625008-01-0004-1-20260212000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-01-0005",
+        "scientificName": "Tectona grandis",
+        "englishName": "Teak Tree",
+        "localName": "தேக்கு",
+        "latitude": 9.9684,
+        "longitude": 78.03,
+        "address": "Alangallur Govt Boys School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "01",
+        "LocalSlNo": "0005",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Suresh M.",
+        "ttr": "Anbu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Anbu",
+                "registererId": "GRR-2024-086",
+                "registeredDate": "2026-02-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "12.3m"
+                },
+                "photos": [
+                    "625008-01-0005-1-20260219000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-29-0001",
+        "scientificName": "Anacardium occidentale",
+        "englishName": "Cashew Tree",
+        "localName": "முந்திரி",
+        "latitude": 9.9692,
+        "longitude": 78.0324,
+        "address": "Alangallur Govt Girls School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "29",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Kavitha N.",
+        "ttr": "Kamal",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kamal",
+                "registererId": "GRR-2024-087",
+                "registeredDate": "2026-02-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "6.8m"
+                },
+                "photos": [
+                    "625008-29-0001-1-20260226000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-29-0002",
+        "scientificName": "Peltophorum pterocarpum",
+        "englishName": "Copper Pod",
+        "localName": "கொடித் தலை",
+        "latitude": 9.97,
+        "longitude": 78.0292,
+        "address": "Alangallur Govt Girls School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "29",
+        "LocalSlNo": "0002",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Venkat G.",
+        "ttr": "Devi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Devi",
+                "registererId": "GRR-2024-088",
+                "registeredDate": "2026-03-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "6.2m"
+                },
+                "photos": [
+                    "625008-29-0002-1-20260305000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-29-0003",
+        "scientificName": "Cassia fistula",
+        "englishName": "Indian Laburnum",
+        "localName": "கனிக்கொன்றை",
+        "latitude": 9.9708,
+        "longitude": 78.0316,
+        "address": "Alangallur Govt Girls School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "29",
+        "LocalSlNo": "0003",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Deepa V.",
+        "ttr": "Pandian",
+        "encounter": {
+            "1": {
+                "registeredBy": "Pandian",
+                "registererId": "GRR-2024-089",
+                "registeredDate": "2026-03-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "5.1m"
+                },
+                "photos": [
+                    "625008-29-0003-1-20260312000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-30-0001",
+        "scientificName": "Manilkara zapota",
+        "englishName": "Sapota Tree",
+        "localName": "சப்போட்டா",
+        "latitude": 9.9716,
+        "longitude": 78.0284,
+        "address": "Alangallur Primary School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "30",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Murugan T.",
+        "ttr": "Govindan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Govindan",
+                "registererId": "GRR-2024-090",
+                "registeredDate": "2026-03-19",
+                "status": {
+                    "health": "sick",
+                    "diameter": "14cm",
+                    "height": "5.2m"
+                },
+                "photos": [
+                    "625008-30-0001-1-20260319000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625008-30-0002",
+        "scientificName": "Bambusa vulgaris",
+        "englishName": "Bamboo",
+        "localName": "மூங்கில்",
+        "latitude": 9.9684,
+        "longitude": 78.0308,
+        "address": "Alangallur Primary School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "30",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 4,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Selvi B.",
+        "ttr": "Mahesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Mahesh",
+                "registererId": "GRR-2024-091",
+                "registeredDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "5cm",
+                    "height": "9.1m"
+                },
+                "photos": [
+                    "625008-30-0002-1-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "2": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "5cm",
+                    "height": "9.1m"
+                },
+                "photos": [
+                    "625008-30-0002-2-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "3": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "5cm",
+                    "height": "9.1m"
+                },
+                "photos": [
+                    "625008-30-0002-3-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "4": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "5cm",
+                    "height": "9.1m"
+                },
+                "photos": [
+                    "625008-30-0002-4-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-31-0001",
+        "scientificName": "Borassus flabellifer",
+        "englishName": "Palmyra Palm",
+        "localName": "பனை",
+        "latitude": 9.9692,
+        "longitude": 78.0276,
+        "address": "Alangallur Middle School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "31",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Ganesh A.",
+        "ttr": "Saraswathi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Saraswathi",
+                "registererId": "GRR-2024-092",
+                "registeredDate": "2026-04-02",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "10.7m"
+                },
+                "photos": [
+                    "625008-31-0001-1-20260402000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-32-0001",
+        "scientificName": "Areca catechu",
+        "englishName": "Areca Palm",
+        "localName": "பாக்கு",
+        "latitude": 9.97,
+        "longitude": 78.03,
+        "address": "Alangallur Higher Secondary School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "32",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Jyothi D.",
+        "ttr": "Bala",
+        "encounter": {
+            "1": {
+                "registeredBy": "Bala",
+                "registererId": "GRR-2024-093",
+                "registeredDate": "2026-04-09",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "7.0m"
+                },
+                "photos": [
+                    "625008-32-0001-1-20260409000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625008-32-0002",
+        "scientificName": "Aegle marmelos",
+        "englishName": "Bael Tree",
+        "localName": "வில்வம்",
+        "latitude": 9.9708,
+        "longitude": 78.0324,
+        "address": "Alangallur Higher Secondary School, 625008, Tamil Nadu",
+        "pincode": "625008",
+        "collegeCode": "32",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Senthil K.",
+        "ttr": "Ramesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Ramesh",
+                "registererId": "GRR-2024-094",
+                "registeredDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "26cm",
+                    "height": "8.1m"
+                },
+                "photos": [
+                    "625008-32-0002-1-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-10-0001",
+        "scientificName": "Limonia acidissima",
+        "englishName": "Wood Apple",
+        "localName": "விளா",
+        "latitude": 10.0216,
+        "longitude": 77.9792,
+        "address": "Thirumangalam Govt School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "10",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Gomathi R.",
+        "ttr": "Chandran",
+        "encounter": {
+            "1": {
+                "registeredBy": "Chandran",
+                "registererId": "GRR-2024-095",
+                "registeredDate": "2026-04-23",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "22cm",
+                    "height": "7.4m"
+                },
+                "photos": [
+                    "625010-10-0001-1-20260423000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-10-0002",
+        "scientificName": "Terminalia arjuna",
+        "englishName": "Arjun Tree",
+        "localName": "வெள்ளை மருது",
+        "latitude": 10.0184,
+        "longitude": 77.9816,
+        "address": "Thirumangalam Govt School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "10",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#3B6D11)",
+        "care-giver": "Ravi K.",
+        "ttr": "Selvam",
+        "encounter": {
+            "1": {
+                "registeredBy": "Selvam",
+                "registererId": "GRR-2024-081",
+                "registeredDate": "2026-01-15",
+                "status": {
+                    "health": "dead",
+                    "diameter": "38cm",
+                    "height": "15.7m"
+                },
+                "photos": [
+                    "625010-10-0002-1-20260115000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625010-10-0003",
+        "scientificName": "Punica granatum",
+        "englishName": "Pomegranate",
+        "localName": "மாதுளை",
+        "latitude": 10.0192,
+        "longitude": 77.9784,
+        "address": "Thirumangalam Govt School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "10",
+        "LocalSlNo": "0003",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Priya S.",
+        "ttr": "Raj Kumar",
+        "encounter": {
+            "1": {
+                "registeredBy": "Raj Kumar",
+                "registererId": "GRR-2024-082",
+                "registeredDate": "2026-01-22",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "6cm",
+                    "height": "3.5m"
+                },
+                "photos": [
+                    "625010-10-0003-1-20260122000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-33-0001",
+        "scientificName": "Psidium guajava",
+        "englishName": "Guava Tree",
+        "localName": "கொய்யா",
+        "latitude": 10.02,
+        "longitude": 77.9808,
+        "address": "Thirumangalam Govt Boys School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "33",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Madhavi I.",
+        "ttr": "Muthu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Muthu",
+                "registererId": "GRR-2024-083",
+                "registeredDate": "2026-01-29",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "10cm",
+                    "height": "4.5m"
+                },
+                "photos": [
+                    "625010-33-0001-1-20260129000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-33-0002",
+        "scientificName": "Santalum album",
+        "englishName": "Sandalwood",
+        "localName": "சந்தனம்",
+        "latitude": 10.0208,
+        "longitude": 77.9776,
+        "address": "Thirumangalam Govt Boys School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "33",
+        "LocalSlNo": "0002",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Arun R.",
+        "ttr": "Kannan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kannan",
+                "registererId": "GRR-2024-084",
+                "registeredDate": "2026-02-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "10.1m"
+                },
+                "photos": [
+                    "625010-33-0002-1-20260205000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-34-0001",
+        "scientificName": "Erythrina variegata",
+        "englishName": "Coral Tree",
+        "localName": "முருக்கு",
+        "latitude": 10.0216,
+        "longitude": 77.98,
+        "address": "Thirumangalam Govt Girls School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "34",
+        "LocalSlNo": "0001",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Lakshmi P.",
+        "ttr": "Vijay",
+        "encounter": {
+            "1": {
+                "registeredBy": "Vijay",
+                "registererId": "GRR-2024-085",
+                "registeredDate": "2026-02-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "7.7m"
+                },
+                "photos": [
+                    "625010-34-0001-1-20260212000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-34-0002",
+        "scientificName": "Morus alba",
+        "englishName": "Mulberry",
+        "localName": "மல்பெரி",
+        "latitude": 10.0184,
+        "longitude": 77.9824,
+        "address": "Thirumangalam Govt Girls School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "34",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Suresh M.",
+        "ttr": "Anbu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Anbu",
+                "registererId": "GRR-2024-086",
+                "registeredDate": "2026-02-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "5cm",
+                    "height": "4.5m"
+                },
+                "photos": [
+                    "625010-34-0002-1-20260219000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-35-0001",
+        "scientificName": "Eucalyptus globulus",
+        "englishName": "Eucalyptus",
+        "localName": "தைலமரம்",
+        "latitude": 10.0192,
+        "longitude": 77.9792,
+        "address": "Thirumangalam Primary School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "35",
+        "LocalSlNo": "0001",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Kavitha N.",
+        "ttr": "Kamal",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kamal",
+                "registererId": "GRR-2024-087",
+                "registeredDate": "2026-02-26",
+                "status": {
+                    "health": "sick",
+                    "diameter": "33cm",
+                    "height": "22.3m"
+                },
+                "photos": [
+                    "625010-35-0001-1-20260226000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625010-35-0002",
+        "scientificName": "Terminalia catappa",
+        "englishName": "Indian Almond",
+        "localName": "வாதுமை",
+        "latitude": 10.02,
+        "longitude": 77.9816,
+        "address": "Thirumangalam Primary School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "35",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Venkat G.",
+        "ttr": "Devi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Devi",
+                "registererId": "GRR-2024-088",
+                "registeredDate": "2026-03-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "13.1m"
+                },
+                "photos": [
+                    "625010-35-0002-1-20260305000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625010-36-0001",
+        "scientificName": "Thespesia populnea",
+        "englishName": "Indian Tulip Tree",
+        "localName": "பூவரசு",
+        "latitude": 10.0208,
+        "longitude": 77.9784,
+        "address": "Thirumangalam Middle School, 625010, Tamil Nadu",
+        "pincode": "625010",
+        "collegeCode": "36",
+        "LocalSlNo": "0001",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Deepa V.",
+        "ttr": "Pandian",
+        "encounter": {
+            "1": {
+                "registeredBy": "Pandian",
+                "registererId": "GRR-2024-089",
+                "registeredDate": "2026-03-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "9.7m"
+                },
+                "photos": [
+                    "625010-36-0001-1-20260312000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-02-0001",
+        "scientificName": "Phoenix sylvestris",
+        "englishName": "Indian Date Palm",
+        "localName": "பேரீச்சை",
+        "latitude": 10.0516,
+        "longitude": 77.9308,
+        "address": "Alanganallur Primary School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "02",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Murugan T.",
+        "ttr": "Govindan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Govindan",
+                "registererId": "GRR-2024-090",
+                "registeredDate": "2026-03-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "34cm",
+                    "height": "12.5m"
+                },
+                "photos": [
+                    "625017-02-0001-1-20260319000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-02-0002",
+        "scientificName": "Azadirachta indica",
+        "englishName": "Neem Tree",
+        "localName": "வேம்பு",
+        "latitude": 10.0484,
+        "longitude": 77.9276,
+        "address": "Alanganallur Primary School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "02",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 5,
+        "bg": "linear-gradient(135deg,#2d5a1b,#4a7c2f)",
+        "care-giver": "Selvi B.",
+        "ttr": "Mahesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Mahesh",
+                "registererId": "GRR-2024-091",
+                "registeredDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "15cm",
+                    "height": "7.7m"
+                },
+                "photos": [
+                    "625017-02-0002-1-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "2": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "15cm",
+                    "height": "7.7m"
+                },
+                "photos": [
+                    "625017-02-0002-2-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "3": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "15cm",
+                    "height": "7.7m"
+                },
+                "photos": [
+                    "625017-02-0002-3-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "4": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "15cm",
+                    "height": "7.7m"
+                },
+                "photos": [
+                    "625017-02-0002-4-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "5": {
+                "updatedBy": "Mahesh",
+                "updaterId": "GRR-2024-091",
+                "updatedDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "15cm",
+                    "height": "7.7m"
+                },
+                "photos": [
+                    "625017-02-0002-5-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-02-0003",
+        "scientificName": "Ficus benghalensis",
+        "englishName": "Banyan Tree",
+        "localName": "ஆலமரம்",
+        "latitude": 10.0492,
+        "longitude": 77.93,
+        "address": "Alanganallur Primary School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "02",
+        "LocalSlNo": "0003",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Ganesh A.",
+        "ttr": "Saraswathi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Saraswathi",
+                "registererId": "GRR-2024-092",
+                "registeredDate": "2026-04-02",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "38cm",
+                    "height": "12.8m"
+                },
+                "photos": [
+                    "625017-02-0003-1-20260402000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-02-0004",
+        "scientificName": "Tamarindus indica",
+        "englishName": "Tamarind Tree",
+        "localName": "புளியமரம்",
+        "latitude": 10.05,
+        "longitude": 77.9324,
+        "address": "Alanganallur Primary School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "02",
+        "LocalSlNo": "0004",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Jyothi D.",
+        "ttr": "Bala",
+        "encounter": {
+            "1": {
+                "registeredBy": "Bala",
+                "registererId": "GRR-2024-093",
+                "registeredDate": "2026-04-09",
+                "status": {
+                    "health": "dead",
+                    "diameter": "28cm",
+                    "height": "9.5m"
+                },
+                "photos": [
+                    "625017-02-0004-1-20260409000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625017-02-0005",
+        "scientificName": "Delonix regia",
+        "englishName": "Gulmohar Tree",
+        "localName": "மயில்கொம்பு",
+        "latitude": 10.0508,
+        "longitude": 77.9292,
+        "address": "Alanganallur Primary School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "02",
+        "LocalSlNo": "0005",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Senthil K.",
+        "ttr": "Ramesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Ramesh",
+                "registererId": "GRR-2024-094",
+                "registeredDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "5.6m"
+                },
+                "photos": [
+                    "625017-02-0005-1-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-37-0001",
+        "scientificName": "Cocos nucifera",
+        "englishName": "Coconut Palm",
+        "localName": "தென்னை",
+        "latitude": 10.0516,
+        "longitude": 77.9316,
+        "address": "Alanganallur Govt Boys School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "37",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Gomathi R.",
+        "ttr": "Chandran",
+        "encounter": {
+            "1": {
+                "registeredBy": "Chandran",
+                "registererId": "GRR-2024-095",
+                "registeredDate": "2026-04-23",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "9.4m"
+                },
+                "photos": [
+                    "625017-37-0001-1-20260423000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-37-0002",
+        "scientificName": "Mangifera indica",
+        "englishName": "Mango Tree",
+        "localName": "மாமரம்",
+        "latitude": 10.0484,
+        "longitude": 77.9284,
+        "address": "Alanganallur Govt Boys School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "37",
+        "LocalSlNo": "0002",
+        "emoji": "🥭",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Ravi K.",
+        "ttr": "Selvam",
+        "encounter": {
+            "1": {
+                "registeredBy": "Selvam",
+                "registererId": "GRR-2024-081",
+                "registeredDate": "2026-01-15",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "6.8m"
+                },
+                "photos": [
+                    "625017-37-0002-1-20260115000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-37-0003",
+        "scientificName": "Ficus religiosa",
+        "englishName": "Peepal Tree",
+        "localName": "அரசமரம்",
+        "latitude": 10.0492,
+        "longitude": 77.9308,
+        "address": "Alanganallur Govt Boys School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "37",
+        "LocalSlNo": "0003",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Priya S.",
+        "ttr": "Raj Kumar",
+        "encounter": {
+            "1": {
+                "registeredBy": "Raj Kumar",
+                "registererId": "GRR-2024-082",
+                "registeredDate": "2026-01-22",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "6.6m"
+                },
+                "photos": [
+                    "625017-37-0003-1-20260122000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-38-0001",
+        "scientificName": "Phyllanthus emblica",
+        "englishName": "Amla Tree",
+        "localName": "நெல்லி",
+        "latitude": 10.05,
+        "longitude": 77.9276,
+        "address": "Alanganallur Govt Girls School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "38",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Madhavi I.",
+        "ttr": "Muthu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Muthu",
+                "registererId": "GRR-2024-083",
+                "registeredDate": "2026-01-29",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "9cm",
+                    "height": "4.3m"
+                },
+                "photos": [
+                    "625017-38-0001-1-20260129000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-38-0002",
+        "scientificName": "Artocarpus heterophyllus",
+        "englishName": "Jackfruit Tree",
+        "localName": "பலாமரம்",
+        "latitude": 10.0508,
+        "longitude": 77.93,
+        "address": "Alanganallur Govt Girls School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "38",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#2d5a1b)",
+        "care-giver": "Arun R.",
+        "ttr": "Kannan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kannan",
+                "registererId": "GRR-2024-084",
+                "registeredDate": "2026-02-05",
+                "status": {
+                    "health": "sick",
+                    "diameter": "22cm",
+                    "height": "7.9m"
+                },
+                "photos": [
+                    "625017-38-0002-1-20260205000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625017-39-0001",
+        "scientificName": "Samanea saman",
+        "englishName": "Rain Tree",
+        "localName": "தூங்குமூஞ்சி",
+        "latitude": 10.0516,
+        "longitude": 77.9324,
+        "address": "Alanganallur Middle School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "39",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Lakshmi P.",
+        "ttr": "Vijay",
+        "encounter": {
+            "1": {
+                "registeredBy": "Vijay",
+                "registererId": "GRR-2024-085",
+                "registeredDate": "2026-02-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "25cm",
+                    "height": "9.5m"
+                },
+                "photos": [
+                    "625017-39-0001-1-20260212000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-39-0002",
+        "scientificName": "Grevillea robusta",
+        "englishName": "Silver Oak",
+        "localName": "வெள்ளிக் கொன்றை",
+        "latitude": 10.0484,
+        "longitude": 77.9292,
+        "address": "Alanganallur Middle School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "39",
+        "LocalSlNo": "0002",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Suresh M.",
+        "ttr": "Anbu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Anbu",
+                "registererId": "GRR-2024-086",
+                "registeredDate": "2026-02-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "26cm",
+                    "height": "10.9m"
+                },
+                "photos": [
+                    "625017-39-0002-1-20260219000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625017-40-0001",
+        "scientificName": "Pongamia pinnata",
+        "englishName": "Pongam Tree",
+        "localName": "புங்கை",
+        "latitude": 10.0492,
+        "longitude": 77.9316,
+        "address": "Alanganallur Higher Secondary School, 625017, Tamil Nadu",
+        "pincode": "625017",
+        "collegeCode": "40",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Kavitha N.",
+        "ttr": "Kamal",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kamal",
+                "registererId": "GRR-2024-087",
+                "registeredDate": "2026-02-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "6.0m"
+                },
+                "photos": [
+                    "625017-40-0001-1-20260226000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-03-0001",
+        "scientificName": "Millettia pinnata",
+        "englishName": "Indian Beech",
+        "localName": "புங்கு",
+        "latitude": 9.98,
+        "longitude": 78.0784,
+        "address": "Palamedu Govt School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "03",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Venkat G.",
+        "ttr": "Devi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Devi",
+                "registererId": "GRR-2024-088",
+                "registeredDate": "2026-03-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "12cm",
+                    "height": "6.0m"
+                },
+                "photos": [
+                    "625018-03-0001-1-20260305000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-03-0002",
+        "scientificName": "Syzygium cumini",
+        "englishName": "Jamun Tree",
+        "localName": "நாவல்மரம்",
+        "latitude": 9.9808,
+        "longitude": 78.0808,
+        "address": "Palamedu Govt School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "03",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Deepa V.",
+        "ttr": "Pandian",
+        "encounter": {
+            "1": {
+                "registeredBy": "Pandian",
+                "registererId": "GRR-2024-089",
+                "registeredDate": "2026-03-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "24cm",
+                    "height": "9.2m"
+                },
+                "photos": [
+                    "625018-03-0002-1-20260312000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-03-0003",
+        "scientificName": "Swietenia mahagoni",
+        "englishName": "Mahogany Tree",
+        "localName": "மஹோகனி",
+        "latitude": 9.9816,
+        "longitude": 78.0776,
+        "address": "Palamedu Govt School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "03",
+        "LocalSlNo": "0003",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Murugan T.",
+        "ttr": "Govindan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Govindan",
+                "registererId": "GRR-2024-090",
+                "registeredDate": "2026-03-19",
+                "status": {
+                    "health": "dead",
+                    "diameter": "37cm",
+                    "height": "11.1m"
+                },
+                "photos": [
+                    "625018-03-0003-1-20260319000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625018-03-0004",
+        "scientificName": "Tectona grandis",
+        "englishName": "Teak Tree",
+        "localName": "தேக்கு",
+        "latitude": 9.9784,
+        "longitude": 78.08,
+        "address": "Palamedu Govt School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "03",
+        "LocalSlNo": "0004",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
+        "care-giver": "Selvi B.",
+        "ttr": "Mahesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Mahesh",
+                "registererId": "GRR-2024-091",
+                "registeredDate": "2026-03-26",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "12.0m"
+                },
+                "photos": [
+                    "625018-03-0004-1-20260326000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-03-0005",
+        "scientificName": "Anacardium occidentale",
+        "englishName": "Cashew Tree",
+        "localName": "முந்திரி",
+        "latitude": 9.9792,
+        "longitude": 78.0824,
+        "address": "Palamedu Govt School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "03",
+        "LocalSlNo": "0005",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Ganesh A.",
+        "ttr": "Saraswathi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Saraswathi",
+                "registererId": "GRR-2024-092",
+                "registeredDate": "2026-04-02",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "13cm",
+                    "height": "6.5m"
+                },
+                "photos": [
+                    "625018-03-0005-1-20260402000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-41-0001",
+        "scientificName": "Peltophorum pterocarpum",
+        "englishName": "Copper Pod",
+        "localName": "கொடித் தலை",
+        "latitude": 9.98,
+        "longitude": 78.0792,
+        "address": "Palamedu Govt Boys School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "41",
+        "LocalSlNo": "0001",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Jyothi D.",
+        "ttr": "Bala",
+        "encounter": {
+            "1": {
+                "registeredBy": "Bala",
+                "registererId": "GRR-2024-093",
+                "registeredDate": "2026-04-09",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "7.1m"
+                },
+                "photos": [
+                    "625018-41-0001-1-20260409000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-41-0002",
+        "scientificName": "Cassia fistula",
+        "englishName": "Indian Laburnum",
+        "localName": "கனிக்கொன்றை",
+        "latitude": 9.9808,
+        "longitude": 78.0816,
+        "address": "Palamedu Govt Boys School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "41",
+        "LocalSlNo": "0002",
+        "emoji": "🌸",
+        "encounters": 3,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Senthil K.",
+        "ttr": "Ramesh",
+        "encounter": {
+            "1": {
+                "registeredBy": "Ramesh",
+                "registererId": "GRR-2024-094",
+                "registeredDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625018-41-0002-1-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "2": {
+                "updatedBy": "Ramesh",
+                "updaterId": "GRR-2024-094",
+                "updatedDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625018-41-0002-2-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            },
+            "3": {
+                "updatedBy": "Ramesh",
+                "updaterId": "GRR-2024-094",
+                "updatedDate": "2026-04-16",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "11cm",
+                    "height": "4.8m"
+                },
+                "photos": [
+                    "625018-41-0002-3-20260416000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-42-0001",
+        "scientificName": "Manilkara zapota",
+        "englishName": "Sapota Tree",
+        "localName": "சப்போட்டா",
+        "latitude": 9.9816,
+        "longitude": 78.0784,
+        "address": "Palamedu Govt Girls School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "42",
+        "LocalSlNo": "0001",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Gomathi R.",
+        "ttr": "Chandran",
+        "encounter": {
+            "1": {
+                "registeredBy": "Chandran",
+                "registererId": "GRR-2024-095",
+                "registeredDate": "2026-04-23",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "4.9m"
+                },
+                "photos": [
+                    "625018-42-0001-1-20260423000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-42-0002",
+        "scientificName": "Bambusa vulgaris",
+        "englishName": "Bamboo",
+        "localName": "மூங்கில்",
+        "latitude": 9.9784,
+        "longitude": 78.0808,
+        "address": "Palamedu Govt Girls School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "42",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Ravi K.",
+        "ttr": "Selvam",
+        "encounter": {
+            "1": {
+                "registeredBy": "Selvam",
+                "registererId": "GRR-2024-081",
+                "registeredDate": "2026-01-15",
+                "status": {
+                    "health": "sick",
+                    "diameter": "5cm",
+                    "height": "8.8m"
+                },
+                "photos": [
+                    "625018-42-0002-1-20260115000000.jpg"
+                ],
+                "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+                "toDo": "Apply treatment and recheck in 2 weeks."
+            }
+        }
+    },
+    {
+        "treeId": "625018-42-0003",
+        "scientificName": "Borassus flabellifer",
+        "englishName": "Palmyra Palm",
+        "localName": "பனை",
+        "latitude": 9.9792,
+        "longitude": 78.0776,
+        "address": "Palamedu Govt Girls School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "42",
+        "LocalSlNo": "0003",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Priya S.",
+        "ttr": "Raj Kumar",
+        "encounter": {
+            "1": {
+                "registeredBy": "Raj Kumar",
+                "registererId": "GRR-2024-082",
+                "registeredDate": "2026-01-22",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "11.6m"
+                },
+                "photos": [
+                    "625018-42-0003-1-20260122000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-43-0001",
+        "scientificName": "Areca catechu",
+        "englishName": "Areca Palm",
+        "localName": "பாக்கு",
+        "latitude": 9.98,
+        "longitude": 78.08,
+        "address": "Palamedu Primary School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "43",
+        "LocalSlNo": "0001",
+        "emoji": "🌴",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
+        "care-giver": "Madhavi I.",
+        "ttr": "Muthu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Muthu",
+                "registererId": "GRR-2024-083",
+                "registeredDate": "2026-01-29",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "14cm",
+                    "height": "6.7m"
+                },
+                "photos": [
+                    "625018-43-0001-1-20260129000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-44-0001",
+        "scientificName": "Aegle marmelos",
+        "englishName": "Bael Tree",
+        "localName": "வில்வம்",
+        "latitude": 9.9808,
+        "longitude": 78.0824,
+        "address": "Palamedu Middle School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "44",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Arun R.",
+        "ttr": "Kannan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kannan",
+                "registererId": "GRR-2024-084",
+                "registeredDate": "2026-02-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "26cm",
+                    "height": "7.8m"
+                },
+                "photos": [
+                    "625018-44-0001-1-20260205000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625018-44-0002",
+        "scientificName": "Limonia acidissima",
+        "englishName": "Wood Apple",
+        "localName": "விளா",
+        "latitude": 9.9816,
+        "longitude": 78.0792,
+        "address": "Palamedu Middle School, 625018, Tamil Nadu",
+        "pincode": "625018",
+        "collegeCode": "44",
+        "LocalSlNo": "0002",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Lakshmi P.",
+        "ttr": "Vijay",
+        "encounter": {
+            "1": {
+                "registeredBy": "Vijay",
+                "registererId": "GRR-2024-085",
+                "registeredDate": "2026-02-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "22cm",
+                    "height": "7.1m"
+                },
+                "photos": [
+                    "625018-44-0002-1-20260212000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625020-05-0001",
+        "scientificName": "Terminalia arjuna",
+        "englishName": "Arjun Tree",
+        "localName": "வெள்ளை மருது",
+        "latitude": 9.9984,
+        "longitude": 78.0516,
+        "address": "Kallanai Primary School, 625020, Tamil Nadu",
+        "pincode": "625020",
+        "collegeCode": "05",
+        "LocalSlNo": "0001",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#3B6D11)",
+        "care-giver": "Suresh M.",
+        "ttr": "Anbu",
+        "encounter": {
+            "1": {
+                "registeredBy": "Anbu",
+                "registererId": "GRR-2024-086",
+                "registeredDate": "2026-02-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "38cm",
+                    "height": "16.6m"
+                },
+                "photos": [
+                    "625020-05-0001-1-20260219000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625020-05-0002",
+        "scientificName": "Punica granatum",
+        "englishName": "Pomegranate",
+        "localName": "மாதுளை",
+        "latitude": 9.9992,
+        "longitude": 78.0484,
+        "address": "Kallanai Primary School, 625020, Tamil Nadu",
+        "pincode": "625020",
+        "collegeCode": "05",
+        "LocalSlNo": "0002",
+        "emoji": "🌿",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
+        "care-giver": "Kavitha N.",
+        "ttr": "Kamal",
+        "encounter": {
+            "1": {
+                "registeredBy": "Kamal",
+                "registererId": "GRR-2024-087",
+                "registeredDate": "2026-02-26",
+                "status": {
+                    "health": "dead",
+                    "diameter": "6cm",
+                    "height": "3.2m"
+                },
+                "photos": [
+                    "625020-05-0002-1-20260226000000.jpg"
+                ],
+                "fieldNotes": "Tree fully dried with no green parts.",
+                "toDo": "Plan removal and replanting."
+            }
+        }
+    },
+    {
+        "treeId": "625020-05-0003",
+        "scientificName": "Psidium guajava",
+        "englishName": "Guava Tree",
+        "localName": "கொய்யா",
+        "latitude": 10,
+        "longitude": 78.0508,
+        "address": "Kallanai Primary School, 625020, Tamil Nadu",
+        "pincode": "625020",
+        "collegeCode": "05",
+        "LocalSlNo": "0003",
+        "emoji": "🌳",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
+        "care-giver": "Venkat G.",
+        "ttr": "Devi",
+        "encounter": {
+            "1": {
+                "registeredBy": "Devi",
+                "registererId": "GRR-2024-088",
+                "registeredDate": "2026-03-05",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "10cm",
+                    "height": "4.2m"
+                },
+                "photos": [
+                    "625020-05-0003-1-20260305000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625020-05-0004",
+        "scientificName": "Santalum album",
+        "englishName": "Sandalwood",
+        "localName": "சந்தனம்",
+        "latitude": 10.0008,
+        "longitude": 78.0476,
+        "address": "Kallanai Primary School, 625020, Tamil Nadu",
+        "pincode": "625020",
+        "collegeCode": "05",
+        "LocalSlNo": "0004",
+        "emoji": "🌲",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
+        "care-giver": "Deepa V.",
+        "ttr": "Pandian",
+        "encounter": {
+            "1": {
+                "registeredBy": "Pandian",
+                "registererId": "GRR-2024-089",
+                "registeredDate": "2026-03-12",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "9.8m"
+                },
+                "photos": [
+                    "625020-05-0004-1-20260312000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    },
+    {
+        "treeId": "625020-45-0001",
+        "scientificName": "Erythrina variegata",
+        "englishName": "Coral Tree",
+        "localName": "முருக்கு",
+        "latitude": 10.0016,
+        "longitude": 78.05,
+        "address": "Kallanai Govt Boys School, 625020, Tamil Nadu",
+        "pincode": "625020",
+        "collegeCode": "45",
+        "LocalSlNo": "0001",
+        "emoji": "🌸",
+        "encounters": 1,
+        "bg": "linear-gradient(135deg,#3B6D11,#639922)",
+        "care-giver": "Murugan T.",
+        "ttr": "Govindan",
+        "encounter": {
+            "1": {
+                "registeredBy": "Govindan",
+                "registererId": "GRR-2024-090",
+                "registeredDate": "2026-03-19",
+                "status": {
+                    "health": "healthy",
+                    "diameter": "30cm",
+                    "height": "8.6m"
+                },
+                "photos": [
+                    "625020-45-0001-1-20260319000000.jpg"
+                ],
+                "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+                "toDo": "Routine check-up; no action needed."
+            }
+        }
+    }
+]

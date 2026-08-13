@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Tree Tracker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<style>
+  :root {
+    --color-theme: #3B6D11;
+    --color-theme-dark: #1e3d0f;
+    --color-theme-light: #EAF3DE;
+    --color-theme-accent: #C0DD97;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f4f4f4;
+    --color-text-primary: #111111;
+    --color-text-secondary: #666666;
+    --color-border-tertiary: #e0e0e0;
+    --color-border-secondary: #cccccc;
+    --border-radius-md: 10px;
+    --border-radius-lg: 14px;
+    --font-sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
+  html { font-size: 15px; }
+  body { background: #e8e8e8; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 24px 0; }
+  .phone { background: #1a1a1a; border-radius: 36px; padding: 10px; width: 320px; box-shadow: 0 0 0 1px #333, 0 20px 60px rgba(0,0,0,0.3); }
+  .screen { background: var(--color-background-primary); border-radius: 28px; overflow: hidden; height: 600px; display: flex; flex-direction: column; position: relative; }
+  .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
+  .status-bar.dark span { color: var(--color-theme-light); }
+  .status-bar.blue span { color: var(--color-theme-light); }
+  .page { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+  .page.active { display: flex; }
+  .scrollable { overflow-y: auto; flex: 1; }
+
+  /* SHARED */
+  .back-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--color-text-primary); border: none; flex-shrink: 0; }
+  .back-btn.inv { background: rgba(255,255,255,0.12); color: var(--color-theme-light); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 8px 14px 10px; flex-shrink: 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .topbar-title { font-size: 1rem; font-weight: 500; color: var(--color-text-primary); }
+  .topbar-step { margin-left: auto; font-size: 0.7333rem; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 3px 10px; border-radius: 20px; }
+  .green-btn { width: 100%; padding: 12px; border-radius: var(--border-radius-lg); background: var(--color-theme); color: var(--color-theme-light); font-size: 0.9333rem; font-weight: 500; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .blue-btn { width: 100%; padding: 12px; border-radius: var(--border-radius-lg); background: var(--color-theme); color: var(--color-theme-light); font-size: 0.9333rem; font-weight: 500; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .ghost-btn { width: 100%; padding: 11px; border-radius: var(--border-radius-lg); background: transparent; color: var(--color-text-secondary); font-size: 0.8667rem; border: 0.5px solid var(--color-border-tertiary); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .google-btn { width: 100%; padding: 12px; border-radius: var(--border-radius-lg); background: #fff; color: #333; font-size: 0.9333rem; font-weight: 500; border: 1px solid #dadce0; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .google-btn:hover { background: #f8f9fa; }
+  .google-g { width: 18px; height: 18px; }
+  .section-title { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .info-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 2px 12px; }
+  .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { font-size: 0.8rem; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px; }
+  .info-val { font-size: 0.8667rem; font-weight: 500; color: var(--color-text-primary); }
+  .chip { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); }
+  .chip-blue { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); display: flex; align-items: center; gap: 3px; }
+  .field-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .field-lbl { font-size: 0.8rem; color: var(--color-text-secondary); display: flex; align-items: center; gap: 5px; }
+  .field-inp { width: 100%; padding: 11px 13px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); font-size: 0.9333rem; outline: none; font-family: var(--font-sans); }
+  .field-inp:focus { border-color: var(--color-theme); }
+  .pw-wrap { position: relative; }
+  .pw-toggle { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--color-text-secondary); font-size: 1.0667rem; }
+
+  /* MAIN - ALBUM PAGE */
+  .main-topbar { background: var(--color-theme-dark); display: flex; justify-content: flex-end; padding: 4px 14px 0; flex-shrink: 0; position: relative; }
+  .dots-btn { background: none; border: none; cursor: pointer; color: #ffffff; font-size: 1.3333rem; padding: 4px; border-radius: 6px; }
+  .dots-btn:hover { background: rgba(255,255,255,0.1); }
+  .dropdown { position: absolute; top: 34px; right: 12px; background: var(--color-background-primary); border-radius: var(--border-radius-lg); box-shadow: 0 4px 20px rgba(0,0,0,0.18); z-index: 50; min-width: 160px; overflow: hidden; display: none; border: 0.5px solid var(--color-border-tertiary); }
+  .dropdown.open { display: block; }
+  .dd-item { padding: 12px 14px; font-size: 0.8667rem; color: var(--color-text-primary); cursor: pointer; display: flex; align-items: center; gap: 9px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .dd-item:last-child { border-bottom: none; }
+  .dd-item:hover { background: var(--color-background-secondary); }
+  .main-hero { background: var(--color-theme-dark); padding: 8px 28px 12px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+  .main-logo { width: 40px; height: 40px; border-radius: 50%; background: var(--color-theme); display: flex; align-items: center; justify-content: center; }
+  .main-logo .tree-emoji { font-size: 1.3333rem; line-height: 1; }
+  .main-title { font-size: 1.1333rem; font-weight: 500; color: var(--color-theme-light); margin-top: 4px; }
+  .main-sub { font-size: 0.6667rem; color: rgba(192,221,151,0.65); margin-bottom: 8px; }
+  .search-row { display: flex; gap: 6px; width: 100%; }
+  .clear-wrap { flex: 1; position: relative; }
+  .clear-wrap .id-input { width: 100%; padding-right: 30px; }
+  .clear-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; border: none; background: rgba(192,221,151,0.15); color: var(--color-theme-light); width: 18px; height: 18px; border-radius: 50%; cursor: pointer; font-size: 0.8667rem; line-height: 1; padding: 0; }
+  .clear-btn:disabled { opacity: 0.35; cursor: not-allowed; color: #999; background: rgba(0,0,0,0.08); }
+  .clear-btn:disabled:hover { background: rgba(0,0,0,0.08); }
+  .id-input { flex: 1; padding: 7px 10px; font-size: 0.8rem; background: rgba(255,255,255,0.06); color: var(--color-theme-light); border: 1.5px solid rgba(192,221,151,0.25); border-radius: 10px; font-family: monospace; letter-spacing: 1px; outline: none; }
+  #album-place, #album-tree { font-size: 1.0667rem; letter-spacing: normal; padding: 4px 10px; }
+  .id-input::placeholder { color: rgba(192,221,151,0.3); font-family: var(--font-sans); letter-spacing: normal; }
+  .album-container { background: var(--color-theme-dark); flex: 1; overflow-y: auto; padding: 0 14px 16px; }
+  .filter-row { display: flex; gap: 6px; margin-bottom: 6px; margin-top: 8px; }
+  .filter-row select { flex: 1; padding: 6px 8px; font-size: 0.6667rem; background: rgba(255,255,255,0.07); color: var(--color-theme-light); border: 1.5px solid rgba(192,221,151,0.2); border-radius: 10px; outline: none; font-family: var(--font-sans); cursor: pointer; }
+  .filter-row select option { background: var(--color-theme-dark); color: var(--color-theme-light); }
+  .album-filters { background: var(--color-theme-dark); padding: 0 14px 10px; flex-shrink: 0; }
+  .filter-btn { border-radius: 10px; background: rgba(255,255,255,0.08); color: var(--color-theme-light); border: 1.5px solid rgba(192,221,151,0.15); padding: 6px; font-size: 0.7333rem; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .filter-btn:hover { background: rgba(255,255,255,0.15); }
+  .album-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; margin-top: 8px; }
+  .album-title { font-size: 0.6667rem; color: rgba(192,221,151,0.5); display: flex; align-items: center; gap: 4px; }
+  .album-count { font-size: 0.6rem; color: rgba(192,221,151,0.35); }
+  .album-toggle { display: flex; align-items: center; justify-content: center; border: none; background: rgba(192,221,151,0.15); color: var(--color-theme-light); width: 22px; height: 22px; border-radius: 6px; cursor: pointer; font-size: 0.8667rem; padding: 0; }
+  .album-toggle.off { opacity: 0.4; }
+  .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .album-summary { flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .album-chip { font-size: 0.6667rem; padding: 4px 9px; border-radius: 20px; background: rgba(255,255,255,0.08); color: var(--color-theme-light); border: 1.5px solid rgba(192,221,151,0.15); }
+  .album-chip b { color: var(--color-theme-accent); font-weight: 600; }
+  .chip-click { cursor: pointer; }
+  .chip-click:hover { background: rgba(255,255,255,0.18); }
+  .map-btn { flex-basis: 100%; width: 100%; margin-top: 8px; padding: 8px; border-radius: 10px; background: var(--color-theme); color: var(--color-theme-light); border: none; cursor: pointer; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-sans); }
+  .map-btn:hover { opacity: 0.9; }
+  .map-pin-btn { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; margin-left: 6px; background: rgba(255,255,255,0.15); border: none; border-radius: 6px; color: #fff; cursor: pointer; font-size: 0.7333rem; padding: 3px 6px; }
+  .map-pin-btn:hover { background: rgba(255,255,255,0.3); }
+  .card-pin-btn { position: absolute; top: 4px; right: 4px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); border: none; border-radius: 50%; color: #fff; cursor: pointer; width: 20px; height: 20px; padding: 0; z-index: 2; }
+  .card-pin-btn:hover { background: rgba(0,0,0,0.65); }
+  .tree-card { border-radius: 10px; overflow: hidden; cursor: pointer; border: 0.5px solid rgba(192,221,151,0.1); transition: opacity 0.2s; }
+  .tree-card:hover { opacity: 0.85; }
+  .tree-photo { height: 80px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .tree-emoji { font-size: 2rem; }
+  .tree-location { position: absolute; bottom: 4px; left: 7px; font-size: 0.5333rem; color: rgba(255,255,255,0.7); }
+  .tree-info { padding: 5px 8px 7px; background: rgba(255,255,255,0.04); }
+  .tree-id { font-size: 0.5333rem; font-family: monospace; color: var(--color-theme-light); }
+  .tree-name { font-size: 0.7333rem; font-weight: 500; color: var(--color-theme-light); }
+  .tree-stats { display: flex; gap: 5px; font-size: 0.5333rem; color: rgba(192,221,151,0.4); margin-top: 2px; }
+  .tree-meta { margin-top: 5px; padding-top: 5px; border-top: 0.5px solid rgba(192,221,151,0.08); font-size: 0.5333rem; color: rgba(192,221,151,0.45); line-height: 1.55; }
+  .tree-meta b { color: var(--color-theme-light); font-weight: 500; }
+  .no-trees { grid-column: 1/-1; text-align: center; padding: 30px 10px; color: rgba(192,221,151,0.3); font-size: 0.7333rem; }
+
+  /* ── PROFILE ── */
+  .hero { position: relative; height: 150px; display: flex; align-items: flex-end; flex-shrink: 0; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.55)); }
+  .hero-badge { position: absolute; top: 10px; right: 12px; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 3px 9px; font-size: 0.7333rem; color: #fff; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+  .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+  .hero-title { position: relative; z-index: 1; padding: 10px 14px; }
+  .hero-title h1 { font-size: 1.0667rem; font-weight: 500; color: #fff; }
+  .hero-title p { font-size: 0.7333rem; color: rgba(255,255,255,0.7); margin-top: 2px; display: flex; align-items: center; gap: 3px; }
+  .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-bottom: 14px; }
+  .stat-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 9px 6px; text-align: center; }
+  .stat-label { font-size: 0.6667rem; color: var(--color-text-secondary); margin-bottom: 3px; }
+  .stat-value { font-size: 1.0667rem; font-weight: 500; color: var(--color-text-primary); }
+  .stat-unit { font-size: 0.6rem; color: var(--color-text-secondary); }
+  .health-bar-wrap { margin-bottom: 14px; }
+  .health-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 5px; }
+  .health-bar { height: 6px; border-radius: 3px; background: var(--color-background-secondary); overflow: hidden; }
+  .health-fill { height: 100%; border-radius: 3px; background: var(--color-theme); width: 82%; }
+  .log-entry { display: flex; align-items: center; gap: 9px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); cursor: pointer; }
+  .log-entry:last-child { border-bottom: none; }
+  .log-entry:hover { opacity: 0.8; }
+  .log-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .log-body { flex: 1; }
+  .log-date { font-size: 0.6667rem; color: var(--color-text-secondary); margin-bottom: 2px; }
+  .log-text { font-size: 0.8rem; color: var(--color-text-primary); }
+  .log-chips { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+  .log-thumb { width: 40px; height: 40px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 0.5px solid var(--color-border-tertiary); }
+
+  /* ── ALBUM PAGE ── */
+  .album-grid-page { padding: 11px 13px; display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .album-photo { border-radius: 9px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 0.5px solid var(--color-border-tertiary); }
+  .album-photo-main { grid-column: 1 / -1; aspect-ratio: 16/9; }
+  .photo-label { font-size: 0.6667rem; color: rgba(255,255,255,0.85); position: absolute; bottom: 6px; left: 8px; font-weight: 500; }
+  .photo-time { font-size: 0.6rem; color: rgba(255,255,255,0.55); position: absolute; bottom: 6px; right: 8px; }
+  .album-meta { padding: 10px 13px; border-bottom: 0.5px solid var(--color-border-tertiary); flex-shrink: 0; }
+  .album-note { margin: 0 13px 13px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 9px 11px; }
+  .album-note-label { font-size: 0.6667rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+
+  /* ── SCAN STEPS ── */
+  .steps { display: flex; align-items: center; justify-content: center; padding: 10px 20px 0; flex-shrink: 0; }
+  .step-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7333rem; font-weight: 500; }
+  .step-dot.active { background: var(--color-theme); color: #fff; box-shadow: 0 0 0 3px rgba(59,109,17,0.2); }
+  .step-dot.done { background: var(--color-theme); color: #fff; }
+  .step-dot.pending { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+  .step-line { flex: 1; height: 1.5px; background: var(--color-border-tertiary); margin: 0 4px; }
+  .step-line.done { background: var(--color-theme); }
+  .step-labels { display: flex; justify-content: space-between; padding: 3px 8px 0; flex-shrink: 0; }
+  .step-lbl { font-size: 0.6667rem; color: var(--color-text-secondary); text-align: center; width: 60px; }
+  .step-lbl.active { color: var(--color-theme); font-weight: 500; }
+  .camera-box { width: 100%; aspect-ratio: 4/3; border-radius: 12px; background: #111; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .scan-frame { width: 70%; height: 50%; border: 2px solid rgba(255,255,255,0.5); border-radius: 8px; position: relative; }
+  .sc { position: absolute; width: 13px; height: 13px; border-color: #4ade80; border-style: solid; }
+  .tl{top:-2px;left:-2px;border-width:2px 0 0 2px;} .tr{top:-2px;right:-2px;border-width:2px 2px 0 0;} .bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px;} .br{bottom:-2px;right:-2px;border-width:0 2px 2px 0;}
+  @keyframes scanline{0%{top:10%}100%{top:90%}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  .scan-line{position:absolute;left:5%;width:90%;height:2px;background:rgba(74,222,128,0.6);animation:scanline 1.8s ease-in-out infinite alternate;}
+  .scan-hint{color:rgba(74,222,128,0.9);font-size:0.7333rem;position:absolute;bottom:26px;animation:pulse 1.5s infinite;}
+  .capture-btn{width:48px;height:48px;border-radius:50%;background:#fff;border:3px solid rgba(255,255,255,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;bottom:12px;}
+  .capture-inner{width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid #ddd;}
+  .field-wrap { position: relative; margin-bottom: 12px; }
+  .field-input { width: 100%; padding: 10px 36px 10px 12px; border-radius: var(--border-radius-md); border: 1.5px solid var(--color-theme); font-size: 0.9333rem; font-family: monospace; font-weight: 500; letter-spacing: 1.5px; background: var(--color-background-primary); color: var(--color-text-primary); outline: none; }
+  .field-input.normal { border-color: var(--color-border-secondary); font-family: var(--font-sans); letter-spacing: normal; font-weight: 400; font-size: 0.8667rem; }
+  .field-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 1rem; color: var(--color-text-secondary); }
+  .field-label { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .field-unit { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: var(--color-text-secondary); }
+  .photo-preview{width:100%;aspect-ratio:16/7;border-radius:10px;background:#1a1a0a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:12px;}
+  .nameplate-mock{background:#f5f0e0;border-radius:5px;padding:8px 16px;border:1.5px solid #c8b870;text-align:center;}
+  .plate-title{font-size:0.6rem;color:#6b5e2a;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+  .plate-id{font-size:1.2rem;font-weight:500;color:#2a1f05;letter-spacing:2px;font-family:monospace;}
+  .plate-sub{font-size:0.5333rem;color:#8a7540;margin-top:2px;}
+  .ocr-badge{position:absolute;top:7px;right:7px;background:rgba(59,109,17,0.85);color:#fff;font-size:0.6667rem;padding:3px 8px;border-radius:20px;display:flex;align-items:center;gap:3px;}
+  .ocr-note{font-size:0.7333rem;color:var(--color-theme);background:var(--color-theme-light);border-radius:6px;padding:7px 10px;margin-bottom:12px;display:flex;align-items:flex-start;gap:5px;line-height:1.5;}
+  .id-badge{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:7px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .photo-strip{display:flex;gap:7px;margin-bottom:12px;}
+  .photo-thumb{width:50px;height:50px;border-radius:7px;border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:1.3333rem;background:var(--color-background-secondary);}
+  .photo-add{width:50px;height:50px;border-radius:7px;border:1.5px dashed var(--color-border-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary);font-size:1.2rem;}
+  textarea{width:100%;padding:9px 11px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:0.8rem;color:var(--color-text-primary);background:var(--color-background-primary);resize:none;font-family:var(--font-sans);line-height:1.5;height:64px;outline:none;}
+
+  /* ── SUCCESS ── */
+  .success-top{background:var(--color-theme-light);padding:24px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;}
+  .check-ring{width:58px;height:58px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;}
+  @keyframes popIn{0%{transform:scale(0.4);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+  .check-ring{animation:popIn 0.5s ease forwards;}
+
+  /* ── TRACKER DASH ── */
+  .dash-header{background:var(--color-theme-dark);padding:12px 14px 16px;flex-shrink:0;}
+  .dash-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .dash-greeting{font-size:0.8rem;color:rgba(192,221,151,0.65);}
+  .dash-name{font-size:1.0667rem;font-weight:500;color:var(--color-theme-light);margin-top:1px;}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:500;color:var(--color-theme-accent);border:1.5px solid rgba(192,221,151,0.3);}
+  .logout-drop{display:none;position:absolute;top:40px;right:0;background:var(--color-background-primary);border-radius:var(--border-radius-lg);box-shadow:0 4px 20px rgba(0,0,0,0.18);z-index:50;min-width:140px;overflow:hidden;border:0.5px solid var(--color-border-tertiary);}
+  .logout-drop.open{display:block;}
+  .dash-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+  .dash-stat{background:rgba(255,255,255,0.07);border-radius:var(--border-radius-md);padding:9px 11px;}
+  .dash-stat-label{font-size:0.6667rem;color:rgba(192,221,151,0.5);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;}
+  .dash-stat-val{font-size:1.1333rem;font-weight:500;color:var(--color-theme-light);}
+  .recent-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+  .recent-row:last-child{border-bottom:none;}
+  .recent-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .recent-id{font-size:0.8rem;font-weight:500;color:var(--color-text-primary);font-family:monospace;}
+  .recent-date{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:1px;}
+  .recent-badge{font-size:0.6667rem;padding:2px 7px;border-radius:20px;background:var(--color-theme-light);color:var(--color-theme);margin-left:auto;}
+
+  /* ── SPONSOR ── */
+  .slogin-header{background:var(--color-theme-dark);padding:14px 14px 22px;flex-shrink:0;}
+  .slogin-header h2{font-size:1.2rem;font-weight:500;color:var(--color-theme-light);margin-top:10px;}
+  .slogin-header p{font-size:0.8rem;color:rgba(192,221,151,0.65);margin-top:3px;}
+  .sdash-header{background:var(--color-theme-dark);padding:12px 14px 16px;flex-shrink:0;}
+  .sdash-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .sdash-greeting{font-size:0.8rem;color:rgba(192,221,151,0.65);}
+  .sdash-name{font-size:1.0667rem;font-weight:500;color:var(--color-theme-light);margin-top:1px;}
+  .savatar{width:34px;height:34px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:500;color:var(--color-theme-accent);border:1.5px solid rgba(192,221,151,0.3);}
+  .sdash-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+  .sdash-stat{background:rgba(255,255,255,0.07);border-radius:var(--border-radius-md);padding:9px 11px;}
+  .sdash-stat-label{font-size:0.6667rem;color:rgba(192,221,151,0.5);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;}
+  .sdash-stat-val{font-size:1.1333rem;font-weight:500;color:var(--color-theme-light);}
+  .tree-card-sponsor{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:12px;}
+  .tree-card-hero{height:72px;display:flex;align-items:flex-end;position:relative;}
+  .tree-card-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.5));}
+  .tree-card-title{position:relative;z-index:1;padding:7px 11px;}
+  .tree-card-title h3{font-size:0.8667rem;font-weight:500;color:#fff;}
+  .tree-card-title p{font-size:0.6667rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:3px;}
+  .tree-card-body{padding:10px 11px 0;}
+  .tree-card-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
+  .tcs{background:var(--color-background-secondary);border-radius:6px;padding:6px 4px;text-align:center;}
+  .tcs-label{font-size:0.6rem;color:var(--color-text-secondary);margin-bottom:2px;}
+  .tcs-val{font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);}
+  .tree-card-status{display:flex;align-items:center;gap:5px;margin-bottom:10px;}
+  .status-dot{width:6px;height:6px;border-radius:50%;}
+  .status-txt{font-size:0.7333rem;color:var(--color-text-secondary);}
+  .tree-card-btns{display:grid;grid-template-columns:1fr 1fr;border-top:0.5px solid var(--color-border-tertiary);}
+  .tcbtn{padding:10px;font-size:0.8rem;font-weight:500;border:none;cursor:pointer;background:transparent;display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--font-sans);}
+  .tcbtn-logs{color:var(--color-theme);border-right:0.5px solid var(--color-border-tertiary);}
+  .tcbtn-pay{color:var(--color-theme);}
+  .tcard-head{padding:11px 12px;}
+  .tcard-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .tcard-id{font-size:0.8667rem;font-weight:600;color:var(--color-text-primary);}
+  .tcard-addr{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:4px;display:flex;align-items:center;gap:4px;}
+  .tcard-toggle{background:var(--color-background-secondary);border:none;border-radius:8px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary);font-size:0.9333rem;flex-shrink:0;}
+  .tcard-collapse{padding:0 11px 11px;border-top:0.5px solid var(--color-border-tertiary);margin-top:10px;}
+  .tcard-img{height:130px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:3rem;margin-top:11px;}
+  .tcard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;}
+  .tcard-stat{background:var(--color-background-secondary);border-radius:6px;padding:6px 4px;text-align:center;}
+  .tcard-stat-lbl{font-size:0.6rem;color:var(--color-text-secondary);margin-bottom:2px;}
+  .tcard-stat-val{font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);}
+  .tcard-status{display:flex;align-items:center;gap:5px;margin-top:10px;}
+  .tcard-btns{display:grid;grid-template-columns:1fr 1fr;margin-top:11px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;}
+  .pay-entry{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+  .pay-entry:last-child{border-bottom:none;}
+  .pay-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .pay-label{font-size:0.8rem;font-weight:500;color:var(--color-text-primary);}
+  .pay-date{font-size:0.6667rem;color:var(--color-text-secondary);margin-top:2px;}
+  .browse-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px;display:flex;align-items:center;}
+  .browse-card-thumb{width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:1.8667rem;flex-shrink:0;}
+  .browse-card-body{flex:1;padding:10px 8px;}
+  .browse-card-id{font-size:0.7333rem;font-family:monospace;color:var(--color-text-secondary);margin-bottom:2px;}
+  .browse-card-name{font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);}
+  .browse-card-loc{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:2px;display:flex;align-items:center;gap:3px;}
+  .add-btn{width:36px;height:36px;border-radius:50%;background:var(--color-theme);border:none;color:var(--color-theme-light);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0;}
+  .add-btn.added{background:var(--color-background-secondary);color:var(--color-theme);font-size:0.9333rem;}
+  .modal-back{display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:80;border-radius:28px;align-items:flex-end;}
+  .modal-back.open{display:flex;}
+  .modal-sheet{background:var(--color-background-primary);border-radius:20px 20px 0 0;width:100%;padding:18px 16px 24px;}
+  .modal-handle{width:36px;height:4px;background:var(--color-border-tertiary);border-radius:2px;margin:0 auto 16px;}
+  .map-modal-back{display:none;position:absolute;inset:0;z-index:90;border-radius:28px;flex-direction:column;background:var(--color-background-primary);}
+  .map-modal-back.open{display:flex;}
+  .map-modal-head{display:flex;align-items:center;gap:10px;padding:8px 12px;}
+  .map-frame{flex:1;width:100%;border:none;}
+  .amount-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
+  .amt-chip{padding:10px;border-radius:var(--border-radius-md);border:1.5px solid var(--color-border-secondary);text-align:center;font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);cursor:pointer;font-family:var(--font-sans);}
+  .amt-chip.selected{border-color:var(--color-theme);background:var(--color-theme-light);color:var(--color-theme);}
+  .log-tracker-entry{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;}
+  .log-tracker-entry:last-child{border-bottom:none;}
+  .log-tracker-entry:hover{opacity:0.75;}
+  .log-by{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:2px;}.log-notes{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:2px;display:flex;align-items:center;gap:4px;}.log-notes b,.log-todo b{color:var(--color-theme-light);font-weight:500;margin-right:5px;flex-shrink:0;}.log-todo{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:2px;display:flex;align-items:center;gap:4px;}
+  .dbl-hint{font-size:0.6667rem;color:rgba(192,221,151,0.5);text-align:center;padding:6px 0 2px;letter-spacing:0.2px;}
+  .tracker-tree-card{background:rgba(255,255,255,0.07);border-radius:var(--border-radius-lg);padding:11px 12px;margin-bottom:8px;cursor:pointer;border:0.5px solid rgba(255,255,255,0.08);}
+  .tracker-tree-card:hover{background:rgba(255,255,255,0.12);}
+  .ttc-id{font-size:0.7333rem;font-family:monospace;color:rgba(192,221,151,0.6);margin-bottom:3px;}
+  .ttc-name{font-size:0.9333rem;font-weight:500;color:var(--color-theme-light);}
+  .ttc-loc{font-size:0.7333rem;color:rgba(192,221,151,0.55);margin-top:2px;display:flex;align-items:center;gap:3px;}
+  .ttc-stats{display:flex;gap:12px;margin-top:8px;}
+  .ttc-stat{font-size:0.7333rem;color:rgba(192,221,151,0.65);}
+  .ttc-stat span{font-weight:500;color:var(--color-theme-light);}
+
+  /* ── LOGIN HUB ── */
+  .hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .hub-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; text-align: center; min-height: 96px; }
+  .hub-tile:hover { border-color: var(--color-theme); }
+  .hub-tile i { font-size: 1.3333rem; color: var(--color-theme); }
+  .hub-tile span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-primary); }
+  .hub-tile small { font-size: 0.6rem; color: var(--color-text-secondary); }
+  .hub-tile.empty { border: 1.5px dashed var(--color-border-tertiary); cursor: default; background: var(--color-background-secondary); }
+  .hub-tile.empty:hover { border-color: var(--color-border-tertiary); }
+
+  /* ── SETTINGS ── */
+  .font-size-row { display: flex; align-items: center; justify-content: space-between; }
+  .font-size-ctrl { display: flex; align-items: center; gap: 10px; }
+  .fs-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); font-size: 1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .fs-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .fs-val { min-width: 24px; text-align: center; font-size: 0.8667rem; color: var(--color-text-primary); }
+  .lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .lang-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 10px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; text-align: center; font-family: var(--font-sans); }
+  .lang-tile:hover { border-color: var(--color-theme); }
+  .lang-tile.sel { border-color: var(--color-theme); background: var(--color-theme-light); }
+  .lang-tile b { font-size: 1rem; font-weight: 500; color: var(--color-text-primary); }
+  .lang-tile small { font-size: 0.6667rem; color: var(--color-text-secondary); }
+  .switch { width: 44px; height: 24px; border-radius: 14px; background: rgba(192,221,151,0.25); border: none; position: relative; cursor: pointer; padding: 0; transition: background 0.2s; }
+  .switch .knob { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left 0.2s; }
+  .switch[aria-checked="true"] { background: var(--color-theme); }
+  .switch[aria-checked="true"] .knob { left: 22px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="screen">
+    <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
+
+    <!-- ① MAIN - ALBUM PAGE -->
+    <div class="page active" id="page-main">
+      <div class="main-topbar">
+        <button class="dots-btn" onclick="toggleDD()"><i class="ti ti-dots-vertical"></i></button>
+        <div class="dropdown" id="dropdown">
+        <div class="dd-item" onclick="goTo('role-login')"><i class="ti ti-login" style="font-size:1rem;color:var(--color-theme)"></i> Login</div>
+        <div class="dd-item" onclick="goTo('role-login')"><i class="ti ti-user-plus" style="font-size:1rem;color:var(--color-theme)"></i> Register</div>
+        </div>
+      </div>
+      
+      <div class="main-hero">
+        <div class="main-logo"><div class="tree-emoji">🌴</div></div>
+        <div class="main-title">Our Tree Tracker</div>
+        <div class="main-sub">Monitoring ensures Good Health</div>
+      </div>
+      
+      <div class="album-filters">
+        <div class="filter-row" style="flex-direction:column;gap:8px;">
+          <div class="clear-wrap">
+            <input class="id-input" id="album-place" type="text" placeholder="Type Place Name" oninput="onInput(this)" />
+            <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
+          </div>
+          <div class="clear-wrap">
+            <input class="id-input" id="album-tree" type="text" placeholder="Type Tree Name" oninput="onInput(this)" />
+            <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="album-container">
+        <div class="album-header">
+          <span class="album-title"><i class="ti ti-photo"></i> Tree album</span>
+          <span style="display:flex;align-items:center;gap:8px;">
+            <span class="album-count" id="album-count">0 trees</span>
+            <button class="album-toggle" id="summary-toggle" type="button" onclick="toggleSummary()"><i class="ti ti-eye"></i></button>
+          </span>
+        </div>
+        
+        <div class="album-summary" id="album-summary"></div>
+        <div class="album-grid" id="album-grid"></div>
+      </div>
+    </div>
+    <div class="page" id="page-role-login">
+      <div class="dash-header">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn inv" onclick="goTo('main')"><i class="ti ti-arrow-left"></i></button></div>
+        <h2 style="font-size:1.2rem;font-weight:500;color:var(--color-theme-light);" id="role-login-title">Role login</h2>
+        <p style="font-size:0.8rem;color:rgba(192,221,151,0.6);margin-top:3px;">Sign in with your Google account</p>
+      </div>
+      <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
+        <button class="google-btn" onclick="googleAuth('role-login')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google</button>
+        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:12px;" id="role-login-sub">Sign in with your Google account</div>
+      </div>
+    </div>
+    <div class="page" id="page-ranger-dash">
+      <div class="dash-header">
+        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name">Selvam</div></div><div class="avatar" onclick="toggleLogoutDrop()" style="cursor:pointer;position:relative;">RK<div class="logout-drop" id="logout-drop"><div class="dd-item" onclick="goTo('main')" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
+        <div class="dash-stats">
+          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">Your logs</div><div class="dash-stat-val">47</div></div>
+          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">This month</div><div class="dash-stat-val">6</div></div>
+          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">Trees covered</div><div class="dash-stat-val">23</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Zone</div><div class="dash-stat-val" style="font-size:0.8667rem">Anna Nagar</div></div>
+        </div>
+        <div class="dbl-hint">Double-tap a card to view your trees</div>
+      </div>
+      <div class="scrollable"><div style="padding:13px 14px;display:flex;flex-direction:column;gap:11px;">
+        <button class="green-btn" onclick="rangerRegister()"><i class="ti ti-camera"></i> Insert new log</button>
+        <div class="section-title">Recent entries</div>
+        <div class="info-card">
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625017-02-001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625018-03-001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
+        </div>
+        <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-trees">
+      <div class="dash-header">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo(roleDash())"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">My trees</span></div>
+        <div style="font-size:0.8rem;color:rgba(192,221,151,0.55);">Double-tap a tree to view its logs</div>
+      </div>
+      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div style="padding:13px 14px;">
+        <div id="ranger-tree-cards">
+          <div class="tree-card-sponsor tcard">
+            <div class="tcard-head">
+              <div class="tcard-row"><span class="tcard-id">🌿 625008-01-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
+              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar</div>
+            </div>
+            <div class="tcard-collapse" style="display:none;">
+              <div class="tcard-img" style="background:linear-gradient(135deg,#2d5a1b,#4a7c2f);">🌿</div>
+              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">8.4m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">22cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">14</div></div></div>
+              <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last logged 12 Jun 2026</div></div>
+              <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo('profile')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button></div>
+            </div>
+          </div>
+          <div class="tree-card-sponsor tcard">
+            <div class="tcard-head">
+              <div class="tcard-row"><span class="tcard-id">🌳 625017-02-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
+              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> T. Nagar</div>
+            </div>
+            <div class="tcard-collapse" style="display:none;">
+              <div class="tcard-img" style="background:linear-gradient(135deg,#1e3d0f,#3B6D11);">🌳</div>
+              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">5.2m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">14cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">8</div></div></div>
+              <div class="tcard-status"><div class="status-dot" style="background:#facc15"></div><div class="status-txt">Needs attention · Last logged 2 Jun</div></div>
+              <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo('profile')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button></div>
+            </div>
+          </div>
+          <div class="tree-card-sponsor tcard">
+            <div class="tcard-head">
+              <div class="tcard-row"><span class="tcard-id">🌴 625018-03-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
+              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Adyar</div>
+            </div>
+            <div class="tcard-collapse" style="display:none;">
+              <div class="tcard-img" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌴</div>
+              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">12m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">38cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">21</div></div></div>
+              <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last logged 5 Jun 2026</div></div>
+              <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo('profile')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="page" id="page-scan">
+      <div class="topbar"><button class="back-btn" onclick="goTo(roleDash())"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Scan nameplate</span><span class="topbar-step">Step 1 of 3</span></div>
+      <div class="steps"><div class="step-dot active">1</div><div class="step-line"></div><div class="step-dot pending">2</div><div class="step-line"></div><div class="step-dot pending">3</div></div>
+      <div class="step-labels"><span class="step-lbl active">Scan</span><span class="step-lbl">Verify ID</span><span class="step-lbl">Log details</span></div>
+      <div class="scrollable" style="padding:12px 13px;display:flex;flex-direction:column;gap:10px;">
+        <p style="font-size:0.8rem;color:var(--color-text-secondary);text-align:center;">Point camera at the tree nameplate to scan the ID</p>
+        <div class="camera-box">
+          <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1a2a1a,#0d1a0d);"></div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;">
+            <div class="scan-frame"><div class="sc tl"></div><div class="sc tr"></div><div class="sc bl"></div><div class="sc br"></div><div class="scan-line"></div></div>
+          </div>
+          <div class="scan-hint" id="scan-hint">Scanning for text...</div>
+          <button class="capture-btn" onclick="doCapture()"><div class="capture-inner"></div></button>
+        </div>
+        <p style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;">Or <span style="color:#3B6D11;cursor:pointer;font-weight:500" onclick="goTo('verify')">enter ID manually</span></p>
+      </div>
+    </div>
+    <div class="page" id="page-verify">
+      <div class="topbar"><button class="back-btn" onclick="goTo('scan')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Verify tree ID</span><span class="topbar-step">Step 2 of 3</span></div>
+      <div class="steps"><div class="step-dot done"><i class="ti ti-check" style="font-size:0.7333rem"></i></div><div class="step-line done"></div><div class="step-dot active">2</div><div class="step-line"></div><div class="step-dot pending">3</div></div>
+      <div class="step-labels"><span class="step-lbl">Scan</span><span class="step-lbl active">Verify ID</span><span class="step-lbl">Log details</span></div>
+      <div class="scrollable" style="padding:12px 13px;">
+        <div class="photo-preview"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a1a0a,#2a2a1a);"></div><div class="nameplate-mock"><div class="plate-title">Urban Tree Registry</div><div class="plate-id">625008-01-001</div><div class="plate-sub">Chennai Municipal Corp.</div></div><div class="ocr-badge"><i class="ti ti-scan" style="font-size:0.6667rem"></i> OCR read</div></div>
+        <div class="ocr-note"><i class="ti ti-info-circle" style="font-size:0.8667rem;flex-shrink:0;margin-top:1px"></i>ID read from nameplate. Verify before continuing.</div>
+        <div class="field-label"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Tree ID</div>
+        <div class="field-wrap"><input class="field-input" id="verify-id" type="text" value="625008-01-001" /><i class="ti ti-pencil field-icon"></i></div>
+        <div class="field-label" style="margin-top:4px"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i> Location (auto-detected)</div>
+        <div class="field-wrap" style="margin-bottom:14px"><input class="field-input normal" type="text" value="Anna Nagar, Chennai" readonly /><i class="ti ti-gps field-icon"></i></div>
+        <button class="green-btn" onclick="goTo('logdetails')"><i class="ti ti-check"></i> Confirm & continue</button>
+        <button class="ghost-btn" style="margin-top:8px" onclick="goTo('scan')"><i class="ti ti-camera"></i> Retake photo</button>
+      </div>
+    </div>
+    <div class="page" id="page-logdetails">
+      <div class="topbar"><button class="back-btn" onclick="goTo('verify')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Log growth</span><span class="topbar-step">Step 3 of 3</span></div>
+      <div class="steps"><div class="step-dot done"><i class="ti ti-check" style="font-size:0.7333rem"></i></div><div class="step-line done"></div><div class="step-dot done"><i class="ti ti-check" style="font-size:0.7333rem"></i></div><div class="step-line done"></div><div class="step-dot active">3</div></div>
+      <div class="step-labels"><span class="step-lbl">Scan</span><span class="step-lbl">Verify ID</span><span class="step-lbl active">Log details</span></div>
+      <div class="scrollable" style="padding:12px 13px;display:flex;flex-direction:column;gap:10px;">
+        <div class="id-badge"><i class="ti ti-tag" style="font-size:0.8667rem;color:#3B6D11"></i><span style="font-size:0.8rem;color:var(--color-text-secondary)">Tree</span><span style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);font-family:monospace">625008-01-001</span></div>
+        <div><div class="field-label"><i class="ti ti-ruler" style="font-size:0.8667rem"></i> Height</div><div class="field-wrap" style="margin-bottom:0"><input class="field-input normal" type="number" placeholder="e.g. 8.4" /><span class="field-unit">m</span></div></div>
+        <div><div class="field-label"><i class="ti ti-circle" style="font-size:0.8667rem"></i> Trunk diameter</div><div class="field-wrap" style="margin-bottom:0"><input class="field-input normal" type="number" placeholder="e.g. 22" /><span class="field-unit">cm</span></div></div>
+        <div><div class="field-label" style="margin-bottom:5px"><i class="ti ti-camera" style="font-size:0.8667rem"></i> Photos</div><div class="photo-strip"><div class="photo-thumb">🌿</div><div class="photo-thumb">🌳</div><div class="photo-add"><i class="ti ti-plus"></i></div></div></div>
+        <div><div class="field-label" style="margin-bottom:5px"><i class="ti ti-notes" style="font-size:0.8667rem"></i> Field notes (optional)</div><textarea placeholder="e.g. New shoots visible, no signs of disease..."></textarea></div>
+        <button class="green-btn" onclick="goTo('success')"><i class="ti ti-device-floppy"></i> Save log entry</button>
+      </div>
+    </div>
+    <div class="page" id="page-success">
+      <div class="success-top">
+        <div style="display:flex;justify-content:center;gap:5px;margin-bottom:4px;"><div style="width:6px;height:6px;border-radius:50%;background:#97C459"></div><div style="width:6px;height:6px;border-radius:50%;background:#EF9F27"></div><div style="width:6px;height:6px;border-radius:50%;background:#5DCAA5"></div><div style="width:6px;height:6px;border-radius:50%;background:#97C459"></div><div style="width:6px;height:6px;border-radius:50%;background:#EF9F27"></div></div>
+        <div class="check-ring"><i class="ti ti-check" style="font-size:1.8667rem;color:var(--color-theme-light)"></i></div>
+        <div style="font-size:1.1333rem;font-weight:500;color:#27500A;">Log saved!</div>
+        <div style="font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;">Growth entry recorded for<br>Neem Tree #0042</div>
+      </div>
+      <div class="scrollable" style="padding:13px;display:flex;flex-direction:column;gap:11px;">
+        <div class="info-card">
+          <div class="info-row"><span class="info-key"><i class="ti ti-tag" style="font-size:0.8667rem"></i>Tree ID</span><span class="info-val" style="font-family:monospace;font-size:0.8rem">625008-01-001</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i>Location</span><span class="info-val">Anna Nagar</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>Date</span><span class="info-val">24 Jun 2026</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-camera" style="font-size:0.8667rem"></i>Photos</span><span class="info-val">2 attached</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="background:var(--color-theme-light);border-radius:var(--border-radius-md);padding:10px 11px;"><div style="font-size:0.6667rem;color:var(--color-theme);margin-bottom:3px;">Height logged</div><div style="font-size:1.1333rem;font-weight:500;color:#27500A;">8.4 m</div><div style="font-size:0.6667rem;color:var(--color-theme);margin-top:1px;"><i class="ti ti-trending-up" style="font-size:0.6667rem"></i> +0.3 m</div></div>
+          <div style="background:var(--color-theme-light);border-radius:var(--border-radius-md);padding:10px 11px;"><div style="font-size:0.6667rem;color:var(--color-theme);margin-bottom:3px;">Diameter logged</div><div style="font-size:1.1333rem;font-weight:500;color:#27500A;">22 cm</div><div style="font-size:0.6667rem;color:var(--color-theme);margin-top:1px;"><i class="ti ti-trending-up" style="font-size:0.6667rem"></i> +1 cm</div></div>
+        </div>
+        <button class="green-btn" onclick="goTo(roleDash())"><i class="ti ti-layout-dashboard"></i> Back to dashboard</button>
+        <button class="ghost-btn" onclick="openProfile()"><i class="ti ti-tree"></i> View tree profile</button>
+      </div>
+    </div>
+    <div class="page" id="page-profile">
+      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-001</span></div>
+      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
+      <div class="scrollable" style="padding:12px 14px 20px;">
+        <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
+        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
+        <div class="section-title">Tree info</div>
+        <div class="info-card" style="margin-bottom:14px;">
+          <div class="info-row"><span class="info-key"><i class="ti ti-leaf" style="font-size:0.8667rem"></i>Species</span><span class="info-val">Azadirachta indica</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-user" style="font-size:0.8667rem"></i>Added by</span><span class="info-val">Ravi K.</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>First logged</span><span class="info-val">Mar 2019</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list" style="font-size:0.8667rem"></i>Total logs</span><span class="info-val">14 entries</span></div>
+        </div>
+        <div class="section-title">Growth logs</div>
+        <div class="info-card">
+          <div class="log-entry" onclick="openAlbum(0)"><div class="log-dot" style="background:#3B6D11"></div><div class="log-body"><div class="log-date">12 Jun 2026</div><div class="log-text">8.4 m · 22 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>3 photos</span></div></div><div class="log-thumb" style="background:#2d4a2d;">🌿</div></div>
+          <div class="log-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB"></div><div class="log-body"><div class="log-date">10 Jan 2026</div><div class="log-text">8.1 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div><div class="log-thumb" style="background:#1e3d1e;">🌳</div></div>
+          <div class="log-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97"></div><div class="log-body"><div class="log-date">15 Jul 2025</div><div class="log-text">7.6 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips"><span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span></div></div><div class="log-thumb" style="background:var(--color-background-secondary);border:0.5px dashed var(--color-border-secondary);"><i class="ti ti-photo-off" style="font-size:1rem;color:var(--color-text-secondary)"></i></div></div>
+        </div>
+        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
+      </div>
+    </div>
+    <div class="page" id="page-album">
+      <div class="topbar"><button class="back-btn" id="album-back-btn" onclick="goTo(albumFrom)"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="album-title">Log photos</span></div>
+      <div class="album-meta"><div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;" id="album-date">12 Jun 2026</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);display:flex;gap:10px;"><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-ruler" style="font-size:0.7333rem"></i><span id="album-h">8.4 m</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-circle" style="font-size:0.7333rem"></i><span id="album-d">22 cm</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-camera" style="font-size:0.7333rem"></i><span id="album-c">3 photos</span></span></div></div>
+      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div style="font-size:0.8rem;color:var(--color-text-primary);line-height:1.5;" id="album-note"></div></div></div>
+    </div>
+    <div class="page" id="page-tree-logs">
+      <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Neem Tree #0042 — Logs</span></div>
+      <div class="scrollable"><div style="padding:12px 14px;">
+        <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;margin-bottom:10px;">Double-tap a log to view photos</div>
+        <div class="section-title">Growth logs</div>
+        <div class="info-card">
+          <div class="log-tracker-entry" onclick="openAlbum(0)"><div class="log-dot" style="background:#3B6D11;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">12 Jun 2026</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 8.4 m · Diameter 22 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>3 photos</span></div></div></div>
+          <div class="log-tracker-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">10 Jan 2026</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 8.1 m · Diameter 21 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div></div>
+          <div class="log-tracker-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">15 Jul 2025</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 7.6 m · Diameter 21 cm</div><div class="log-by">By Priya S. · GRR-2023-042</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.4 m</span></div></div></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="map-modal-back" id="map-modal">
+      <div class="map-modal-head">
+        <button class="back-btn" onclick="closeMapModal()"><i class="ti ti-arrow-left"></i></button>
+        <span class="topbar-title">Tree map</span>
+      </div>
+      <iframe class="map-frame" id="map-frame" title="Tree map"></iframe>
+    </div>
+    <div class="modal-back" id="login-status-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div style="text-align:center;padding:6px 0;">
+          <div class="lsm-icon" id="lsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
+          <div class="lsm-title" id="lsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
+          <div class="lsm-text" id="lsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your login request is waiting for admin approval.</div>
+          <button class="green-btn" onclick="closeLoginStatus(true)"><i class="ti ti-check"></i> Okay</button>
+          </div>
+        </div>
+      </div>
+    <div class="modal-back" id="register-status-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div style="text-align:center;padding:6px 0;">
+          <div class="lsm-icon" id="rsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
+          <div class="lsm-title" id="rsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
+          <div class="lsm-text" id="rsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your registration is waiting for admin approval.</div>
+          <button class="green-btn" id="rsm-ok-btn" onclick="closeRegisterStatus(true)"><i class="ti ti-check"></i> Okay</button>
+          <div class="lsm-test" id="rsm-test" style="margin-top:16px;display:none;">
+            <div style="font-size:0.6667rem;color:var(--color-text-secondary);margin-bottom:6px;">TESTING · simulate result</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('waiting')">Waiting</button>
+              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('existing_member')">Existing</button>
+              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('blocked')">Blocked</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var TESTING_MODE = true;
+var profileFrom = 'main';
+var albumFrom = 'profile';
+var treeLogsFrom = 'trees';
+var sponsoredCount = 2;
+var caredCount = 4;
+var max_register_ten_trees_ranger = 10;
+var logoutTarget = 'main';
+
+var loginStatusData = {
+  waiting:   { icon:'ti ti-clock',        color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your login request is waiting for admin approval. We will notify you once it is reviewed.' },
+  rejected:  { icon:'ti ti-x',            color:'#dc2626', bg:'#fee2e2', title:'Application rejected',      text:'Your login request was rejected. Please contact support if you think this is a mistake.' },
+  approved:  { icon:'ti ti-check',        color:'#16a34a', bg:'#dcfce7', title:'Login approved',            text:'Welcome! Your login was approved. You can now continue to your dashboard.' },
+  withdrawn: { icon:'ti ti-user-off',     color:'#64748b', bg:'#e2e8f0', title:'Access withdrawn',          text:'Your access has been withdrawn. Please contact the administrator for details.' }
+};
+
+var registerStatusData = {
+  waiting:          { icon:'ti ti-clock',       color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your registration is waiting for admin approval. We will notify you once it is reviewed.', go:'Login' },
+  existing_member:  { icon:'ti ti-user-check',  color:'#16a34a', bg:'#dcfce7', title:'Already registered',        text:'An account with this email already exists. Please log in instead of registering again.', go:'Login', to:'role-login' },
+  blocked:          { icon:'ti ti-ban',         color:'#dc2626', bg:'#fee2e2', title:'Registration blocked',       text:'Your registration has been blocked. Please contact support if you think this is a mistake.', go:'Contact us', to:'role-login' },
+  limit:            { icon:'ti ti-circle-x',    color:'#dc2626', bg:'#fee2e2', title:'Limit reached',              text:'Your limit reached. Kindly contact your ten tree ranger.' }
+};
+
+// Register status modal — waiting / existing_member / blocked
+var regTarget = 'main';
+
+function showRegisterStatus(status, page) {
+  if (page) regTarget = page;
+  var d = registerStatusData[status] || registerStatusData.waiting;
+  if (d.to) regTarget = d.to;
+  var icon = document.getElementById('rsm-icon');
+  icon.style.background = d.bg;
+  icon.style.color = d.color;
+  icon.innerHTML = '<i class="' + d.icon + '" style="font-size:24px;"></i>';
+  document.getElementById('rsm-title').textContent = d.title;
+  document.getElementById('rsm-text').textContent = d.text;
+  var ok = document.getElementById('rsm-ok-btn');
+  if (status === 'existing_member') {
+    ok.innerHTML = '<i class="ti ti-login"></i> ' + d.go;
+  } else {
+    ok.innerHTML = '<i class="ti ti-check"></i> Okay';
+  }
+  if (status === 'blocked') {
+    ok.style.background = '#dc2626';
+  } else {
+    ok.style.background = 'var(--color-theme)';
+  }
+  var test = document.getElementById('rsm-test');
+  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  document.getElementById('register-status-modal').classList.add('open');
+}
+
+
+
+function closeRegisterStatus(go) {
+  document.getElementById('register-status-modal').classList.remove('open');
+  if (go) goTo(regTarget);
+}
+
+
+// Google OAuth — simulates result in TESTING_MODE, else real OAuth redirect
+
+function googleAuth(page, status) {
+  status = status || (TESTING_MODE ? 'approved' : null);
+  if (TESTING_MODE) {
+    showLoginStatus(page, status);
+    return;
+  }
+  var clientId = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+  var redirect = encodeURIComponent(window.location.origin + window.location.pathname);
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=' + clientId +
+    '&redirect_uri=' + redirect + '&response_type=code&scope=openid%20email%20profile';
+}
+
+
+// Open the shared role login page (Care-giver, Ten Tree Ranger, Surveyor)
+var currentRole = 'caregiver';
+
+function openRoleLogin(title, role) {
+  currentRole = role;
+  document.getElementById('role-login-title').textContent = title + ' login';
+  document.getElementById('role-login-sub').textContent = 'Sign in as a ' + title.toLowerCase();
+  logoutTarget = 'role-login';
+  goTo('role-login');
+}
+
+
+
+function roleDash() {
+  return currentRole === 'surveyor' ? 'surveyor-dash' : 'ranger-dash';
+}
+
+
+// Show login-result modal based on status
+
+function showLoginStatus(page, status) {
+  var d = loginStatusData[status] || loginStatusData.waiting;
+  var icon = document.getElementById('lsm-icon');
+  icon.style.background = d.bg;
+  icon.style.color = d.color;
+  icon.innerHTML = '<i class="' + d.icon + '" style="font-size:24px;"></i>';
+  document.getElementById('lsm-title').textContent = d.title;
+  document.getElementById('lsm-text').textContent = d.text;
+  var test = document.getElementById('lsm-test');
+  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  logoutTarget = page;
+  document.getElementById('login-status-modal').classList.add('open');
+}
+
+
+
+function closeLoginStatus(go) {
+  document.getElementById('login-status-modal').classList.remove('open');
+  if (go) goTo(logoutTarget);
+}
+
+
+// Font size (S/M/L) — text-only scaling via root html font-size (all fonts are rem)
+var fontSizeLevel = 1; // 0=S, 1=M, 2=L
+var fontLevels = [
+  { label:'S', mul:0.85 },
+  { label:'M', mul:1.0 },
+  { label:'L', mul:1.15 }
+];
+
+function fontSize(dir) {
+  if (dir === 'up') { if (fontSizeLevel < 2) fontSizeLevel++; }
+  else { if (fontSizeLevel > 0) fontSizeLevel--; }
+  applyFontSize();
+}
+
+function applyFontSize() {
+  var lv = fontLevels[fontSizeLevel];
+  document.getElementById('fs-val').textContent = lv.label;
+  document.getElementById('fs-minus').disabled = fontSizeLevel === 0;
+  document.getElementById('fs-plus').disabled = fontSizeLevel === 2;
+  document.documentElement.style.fontSize = (15 * lv.mul) + 'px';
+}
+
+function pickLang(tile, name) {
+  document.querySelectorAll('.lang-tile').forEach(function(t){ t.classList.remove('sel'); });
+  tile.classList.add('sel');
+  alert('Language set to ' + name);
+}
+
+
+// Notifications on/off switch
+
+function toggleNotif(btn) {
+  var on = btn.getAttribute('aria-checked') === 'true';
+  btn.setAttribute('aria-checked', String(!on));
+}
+
+
+// Tree data for album
+// Tree data - loaded from trees.json (plain array)
+var albumData = [];
+fetch('trees.json').then(function(r){ return r.json(); }).then(function(data){
+  albumData = Array.isArray(data) ? data : (data.albumData || []);
+  applyFilters();
+  if (document.getElementById('admin-pincode'))
+  if (document.getElementById('admin-pincode')) adminUpdatePlaceOptions();
+  if (document.getElementById('admin-grid'))
+  if (document.getElementById('admin-grid')) adminApplyFilters();
+}).catch(function(err){ console.error('Failed to load trees.json', err); });
+
+var logs = [
+  { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
+  { date:'10 Jan 2026', height:'8.1 m', diam:'21 cm', note:'Some yellowing on lower leaves — likely seasonal.', photos:[{bg:'linear-gradient(135deg,#1e3d0f,#2d5a1b)',emoji:'🌳',label:'Full tree',time:'10:05 AM',main:true},{bg:'linear-gradient(135deg,#27500A,#3B6D11)',emoji:'🍂',label:'Lower leaves',time:'10:08 AM'}] },
+  { date:'15 Jul 2025', height:'7.6 m', diam:'21 cm', note:'Measurement only. Camera not available. Tree looks healthy overall.', photos:[] }
+];
+
+// Toggle dropdown
+
+function toggleDD() {
+  var dd = document.getElementById('dropdown');
+  dd.classList.toggle('open');
+}
+
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+  var dd = document.getElementById('dropdown');
+  if (!e.target.closest('.main-topbar')) {
+    dd.classList.remove('open');
+  }
+  var ld = document.getElementById('logout-drop');
+  if (ld && !e.target.closest('.avatar')) {
+    ld.classList.remove('open');
+  }
+  var lsd = document.getElementById('logout-drop-surveyor');
+  if (lsd && !e.target.closest('.avatar')) {
+    lsd.classList.remove('open');
+  }
+  var sld = document.getElementById('slogout-drop');
+  if (sld && !e.target.closest('.savatar')) {
+    sld.classList.remove('open');
+  }
+  var cld = document.getElementById('clogout-drop');
+  if (cld && !e.target.closest('.savatar')) {
+    cld.classList.remove('open');
+  }
+  var ald = document.getElementById('alogout-drop');
+  if (ald && !e.target.closest('.avatar')) {
+    ald.classList.remove('open');
+  }
+});
+
+
+function toggleLogoutDrop() {
+  document.getElementById('logout-drop').classList.toggle('open');
+}
+
+function toggleTreeCard(btn) {
+  var card = btn.closest('.tcard');
+  if (!card) return;
+  var coll = card.querySelector('.tcard-collapse');
+  var ic = btn.querySelector('i');
+  var open = coll.style.display === 'block';
+  coll.style.display = open ? 'none' : 'block';
+  ic.className = open ? 'ti ti-chevron-down' : 'ti ti-chevron-up';
+}
+
+function rangerRegister() {
+  var cards = document.getElementById('ranger-tree-cards');
+  var n = cards ? cards.querySelectorAll('.tree-card-sponsor').length : 0;
+  if (n >= max_register_ten_trees_ranger) {
+    showRegisterStatus('limit');
+    return;
+  }
+  goTo('scan');
+}
+
+
+
+
+
+
+
+
+
+
+// Navigation
+
+function goTo(page) {
+  if (page === 'tree-logs') {
+    var activePage = document.querySelector('.page.active');
+    if (activePage) {
+      var fromPage = activePage.id.replace('page-', '');
+      if (fromPage !== 'album' && fromPage !== 'profile') {
+        treeLogsFrom = fromPage;
+      }
+    }
+  }
+  
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-'+page).classList.add('active');
+  var sb = document.getElementById('sbar');
+  sb.className = 'status-bar';
+  if (['main','role-login','role-login','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
+  else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  document.getElementById('dropdown').classList.remove('open');
+  var alogout = document.getElementById('alogout-drop');
+  if (alogout) alogout.classList.remove('open');
+  
+  if (page === 'main') {
+    applyFilters();
+  }
+  if (page === 'admin-trees') {
+  if (document.getElementById('admin-pincode'))
+  if (document.getElementById('admin-pincode')) adminUpdatePlaceOptions();
+  if (document.getElementById('admin-grid'))
+  if (document.getElementById('admin-grid')) adminApplyFilters();
+  }
+}
+
+
+
+function treeLogsBack() {
+  goTo(treeLogsFrom);
+}
+
+
+// Password toggle
+
+function togglePw(id, btn) {
+  var inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.querySelector('i').className = inp.type === 'password' ? 'ti ti-eye' : 'ti ti-eye-off';
+}
+
+
+// Search tree - searches scientific, english and local names
+
+function searchById() {
+  applyFilters();
+}
+
+
+
+function searchTree() {
+  searchById();
+}
+
+
+// Open profile
+
+function openProfile(treeId) {
+  var from = document.querySelector('.page.active').id.replace('page-','');
+  profileFrom = from;
+  var id = treeId || '625001-06-0001';
+  document.getElementById('profile-id-label').textContent = id;
+  goTo('profile');
+}
+
+
+// Open the map pinned to a tree by its ID (from a card)
+
+function openTreeMapById(id) {
+  var tree = null;
+  for (var i = 0; i < albumData.length; i++) {
+    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
+  }
+  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
+    showMap(tree.latitude + ',' + tree.longitude);
+  } else {
+    alert('Location not available for this tree.');
+  }
+}
+
+
+
+function profileBack() { goTo(profileFrom); }
+
+
+// Open the map pinned to the tree currently shown in the profile
+
+function openTreeMap() {
+  var id = document.getElementById('profile-id-label').textContent;
+  var tree = null;
+  for (var i = 0; i < albumData.length; i++) {
+    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
+  }
+  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
+    showMap(tree.latitude + ',' + tree.longitude);
+  } else {
+    alert('Location not available for this tree.');
+  }
+}
+
+
+// Opening the map as a fullscreen in-app modal
+
+function showMap(coordsParam) {
+  document.getElementById('map-frame').src = 'map.html?coords=' + encodeURIComponent(coordsParam);
+  document.getElementById('map-modal').classList.add('open');
+}
+
+
+
+function closeMapModal() {
+  document.getElementById('map-modal').classList.remove('open');
+  document.getElementById('map-frame').src = '';
+}
+
+
+// Scan
+
+function doCapture() {
+  document.getElementById('scan-hint').textContent = 'Reading text...';
+  setTimeout(function(){ goTo('verify'); }, 900);
+}
+
+
+// Album
+
+function openAlbum(i) {
+  var log = logs[i];
+  if (!log.photos.length) return;
+  albumFrom = document.querySelector('.page.active').id.replace('page-','');
+  document.getElementById('album-title').textContent = 'Log · ' + log.date;
+  document.getElementById('album-date').textContent = log.date;
+  document.getElementById('album-h').textContent = log.height;
+  document.getElementById('album-d').textContent = log.diam;
+  document.getElementById('album-c').textContent = log.photos.length + ' photo' + (log.photos.length > 1 ? 's' : '');
+  document.getElementById('album-note').textContent = log.note;
+  var grid = document.getElementById('album-grid-page');
+  grid.innerHTML = '';
+  log.photos.forEach(function(p){
+    var div = document.createElement('div');
+    div.className = 'album-photo' + (p.main ? ' album-photo-main' : '');
+    div.style.background = p.bg;
+    div.innerHTML = '<div style="font-size:'+(p.main?'38px':'26px')+'">' + p.emoji + '</div><div class="photo-label">'+p.label+'</div><div class="photo-time">'+p.time+'</div>';
+    grid.appendChild(div);
+  });
+  goTo('album');
+}
+
+
+// Pay modal
+
+
+// Add tree
+
+
+// Care-giver add tree — capped at 4 cards
+
+
+// Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
+
+function treeLoc(t) { return t.address ? t.address.split(', ')[0] : ''; }
+
+
+// Album render - additive filters: place (address) + tree name (scientific/english/local)
+
+function renderAlbum(place, tree) {
+  var grid = document.getElementById('album-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  
+  var q = function(s){ return s ? String(s).toLowerCase() : ''; };
+  place = q(place);
+  tree = q(tree);
+  
+  var filtered = albumData.filter(function(t) {
+    var matchPlace = true;
+    var matchTree = true;
+    if (place) matchPlace = q(t.address).indexOf(place) > -1;
+    if (tree) {
+      matchTree = q(t.scientificName).indexOf(tree) > -1 ||
+                  q(t.englishName).indexOf(tree) > -1 ||
+                  q(t.localName).indexOf(tree) > -1;
+    }
+    return matchPlace && matchTree;
+  });
+  
+  var countEl = document.getElementById('album-count');
+  if (countEl) countEl.textContent = filtered.length + ' trees';
+
+  var summaryEl = document.getElementById('album-summary');
+  window._mapTrees = filtered;
+  if (summaryEl) {
+    if (filtered.length > 0) {
+      var groups = {};
+      filtered.forEach(function(t) {
+        groups[t.englishName] = (groups[t.englishName] || 0) + 1;
+      });
+      var chips = Object.keys(groups).map(function(k) {
+        return '<span class="album-chip chip-click" onclick="filterByTree(\'' + k + '\')">' + k + ' <b>– ' + groups[k] + '</b></span>';
+      }).join('');
+      summaryEl.innerHTML = chips;
+      var mapBtn = document.createElement('button');
+      mapBtn.type = 'button';
+      mapBtn.className = 'map-btn';
+      mapBtn.innerHTML = '<i class="ti ti-map-2"></i> Show in map';
+      mapBtn.onclick = openMap;
+      summaryEl.appendChild(mapBtn);
+      summaryEl.style.display = window._summaryOpen === false ? 'none' : 'flex';
+    } else {
+      summaryEl.style.display = 'none';
+      summaryEl.innerHTML = '';
+    }
+    var toggle = document.getElementById('summary-toggle');
+    if (toggle) toggle.classList.toggle('off', window._summaryOpen === false);
+  }
+  
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="no-trees">No trees found</div>';
+    return;
+  }
+  
+  filtered.forEach(function(t) {
+    var card = document.createElement('div');
+    card.className = 'tree-card';
+    card.onclick = function() {
+      openProfile(t.treeId);
+    };
+    
+    var photo = document.createElement('div');
+    photo.className = 'tree-photo';
+    photo.style.background = t.bg;
+    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div><div class="tree-location">' + treeLoc(t) + '</div>';
+    
+    var info = document.createElement('div');
+    info.className = 'tree-info';
+    info.innerHTML = 
+      '<div class="tree-id">' + t.treeId + '</div>' +
+      '<div class="tree-name">' + t.englishName + '</div>' +
+      '<div class="tree-stats">' +
+        '<span>📏 ' + t.height + '</span>' +
+        '<span>📐 ' + t.diameter + '</span>' +
+        '<span>📋 ' + t.logs + '</span>' +
+      '</div>' +
+      '<div class="tree-meta">' +
+        (function(){ var c = t.cards && t.cards[t.cards.length - 1] || {}; return '' +
+        '<div>👀 Encounter <b>' + (c.encounter != null ? c.encounter : 0) + '</b> · 📋 Logs <b>' + t.logs + '</b></div>' +
+        '<div>Registered by <b>' + (c.registeredBy || '—') + '</b> · ' + (c.registrationDate || '—') + '</div>' +
+        '<div>ID <b>' + (c.updaterId || c.registererId || '—') + '</b> · Updated by <b>' + (c.updatedBy || '—') + '</b> · ' + (c.updatedDate || '—') + '</div>'; })() +
+      '</div>';
+    
+    card.appendChild(photo);
+    card.appendChild(info);
+    grid.appendChild(card);
+  });
+}
+
+
+
+function applyFilters() {
+  var place = document.getElementById('album-place').value.trim();
+  var tree = document.getElementById('album-tree').value.trim();
+  renderAlbum(place, tree);
+}
+
+
+// Toggle summary panel visibility (sticky via re-render)
+
+function toggleSummary() {
+  window._summaryOpen = window._summaryOpen === false ? true : false;
+  var toggle = document.getElementById('summary-toggle');
+  if (toggle) toggle.classList.toggle('off', window._summaryOpen === false);
+  applyFilters();
+}
+
+
+// Clicking a summary chip fills the tree-name box and re-applies (additive)
+
+function filterByTree(name) {
+  var el = document.getElementById('album-tree');
+  el.value = name;
+  var btn = el.parentNode.querySelector('.clear-btn');
+  if (btn) btn.disabled = false;
+  applyFilters();
+}
+
+
+// Dirty-state: X clear button disabled (greyed) when the filter has no value
+
+function onInput(el) {
+  var btn = el.parentNode.querySelector('.clear-btn');
+  if (btn) btn.disabled = !el.value;
+  applyFilters();
+}
+
+
+// Clear a filter's value
+
+function clearInput(id) {
+  var el = document.getElementById(id);
+  el.value = '';
+  var btn = el.parentNode.querySelector('.clear-btn');
+  if (btn) btn.disabled = true;
+  applyFilters();
+}
+
+
+// Spread the current result set over Google Maps (one pin per tree)
+
+function openMap() {
+  var trees = window._mapTrees || albumData;
+  var coords = trees.filter(function(t){
+    return typeof t.latitude === 'number' && typeof t.longitude === 'number';
+  }).map(function(t){
+    return t.latitude + ',' + t.longitude;
+  });
+  if (coords.length > 0) {
+    showMap(coords.join('|'));
+  } else {
+    alert('No tree locations found to show on the map.');
+  }
+}
+
+
+// Admin page
+
+
+
+
+
+
+
+
+// Initial render
+applyFilters();
+  if (document.getElementById('admin-pincode'))
+  if (document.getElementById('admin-pincode')) adminUpdatePlaceOptions();
+  if (document.getElementById('admin-grid'))
+  if (document.getElementById('admin-grid')) adminApplyFilters();
+</script>
+</body>
+</html>
