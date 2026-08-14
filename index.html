@@ -122,6 +122,7 @@
   .tree-location { position: absolute; bottom: 4px; left: 7px; font-size: 0.5333rem; color: rgba(255,255,255,0.7); }
   .tree-info { padding: 5px 8px 7px; background: rgba(255,255,255,0.04); }
   .tree-id { font-size: 0.5333rem; font-family: monospace; color: var(--color-theme-light); }
+  .tree-addr { font-size: 0.5333rem; color: rgba(192,221,151,0.45); margin-top: 1px; display: flex; align-items: center; gap: 3px; line-height: 1.4; }
   .tree-name { font-size: 0.7333rem; font-weight: 500; color: var(--color-theme-light); }
   .tree-stats { display: flex; gap: 5px; font-size: 0.5333rem; color: rgba(192,221,151,0.4); margin-top: 2px; }
   .tree-meta { margin-top: 5px; padding-top: 5px; border-top: 0.5px solid rgba(192,221,151,0.08); font-size: 0.5333rem; color: rgba(192,221,151,0.45); line-height: 1.55; }
@@ -553,7 +554,7 @@
     <!-- ⑧ TREE PROFILE (public, read-only) -->
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
-      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
+      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1 id="profile-hero-title">Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p id="profile-hero-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
       <div class="scrollable" style="padding:12px 14px 20px;">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
         <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
@@ -1463,6 +1464,14 @@ function openProfile(treeId) {
   profileFrom = from;
   var id = treeId || '625001-06-0001';
   document.getElementById('profile-id-label').textContent = id;
+  var tree = null;
+  for (var i = 0; i < albumData.length; i++) {
+    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
+  }
+  if (tree) {
+    document.getElementById('profile-hero-title').textContent = tree.englishName;
+    document.getElementById('profile-hero-addr').innerHTML = '<i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + (tree.address || '') + ' <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button>';
+  }
   goTo('profile');
 }
 
@@ -1607,7 +1616,12 @@ function renderAlbum(place, tree) {
   });
   
   var countEl = document.getElementById('album-count');
-  if (countEl) countEl.textContent = filtered.length + ' trees';
+  if (countEl) {
+    var varieties = {};
+    filtered.forEach(function(t) { varieties[t.englishName] = 1; });
+    var vCount = Object.keys(varieties).length;
+    countEl.textContent = vCount + ' varieties · ' + filtered.length + ' trees';
+  }
 
   var summaryEl = document.getElementById('album-summary');
   window._mapTrees = filtered;
@@ -1651,27 +1665,34 @@ function renderAlbum(place, tree) {
     var photo = document.createElement('div');
     photo.className = 'tree-photo';
     photo.style.background = t.bg;
-    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div><div class="tree-location">' + treeLoc(t) + '</div>';
+    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div>';
     
+    var lastCard = t.cards && t.cards[t.cards.length - 1] || {};
+    var isFirst = String(lastCard.encounter) === '1';
+    var upd = isFirst ? lastCard.registeredBy : lastCard.updatedBy;
+    var updDate = isFirst ? lastCard.registrationDate : lastCard.updatedDate;
+
     var info = document.createElement('div');
     info.className = 'tree-info';
     info.innerHTML = 
-      '<div class="tree-id">' + t.treeId + '</div>' +
       '<div class="tree-name">' + t.englishName + '</div>' +
-      '<div class="tree-stats">' +
-        '<span>📏 ' + t.height + '</span>' +
-        '<span>📐 ' + t.diameter + '</span>' +
-        '<span>📋 ' + t.logs + '</span>' +
-      '</div>' +
-      '<div class="tree-meta">' +
-        (function(){ var c = t.cards && t.cards[t.cards.length - 1] || {}; return '' +
-        '<div>👀 Encounter <b>' + (c.encounter != null ? c.encounter : 0) + '</b> · 📋 Logs <b>' + t.logs + '</b></div>' +
-        '<div>Registered by <b>' + (c.registeredBy || '—') + '</b> · ' + (c.registrationDate || '—') + '</div>' +
-        '<div>ID <b>' + (c.updaterId || c.registererId || '—') + '</b> · Updated by <b>' + (c.updatedBy || '—') + '</b> · ' + (c.updatedDate || '—') + '</div>'; })() +
-      '</div>';
-    
-    card.appendChild(photo);
+      '<div class="tree-id">' + t.treeId + '</div>' +
+      '<div class="tree-addr"><i class="ti ti-map-pin" style="font-size:0.7rem"></i> ' + (t.address || '—') + '</div>';
+
     card.appendChild(info);
+    info.appendChild(photo);
+
+    var stats = document.createElement('div');
+    stats.className = 'tree-stats';
+    stats.innerHTML = '<span>📏 ' + t.height + '</span><span>📐 ' + t.diameter + '</span>';
+    info.appendChild(stats);
+
+    var meta = document.createElement('div');
+    meta.className = 'tree-meta';
+    var updLabel = isFirst ? 'Registered by' : 'Updated by';
+    meta.innerHTML = '<div>👀 Encounter <b>' + (lastCard.encounter != null ? lastCard.encounter : 0) + '</b> · ' + (updDate || '—') + '</div><div>' + updLabel + ' <b>' + (upd || '—') + '</b></div>';
+    info.appendChild(meta);
+
     grid.appendChild(card);
   });
 }
@@ -1723,7 +1744,7 @@ function openMap() {
   var coords = trees.filter(function(t){
     return typeof t.latitude === 'number' && typeof t.longitude === 'number';
   }).map(function(t){
-    return t.latitude + ',' + t.longitude;
+    return t.latitude + ',' + t.longitude + ',' + encodeURIComponent(t.englishName || 'Tree');
   });
   if (coords.length > 0) {
     showMap(coords.join('|'));
@@ -1887,7 +1908,7 @@ function normalizeAlbum(t) {
   out.logs = t.encounters || keys.length || c.logs || 0;
   out.cards = keys.map(function (key) {
     var e = enc[key];
-    return { encounter: key, registeredBy: e.registeredBy || '—', registrationDate: e.registeredDate || '—', registererId: e.registererId || '—', updatedBy: '—', updatedDate: '—' };
+    return { encounter: key, registeredBy: e.registeredBy || '—', registrationDate: e.registeredDate || '—', registererId: e.registererId || '—', updatedBy: e.updatedBy || e.registeredBy || '—', updatedDate: e.updatedDate || e.registeredDate || '—', updaterId: e.updaterId || e.registererId || '—' };
   });
   return out;
 }

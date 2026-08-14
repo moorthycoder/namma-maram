@@ -12,7 +12,7 @@
     "collegeCode": "06",
     "LocalSlNo": "0001",
     "emoji": "🌿",
-    "encounters": 1,
+    "encounters": 5,
     "bg": "linear-gradient(135deg,#2d5a1b,#4a7c2f)",
     "care-giver": "Ravi K.",
     "ttr": "Selvam",
@@ -28,6 +28,66 @@
         },
         "photos": [
           "625001-06-0001-1-20260115000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "2": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-02-25",
+        "status": {
+          "health": "dead",
+          "diameter": "16cm",
+          "height": "7.4m"
+        },
+        "photos": [
+          "625001-06-0001-2-20260225000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "3": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-03-18",
+        "status": {
+          "health": "dead",
+          "diameter": "16cm",
+          "height": "7.4m"
+        },
+        "photos": [
+          "625001-06-0001-3-20260318000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "4": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-04-29",
+        "status": {
+          "health": "dead",
+          "diameter": "16cm",
+          "height": "7.4m"
+        },
+        "photos": [
+          "625001-06-0001-4-20260429000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "5": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-05-27",
+        "status": {
+          "health": "dead",
+          "diameter": "16cm",
+          "height": "7.4m"
+        },
+        "photos": [
+          "625001-06-0001-5-20260527000000.jpg"
         ],
         "fieldNotes": "Tree fully dried with no green parts.",
         "toDo": "Plan removal and replanting."
@@ -232,7 +292,7 @@
     "collegeCode": "12",
     "LocalSlNo": "0001",
     "emoji": "🥭",
-    "encounters": 1,
+    "encounters": 2,
     "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
     "care-giver": "Suresh M.",
     "ttr": "Anbu",
@@ -248,6 +308,21 @@
         },
         "photos": [
           "625001-12-0001-1-20260219000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Anbu",
+        "updaterId": "GRR-2024-086",
+        "updatedDate": "2026-04-06",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.5m"
+        },
+        "photos": [
+          "625001-12-0001-2-20260406000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -337,7 +412,7 @@
     "collegeCode": "13",
     "LocalSlNo": "0003",
     "emoji": "🌳",
-    "encounters": 1,
+    "encounters": 4,
     "bg": "linear-gradient(135deg,#3B6D11,#2d5a1b)",
     "care-giver": "Deepa V.",
     "ttr": "Pandian",
@@ -353,6 +428,51 @@
         },
         "photos": [
           "625001-13-0003-1-20260312000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Pandian",
+        "updaterId": "GRR-2024-089",
+        "updatedDate": "2026-04-12",
+        "status": {
+          "health": "healthy",
+          "diameter": "23cm",
+          "height": "7.6m"
+        },
+        "photos": [
+          "625001-13-0003-2-20260412000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Pandian",
+        "updaterId": "GRR-2024-089",
+        "updatedDate": "2026-05-13",
+        "status": {
+          "health": "healthy",
+          "diameter": "23cm",
+          "height": "7.6m"
+        },
+        "photos": [
+          "625001-13-0003-3-20260513000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Pandian",
+        "updaterId": "GRR-2024-089",
+        "updatedDate": "2026-06-16",
+        "status": {
+          "health": "healthy",
+          "diameter": "23cm",
+          "height": "7.6m"
+        },
+        "photos": [
+          "625001-13-0003-4-20260616000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -372,7 +492,7 @@
     "collegeCode": "14",
     "LocalSlNo": "0001",
     "emoji": "🌳",
-    "encounters": 1,
+    "encounters": 6,
     "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
     "care-giver": "Murugan T.",
     "ttr": "Govindan",
@@ -388,6 +508,81 @@
         },
         "photos": [
           "625001-14-0001-1-20260319000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-05-01",
+        "status": {
+          "health": "healthy",
+          "diameter": "26cm",
+          "height": "9.2m"
+        },
+        "photos": [
+          "625001-14-0001-2-20260501000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-05-20",
+        "status": {
+          "health": "healthy",
+          "diameter": "26cm",
+          "height": "9.2m"
+        },
+        "photos": [
+          "625001-14-0001-3-20260520000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-06-28",
+        "status": {
+          "health": "healthy",
+          "diameter": "26cm",
+          "height": "9.2m"
+        },
+        "photos": [
+          "625001-14-0001-4-20260628000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-07-24",
+        "status": {
+          "health": "healthy",
+          "diameter": "26cm",
+          "height": "9.2m"
+        },
+        "photos": [
+          "625001-14-0001-5-20260724000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "6": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-08-17",
+        "status": {
+          "health": "healthy",
+          "diameter": "26cm",
+          "height": "9.2m"
+        },
+        "photos": [
+          "625001-14-0001-6-20260817000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -572,7 +767,7 @@
     "collegeCode": "07",
     "LocalSlNo": "0002",
     "emoji": "🌳",
-    "encounters": 1,
+    "encounters": 5,
     "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
     "care-giver": "Senthil K.",
     "ttr": "Ramesh",
@@ -588,6 +783,66 @@
         },
         "photos": [
           "625002-07-0002-1-20260416000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-06-01",
+        "status": {
+          "health": "healthy",
+          "diameter": "25cm",
+          "height": "8.9m"
+        },
+        "photos": [
+          "625002-07-0002-2-20260601000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-06-23",
+        "status": {
+          "health": "healthy",
+          "diameter": "25cm",
+          "height": "8.9m"
+        },
+        "photos": [
+          "625002-07-0002-3-20260623000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-07-30",
+        "status": {
+          "health": "healthy",
+          "diameter": "25cm",
+          "height": "8.9m"
+        },
+        "photos": [
+          "625002-07-0002-4-20260730000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-08-26",
+        "status": {
+          "health": "healthy",
+          "diameter": "25cm",
+          "height": "8.9m"
+        },
+        "photos": [
+          "625002-07-0002-5-20260826000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -642,7 +897,7 @@
     "collegeCode": "16",
     "LocalSlNo": "0001",
     "emoji": "🌲",
-    "encounters": 1,
+    "encounters": 7,
     "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
     "care-giver": "Ravi K.",
     "ttr": "Selvam",
@@ -658,6 +913,96 @@
         },
         "photos": [
           "625002-16-0001-1-20260115000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-02-20",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "12.9m"
+        },
+        "photos": [
+          "625002-16-0001-2-20260220000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-03-16",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "12.9m"
+        },
+        "photos": [
+          "625002-16-0001-3-20260316000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-04-26",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "12.9m"
+        },
+        "photos": [
+          "625002-16-0001-4-20260426000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-05-19",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "12.9m"
+        },
+        "photos": [
+          "625002-16-0001-5-20260519000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "6": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-06-21",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "12.9m"
+        },
+        "photos": [
+          "625002-16-0001-6-20260621000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "7": {
+        "updatedBy": "Selvam",
+        "updaterId": "GRR-2024-081",
+        "updatedDate": "2026-07-26",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "12.9m"
+        },
+        "photos": [
+          "625002-16-0001-7-20260726000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -1057,7 +1402,7 @@
     "collegeCode": "20",
     "LocalSlNo": "0002",
     "emoji": "🌿",
-    "encounters": 1,
+    "encounters": 4,
     "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
     "care-giver": "Ganesh A.",
     "ttr": "Saraswathi",
@@ -1073,6 +1418,51 @@
         },
         "photos": [
           "625004-20-0002-1-20260402000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Saraswathi",
+        "updaterId": "GRR-2024-092",
+        "updatedDate": "2026-05-10",
+        "status": {
+          "health": "healthy",
+          "diameter": "7cm",
+          "height": "4.1m"
+        },
+        "photos": [
+          "625004-20-0002-2-20260510000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Saraswathi",
+        "updaterId": "GRR-2024-092",
+        "updatedDate": "2026-06-16",
+        "status": {
+          "health": "healthy",
+          "diameter": "7cm",
+          "height": "4.1m"
+        },
+        "photos": [
+          "625004-20-0002-3-20260616000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Saraswathi",
+        "updaterId": "GRR-2024-092",
+        "updatedDate": "2026-07-02",
+        "status": {
+          "health": "healthy",
+          "diameter": "7cm",
+          "height": "4.1m"
+        },
+        "photos": [
+          "625004-20-0002-4-20260702000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -1552,7 +1942,7 @@
     "collegeCode": "25",
     "LocalSlNo": "0001",
     "emoji": "🌸",
-    "encounters": 1,
+    "encounters": 4,
     "bg": "linear-gradient(135deg,#3B6D11,#639922)",
     "care-giver": "Deepa V.",
     "ttr": "Pandian",
@@ -1568,6 +1958,51 @@
         },
         "photos": [
           "625006-25-0001-1-20260312000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Pandian",
+        "updaterId": "GRR-2024-089",
+        "updatedDate": "2026-04-30",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "6.2m"
+        },
+        "photos": [
+          "625006-25-0001-2-20260430000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Pandian",
+        "updaterId": "GRR-2024-089",
+        "updatedDate": "2026-05-15",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "6.2m"
+        },
+        "photos": [
+          "625006-25-0001-3-20260515000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Pandian",
+        "updaterId": "GRR-2024-089",
+        "updatedDate": "2026-06-27",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "6.2m"
+        },
+        "photos": [
+          "625006-25-0001-4-20260627000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -2022,7 +2457,7 @@
     "collegeCode": "29",
     "LocalSlNo": "0001",
     "emoji": "🌳",
-    "encounters": 1,
+    "encounters": 4,
     "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
     "care-giver": "Kavitha N.",
     "ttr": "Kamal",
@@ -2038,6 +2473,51 @@
         },
         "photos": [
           "625008-29-0001-1-20260226000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-04-01",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "7.1m"
+        },
+        "photos": [
+          "625008-29-0001-2-20260401000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-05-05",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "7.1m"
+        },
+        "photos": [
+          "625008-29-0001-3-20260505000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-06-02",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "7.1m"
+        },
+        "photos": [
+          "625008-29-0001-4-20260602000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -2127,7 +2607,7 @@
     "collegeCode": "30",
     "LocalSlNo": "0001",
     "emoji": "🌿",
-    "encounters": 1,
+    "encounters": 7,
     "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
     "care-giver": "Murugan T.",
     "ttr": "Govindan",
@@ -2143,6 +2623,96 @@
         },
         "photos": [
           "625008-30-0001-1-20260319000000.jpg"
+        ],
+        "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+        "toDo": "Apply treatment and recheck in 2 weeks."
+      },
+      "2": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-05-03",
+        "status": {
+          "health": "sick",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625008-30-0001-2-20260503000000.jpg"
+        ],
+        "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+        "toDo": "Apply treatment and recheck in 2 weeks."
+      },
+      "3": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-05-23",
+        "status": {
+          "health": "sick",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625008-30-0001-3-20260523000000.jpg"
+        ],
+        "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+        "toDo": "Apply treatment and recheck in 2 weeks."
+      },
+      "4": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-07-01",
+        "status": {
+          "health": "sick",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625008-30-0001-4-20260701000000.jpg"
+        ],
+        "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+        "toDo": "Apply treatment and recheck in 2 weeks."
+      },
+      "5": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-07-28",
+        "status": {
+          "health": "sick",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625008-30-0001-5-20260728000000.jpg"
+        ],
+        "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+        "toDo": "Apply treatment and recheck in 2 weeks."
+      },
+      "6": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-08-26",
+        "status": {
+          "health": "sick",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625008-30-0001-6-20260826000000.jpg"
+        ],
+        "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
+        "toDo": "Apply treatment and recheck in 2 weeks."
+      },
+      "7": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-09-27",
+        "status": {
+          "health": "sick",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625008-30-0001-7-20260927000000.jpg"
         ],
         "fieldNotes": "Visible stress - leaf yellowing and some branch dieback.",
         "toDo": "Apply treatment and recheck in 2 weeks."
@@ -2452,7 +3022,7 @@
     "collegeCode": "33",
     "LocalSlNo": "0001",
     "emoji": "🌳",
-    "encounters": 1,
+    "encounters": 7,
     "bg": "linear-gradient(135deg,#2d5a1b,#639922)",
     "care-giver": "Madhavi I.",
     "ttr": "Muthu",
@@ -2468,6 +3038,96 @@
         },
         "photos": [
           "625010-33-0001-1-20260129000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-03-16",
+        "status": {
+          "health": "healthy",
+          "diameter": "11cm",
+          "height": "4.8m"
+        },
+        "photos": [
+          "625010-33-0001-2-20260316000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-03-30",
+        "status": {
+          "health": "healthy",
+          "diameter": "11cm",
+          "height": "4.8m"
+        },
+        "photos": [
+          "625010-33-0001-3-20260330000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-05-13",
+        "status": {
+          "health": "healthy",
+          "diameter": "11cm",
+          "height": "4.8m"
+        },
+        "photos": [
+          "625010-33-0001-4-20260513000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-05-30",
+        "status": {
+          "health": "healthy",
+          "diameter": "11cm",
+          "height": "4.8m"
+        },
+        "photos": [
+          "625010-33-0001-5-20260530000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "6": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-07-16",
+        "status": {
+          "health": "healthy",
+          "diameter": "11cm",
+          "height": "4.8m"
+        },
+        "photos": [
+          "625010-33-0001-6-20260716000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "7": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-07-30",
+        "status": {
+          "health": "healthy",
+          "diameter": "11cm",
+          "height": "4.8m"
+        },
+        "photos": [
+          "625010-33-0001-7-20260730000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -2897,7 +3557,7 @@
     "collegeCode": "02",
     "LocalSlNo": "0005",
     "emoji": "🌸",
-    "encounters": 1,
+    "encounters": 7,
     "bg": "linear-gradient(135deg,#3B6D11,#639922)",
     "care-giver": "Senthil K.",
     "ttr": "Ramesh",
@@ -2913,6 +3573,96 @@
         },
         "photos": [
           "625017-02-0005-1-20260416000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-05-24",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "5.9m"
+        },
+        "photos": [
+          "625017-02-0005-2-20260524000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-07-02",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "5.9m"
+        },
+        "photos": [
+          "625017-02-0005-3-20260702000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-07-18",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "5.9m"
+        },
+        "photos": [
+          "625017-02-0005-4-20260718000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-08-30",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "5.9m"
+        },
+        "photos": [
+          "625017-02-0005-5-20260830000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "6": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-09-24",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "5.9m"
+        },
+        "photos": [
+          "625017-02-0005-6-20260924000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "7": {
+        "updatedBy": "Ramesh",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-11-01",
+        "status": {
+          "health": "healthy",
+          "diameter": "14cm",
+          "height": "5.9m"
+        },
+        "photos": [
+          "625017-02-0005-7-20261101000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -2932,7 +3682,7 @@
     "collegeCode": "37",
     "LocalSlNo": "0001",
     "emoji": "🌴",
-    "encounters": 1,
+    "encounters": 6,
     "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
     "care-giver": "Gomathi R.",
     "ttr": "Chandran",
@@ -2948,6 +3698,81 @@
         },
         "photos": [
           "625017-37-0001-1-20260423000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Chandran",
+        "updaterId": "GRR-2024-095",
+        "updatedDate": "2026-06-05",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "9.7m"
+        },
+        "photos": [
+          "625017-37-0001-2-20260605000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Chandran",
+        "updaterId": "GRR-2024-095",
+        "updatedDate": "2026-07-08",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "9.7m"
+        },
+        "photos": [
+          "625017-37-0001-3-20260708000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Chandran",
+        "updaterId": "GRR-2024-095",
+        "updatedDate": "2026-08-04",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "9.7m"
+        },
+        "photos": [
+          "625017-37-0001-4-20260804000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Chandran",
+        "updaterId": "GRR-2024-095",
+        "updatedDate": "2026-09-02",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "9.7m"
+        },
+        "photos": [
+          "625017-37-0001-5-20260902000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "6": {
+        "updatedBy": "Chandran",
+        "updaterId": "GRR-2024-095",
+        "updatedDate": "2026-09-23",
+        "status": {
+          "health": "healthy",
+          "diameter": "31cm",
+          "height": "9.7m"
+        },
+        "photos": [
+          "625017-37-0001-6-20260923000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -3142,7 +3967,7 @@
     "collegeCode": "39",
     "LocalSlNo": "0002",
     "emoji": "🌲",
-    "encounters": 1,
+    "encounters": 7,
     "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
     "care-giver": "Suresh M.",
     "ttr": "Anbu",
@@ -3158,6 +3983,96 @@
         },
         "photos": [
           "625017-39-0002-1-20260219000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Anbu",
+        "updaterId": "GRR-2024-086",
+        "updatedDate": "2026-03-22",
+        "status": {
+          "health": "healthy",
+          "diameter": "27cm",
+          "height": "11.2m"
+        },
+        "photos": [
+          "625017-39-0002-2-20260322000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Anbu",
+        "updaterId": "GRR-2024-086",
+        "updatedDate": "2026-04-21",
+        "status": {
+          "health": "healthy",
+          "diameter": "27cm",
+          "height": "11.2m"
+        },
+        "photos": [
+          "625017-39-0002-3-20260421000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Anbu",
+        "updaterId": "GRR-2024-086",
+        "updatedDate": "2026-05-28",
+        "status": {
+          "health": "healthy",
+          "diameter": "27cm",
+          "height": "11.2m"
+        },
+        "photos": [
+          "625017-39-0002-4-20260528000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Anbu",
+        "updaterId": "GRR-2024-086",
+        "updatedDate": "2026-06-24",
+        "status": {
+          "health": "healthy",
+          "diameter": "27cm",
+          "height": "11.2m"
+        },
+        "photos": [
+          "625017-39-0002-5-20260624000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "6": {
+        "updatedBy": "Anbu",
+        "updaterId": "GRR-2024-086",
+        "updatedDate": "2026-07-22",
+        "status": {
+          "health": "healthy",
+          "diameter": "27cm",
+          "height": "11.2m"
+        },
+        "photos": [
+          "625017-39-0002-6-20260722000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "7": {
+        "updatedBy": "Anbu",
+        "updaterId": "GRR-2024-086",
+        "updatedDate": "2026-09-03",
+        "status": {
+          "health": "healthy",
+          "diameter": "27cm",
+          "height": "11.2m"
+        },
+        "photos": [
+          "625017-39-0002-7-20260903000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -3177,7 +4092,7 @@
     "collegeCode": "40",
     "LocalSlNo": "0001",
     "emoji": "🌿",
-    "encounters": 1,
+    "encounters": 5,
     "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
     "care-giver": "Kavitha N.",
     "ttr": "Kamal",
@@ -3193,6 +4108,66 @@
         },
         "photos": [
           "625017-40-0001-1-20260226000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-04-05",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.3m"
+        },
+        "photos": [
+          "625017-40-0001-2-20260405000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-05-07",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.3m"
+        },
+        "photos": [
+          "625017-40-0001-3-20260507000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-05-29",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.3m"
+        },
+        "photos": [
+          "625017-40-0001-4-20260529000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "5": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-06-28",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.3m"
+        },
+        "photos": [
+          "625017-40-0001-5-20260628000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -3282,7 +4257,7 @@
     "collegeCode": "03",
     "LocalSlNo": "0003",
     "emoji": "🌲",
-    "encounters": 1,
+    "encounters": 7,
     "bg": "linear-gradient(135deg,#1e3d0f,#2d5a1b)",
     "care-giver": "Murugan T.",
     "ttr": "Govindan",
@@ -3298,6 +4273,96 @@
         },
         "photos": [
           "625018-03-0003-1-20260319000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "2": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-05-05",
+        "status": {
+          "health": "dead",
+          "diameter": "38cm",
+          "height": "11.4m"
+        },
+        "photos": [
+          "625018-03-0003-2-20260505000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "3": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-06-06",
+        "status": {
+          "health": "dead",
+          "diameter": "38cm",
+          "height": "11.4m"
+        },
+        "photos": [
+          "625018-03-0003-3-20260606000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "4": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-06-21",
+        "status": {
+          "health": "dead",
+          "diameter": "38cm",
+          "height": "11.4m"
+        },
+        "photos": [
+          "625018-03-0003-4-20260621000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "5": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-08-04",
+        "status": {
+          "health": "dead",
+          "diameter": "38cm",
+          "height": "11.4m"
+        },
+        "photos": [
+          "625018-03-0003-5-20260804000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "6": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-08-26",
+        "status": {
+          "health": "dead",
+          "diameter": "38cm",
+          "height": "11.4m"
+        },
+        "photos": [
+          "625018-03-0003-6-20260826000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "7": {
+        "updatedBy": "Govindan",
+        "updaterId": "GRR-2024-090",
+        "updatedDate": "2026-10-03",
+        "status": {
+          "health": "dead",
+          "diameter": "38cm",
+          "height": "11.4m"
+        },
+        "photos": [
+          "625018-03-0003-7-20261003000000.jpg"
         ],
         "fieldNotes": "Tree fully dried with no green parts.",
         "toDo": "Plan removal and replanting."
@@ -3592,7 +4657,7 @@
     "collegeCode": "43",
     "LocalSlNo": "0001",
     "emoji": "🌴",
-    "encounters": 1,
+    "encounters": 3,
     "bg": "linear-gradient(135deg,#1e3d0f,#4a7c2f)",
     "care-giver": "Madhavi I.",
     "ttr": "Muthu",
@@ -3608,6 +4673,36 @@
         },
         "photos": [
           "625018-43-0001-1-20260129000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-03-14",
+        "status": {
+          "health": "healthy",
+          "diameter": "15cm",
+          "height": "7m"
+        },
+        "photos": [
+          "625018-43-0001-2-20260314000000.jpg"
+        ],
+        "fieldNotes": "Canopy healthy, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Muthu",
+        "updaterId": "GRR-2024-083",
+        "updatedDate": "2026-04-06",
+        "status": {
+          "health": "healthy",
+          "diameter": "15cm",
+          "height": "7m"
+        },
+        "photos": [
+          "625018-43-0001-3-20260406000000.jpg"
         ],
         "fieldNotes": "Canopy healthy, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
@@ -3732,7 +4827,7 @@
     "collegeCode": "05",
     "LocalSlNo": "0002",
     "emoji": "🌿",
-    "encounters": 1,
+    "encounters": 5,
     "bg": "linear-gradient(135deg,#639922,#4a7c2f)",
     "care-giver": "Kavitha N.",
     "ttr": "Kamal",
@@ -3748,6 +4843,66 @@
         },
         "photos": [
           "625020-05-0002-1-20260226000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "2": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-04-12",
+        "status": {
+          "health": "dead",
+          "diameter": "7cm",
+          "height": "3.5m"
+        },
+        "photos": [
+          "625020-05-0002-2-20260412000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "3": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-05-05",
+        "status": {
+          "health": "dead",
+          "diameter": "7cm",
+          "height": "3.5m"
+        },
+        "photos": [
+          "625020-05-0002-3-20260505000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "4": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-06-02",
+        "status": {
+          "health": "dead",
+          "diameter": "7cm",
+          "height": "3.5m"
+        },
+        "photos": [
+          "625020-05-0002-4-20260602000000.jpg"
+        ],
+        "fieldNotes": "Tree fully dried with no green parts.",
+        "toDo": "Plan removal and replanting."
+      },
+      "5": {
+        "updatedBy": "Kamal",
+        "updaterId": "GRR-2024-087",
+        "updatedDate": "2026-07-04",
+        "status": {
+          "health": "dead",
+          "diameter": "7cm",
+          "height": "3.5m"
+        },
+        "photos": [
+          "625020-05-0002-5-20260704000000.jpg"
         ],
         "fieldNotes": "Tree fully dried with no green parts.",
         "toDo": "Plan removal and replanting."
@@ -3923,7 +5078,7 @@
     "collegeCode": "02",
     "LocalSlNo": "0001",
     "emoji": "🌳",
-    "encounters": 1,
+    "encounters": 4,
     "bg": "linear-gradient(135deg,#1e3d0f,#3B6D11)",
     "care-giver": "Ravi K.",
     "ttr": "Vijay",
@@ -3939,6 +5094,51 @@
         },
         "photos": [
           "625017-02-0001-1-20260602000000.jpg"
+        ],
+        "fieldNotes": "Some yellowing on lower leaves; monitor closely.",
+        "toDo": "Schedule next check-up in March."
+      },
+      "2": {
+        "updatedBy": "Vijay",
+        "updaterId": "GRR-2024-092",
+        "updatedDate": "2026-07-08",
+        "status": {
+          "health": "needs attention",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625017-02-0001-2-20260708000000.jpg"
+        ],
+        "fieldNotes": "Some yellowing on lower leaves; monitor closely.",
+        "toDo": "Schedule next check-up in March."
+      },
+      "3": {
+        "updatedBy": "Vijay",
+        "updaterId": "GRR-2024-092",
+        "updatedDate": "2026-08-06",
+        "status": {
+          "health": "needs attention",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625017-02-0001-3-20260806000000.jpg"
+        ],
+        "fieldNotes": "Some yellowing on lower leaves; monitor closely.",
+        "toDo": "Schedule next check-up in March."
+      },
+      "4": {
+        "updatedBy": "Vijay",
+        "updaterId": "GRR-2024-092",
+        "updatedDate": "2026-09-14",
+        "status": {
+          "health": "needs attention",
+          "diameter": "15cm",
+          "height": "5.5m"
+        },
+        "photos": [
+          "625017-02-0001-4-20260914000000.jpg"
         ],
         "fieldNotes": "Some yellowing on lower leaves; monitor closely.",
         "toDo": "Schedule next check-up in March."
@@ -3999,7 +5199,7 @@
     "collegeCode": "04",
     "LocalSlNo": "0001",
     "emoji": "🌸",
-    "encounters": 1,
+    "encounters": 4,
     "bg": "linear-gradient(135deg,#1a3a0a,#2d5a1b)",
     "care-giver": "Kavitha N.",
     "ttr": "Kannan",
@@ -4015,6 +5215,51 @@
         },
         "photos": [
           "625028-04-0001-1-20260528000000.jpg"
+        ],
+        "fieldNotes": "Flowering well, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "2": {
+        "updatedBy": "Kannan",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-07-09",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.3m"
+        },
+        "photos": [
+          "625028-04-0001-2-20260709000000.jpg"
+        ],
+        "fieldNotes": "Flowering well, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "3": {
+        "updatedBy": "Kannan",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-08-10",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.3m"
+        },
+        "photos": [
+          "625028-04-0001-3-20260810000000.jpg"
+        ],
+        "fieldNotes": "Flowering well, no signs of disease or pests.",
+        "toDo": "Routine check-up; no action needed."
+      },
+      "4": {
+        "updatedBy": "Kannan",
+        "updaterId": "GRR-2024-094",
+        "updatedDate": "2026-08-26",
+        "status": {
+          "health": "healthy",
+          "diameter": "12cm",
+          "height": "6.3m"
+        },
+        "photos": [
+          "625028-04-0001-4-20260826000000.jpg"
         ],
         "fieldNotes": "Flowering well, no signs of disease or pests.",
         "toDo": "Routine check-up; no action needed."
