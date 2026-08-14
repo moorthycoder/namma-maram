@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Our Tree Tracker</title>
+<title>Namma Maram</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
@@ -81,10 +81,15 @@
   .clear-wrap { flex: 1; position: relative; }
   .clear-wrap .id-input { width: 100%; padding-right: 30px; }
   .clear-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; border: none; background: rgba(192,221,151,0.15); color: var(--color-theme-light); width: 18px; height: 18px; border-radius: 50%; cursor: pointer; font-size: 0.8667rem; line-height: 1; padding: 0; }
+  .album-suggest { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.18); z-index: 40; max-height: 180px; overflow: auto; display: none; }
+  .album-suggest.open { display: block; }
+  .album-suggest-item { padding: 9px 12px; font-size: 0.8rem; color: var(--color-text-primary); cursor: pointer; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .album-suggest-item:last-child { border-bottom: none; }
+  .album-suggest-item:hover { background: var(--color-background-secondary); }
   .clear-btn:disabled { opacity: 0.35; cursor: not-allowed; color: #999; background: rgba(0,0,0,0.08); }
   .clear-btn:disabled:hover { background: rgba(0,0,0,0.08); }
   .id-input { flex: 1; padding: 7px 10px; font-size: 0.8rem; background: rgba(255,255,255,0.06); color: var(--color-theme-light); border: 1.5px solid rgba(192,221,151,0.25); border-radius: 10px; font-family: monospace; letter-spacing: 1px; outline: none; }
-  #album-place, #album-tree { font-size: 1.0667rem; letter-spacing: normal; padding: 4px 10px; }
+  #album-place, #album-tree { font-size: 0.9333rem; letter-spacing: normal; padding: 4px 10px; }
   .id-input::placeholder { color: rgba(192,221,151,0.3); font-family: var(--font-sans); letter-spacing: normal; }
   .album-container { background: var(--color-theme-dark); flex: 1; overflow-y: auto; padding: 0 14px 16px; }
   .filter-row { display: flex; gap: 6px; margin-bottom: 6px; margin-top: 8px; }
@@ -94,8 +99,8 @@
   .filter-btn { border-radius: 10px; background: rgba(255,255,255,0.08); color: var(--color-theme-light); border: 1.5px solid rgba(192,221,151,0.15); padding: 6px; font-size: 0.7333rem; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
   .filter-btn:hover { background: rgba(255,255,255,0.15); }
   .album-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; margin-top: 8px; }
-  .album-title { font-size: 0.6667rem; color: rgba(192,221,151,0.5); display: flex; align-items: center; gap: 4px; }
-  .album-count { font-size: 0.6rem; color: rgba(192,221,151,0.35); }
+  .album-title { font-size: 0.6667rem; color: var(--color-theme-light); display: flex; align-items: center; gap: 4px; }
+  .album-count { font-size: 0.6rem; color: var(--color-theme-light); }
   .album-toggle { display: flex; align-items: center; justify-content: center; border: none; background: rgba(192,221,151,0.15); color: var(--color-theme-light); width: 22px; height: 22px; border-radius: 6px; cursor: pointer; font-size: 0.8667rem; padding: 0; }
   .album-toggle.off { opacity: 0.4; }
   .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -354,18 +359,19 @@
       
       <div class="main-hero">
         <div class="main-logo"><div class="tree-emoji">🌴</div></div>
-        <div class="main-title">Our Tree Tracker</div>
-        <div class="main-sub">Monitoring ensures Good Health</div>
+        <div class="main-title">Namma Maram</div>
+        <div class="main-sub">Nature and us are one and same</div>
       </div>
       
       <div class="album-filters">
         <div class="filter-row" style="flex-direction:column;gap:8px;">
           <div class="clear-wrap">
-            <input class="id-input" id="album-place" type="text" placeholder="Type Place Name" oninput="onInput(this)" />
+            <input class="id-input" id="album-place" type="text" placeholder="Type Place, Pincode or Project" autocomplete="new-password" oninput="onInput(this)" />
             <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
+            <div class="album-suggest" id="album-suggest"></div>
           </div>
           <div class="clear-wrap">
-            <input class="id-input" id="album-tree" type="text" placeholder="Type Tree Name" oninput="onInput(this)" />
+            <input class="id-input" id="album-tree" type="text" placeholder="Type Tree Name" autocomplete="new-password" oninput="onInput(this)" />
             <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
           </div>
         </div>
@@ -427,9 +433,9 @@
         <button class="green-btn" onclick="goTo('scan')"><i class="ti ti-camera"></i> Insert new log</button>
         <div class="section-title">Recent entries</div>
         <div class="info-card">
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625017-02-001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625018-03-001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-0001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625017-02-0001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625018-03-0001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
         </div>
         <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
       </div></div>
@@ -451,9 +457,9 @@
         <button class="green-btn" onclick="goTo('scan')"><i class="ti ti-camera"></i> Insert new log</button>
         <div class="section-title">Recent entries</div>
         <div class="info-card">
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625017-02-001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625018-03-001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-0001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625017-02-0001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625018-03-0001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
         </div>
         <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
       </div></div>
@@ -465,43 +471,7 @@
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo(roleDash())"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">My trees</span></div>
         <div style="font-size:0.8rem;color:rgba(192,221,151,0.55);">Double-tap a tree to view its logs</div>
       </div>
-      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div style="padding:13px 14px;">
-        <div class="tree-card-sponsor tcard">
-          <div class="tcard-head">
-            <div class="tcard-row"><span class="tcard-id">🌿 625008-01-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-            <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar</div>
-          </div>
-          <div class="tcard-collapse" style="display:none;">
-            <div class="tcard-img" style="background:linear-gradient(135deg,#2d5a1b,#4a7c2f);">🌿</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 12 Jun 2026 — Ravi K.</span></div>
-            <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">8.4m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">22cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">14</div></div></div>
-            <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last logged 12 Jun 2026</div></div>
-            <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>
-          </div>
-        </div>
-        <div class="tree-card-sponsor tcard">
-          <div class="tcard-head">
-            <div class="tcard-row"><span class="tcard-id">🌳 625017-02-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-            <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> T. Nagar</div>
-          </div>
-          <div class="tcard-collapse" style="display:none;">
-            <div class="tcard-img" style="background:linear-gradient(135deg,#1e3d0f,#3B6D11);">🌳</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 2 Jun 2026 — Ravi K.</span></div>
-            <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">5.2m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">14cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">8</div></div></div>
-            <div class="tcard-status"><div class="status-dot" style="background:#facc15"></div><div class="status-txt">Needs attention · Last logged 2 Jun</div></div>
-            <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>
-          </div>
-        </div>
-        <div class="tree-card-sponsor tcard">
-          <div class="tcard-head">
-            <div class="tcard-row"><span class="tcard-id">🌴 625018-03-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-            <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Adyar</div>
-          </div>
-          <div class="tcard-collapse" style="display:none;">
-            <div class="tcard-img" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌴</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 5 Jun 2026 — Priya S.</span></div>
-            <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">12m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">38cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">21</div></div></div>
-            <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last logged 5 Jun 2026</div></div>
-            <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="openProfile('625018-03-001')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button></div>
-          </div>
-        </div>
+      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="page-trees-cards" style="padding:13px 14px;">
       </div></div>
     </div>
 
@@ -530,10 +500,10 @@
       <div class="steps"><div class="step-dot done"><i class="ti ti-check" style="font-size:0.7333rem"></i></div><div class="step-line done"></div><div class="step-dot active">2</div><div class="step-line"></div><div class="step-dot pending">3</div></div>
       <div class="step-labels"><span class="step-lbl">Scan</span><span class="step-lbl active">Verify ID</span><span class="step-lbl">Log details</span></div>
       <div class="scrollable" style="padding:12px 13px;">
-        <div class="photo-preview"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a1a0a,#2a2a1a);"></div><div class="nameplate-mock"><div class="plate-title">Urban Tree Registry</div><div class="plate-id">625008-01-001</div><div class="plate-sub">Chennai Municipal Corp.</div></div><div class="ocr-badge"><i class="ti ti-scan" style="font-size:0.6667rem"></i> OCR read</div></div>
+        <div class="photo-preview"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a1a0a,#2a2a1a);"></div><div class="nameplate-mock"><div class="plate-title">Urban Tree Registry</div><div class="plate-id">625008-01-0001</div><div class="plate-sub">Chennai Municipal Corp.</div></div><div class="ocr-badge"><i class="ti ti-scan" style="font-size:0.6667rem"></i> OCR read</div></div>
         <div class="ocr-note"><i class="ti ti-info-circle" style="font-size:0.8667rem;flex-shrink:0;margin-top:1px"></i>ID read from nameplate. Verify before continuing.</div>
         <div class="field-label"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Tree ID</div>
-        <div class="field-wrap"><input class="field-input" id="verify-id" type="text" value="625008-01-001" /><i class="ti ti-pencil field-icon"></i></div>
+        <div class="field-wrap"><input class="field-input" id="verify-id" type="text" value="625008-01-0001" /><i class="ti ti-pencil field-icon"></i></div>
         <div class="field-label" style="margin-top:4px"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i> Location (auto-detected)</div>
         <div class="field-wrap" style="margin-bottom:14px"><input class="field-input normal" type="text" value="Anna Nagar, Chennai" readonly /><i class="ti ti-gps field-icon"></i></div>
         <button class="green-btn" onclick="goTo('logdetails')"><i class="ti ti-check"></i> Confirm & continue</button>
@@ -547,7 +517,7 @@
       <div class="steps"><div class="step-dot done"><i class="ti ti-check" style="font-size:0.7333rem"></i></div><div class="step-line done"></div><div class="step-dot done"><i class="ti ti-check" style="font-size:0.7333rem"></i></div><div class="step-line done"></div><div class="step-dot active">3</div></div>
       <div class="step-labels"><span class="step-lbl">Scan</span><span class="step-lbl">Verify ID</span><span class="step-lbl active">Log details</span></div>
       <div class="scrollable" style="padding:12px 13px;display:flex;flex-direction:column;gap:10px;">
-        <div class="id-badge"><i class="ti ti-tag" style="font-size:0.8667rem;color:#3B6D11"></i><span style="font-size:0.8rem;color:var(--color-text-secondary)">Tree</span><span style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);font-family:monospace">625008-01-001</span></div>
+        <div class="id-badge"><i class="ti ti-tag" style="font-size:0.8667rem;color:#3B6D11"></i><span style="font-size:0.8rem;color:var(--color-text-secondary)">Tree</span><span style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);font-family:monospace">625008-01-0001</span></div>
         <div><div class="field-label"><i class="ti ti-ruler" style="font-size:0.8667rem"></i> Height</div><div class="field-wrap" style="margin-bottom:0"><input class="field-input normal" type="number" placeholder="e.g. 8.4" /><span class="field-unit">m</span></div></div>
         <div><div class="field-label"><i class="ti ti-circle" style="font-size:0.8667rem"></i> Trunk diameter</div><div class="field-wrap" style="margin-bottom:0"><input class="field-input normal" type="number" placeholder="e.g. 22" /><span class="field-unit">cm</span></div></div>
         <div><div class="field-label" style="margin-bottom:5px"><i class="ti ti-camera" style="font-size:0.8667rem"></i> Photos</div><div class="photo-strip"><div class="photo-thumb">🌿</div><div class="photo-thumb">🌳</div><div class="photo-add"><i class="ti ti-plus"></i></div></div></div>
@@ -566,7 +536,7 @@
       </div>
       <div class="scrollable" style="padding:13px;display:flex;flex-direction:column;gap:11px;">
         <div class="info-card">
-          <div class="info-row"><span class="info-key"><i class="ti ti-tag" style="font-size:0.8667rem"></i>Tree ID</span><span class="info-val" style="font-family:monospace;font-size:0.8rem">625008-01-001</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-tag" style="font-size:0.8667rem"></i>Tree ID</span><span class="info-val" style="font-family:monospace;font-size:0.8rem">625008-01-0001</span></div>
           <div class="info-row"><span class="info-key"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i>Location</span><span class="info-val">Anna Nagar</span></div>
           <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>Date</span><span class="info-val">24 Jun 2026</span></div>
           <div class="info-row"><span class="info-key"><i class="ti ti-camera" style="font-size:0.8667rem"></i>Photos</span><span class="info-val">2 attached</span></div>
@@ -582,7 +552,7 @@
 
     <!-- ⑧ TREE PROFILE (public, read-only) -->
     <div class="page" id="page-profile">
-      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-001</span></div>
+      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
       <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
       <div class="scrollable" style="padding:12px 14px 20px;">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
@@ -662,30 +632,6 @@
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
         <div class="section-title" style="margin-bottom:12px;">My sponsored trees</div>
         <div id="sponsor-cards">
-          <div class="tree-card-sponsor tcard">
-            <div class="tcard-head">
-              <div class="tcard-row"><span class="tcard-id">🌿 625008-01-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar</div>
-            </div>
-            <div class="tcard-collapse" style="display:none;">
-              <div class="tcard-img" style="background:linear-gradient(135deg,#2d5a1b,#4a7c2f);">🌿</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 12 Jun 2026 — Ravi K.</span></div>
-              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">8.4m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">22cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">14</div></div></div>
-              <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last logged 12 Jun 2026</div></div>
-              <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo('pay-logs')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>
-            </div>
-          </div>
-          <div class="tree-card-sponsor tcard">
-            <div class="tcard-head">
-              <div class="tcard-row"><span class="tcard-id">🌳 625017-02-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> T. Nagar</div>
-            </div>
-            <div class="tcard-collapse" style="display:none;">
-              <div class="tcard-img" style="background:linear-gradient(135deg,#1e3d0f,#3B6D11);">🌳</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 2 Jun 2026 — Ravi K.</span></div>
-              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">5.2m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">14cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">8</div></div></div>
-              <div class="tcard-status"><div class="status-dot" style="background:#facc15"></div><div class="status-txt">Needs attention · Last logged 2 Jun</div></div>
-              <div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo('pay-logs')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>
-            </div>
-          </div>
         </div>
         <button class="ghost-btn" onclick="goTo('browse-trees')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
       </div></div>
@@ -705,54 +651,6 @@
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
         <div class="section-title" style="margin-bottom:12px;">My trees in care</div>
         <div id="caregiver-cards">
-          <div class="tree-card-sponsor tcard">
-            <div class="tcard-head">
-              <div class="tcard-row"><span class="tcard-id">🌿 625008-01-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar</div>
-            </div>
-            <div class="tcard-collapse" style="display:none;">
-              <div class="tcard-img" style="background:linear-gradient(135deg,#2d5a1b,#4a7c2f);">🌿</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 12 Jun 2026 — Ravi K.</span></div>
-              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">8.4m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">22cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">14</div></div></div>
-              <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last checked 12 Jun 2026</div></div>
-              <div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do — Fertilize before monsoon.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>
-            </div>
-          </div>
-          <div class="tree-card-sponsor tcard">
-            <div class="tcard-head">
-              <div class="tcard-row"><span class="tcard-id">🌳 625017-02-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> T. Nagar</div>
-            </div>
-            <div class="tcard-collapse" style="display:none;">
-              <div class="tcard-img" style="background:linear-gradient(135deg,#1e3d0f,#3B6D11);">🌳</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 2 Jun 2026 — Ravi K.</span></div>
-              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">5.2m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">14cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">8</div></div></div>
-              <div class="tcard-status"><div class="status-dot" style="background:#facc15"></div><div class="status-txt">Needs attention · Last checked 2 Jun</div></div>
-              <div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do — Schedule next check-up in March.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>
-            </div>
-          </div>
-          <div class="tree-card-sponsor tcard">
-            <div class="tcard-head">
-              <div class="tcard-row"><span class="tcard-id">🌴 625018-03-002</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Palamedu</div>
-            </div>
-            <div class="tcard-collapse" style="display:none;">
-              <div class="tcard-img" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌴</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 5 Jun 2026 — Priya S.</span></div>
-              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">12m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">38cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">21</div></div></div>
-              <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last checked 5 Jun 2026</div></div>
-              <div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do — Apply neem spray and follow up in 2 weeks.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>
-            </div>
-          </div>
-          <div class="tree-card-sponsor tcard">
-            <div class="tcard-head">
-              <div class="tcard-row"><span class="tcard-id">🌸 625028-04-001</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>
-              <div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Kondaiyampatti</div>
-            </div>
-            <div class="tcard-collapse" style="display:none;">
-              <div class="tcard-img" style="background:linear-gradient(135deg,#1a3a0a,#2d5a1b);">🌸</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter — 28 May 2026 — Meena L.</span></div>
-              <div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">6m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">11cm</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">5</div></div></div>
-              <div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy · Last checked 28 May 2026</div></div>
-              <div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do — Routine check-up; no action needed.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo('tree-logs')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>
-            </div>
-          </div>
         </div>
         <button class="ghost-btn" onclick="goTo('browse-trees')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
       </div></div>
@@ -793,9 +691,9 @@
       <div style="padding:10px 14px 6px;flex-shrink:0;"><div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;display:flex;align-items:center;gap:8px;"><i class="ti ti-search" style="font-size:0.9333rem;color:var(--color-text-secondary)"></i><span style="font-size:0.8667rem;color:var(--color-text-secondary);">Search by ID or area...</span></div></div>
       <div class="scrollable"><div style="padding:10px 14px;">
         <div class="section-title" style="margin-bottom:10px;">Available trees</div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#2d5a1b,#3B6D11);">🌴</div><div class="browse-card-body"><div class="browse-card-id">625018-03-002</div><div class="browse-card-name">Banyan Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Palamedu Govt School · ₹300/mo</div></div><button class="add-btn" id="add-btn-625018-03-002" onclick="addTree(this,'Banyan Tree #625018-03-002','Palamedu Govt School','linear-gradient(135deg,#2d5a1b,#3B6D11)','🌴',12,'38cm',21)"><i class="ti ti-plus"></i></button></div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌸</div><div class="browse-card-body"><div class="browse-card-id">625028-04-001</div><div class="browse-card-name">Gulmohar Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kondaiyampatti Govt School · ₹300/mo</div></div><button class="add-btn" id="add-btn-625028-04-001" onclick="addTree(this,'Gulmohar Tree #625028-04-001','Kondaiyampatti Govt School','linear-gradient(135deg,#3B6D11,#639922)','🌸',6,'11cm',5)"><i class="ti ti-plus"></i></button></div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#1e3d0f,#2d5a1b);">🌳</div><div class="browse-card-body"><div class="browse-card-id">625020-05-001</div><div class="browse-card-name">Rain Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kallanai Primary School · ₹300/mo</div></div><button class="add-btn" id="add-btn-625020-05-001" onclick="addTree(this,'Rain Tree #625020-05-001','Kallanai Primary School','linear-gradient(135deg,#1e3d0f,#2d5a1b)','🌳',9,'18cm',11)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#2d5a1b,#3B6D11);">🌴</div><div class="browse-card-body"><div class="browse-card-id">625018-03-0002</div><div class="browse-card-name">Banyan Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Palamedu Govt School · ₹300/mo</div></div><button class="add-btn" id="add-btn-625018-03-0002" onclick="addTree(this,'Banyan Tree #625018-03-0002','Palamedu Govt School','linear-gradient(135deg,#2d5a1b,#3B6D11)','🌴',12,'38cm',21)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌸</div><div class="browse-card-body"><div class="browse-card-id">625028-04-0001</div><div class="browse-card-name">Gulmohar Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kondaiyampatti Govt School · ₹300/mo</div></div><button class="add-btn" id="add-btn-625028-04-0001" onclick="addTree(this,'Gulmohar Tree #625028-04-0001','Kondaiyampatti Govt School','linear-gradient(135deg,#3B6D11,#639922)','🌸',6,'11cm',5)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#1e3d0f,#2d5a1b);">🌳</div><div class="browse-card-body"><div class="browse-card-id">625020-05-0001</div><div class="browse-card-name">Rain Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kallanai Primary School · ₹300/mo</div></div><button class="add-btn" id="add-btn-625020-05-0001" onclick="addTree(this,'Rain Tree #625020-05-0001','Kallanai Primary School','linear-gradient(135deg,#1e3d0f,#2d5a1b)','🌳',9,'18cm',11)"><i class="ti ti-plus"></i></button></div>
       </div></div>
     </div>
 
@@ -805,9 +703,9 @@
       <div style="padding:10px 14px 6px;flex-shrink:0;"><div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;display:flex;align-items:center;gap:8px;"><i class="ti ti-search" style="font-size:0.9333rem;color:var(--color-text-secondary)"></i><span style="font-size:0.8667rem;color:var(--color-text-secondary);">Search by ID or area...</span></div></div>
       <div class="scrollable"><div style="padding:10px 14px;">
         <div class="section-title" style="margin-bottom:10px;">Available trees</div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#2d5a1b,#3B6D11);">🌴</div><div class="browse-card-body"><div class="browse-card-id">625018-03-002</div><div class="browse-card-name">Banyan Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Palamedu Govt School</div></div><button class="add-btn" id="cg-add-625018-03-002" onclick="addCaredTree(this,'Banyan Tree #625018-03-002','Palamedu Govt School','linear-gradient(135deg,#2d5a1b,#3B6D11)','🌴',12,'38cm',21)"><i class="ti ti-plus"></i></button></div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌸</div><div class="browse-card-body"><div class="browse-card-id">625028-04-001</div><div class="browse-card-name">Gulmohar Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kondaiyampatti Govt School</div></div><button class="add-btn" id="cg-add-625028-04-001" onclick="addCaredTree(this,'Gulmohar Tree #625028-04-001','Kondaiyampatti Govt School','linear-gradient(135deg,#3B6D11,#639922)','🌸',6,'11cm',5)"><i class="ti ti-plus"></i></button></div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#1e3d0f,#2d5a1b);">🌳</div><div class="browse-card-body"><div class="browse-card-id">625020-05-001</div><div class="browse-card-name">Rain Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kallanai Primary School</div></div><button class="add-btn" id="cg-add-625020-05-001" onclick="addCaredTree(this,'Rain Tree #625020-05-001','Kallanai Primary School','linear-gradient(135deg,#1e3d0f,#2d5a1b)','🌳',9,'18cm',11)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#2d5a1b,#3B6D11);">🌴</div><div class="browse-card-body"><div class="browse-card-id">625018-03-0002</div><div class="browse-card-name">Banyan Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Palamedu Govt School</div></div><button class="add-btn" id="cg-add-625018-03-0002" onclick="addCaredTree(this,'Banyan Tree #625018-03-0002','Palamedu Govt School','linear-gradient(135deg,#2d5a1b,#3B6D11)','🌴',12,'38cm',21)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌸</div><div class="browse-card-body"><div class="browse-card-id">625028-04-0001</div><div class="browse-card-name">Gulmohar Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kondaiyampatti Govt School</div></div><button class="add-btn" id="cg-add-625028-04-0001" onclick="addCaredTree(this,'Gulmohar Tree #625028-04-0001','Kondaiyampatti Govt School','linear-gradient(135deg,#3B6D11,#639922)','🌸',6,'11cm',5)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#1e3d0f,#2d5a1b);">🌳</div><div class="browse-card-body"><div class="browse-card-id">625020-05-0001</div><div class="browse-card-name">Rain Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kallanai Primary School</div></div><button class="add-btn" id="cg-add-625020-05-0001" onclick="addCaredTree(this,'Rain Tree #625020-05-0001','Kallanai Primary School','linear-gradient(135deg,#1e3d0f,#2d5a1b)','🌳',9,'18cm',11)"><i class="ti ti-plus"></i></button></div>
       </div></div>
     </div>
 
@@ -909,7 +807,7 @@
       <div class="scrollable" style="padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 0;">
           <div style="width:50px;height:50px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;"><i class="ti ti-tree" style="font-size:1.7333rem;color:var(--color-theme-accent)"></i></div>
-          <div style="font-size:1.2rem;font-weight:500;color:var(--color-text-primary);">Our Tree Tracker</div>
+          <div style="font-size:1.2rem;font-weight:500;color:var(--color-text-primary);">Namma Maram</div>
           <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;max-width:220px;">A community-driven platform for monitoring and preserving urban tree cover.</div>
         </div>
         <div class="info-card">
@@ -947,7 +845,7 @@
         <div class="section-title" style="font-size:0.8rem;color:var(--color-text-secondary);margin-top:4px;">Recent activity</div>
         <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">New ranger registered</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">GRR-2026-042 · 10 min ago</div></div></div>
         <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Sponsor payment verified</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">Madhavi I · ₹300 · 2 hrs ago</div></div></div>
-        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Tree log flagged</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">625017-02-001 · Needs review · 1 day ago</div></div></div>
+        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Tree log flagged</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">625017-02-0001 · Needs review · 1 day ago</div></div></div>
       </div>
     </div>
 
@@ -1088,7 +986,7 @@
     <div class="page" id="page-admin-edit-tree">
       <div class="topbar"><button class="back-btn" onclick="goTo('admin-trees')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Edit tree</span></div>
       <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" id="edit-tree-id" value="625008-01-001" readonly style="background:var(--color-background-secondary);color:var(--color-text-secondary);" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" id="edit-tree-id" value="625008-01-0001" readonly style="background:var(--color-background-secondary);color:var(--color-text-secondary);" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Name</div><input class="field-inp" type="text" id="edit-tree-name" value="Neem Tree" /></div>
         <button class="ghost-btn" style="color:#dc2626;border-color:#dc2626;" onclick="document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i> Delete this tree</button>
         <div style="border-top:0.5px solid var(--color-border-tertiary);margin:4px 0;"></div>
@@ -1156,7 +1054,7 @@
     <div class="page" id="page-admin-add-tree">
       <div class="topbar"><button class="back-btn" onclick="goTo('admin-trees')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Add new tree</span></div>
       <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" placeholder="e.g. 625008-01-006" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" placeholder="e.g. 625008-01-0006" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Name</div><input class="field-inp" type="text" placeholder="e.g. Neem Tree" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i> Pincode</div><input class="field-inp" type="text" placeholder="e.g. 625008" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-building" style="font-size:0.8667rem"></i> Location</div><input class="field-inp" type="text" placeholder="e.g. Anna Nagar" /></div>
@@ -1372,15 +1270,71 @@ function toggleNotif(btn) {
   btn.setAttribute('aria-checked', String(!on));
 }
 
-// Tree data for album
-// Tree data - loaded from trees.json (plain array)
+// Tree data for album — populated from tree_cards.json via loadTreeData
 var albumData = [];
-fetch('trees.json').then(function(r){ return r.json(); }).then(function(data){
-  albumData = Array.isArray(data) ? data : (data.albumData || []);
+
+// Places for search — loaded from places_name.json: [{id, placeName, pincode}, ...]
+var __PLACES = [];
+var __SUGGESTIONS = [];
+function populatePlaceList() {
+  __SUGGESTIONS = [];
+  __PLACES.forEach(function (p) {
+    __SUGGESTIONS.push({ value: p.placeName, label: p.placeName + ' · ' + p.pincode });
+  });
+  var projects = [];
+  (window.__TREE_DATA || []).forEach(function (t) {
+    if (t.project && projects.indexOf(t.project) === -1) projects.push(t.project);
+  });
+  projects.forEach(function (pr) {
+    __SUGGESTIONS.push({ value: pr, label: pr });
+  });
+}
+function renderSuggestions(query) {
+  var box = document.getElementById('album-suggest');
+  if (!box) return;
+  var q = String(query || '').toLowerCase().trim();
+  if (!q) { box.classList.remove('open'); return; }
+  var list = __SUGGESTIONS.filter(function (s) {
+    return s.value.toLowerCase().indexOf(q) > -1 || s.label.toLowerCase().indexOf(q) > -1;
+  });
+  if (list.length === 0) { box.classList.remove('open'); return; }
+  box.innerHTML = '';
+  list.slice(0, 8).forEach(function (s) {
+    var item = document.createElement('div');
+    item.className = 'album-suggest-item';
+    item.textContent = s.label;
+    item.onclick = function () { chooseSuggestion(s); };
+    box.appendChild(item);
+  });
+  box.classList.add('open');
+}
+function chooseSuggestion(s) {
+  var el = document.getElementById('album-place');
+  el.value = s.value;
+  var btn = el.parentNode.querySelector('.clear-btn');
+  if (btn) btn.disabled = false;
+  document.getElementById('album-suggest').classList.remove('open');
   applyFilters();
-  adminUpdatePlaceOptions();
-  adminApplyFilters();
-}).catch(function(err){ console.error('Failed to load trees.json', err); });
+}
+document.addEventListener('click', function (e) {
+  var box = document.getElementById('album-suggest');
+  var wrap = document.querySelector('.clear-wrap');
+  if (box && wrap && !wrap.contains(e.target)) box.classList.remove('open');
+});
+function resolvePlace(query) {
+  var q = String(query).toLowerCase().trim();
+  if (!q) return null;
+  for (var i = 0; i < __PLACES.length; i++) {
+    var p = __PLACES[i];
+    if (String(p.placeName).toLowerCase() === q || String(p.pincode) === q || String(p.id).toLowerCase() === q) { return p; }
+  }
+  return null;
+}
+fetch('places_name.json').then(function(r){ return r.json(); }).then(function(data){
+  __PLACES = Array.isArray(data) ? data : [];
+  populatePlaceList();
+  applyFilters();
+}).catch(function(){});
 
 var logs = [
   { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
@@ -1640,7 +1594,10 @@ function renderAlbum(place, tree) {
   var filtered = albumData.filter(function(t) {
     var matchPlace = true;
     var matchTree = true;
-    if (place) matchPlace = q(t.address).indexOf(place) > -1;
+    if (place) {
+      var placeEntry = resolvePlace(place);
+      matchPlace = placeEntry ? (treeLoc(t) === placeEntry.placeName || t.pincode === placeEntry.pincode) : (q(t.address).indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1);
+    }
     if (tree) {
       matchTree = q(t.scientificName).indexOf(tree) > -1 ||
                   q(t.englishName).indexOf(tree) > -1 ||
@@ -1746,6 +1703,7 @@ function filterByTree(name) {
 function onInput(el) {
   var btn = el.parentNode.querySelector('.clear-btn');
   if (btn) btn.disabled = !el.value;
+  if (el.id === 'album-place') renderSuggestions(el.value);
   applyFilters();
 }
 
@@ -1755,6 +1713,7 @@ function clearInput(id) {
   el.value = '';
   var btn = el.parentNode.querySelector('.clear-btn');
   if (btn) btn.disabled = true;
+  if (id === 'album-place') document.getElementById('album-suggest').classList.remove('open');
   applyFilters();
 }
 
@@ -1861,6 +1820,89 @@ function adminRenderAlbum(pincode, place, searchId) {
 applyFilters();
 adminUpdatePlaceOptions();
 adminApplyFilters();
+
+function loadTreeData(cb) {
+  if (window.TREE_CARDS_DATA) { window.__TREE_DATA = window.TREE_CARDS_DATA; if (cb) { cb(); } return; }
+  var d = null;
+  try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
+  if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
+  try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
+  fetch('tree_cards.json').then(function (r) { return r.json(); }).then(function (data) {
+    window.__TREE_DATA = data;
+    try { localStorage.setItem('treeDataV1', JSON.stringify(data)); } catch (e) {}
+    try { window.name = 'TREE_DATA_V1=' + JSON.stringify(data); } catch (e) {}
+    if (cb) { cb(); }
+  }).catch(function () { if (cb) { cb(); } });
+}
+function treeCardHtml(t, cfg) {
+  var q = String.fromCharCode(39);
+  cfg = cfg || {};
+  var c = t.card || {};
+  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (c.addr || '');
+  var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked) : (c.statusChecked || c.statusLogged));
+  var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
+  var todo = (cfg.showTodo && c.todo) ? '<div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.todo + '</span></div>' : '';
+  var btn2Type = (cfg.btn2 !== undefined) ? cfg.btn2 : (c.btn2 || null);
+  var btn2 = '';
+  if (btn2Type === 'profile') {
+    btn2 = cfg.btn2GoTo ? '<button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'profile' + q + ')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button>'
+                       : '<button class="tcbtn tcbtn-pay" onclick="openProfile(' + q + t.treeId + q + ')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button>';
+  }
+  if (btn2Type === 'payments') { btn2 = '<button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'pay-logs' + q + ')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button>'; }
+  return '<div class="tree-card-sponsor tcard">' +
+    '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
+    '<div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + addr + '</div></div>' +
+    '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (c.bg || '') + ';">' + (c.emoji || '') + '</div>' + latest +
+    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + c.height + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + c.diameter + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + c.logs + '</div></div></div>' +
+    '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
+    '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
+}
+function renderRoleCards(target, role, cfg) {
+  var el = document.getElementById(target);
+  if (!el) { return; }
+  var data = window.__TREE_DATA || [];
+  var list = data.filter(function (t) { return t.roles && t.roles.indexOf(role) > -1; });
+  el.innerHTML = list.map(function (t) { return treeCardHtml(t, cfg); }).join('');
+}
+
+function normalizeAlbum(t) {
+  var out = {};
+  for (var k in t) { if (Object.prototype.hasOwnProperty.call(t, k)) { out[k] = t[k]; } }
+  var enc = t.encounter || {};
+  var keys = Object.keys(enc);
+  var last = enc[keys[keys.length - 1]] || {};
+  var st = last.status || {};
+  var c = t.card || {};
+  out.id = t.treeId;
+  out.name = t.englishName || t.name || c.addr || '';
+  out.emoji = t.emoji || c.emoji || '🌳';
+  out.bg = t.bg || c.bg || '';
+  out.address = t.address || c.addrFull || c.addr || '';
+  out.englishName = t.englishName || t.name || '';
+  out.localName = t.localName || '';
+  out.scientificName = t.scientificName || '';
+  out.pincode = t.pincode || '';
+  out.height = st.height || c.height || '—';
+  out.diameter = st.diameter || c.diameter || '—';
+  out.logs = t.encounters || keys.length || c.logs || 0;
+  out.cards = keys.map(function (key) {
+    var e = enc[key];
+    return { encounter: key, registeredBy: e.registeredBy || '—', registrationDate: e.registeredDate || '—', registererId: e.registererId || '—', updatedBy: '—', updatedDate: '—' };
+  });
+  return out;
+}
+
+loadTreeData(function () {
+  renderRoleCards('page-trees-cards', 'ranger', { verb: 'logged', showLatest: true, showTodo: false, addrMode: 'short' });
+  renderRoleCards('sponsor-cards', 'sponsor', { verb: 'logged', showLatest: true, showTodo: false, btn2: 'payments', addrMode: 'short' });
+  renderRoleCards('caregiver-cards', 'caregiver', { verb: 'checked', showLatest: true, showTodo: true, btn2: null, addrMode: 'short' });
+  albumData = (window.__TREE_DATA || []).filter(function (t) { return !t.mock; }).map(normalizeAlbum);
+  populatePlaceList();
+  applyFilters();
+  adminUpdatePlaceOptions();
+  adminApplyFilters();
+});
+
 </script>
 </body>
 </html>

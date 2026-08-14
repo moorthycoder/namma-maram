@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Our Tree Tracker</title>
+<title>Namma Maram</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
@@ -94,8 +94,8 @@
   .filter-btn { border-radius: 10px; background: rgba(255,255,255,0.08); color: var(--color-theme-light); border: 1.5px solid rgba(192,221,151,0.15); padding: 6px; font-size: 0.7333rem; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
   .filter-btn:hover { background: rgba(255,255,255,0.15); }
   .album-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; margin-top: 8px; }
-  .album-title { font-size: 0.6667rem; color: rgba(192,221,151,0.5); display: flex; align-items: center; gap: 4px; }
-  .album-count { font-size: 0.6rem; color: rgba(192,221,151,0.35); }
+  .album-title { font-size: 0.6667rem; color: var(--color-theme-light); display: flex; align-items: center; gap: 4px; }
+  .album-count { font-size: 0.6rem; color: var(--color-theme-light); }
   .album-toggle { display: flex; align-items: center; justify-content: center; border: none; background: rgba(192,221,151,0.15); color: var(--color-theme-light); width: 22px; height: 22px; border-radius: 6px; cursor: pointer; font-size: 0.8667rem; padding: 0; }
   .album-toggle.off { opacity: 0.4; }
   .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -338,8 +338,8 @@
       
       <div class="main-hero">
         <div class="main-logo"><div class="tree-emoji">🌴</div></div>
-        <div class="main-title">Our Tree Tracker</div>
-        <div class="main-sub">Monitoring ensures Good Health</div>
+        <div class="main-title">Namma Maram</div>
+        <div class="main-sub">Nature and us are one and same</div>
       </div>
       
       <div class="album-filters">
@@ -392,7 +392,7 @@
         <div class="section-title" style="font-size:0.8rem;color:var(--color-text-secondary);margin-top:4px;">Recent activity</div>
         <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">New ranger registered</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">GRR-2026-042 · 10 min ago</div></div></div>
         <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Sponsor payment verified</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">Madhavi I · ₹300 · 2 hrs ago</div></div></div>
-        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Tree log flagged</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">625017-02-001 · Needs review · 1 day ago</div></div></div>
+        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Tree log flagged</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">625017-02-0001 · Needs review · 1 day ago</div></div></div>
       </div>
     </div>
     <div class="page" id="page-admin-trackers">
@@ -521,7 +521,7 @@
     <div class="page" id="page-admin-edit-tree">
       <div class="topbar"><button class="back-btn" onclick="goTo('admin-trees')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Edit tree</span></div>
       <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" id="edit-tree-id" value="625008-01-001" readonly style="background:var(--color-background-secondary);color:var(--color-text-secondary);" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" id="edit-tree-id" value="625008-01-0001" readonly style="background:var(--color-background-secondary);color:var(--color-text-secondary);" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Name</div><input class="field-inp" type="text" id="edit-tree-name" value="Neem Tree" /></div>
         <button class="ghost-btn" style="color:#dc2626;border-color:#dc2626;" onclick="document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i> Delete this tree</button>
         <div style="border-top:0.5px solid var(--color-border-tertiary);margin:4px 0;"></div>
@@ -531,7 +531,7 @@
     <div class="page" id="page-admin-add-tree">
       <div class="topbar"><button class="back-btn" onclick="goTo('admin-trees')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Add new tree</span></div>
       <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" placeholder="e.g. 625008-01-006" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" placeholder="e.g. 625008-01-0006" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Name</div><input class="field-inp" type="text" placeholder="e.g. Neem Tree" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i> Pincode</div><input class="field-inp" type="text" placeholder="e.g. 625008" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-building" style="font-size:0.8667rem"></i> Location</div><input class="field-inp" type="text" placeholder="e.g. Anna Nagar" /></div>
@@ -539,7 +539,7 @@
       </div>
     </div>
     <div class="page" id="page-profile">
-      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-001</span></div>
+      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
       <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
       <div class="scrollable" style="padding:12px 14px 20px;">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
