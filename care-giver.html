@@ -160,52 +160,6 @@
   .album-note { margin: 0 13px 13px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 9px 11px; }
   .album-note-label { font-size: 0.6667rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
 
-  /* ── SCAN STEPS ── */
-  .steps { display: flex; align-items: center; justify-content: center; padding: 10px 20px 0; flex-shrink: 0; }
-  .step-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7333rem; font-weight: 500; }
-  .step-dot.active { background: var(--color-theme); color: #fff; box-shadow: 0 0 0 3px rgba(59,109,17,0.2); }
-  .step-dot.done { background: var(--color-theme); color: #fff; }
-  .step-dot.pending { background: var(--color-background-secondary); color: var(--color-text-secondary); }
-  .step-line { flex: 1; height: 1.5px; background: var(--color-border-tertiary); margin: 0 4px; }
-  .step-line.done { background: var(--color-theme); }
-  .step-labels { display: flex; justify-content: space-between; padding: 3px 8px 0; flex-shrink: 0; }
-  .step-lbl { font-size: 0.6667rem; color: var(--color-text-secondary); text-align: center; width: 60px; }
-  .step-lbl.active { color: var(--color-theme); font-weight: 500; }
-  .camera-box { width: 100%; aspect-ratio: 4/3; border-radius: 12px; background: #111; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-  .scan-frame { width: 70%; height: 50%; border: 2px solid rgba(255,255,255,0.5); border-radius: 8px; position: relative; }
-  .sc { position: absolute; width: 13px; height: 13px; border-color: #4ade80; border-style: solid; }
-  .tl{top:-2px;left:-2px;border-width:2px 0 0 2px;} .tr{top:-2px;right:-2px;border-width:2px 2px 0 0;} .bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px;} .br{bottom:-2px;right:-2px;border-width:0 2px 2px 0;}
-  @keyframes scanline{0%{top:10%}100%{top:90%}}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-  .scan-line{position:absolute;left:5%;width:90%;height:2px;background:rgba(74,222,128,0.6);animation:scanline 1.8s ease-in-out infinite alternate;}
-  .scan-hint{color:rgba(74,222,128,0.9);font-size:0.7333rem;position:absolute;bottom:26px;animation:pulse 1.5s infinite;}
-  .capture-btn{width:48px;height:48px;border-radius:50%;background:#fff;border:3px solid rgba(255,255,255,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;bottom:12px;}
-  .capture-inner{width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid #ddd;}
-  .field-wrap { position: relative; margin-bottom: 12px; }
-  .field-input { width: 100%; padding: 10px 36px 10px 12px; border-radius: var(--border-radius-md); border: 1.5px solid var(--color-theme); font-size: 0.9333rem; font-family: monospace; font-weight: 500; letter-spacing: 1.5px; background: var(--color-background-primary); color: var(--color-text-primary); outline: none; }
-  .field-input.normal { border-color: var(--color-border-secondary); font-family: var(--font-sans); letter-spacing: normal; font-weight: 400; font-size: 0.8667rem; }
-  .field-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 1rem; color: var(--color-text-secondary); }
-  .field-label { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
-  .field-unit { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: var(--color-text-secondary); }
-  .photo-preview{width:100%;aspect-ratio:16/7;border-radius:10px;background:#1a1a0a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:12px;}
-  .nameplate-mock{background:#f5f0e0;border-radius:5px;padding:8px 16px;border:1.5px solid #c8b870;text-align:center;}
-  .plate-title{font-size:0.6rem;color:#6b5e2a;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
-  .plate-id{font-size:1.2rem;font-weight:500;color:#2a1f05;letter-spacing:2px;font-family:monospace;}
-  .plate-sub{font-size:0.5333rem;color:#8a7540;margin-top:2px;}
-  .ocr-badge{position:absolute;top:7px;right:7px;background:rgba(59,109,17,0.85);color:#fff;font-size:0.6667rem;padding:3px 8px;border-radius:20px;display:flex;align-items:center;gap:3px;}
-  .ocr-note{font-size:0.7333rem;color:var(--color-theme);background:var(--color-theme-light);border-radius:6px;padding:7px 10px;margin-bottom:12px;display:flex;align-items:flex-start;gap:5px;line-height:1.5;}
-  .id-badge{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:7px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-  .photo-strip{display:flex;gap:7px;margin-bottom:12px;}
-  .photo-thumb{width:50px;height:50px;border-radius:7px;border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:1.3333rem;background:var(--color-background-secondary);}
-  .photo-add{width:50px;height:50px;border-radius:7px;border:1.5px dashed var(--color-border-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary);font-size:1.2rem;}
-  textarea{width:100%;padding:9px 11px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:0.8rem;color:var(--color-text-primary);background:var(--color-background-primary);resize:none;font-family:var(--font-sans);line-height:1.5;height:64px;outline:none;}
-
-  /* ── SUCCESS ── */
-  .success-top{background:var(--color-theme-light);padding:24px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;}
-  .check-ring{width:58px;height:58px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;}
-  @keyframes popIn{0%{transform:scale(0.4);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-  .check-ring{animation:popIn 0.5s ease forwards;}
-
   /* ── TRACKER DASH ── */
   .dash-header{background:var(--color-theme-dark);padding:12px 14px 16px;flex-shrink:0;}
   .dash-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
@@ -406,7 +360,7 @@
     </div>
     <div class="page" id="page-caregiver-dash">
       <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name">Lakshmi</div></div><div class="savatar" onclick="toggleCLogoutDrop()" style="cursor:pointer;position:relative;">LR<div class="logout-drop" id="clogout-drop"><div class="dd-item" onclick="goTo('main')" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name">Lakshmi</div></div><div class="savatar" onclick="toggleCLogoutDrop()" style="cursor:pointer;position:relative;">LR<div class="logout-drop" id="clogout-drop"><div class="dd-item" onclick="location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div style="font-size:0.8667rem;color:var(--color-text-secondary);margin-top:12px;">What would you like to do today?</div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;gap:12px;">
@@ -424,14 +378,19 @@
         </div>
         <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('caregiver-browse')">
           <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#fdf0dc;">🌱</div>
-          <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Register a tree</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Adopt a new tree in your area</div></div>
+          <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Adopt a registered tree</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Adopt an existing tree in your area</div></div>
+          <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('register-tree')">
+          <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#e6eddc;">🌳</div>
+          <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Register and adopt a tree</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Register a new tree in the registry</div></div>
           <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
         </div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-current">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Current trees</span></div>
-      <div class="scrollable"><div id="caregiver-past-cards" style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
         <div class="sdash-stats" style="margin-bottom:18px;">
           <div class="sdash-stat"><div class="sdash-stat-label">Trees in care</div><div class="sdash-stat-val" id="c-tree-count">4</div></div>
           <div class="sdash-stat"><div class="sdash-stat-label">Checks this month</div><div class="sdash-stat-val" id="c-monthly">8</div></div>
@@ -448,6 +407,7 @@
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Past trees</span></div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
         <div class="section-title" style="margin-bottom:12px;">Trees you used to care for</div>
+        <div id="caregiver-past-cards"></div>
         <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:6px;"><i class="ti ti-history" style="font-size:0.8rem"></i> You can re-adopt these trees anytime</div>
       </div></div>
     </div>
@@ -456,9 +416,9 @@
       <div style="padding:10px 14px 6px;flex-shrink:0;"><div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;display:flex;align-items:center;gap:8px;"><i class="ti ti-search" style="font-size:0.9333rem;color:var(--color-text-secondary)"></i><span style="font-size:0.8667rem;color:var(--color-text-secondary);">Search by ID or area...</span></div></div>
       <div class="scrollable"><div style="padding:10px 14px;">
         <div class="section-title" style="margin-bottom:10px;">Available trees</div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#2d5a1b,#3B6D11);">🌴</div><div class="browse-card-body"><div class="browse-card-id">625018-03-0002</div><div class="browse-card-name">Banyan Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Palamedu Govt School</div></div><button class="add-btn" id="cg-add-625018-03-0002" onclick="addCaredTree(this,'Banyan Tree #625018-03-0002','Palamedu Govt School','linear-gradient(135deg,#2d5a1b,#3B6D11)','🌴',12,'38cm',21)"><i class="ti ti-plus"></i></button></div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌸</div><div class="browse-card-body"><div class="browse-card-id">625028-04-0001</div><div class="browse-card-name">Gulmohar Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kondaiyampatti Govt School</div></div><button class="add-btn" id="cg-add-625028-04-0001" onclick="addCaredTree(this,'Gulmohar Tree #625028-04-0001','Kondaiyampatti Govt School','linear-gradient(135deg,#3B6D11,#639922)','🌸',6,'11cm',5)"><i class="ti ti-plus"></i></button></div>
-        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#1e3d0f,#2d5a1b);">🌳</div><div class="browse-card-body"><div class="browse-card-id">625020-05-0001</div><div class="browse-card-name">Rain Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kallanai Primary School</div></div><button class="add-btn" id="cg-add-625020-05-0001" onclick="addCaredTree(this,'Rain Tree #625020-05-0001','Kallanai Primary School','linear-gradient(135deg,#1e3d0f,#2d5a1b)','🌳',9,'18cm',11)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#2d5a1b,#3B6D11);">🌴</div><div class="browse-card-body"><div class="browse-card-id">625018-03-0002</div><div class="browse-card-name">Banyan Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Palamedu Govt School</div></div><button class="add-btn" id="cg-add-625018-03-0002" onclick="var f={btn:this,treeId:'625018-03-0002',englishName:'Banyan Tree',address:'Palamedu Govt School',bg:'linear-gradient(135deg,#2d5a1b,#3B6D11)',emoji:'🌴',height:12,diam:'38cm',logs:21};careATree(f)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#3B6D11,#639922);">🌸</div><div class="browse-card-body"><div class="browse-card-id">625028-04-0001</div><div class="browse-card-name">Gulmohar Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kondaiyampatti Govt School</div></div><button class="add-btn" id="cg-add-625028-04-0001" onclick="var f={btn:this,treeId:'625028-04-0001',englishName:'Gulmohar Tree',address:'Kondaiyampatti Govt School',bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🌸',height:6,diam:'11cm',logs:5};careATree(f)"><i class="ti ti-plus"></i></button></div>
+        <div class="browse-card"><div class="browse-card-thumb" style="background:linear-gradient(135deg,#1e3d0f,#2d5a1b);">🌳</div><div class="browse-card-body"><div class="browse-card-id">625020-05-0001</div><div class="browse-card-name">Rain Tree</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>Kallanai Primary School</div></div><button class="add-btn" id="cg-add-625020-05-0001" onclick="var f={btn:this,treeId:'625020-05-0001',englishName:'Rain Tree',address:'Kallanai Primary School',bg:'linear-gradient(135deg,#1e3d0f,#2d5a1b)',emoji:'🌳',height:9,diam:'18cm',logs:11};careATree(f)"><i class="ti ti-plus"></i></button></div>
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">
@@ -688,16 +648,16 @@ function toggleNotif(btn) {
 
 
 // Tree data for album
-// Tree data - loaded from trees.json (plain array)
+// Tree data - loaded from tree_cards.json
 var albumData = [];
-fetch('trees.json').then(function(r){ return r.json(); }).then(function(data){
+fetch('tree_cards.json').then(function(r){ return r.json(); }).then(function(data){
   albumData = Array.isArray(data) ? data : (data.albumData || []);
   applyFilters();
   if (document.getElementById('admin-pincode'))
   if (document.getElementById('admin-pincode')) adminUpdatePlaceOptions();
   if (document.getElementById('admin-grid'))
   if (document.getElementById('admin-grid')) adminApplyFilters();
-}).catch(function(err){ console.error('Failed to load trees.json', err); });
+}).catch(function(err){ console.error('Failed to load tree_cards.json', err); });
 
 var logs = [
   { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
@@ -772,7 +732,7 @@ function goTo(page) {
   document.getElementById('page-'+page).classList.add('active');
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
-  if (['main','caregiver-login','caregiver-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
+  if (['main','caregiver-login','caregiver-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','append-tree-name','register-tree','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
   else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash','caregiver-current','caregiver-past'].indexOf(page) > -1) sb.classList.add('blue');
   document.getElementById('dropdown').classList.remove('open');
   var alogout = document.getElementById('alogout-drop');
@@ -879,14 +839,6 @@ function closeMapModal() {
 }
 
 
-// Scan
-
-function doCapture() {
-  document.getElementById('scan-hint').textContent = 'Reading text...';
-  setTimeout(function(){ goTo('verify'); }, 900);
-}
-
-
 // Album
 
 function openAlbum(i) {
@@ -930,22 +882,34 @@ function toggleTreeCard(btn) {
   ic.className = open ? 'ti ti-chevron-down' : 'ti ti-chevron-up';
 }
 
-function addCaredTree(btn, name, loc, bg, emoji, height, diam, logs, treeId) {
+function registerAndAdoptATree() {
+  var reg = registerATree();
+  careATree(reg);
+}
+
+function careATree(form) {
   var cards = document.getElementById('caregiver-cards');
   if (cards.querySelectorAll('.tree-card-sponsor').length >= max_register_care_giver) {
     showRegisterStatus('limit');
     return;
   }
-  btn.classList.add('added');
-  btn.innerHTML = '<i class="ti ti-check"></i>';
-  btn.onclick = null;
+  if (form.btn) {
+    form.btn.classList.add('added');
+    form.btn.innerHTML = '<i class="ti ti-check"></i>';
+    form.btn.onclick = null;
+  }
   caredCount++;
   document.getElementById('c-tree-count').textContent = caredCount;
-  var id = treeId || name.split('#')[1] || '';
+  var id = form.treeId || '';
+  var name = form.englishName || '';
+  var loc = form.address || '';
+  var height = form.height !== undefined ? form.height : 0;
+  var diam = form.diam || '—';
+  var logs = form.logs !== undefined ? form.logs : 0;
   var card = document.createElement('div');
   card.className = 'tree-card-sponsor tcard';
   card.style.opacity = '0';
-  card.innerHTML = '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">'+emoji+' '+id+'</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div><div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> '+loc+'</div></div><div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:'+bg+';">'+emoji+'</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter \u2014 Today \u2014 You</span></div><div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">'+height+'m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">'+diam+'</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">'+logs+'</div></div></div><div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy</div></div><div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do \u2014 Routine check-up; no action needed.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></button></div></div>';
+  card.innerHTML = '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">'+form.emoji+' '+id+'</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div><div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> '+loc+'</div></div><div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:'+form.bg+';">'+form.emoji+'</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter \u2014 Today \u2014 You</span></div><div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">'+height+'m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">'+diam+'</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">'+logs+'</div></div></div><div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy</div></div><div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do \u2014 Routine check-up; no action needed.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></button></div></div>';
   cards.appendChild(card);
   requestAnimationFrame(function(){ card.style.transition = 'opacity .3s'; card.style.opacity = '1'; });
   setTimeout(function(){ goTo('caregiver-current'); }, 500);
@@ -971,7 +935,7 @@ function renderAlbum(place, tree) {
   var filtered = albumData.filter(function(t) {
     var matchPlace = true;
     var matchTree = true;
-    if (place) matchPlace = q(t.address).indexOf(place) > -1;
+    if (place) matchPlace = q(t.address).indexOf(place) > -1 || q(t.addressLocalLang || '').indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1;
     if (tree) {
       matchTree = q(t.scientificName).indexOf(tree) > -1 ||
                   q(t.englishName).indexOf(tree) > -1 ||
@@ -1135,23 +1099,29 @@ applyFilters();
 
 function loadTreeData(cb) {
   if (window.TREE_CARDS_DATA) { window.__TREE_DATA = window.TREE_CARDS_DATA; if (cb) { cb(); } return; }
-  var d = null;
-  try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
-  if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
-  try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
   fetch('tree_cards.json').then(function (r) { return r.json(); }).then(function (data) {
     window.__TREE_DATA = data;
     try { localStorage.setItem('treeDataV1', JSON.stringify(data)); } catch (e) {}
     try { window.name = 'TREE_DATA_V1=' + JSON.stringify(data); } catch (e) {}
     if (cb) { cb(); }
-  }).catch(function () { if (cb) { cb(); } });
+  }).catch(function () {
+    var d = null;
+    try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
+    if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
+    try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
+    if (cb) { cb(); }
+  });
 }
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
   cfg = cfg || {};
   var c = t.card || {};
-  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (c.addr || '');
-  var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked) : (c.statusChecked || c.statusLogged));
+  var enc = t.encounter || {};
+  var keys = Object.keys(enc);
+  var last = enc[keys[keys.length - 1]] || {};
+  var st = last.status || {};
+  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
+  var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
   var todo = (cfg.showTodo && c.todo) ? '<div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.todo + '</span></div>' : '';
   var btn2Type = (cfg.btn2 !== undefined) ? cfg.btn2 : (c.btn2 || null);
@@ -1162,10 +1132,10 @@ function treeCardHtml(t, cfg) {
   }
   if (btn2Type === 'payments') { btn2 = '<button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'pay-logs' + q + ')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button>'; }
   return '<div class="tree-card-sponsor tcard">' +
-    '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
+    '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (t.emoji || c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
     '<div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + addr + '</div></div>' +
-    '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (c.bg || '') + ';">' + (c.emoji || '') + '</div>' + latest +
-    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + c.height + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + c.diameter + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + c.logs + '</div></div></div>' +
+    '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (t.bg || c.bg || '') + ';">' + (t.emoji || c.emoji || '') + '</div>' + latest +
+    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (st.height || c.height || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
     '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
 }
@@ -1183,6 +1153,11 @@ loadTreeData(function () {
   renderRoleCards('caregiver-past-cards', 'caregiver-past', { verb: 'checked', showLatest: true, showTodo: false, btn2: null, addrMode: 'short' });
 });
 
+var hubMode = new URLSearchParams(location.search).get('hub');
+if (hubMode === 'login') { goTo('caregiver-login'); }
+else if (hubMode === 'register') { goTo('caregiver-enroll'); }
+
 </script>
+<script src="register-a-tree.js"></script>
 </body>
 </html>

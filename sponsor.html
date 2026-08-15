@@ -160,52 +160,6 @@
   .album-note { margin: 0 13px 13px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 9px 11px; }
   .album-note-label { font-size: 0.6667rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
 
-  /* ── SCAN STEPS ── */
-  .steps { display: flex; align-items: center; justify-content: center; padding: 10px 20px 0; flex-shrink: 0; }
-  .step-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7333rem; font-weight: 500; }
-  .step-dot.active { background: var(--color-theme); color: #fff; box-shadow: 0 0 0 3px rgba(59,109,17,0.2); }
-  .step-dot.done { background: var(--color-theme); color: #fff; }
-  .step-dot.pending { background: var(--color-background-secondary); color: var(--color-text-secondary); }
-  .step-line { flex: 1; height: 1.5px; background: var(--color-border-tertiary); margin: 0 4px; }
-  .step-line.done { background: var(--color-theme); }
-  .step-labels { display: flex; justify-content: space-between; padding: 3px 8px 0; flex-shrink: 0; }
-  .step-lbl { font-size: 0.6667rem; color: var(--color-text-secondary); text-align: center; width: 60px; }
-  .step-lbl.active { color: var(--color-theme); font-weight: 500; }
-  .camera-box { width: 100%; aspect-ratio: 4/3; border-radius: 12px; background: #111; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-  .scan-frame { width: 70%; height: 50%; border: 2px solid rgba(255,255,255,0.5); border-radius: 8px; position: relative; }
-  .sc { position: absolute; width: 13px; height: 13px; border-color: #4ade80; border-style: solid; }
-  .tl{top:-2px;left:-2px;border-width:2px 0 0 2px;} .tr{top:-2px;right:-2px;border-width:2px 2px 0 0;} .bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px;} .br{bottom:-2px;right:-2px;border-width:0 2px 2px 0;}
-  @keyframes scanline{0%{top:10%}100%{top:90%}}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-  .scan-line{position:absolute;left:5%;width:90%;height:2px;background:rgba(74,222,128,0.6);animation:scanline 1.8s ease-in-out infinite alternate;}
-  .scan-hint{color:rgba(74,222,128,0.9);font-size:0.7333rem;position:absolute;bottom:26px;animation:pulse 1.5s infinite;}
-  .capture-btn{width:48px;height:48px;border-radius:50%;background:#fff;border:3px solid rgba(255,255,255,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;bottom:12px;}
-  .capture-inner{width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid #ddd;}
-  .field-wrap { position: relative; margin-bottom: 12px; }
-  .field-input { width: 100%; padding: 10px 36px 10px 12px; border-radius: var(--border-radius-md); border: 1.5px solid var(--color-theme); font-size: 0.9333rem; font-family: monospace; font-weight: 500; letter-spacing: 1.5px; background: var(--color-background-primary); color: var(--color-text-primary); outline: none; }
-  .field-input.normal { border-color: var(--color-border-secondary); font-family: var(--font-sans); letter-spacing: normal; font-weight: 400; font-size: 0.8667rem; }
-  .field-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 1rem; color: var(--color-text-secondary); }
-  .field-label { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
-  .field-unit { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: var(--color-text-secondary); }
-  .photo-preview{width:100%;aspect-ratio:16/7;border-radius:10px;background:#1a1a0a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:12px;}
-  .nameplate-mock{background:#f5f0e0;border-radius:5px;padding:8px 16px;border:1.5px solid #c8b870;text-align:center;}
-  .plate-title{font-size:0.6rem;color:#6b5e2a;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
-  .plate-id{font-size:1.2rem;font-weight:500;color:#2a1f05;letter-spacing:2px;font-family:monospace;}
-  .plate-sub{font-size:0.5333rem;color:#8a7540;margin-top:2px;}
-  .ocr-badge{position:absolute;top:7px;right:7px;background:rgba(59,109,17,0.85);color:#fff;font-size:0.6667rem;padding:3px 8px;border-radius:20px;display:flex;align-items:center;gap:3px;}
-  .ocr-note{font-size:0.7333rem;color:var(--color-theme);background:var(--color-theme-light);border-radius:6px;padding:7px 10px;margin-bottom:12px;display:flex;align-items:flex-start;gap:5px;line-height:1.5;}
-  .id-badge{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:7px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-  .photo-strip{display:flex;gap:7px;margin-bottom:12px;}
-  .photo-thumb{width:50px;height:50px;border-radius:7px;border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:1.3333rem;background:var(--color-background-secondary);}
-  .photo-add{width:50px;height:50px;border-radius:7px;border:1.5px dashed var(--color-border-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary);font-size:1.2rem;}
-  textarea{width:100%;padding:9px 11px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:0.8rem;color:var(--color-text-primary);background:var(--color-background-primary);resize:none;font-family:var(--font-sans);line-height:1.5;height:64px;outline:none;}
-
-  /* ── SUCCESS ── */
-  .success-top{background:var(--color-theme-light);padding:24px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;}
-  .check-ring{width:58px;height:58px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;}
-  @keyframes popIn{0%{transform:scale(0.4);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-  .check-ring{animation:popIn 0.5s ease forwards;}
-
   /* ── TRACKER DASH ── */
   .dash-header{background:var(--color-theme-dark);padding:12px 14px 16px;flex-shrink:0;}
   .dash-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
@@ -393,7 +347,7 @@
     </div>
     <div class="page" id="page-sponsor-dash">
       <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;">MI<div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="goTo('main')" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;">MI<div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div class="sdash-stats">
           <div class="sdash-stat"><div class="sdash-stat-label">Trees sponsored</div><div class="sdash-stat-val" id="s-tree-count">2</div></div>
           <div class="sdash-stat"><div class="sdash-stat-label">Monthly total</div><div class="sdash-stat-val" id="s-monthly">₹600</div></div>
@@ -670,16 +624,16 @@ function toggleNotif(btn) {
 
 
 // Tree data for album
-// Tree data - loaded from trees.json (plain array)
+// Tree data - loaded from tree_cards.json
 var albumData = [];
-fetch('trees.json').then(function(r){ return r.json(); }).then(function(data){
+fetch('tree_cards.json').then(function(r){ return r.json(); }).then(function(data){
   albumData = Array.isArray(data) ? data : (data.albumData || []);
   applyFilters();
   if (document.getElementById('admin-pincode'))
   if (document.getElementById('admin-pincode')) adminUpdatePlaceOptions();
   if (document.getElementById('admin-grid'))
   if (document.getElementById('admin-grid')) adminApplyFilters();
-}).catch(function(err){ console.error('Failed to load trees.json', err); });
+}).catch(function(err){ console.error('Failed to load tree_cards.json', err); });
 
 var logs = [
   { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
@@ -861,14 +815,6 @@ function closeMapModal() {
 }
 
 
-// Scan
-
-function doCapture() {
-  document.getElementById('scan-hint').textContent = 'Reading text...';
-  setTimeout(function(){ goTo('verify'); }, 900);
-}
-
-
 // Album
 
 function openAlbum(i) {
@@ -943,7 +889,7 @@ function renderAlbum(place, tree) {
   var filtered = albumData.filter(function(t) {
     var matchPlace = true;
     var matchTree = true;
-    if (place) matchPlace = q(t.address).indexOf(place) > -1;
+    if (place) matchPlace = q(t.address).indexOf(place) > -1 || q(t.addressLocalLang || '').indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1;
     if (tree) {
       matchTree = q(t.scientificName).indexOf(tree) > -1 ||
                   q(t.englishName).indexOf(tree) > -1 ||
@@ -1108,10 +1054,14 @@ applyFilters();
 function sponsorCardHtml(t) {
   var q = String.fromCharCode(39);
   var c = t.card || {};
-  var status = c.statusLogged || c.statusChecked || '';
+  var enc = t.encounter || {};
+  var keys = Object.keys(enc);
+  var last = enc[keys[keys.length - 1]] || {};
+  var st = last.status || {};
+  var status = c.statusLogged || c.statusChecked || st.health || '';
   return '<div class="tree-card-sponsor">' +
-    '<div class="tree-card-hero" style="background:' + (c.bg || '') + ';cursor:pointer;" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (c.emoji || '') + ' ' + t.name + '</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> ' + (c.addr || '') + '</p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + c.height + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + c.diameter + '</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">' + c.logs + '</div></div></div>' +
+    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + (t.englishName || t.name || '') + '</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> ' + (t.address || c.addr || '') + '</p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tree-card-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div></div>' +
     '<div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'pay-logs' + q + ')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>' +
     '</div>';
@@ -1126,23 +1076,29 @@ function renderSponsorCards() {
 
 function loadTreeData(cb) {
   if (window.TREE_CARDS_DATA) { window.__TREE_DATA = window.TREE_CARDS_DATA; if (cb) { cb(); } return; }
-  var d = null;
-  try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
-  if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
-  try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
   fetch('tree_cards.json').then(function (r) { return r.json(); }).then(function (data) {
     window.__TREE_DATA = data;
     try { localStorage.setItem('treeDataV1', JSON.stringify(data)); } catch (e) {}
     try { window.name = 'TREE_DATA_V1=' + JSON.stringify(data); } catch (e) {}
     if (cb) { cb(); }
-  }).catch(function () { if (cb) { cb(); } });
+  }).catch(function () {
+    var d = null;
+    try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
+    if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
+    try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
+    if (cb) { cb(); }
+  });
 }
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
   cfg = cfg || {};
   var c = t.card || {};
-  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (c.addr || '');
-  var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked) : (c.statusChecked || c.statusLogged));
+  var enc = t.encounter || {};
+  var keys = Object.keys(enc);
+  var last = enc[keys[keys.length - 1]] || {};
+  var st = last.status || {};
+  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
+  var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
   var todo = (cfg.showTodo && c.todo) ? '<div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.todo + '</span></div>' : '';
   var btn2Type = (cfg.btn2 !== undefined) ? cfg.btn2 : (c.btn2 || null);
@@ -1153,10 +1109,10 @@ function treeCardHtml(t, cfg) {
   }
   if (btn2Type === 'payments') { btn2 = '<button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'pay-logs' + q + ')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button>'; }
   return '<div class="tree-card-sponsor tcard">' +
-    '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
+    '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (t.emoji || c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
     '<div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + addr + '</div></div>' +
-    '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (c.bg || '') + ';">' + (c.emoji || '') + '</div>' + latest +
-    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + c.height + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + c.diameter + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + c.logs + '</div></div></div>' +
+    '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (t.bg || c.bg || '') + ';">' + (t.emoji || c.emoji || '') + '</div>' + latest +
+    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (st.height || c.height || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
     '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
 }
@@ -1169,6 +1125,10 @@ function renderRoleCards(target, role, cfg) {
 }
 
 loadTreeData(renderSponsorCards);
+
+var hubMode = new URLSearchParams(location.search).get('hub');
+if (hubMode === 'login') { goTo('sponsor-login'); }
+else if (hubMode === 'register') { goTo('sponsor-enroll'); }
 
 </script>
 </body>
