@@ -1,0 +1,5 @@
+
+  html, body { height: 100%; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  #map { height: 100%; width: 100%; }
+  .giw { text-align: center; }
+  .giw b { display: block; font-size: 14px; margin-bottom: 2px; }

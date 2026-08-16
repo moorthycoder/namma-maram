@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Namma Maram · Search</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/filter.css" />
+</head>
+<body>
+<div class="screen">
+    <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
+
+    <!-- MAIN - ALBUM PAGE -->
+    <div class="page active" id="page-main">
+      <div class="main-topbar">
+        <button class="dots-btn" onclick="toggleDD()"><i class="ti ti-dots-vertical"></i></button>
+        <div class="dropdown" id="dropdown">
+          <div class="dd-item" onclick="location.href='login-hub.html'"><i class="ti ti-login" style="font-size:1rem;color:var(--color-theme)"></i> Login</div>
+          <div class="dd-item" onclick="location.href='register-hub.html'"><i class="ti ti-user-plus" style="font-size:1rem;color:var(--color-theme)"></i> Register</div>
+        </div>
+      </div>
+
+      <div class="main-hero">
+        <div class="main-logo"><div class="tree-emoji">🌴</div></div>
+        <div class="main-title">Namma Maram</div>
+        <div class="main-sub">Nature and us are one and same</div>
+      </div>
+
+      <div class="album-filters">
+        <div class="filter-row" style="flex-direction:column;gap:8px;">
+          <div class="clear-wrap">
+            <input class="id-input" id="album-place" type="text" placeholder="Type Place, Pincode or Project" autocomplete="new-password" oninput="onInput(this)" onkeyup="onInput(this)" />
+            <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
+            <div class="album-suggest" id="album-suggest"></div>
+          </div>
+          <div class="clear-wrap">
+            <input class="id-input" id="album-tree" type="text" placeholder="Type Tree Name" autocomplete="new-password" oninput="onInput(this)" onkeyup="onInput(this)" />
+            <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="album-container">
+        <div class="album-header">
+          <span class="album-title"><i class="ti ti-search"></i> Search Results</span>
+          <span style="display:flex;align-items:center;gap:8px;">
+            <span class="album-count" id="album-count">0 trees</span>
+            <button class="album-toggle" id="summary-toggle" type="button" onclick="toggleSummary()"><i class="ti ti-eye"></i></button>
+          </span>
+        </div>
+
+        <div class="album-summary" id="album-summary"></div>
+        <div class="album-grid" id="album-grid"></div>
+      </div>
+    </div>
+
+    <!-- TREE PROFILE -->
+    <div class="page" id="page-profile">
+      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
+      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1 id="profile-hero-title">Neem Tree #0042</h1><p id="profile-hero-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
+      <div class="scrollable" style="padding:12px 14px 20px;">
+        <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
+        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
+        <div class="section-title">Tree info</div>
+        <div class="info-card" style="margin-bottom:14px;">
+          <div class="info-row"><span class="info-key"><i class="ti ti-leaf" style="font-size:0.8667rem"></i>Species</span><span class="info-val">Azadirachta indica</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-user" style="font-size:0.8667rem"></i>Added by</span><span class="info-val">Ravi K.</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>First logged</span><span class="info-val">Mar 2019</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list" style="font-size:0.8667rem"></i>Total logs</span><span class="info-val">14 entries</span></div>
+        </div>
+        <div class="section-title">Growth logs</div>
+        <div class="info-card">
+          <div class="log-entry" onclick="openAlbum(0)"><div class="log-dot" style="background:#3B6D11"></div><div class="log-body"><div class="log-date">12 Jun 2026</div><div class="log-text">8.4 m · 22 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>3 photos</span></div></div><div class="log-thumb" style="background:#2d4a2d;">🌿</div></div>
+          <div class="log-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB"></div><div class="log-body"><div class="log-date">10 Jan 2026</div><div class="log-text">8.1 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div><div class="log-thumb" style="background:#1e3d1e;">🌳</div></div>
+          <div class="log-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97"></div><div class="log-body"><div class="log-date">15 Jul 2025</div><div class="log-text">7.6 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips"><span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span></div></div><div class="log-thumb" style="background:var(--color-background-secondary);border:0.5px dashed var(--color-border-secondary);"><i class="ti ti-photo-off" style="font-size:1rem;color:var(--color-text-secondary)"></i></div></div>
+        </div>
+        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
+      </div>
+    </div>
+
+    <!-- ALBUM PAGE (log photos) -->
+    <div class="page" id="page-album">
+      <div class="topbar"><button class="back-btn" id="album-back-btn" onclick="goTo(albumFrom)"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="album-title">Log photos</span></div>
+      <div class="album-meta"><div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;" id="album-date">12 Jun 2026</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);display:flex;gap:10px;"><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-ruler" style="font-size:0.7333rem"></i><span id="album-h">8.4 m</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-circle" style="font-size:0.7333rem"></i><span id="album-d">22 cm</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-camera" style="font-size:0.7333rem"></i><span id="album-c">3 photos</span></span></div></div>
+      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div style="font-size:0.8rem;color:var(--color-text-primary);line-height:1.5;" id="album-note"></div></div></div>
+    </div>
+
+    <!-- TREE MAP FULLSCREEN MODAL -->
+    <div class="map-modal-back" id="map-modal">
+      <div class="map-modal-head">
+        <button class="back-btn" onclick="closeMapModal()"><i class="ti ti-arrow-left"></i></button>
+        <span class="topbar-title">Tree map</span>
+      </div>
+      <iframe class="map-frame" id="map-frame" title="Tree map"></iframe>
+    </div>
+
+  </div>
+<script src="js/filter.js"></script>
+</body>
+</html>

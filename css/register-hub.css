@@ -1,0 +1,35 @@
+
+  :root {
+    --color-theme: #3B6D11;
+    --color-theme-dark: #1e3d0f;
+    --color-theme-light: #EAF3DE;
+    --color-theme-accent: #C0DD97;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f4f4f4;
+    --color-text-primary: #111111;
+    --color-text-secondary: #666666;
+    --color-border-tertiary: #e0e0e0;
+    --color-border-secondary: #cccccc;
+    --border-radius-md: 10px;
+    --border-radius-lg: 14px;
+    --font-sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
+  html { font-size: 15px; }
+  body { background: #e8e8e8; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 24px 0; }
+  .phone { background: #1a1a1a; border-radius: 36px; padding: 10px; width: 320px; box-shadow: 0 0 0 1px #333, 0 20px 60px rgba(0,0,0,0.3); }
+  .screen { background: var(--color-background-primary); border-radius: 28px; overflow: hidden; height: 600px; display: flex; flex-direction: column; position: relative; }
+  .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
+  .status-bar.dark span { color: var(--color-theme-light); }
+  .page { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+  .scrollable { overflow-y: auto; flex: 1; }
+  .back-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--color-text-primary); border: none; flex-shrink: 0; }
+  .back-btn.inv { background: rgba(255,255,255,0.12); color: var(--color-theme-light); }
+  .dash-header{background:var(--color-theme-dark);padding:12px 14px 16px;flex-shrink:0;}
+  .hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .hub-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; text-align: center; min-height: 96px; }
+  .hub-tile:hover { border-color: var(--color-theme); }
+  .hub-tile i { font-size: 1.3333rem; color: var(--color-theme); }
+  .hub-tile span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-primary); }
+  .hub-tile small { font-size: 0.6rem; color: var(--color-text-secondary); }
