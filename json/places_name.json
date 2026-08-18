@@ -1,98 +1,106 @@
 [
   {
-    "id": "625017#Alanganallur",
-    "pincode": "625017",
-    "name": {
+    "placeId": "625501#Alanganallur",
+    "pinCode": "625501",
+    "placeName": {
       "ta": "அலங்காநல்லூர்",
       "en": "Alanganallur"
     }
   },
   {
-    "id": "625020#Kallanai",
-    "pincode": "625020",
-    "name": {
+    "placeId": "625501#Kallanai",
+    "pinCode": "625501",
+    "placeName": {
       "ta": "கல்லணை",
       "en": "Kallanai"
     }
   },
   {
-    "id": "625001#Mettupatti",
-    "pincode": "625001",
-    "name": {
+    "placeId": "625501#Mettupatti",
+    "pinCode": "625501",
+    "placeName": {
       "ta": "மேட்டுப்பட்டி",
       "en": "Mettupatti"
     }
   },
   {
-    "id": "625002#Muduvarpatti",
-    "pincode": "625002",
-    "name": {
+    "placeId": "625503#Muduvarpatti",
+    "pinCode": "625503",
+    "placeName": {
       "ta": "முடுவார்பட்டி",
       "en": "Muduvarpatti"
     }
   },
   {
-    "id": "625018#Palamedu",
-    "pincode": "625018",
-    "name": {
+    "placeId": "625503#Palamedu",
+    "pinCode": "625503",
+    "placeName": {
       "ta": "பாலமேடு",
       "en": "Palamedu"
     }
   },
   {
-    "id": "625004#Pudupatti",
-    "pincode": "625004",
-    "name": {
+    "placeId": "625501#Pudupatti",
+    "pinCode": "625501",
+    "placeName": {
       "ta": "புதுப்பட்டி",
       "en": "Pudupatti"
     }
   },
   {
-    "id": "625010#Thirumangalam",
-    "pincode": "625010",
-    "name": {
+    "placeId": "625706#Thirumangalam",
+    "pinCode": "625706",
+    "placeName": {
       "ta": "திருமங்கலம்",
       "en": "Thirumangalam"
     }
   },
   {
-    "id": "625006#Vellalur",
-    "pincode": "625006",
-    "name": {
+    "placeId": "625109#Vellalur",
+    "pinCode": "625109",
+    "placeName": {
       "ta": "வெள்ளளூர்",
       "en": "Vellalur"
     }
   },
   {
-    "id": "625218#Vadippatti",
-    "pincode": "625218",
-    "name": {
+    "placeId": "625218#Vadippatti",
+    "pinCode": "625218",
+    "placeName": {
       "ta": "வாடிப்பட்டி",
       "en": "Vadippatti"
     }
   },
   {
-    "id": "625214#Solavandhan",
-    "pincode": "625214",
-    "name": {
+    "placeId": "625214#Solavandhan",
+    "pinCode": "625214",
+    "placeName": {
       "ta": "சோழவந்தான்",
       "en": "Solavandhan"
     }
   },
   {
-    "id": "625301#Alagarkoil",
-    "pincode": "625301",
-    "name": {
+    "placeId": "625301#Alagarkoil",
+    "pinCode": "625301",
+    "placeName": {
       "ta": "அழகர்கோவில்",
       "en": "Alagarkoil"
     }
   },
   {
-    "id": "625014#Chatrapatti",
-    "pincode": "625014",
-    "name": {
+    "placeId": "625014#Chatrapatti",
+    "pinCode": "625014",
+    "placeName": {
       "ta": "சத்திரப்பட்டி",
       "en": "Chatrapatti"
+    }
+  },
+  {
+    "placeId": "625018#Koodal nagar",
+    "pinCode": "625018",
+    "placeName": {
+      "ta": "கூடல் நகர்",
+      "en": "Koodal nagar"
     }
   }
 ]

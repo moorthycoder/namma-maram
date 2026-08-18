@@ -4,7 +4,6 @@ var profileFrom = 'main';
 var albumFrom = 'tree-profile';
 var treeLogsFrom = 'trees';
 var sponsoredCount = 2;
-var caredCount = 4;
 var max_register_care_giver = 5;
 var logoutTarget = 'caregiver-dash';
 
@@ -226,8 +225,8 @@ function goTo(page) {
   document.getElementById('page-'+page).classList.add('active');
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
-  if (['caregiver-login','caregiver-enroll','append-tree-name','register-tree'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['caregiver-login','caregiver-dash','caregiver-current','caregiver-past'].indexOf(page) > -1) sb.classList.add('blue');
+  if (['caregiver-login','caregiver-enroll','append-tree-name','register-tree','register-form'].indexOf(page) > -1) sb.classList.add('dark');
+  else if (['caregiver-login','caregiver-dash','caregiver-current','caregiver-past','caregiver-waiting','caregiver-checks'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
 }
@@ -253,7 +252,7 @@ function togglePw(id, btn) {
 function openTreeProfile(treeId) {
   var from = document.querySelector('.page.active').id.replace('page-','');
   treeProfileFrom = from;
-  var id = treeId || '625001-06-0001';
+  var id = treeId || '625501-06-0001';
   document.getElementById('tree-profile-id-label').textContent = id;
   goTo('tree-profile');
 }
@@ -271,8 +270,8 @@ function openTreeMap() {
   for (var i = 0; i < data.length; i++) {
     if (data[i].treeId === id) { tree = data[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -333,12 +332,17 @@ function toggleTreeCard(btn) {
 
 function registerAndAdoptATree() {
   var reg = registerATree();
-  careATree(reg);
+  var waitingCards = document.getElementById('register-waiting-cards');
+  if (waitingCards.querySelectorAll('.tree-card-sponsor').length >= max_register_care_giver) {
+    showRegisterStatus('limit');
+    return;
+  }
+  appendWaitingTreeCard(reg, 'register');
 }
 
 function careATree(form) {
-  var cards = document.getElementById('caregiver-cards');
-  if (cards.querySelectorAll('.tree-card-sponsor').length >= max_register_care_giver) {
+  var waitingCards = document.getElementById('care-waiting-cards');
+  if (waitingCards.querySelectorAll('.tree-card-sponsor').length >= max_register_care_giver) {
     showRegisterStatus('limit');
     return;
   }
@@ -347,21 +351,7 @@ function careATree(form) {
     form.btn.innerHTML = '<i class="ti ti-check"></i>';
     form.btn.onclick = null;
   }
-  caredCount++;
-  document.getElementById('c-tree-count').textContent = caredCount;
-  var id = form.treeId || '';
-  var name = form.englishName || '';
-  var loc = form.address || '';
-  var height = form.height !== undefined ? form.height : 0;
-  var diam = form.diam || '—';
-  var logs = form.logs !== undefined ? form.logs : 0;
-  var card = document.createElement('div');
-  card.className = 'tree-card-sponsor tcard';
-  card.style.opacity = '0';
-  card.innerHTML = '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">'+form.emoji+' '+id+'</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div><div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> '+loc+'</div></div><div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:'+form.bg+';">'+form.emoji+'</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter \u2014 Today \u2014 You</span></div><div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">'+height+'m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">'+diam+'</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">'+logs+'</div></div></div><div class="tcard-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy</div></div><div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do \u2014 Routine check-up; no action needed.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></button></div></div>';
-  cards.appendChild(card);
-  requestAnimationFrame(function(){ card.style.transition = 'opacity .3s'; card.style.opacity = '1'; });
-  setTimeout(function(){ goTo('caregiver-current'); }, 500);
+  appendWaitingTreeCard(form, 'care');
 }
 
 
@@ -372,6 +362,61 @@ function loadTreeData(cb) {
   if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
   try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
   if (cb) { cb(); }
+}
+function setStatById(idValue, statValue) {
+  var matchingElements = document.querySelectorAll('[id="' + idValue + '"]');
+  for (var index = 0; index < matchingElements.length; index++) { matchingElements[index].textContent = statValue; }
+}
+function refreshTreesInCareCount() {
+  var cardsEl = document.getElementById('caregiver-cards');
+  var count = cardsEl ? cardsEl.querySelectorAll('.tree-card-sponsor').length : 0;
+  setStatById('c-tree-current', count);
+  setStatById('caregiver-current-count', count);
+}
+function openWaitingRequests(requestType) {
+  var isCare = requestType === 'care';
+  var careSection = document.getElementById('care-waiting-section');
+  var registerSection = document.getElementById('register-waiting-section');
+  if (careSection) careSection.style.display = isCare ? 'block' : 'none';
+  if (registerSection) registerSection.style.display = isCare ? 'none' : 'block';
+  var titleEl = document.getElementById('waiting-page-title');
+  if (titleEl) titleEl.textContent = isCare ? 'Care request' : 'Register request';
+  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  var ids = (role.cards || {}).waiting || [];
+  var data = window.__TREE_DATA || [];
+  var requestList = ids.length ? data.filter(function (t) { return ids.indexOf(t.treeId) > -1; }) : [];
+  var cardsId = isCare ? 'care-waiting-cards' : 'register-waiting-cards';
+  var emptyId = isCare ? 'care-waiting-empty' : 'register-waiting-empty';
+  var cardsEl = document.getElementById(cardsId);
+  var emptyEl = document.getElementById(emptyId);
+  if (cardsEl) cardsEl.innerHTML = requestList.map(function (t) { return treeCardHtml(t, window.TREE_CFG); }).join('');
+  if (emptyEl) emptyEl.style.display = requestList.length ? 'none' : 'block';
+  goTo('caregiver-waiting');
+}
+function appendWaitingTreeCard(form, requestType) {
+  var isCare = requestType === 'care';
+  var careSection = document.getElementById('care-waiting-section');
+  var registerSection = document.getElementById('register-waiting-section');
+  if (careSection) careSection.style.display = isCare ? 'block' : 'none';
+  if (registerSection) registerSection.style.display = isCare ? 'none' : 'block';
+  var titleEl = document.getElementById('waiting-page-title');
+  if (titleEl) titleEl.textContent = isCare ? 'Care request' : 'Register request';
+  var waitingCards = document.getElementById(isCare ? 'care-waiting-cards' : 'register-waiting-cards');
+  var emptyEl = document.getElementById(isCare ? 'care-waiting-empty' : 'register-waiting-empty');
+  if (emptyEl) emptyEl.style.display = 'none';
+  var id = form.treeId || '';
+  var loc = form.address || '';
+  var height = form.height !== undefined ? form.height : 0;
+  var diam = form.diam || '—';
+  var logs = form.logs !== undefined ? form.logs : 0;
+  var card = document.createElement('div');
+  card.className = 'tree-card-sponsor tcard';
+  card.style.opacity = '0';
+  card.innerHTML = '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">'+form.emoji+' '+id+'</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div><div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> '+loc+'</div></div><div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:'+form.bg+';">'+form.emoji+'</div><div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>Latest encounter \u2014 Today \u2014 You</span></div><div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">'+height+'m</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">'+diam+'</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">'+logs+'</div></div></div><div class="tcard-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div><div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>To do \u2014 Waiting for admin approval.</span></div><div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></button></div></div>';
+  waitingCards.appendChild(card);
+  requestAnimationFrame(function(){ card.style.transition = 'opacity .3s'; card.style.opacity = '1'; });
+  setStatById(isCare ? 'c-care-waiting' : 'c-register-waiting', waitingCards.querySelectorAll('.tree-card-sponsor').length);
+  setTimeout(function(){ goTo('caregiver-waiting'); }, 500);
 }
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
@@ -418,8 +463,53 @@ loadTreeData(function () {
   var byIds = function (ids) {
     return data.filter(function (t) { return ids.indexOf(t.treeId) > -1; });
   };
-  document.getElementById('caregiver-cards').innerHTML = (currentIds.length ? byIds(currentIds) : data.filter(function (t) { return t.roles && t.roles.indexOf('caregiver') > -1; })).map(function (t) { return treeCardHtml(t, window.TREE_CFG); }).join('');
-  document.getElementById('caregiver-past-cards').innerHTML = (pastIds.length ? byIds(pastIds) : data.filter(function (t) { return t.roles && t.roles.indexOf('caregiver-past') > -1; })).map(function (t) { return treeCardHtml(t, { verb: 'checked', showLatest: true, showTodo: false, btn2: null, addrMode: 'short' }); }).join('');
+  var currentList = currentIds.length ? byIds(currentIds) : data.filter(function (t) { return t.roles && t.roles.indexOf('caregiver') > -1; });
+  var pastList = pastIds.length ? byIds(pastIds) : data.filter(function (t) { return t.roles && t.roles.indexOf('caregiver-past') > -1; });
+  document.getElementById('caregiver-cards').innerHTML = currentList.map(function (t) { return treeCardHtml(t, window.TREE_CFG); }).join('');
+  var encounterDates = [];
+  currentList.forEach(function (t) {
+    var enc = t.encounter || {};
+    Object.keys(enc).forEach(function (key) {
+      var entry = enc[key];
+      var dateValue = (entry && (entry.registeredDate || entry.updatedDate)) || '';
+      if (dateValue) encounterDates.push(dateValue);
+    });
+  });
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var nowDate = new Date();
+  var currentYearMonth = nowDate.getFullYear() + '-' + String(nowDate.getMonth() + 1).replace(/^(\d)$/, '0$1');
+  var monthlyChecks = encounterDates.filter(function (dateValue) { return dateValue.slice(0, 7) === currentYearMonth; }).length;
+  var checkedThisMonthTrees = currentList.filter(function (t) {
+    var enc = t.encounter || {};
+    var keys = Object.keys(enc);
+    for (var i = 0; i < keys.length; i++) {
+      var entry = enc[keys[i]];
+      var dateValue = (entry && (entry.registeredDate || entry.updatedDate)) || '';
+      if (dateValue && dateValue.slice(0, 7) === currentYearMonth) { return true; }
+    }
+    return false;
+  });
+  var checksCardsEl = document.getElementById('caregiver-checks-cards');
+  if (checksCardsEl) {
+    checksCardsEl.innerHTML = checkedThisMonthTrees.map(function (t) { return treeCardHtml(t, window.TREE_CFG); }).join('');
+    var checksEmptyEl = document.getElementById('caregiver-checks-empty');
+    if (checksEmptyEl) checksEmptyEl.style.display = checkedThisMonthTrees.length ? 'none' : 'block';
+  }
+  encounterDates.sort();
+  var latestDate = encounterDates.length ? new Date(encounterDates[encounterDates.length - 1]) : null;
+  var nextCheckLabel = '—';
+  if (latestDate) {
+    latestDate.setDate(latestDate.getDate() + 90);
+    nextCheckLabel = latestDate.getDate() + ' ' + monthNames[latestDate.getMonth()];
+  }
+  setStatById('c-monthly', monthlyChecks);
+  setStatById('c-next', nextCheckLabel);
+  setStatById('c-care-waiting', cards.waiting.length);
+  setStatById('c-register-waiting', cards.waiting.length);
+  setStatById('caregiver-past-count', pastList.length);
+  setStatById('c-tree-past', pastList.length);
+  refreshTreesInCareCount();
+  document.getElementById('caregiver-past-cards').innerHTML = pastList.map(function (t) { return treeCardHtml(t, { verb: 'checked', showLatest: true, showTodo: false, btn2: null, addrMode: 'short' }); }).join('');
   var browseEl = document.getElementById('caregiver-browse-cards');
   if (browseEl) {
     var q = String.fromCharCode(39);

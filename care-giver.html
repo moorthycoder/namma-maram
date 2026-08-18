@@ -10,13 +10,12 @@
 <link rel="stylesheet" href="css/care-giver.css" />
 </head>
 <body>
-<div class="phone">
   <div class="screen">
     <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
 
     <div class="page active" id="page-caregiver-login">
       <div class="slogin-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="location.href='index.html'"><i class="ti ti-arrow-left"></i></button></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="window.top.location.href='index.html'"><i class="ti ti-arrow-left"></i></button></div>
         <h2>Care-giver login</h2><p>Sign in to manage the trees you care for</p>
       </div>
       <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
@@ -25,7 +24,7 @@
       </div>
     </div>
     <div class="page" id="page-caregiver-enroll">
-      <div class="topbar"><button class="back-btn" onclick="location.href='index.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Care-giver enrollment</span></div>
+      <div class="topbar"><button class="back-btn" onclick="window.top.location.href='index.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Care-giver enrollment</span></div>
       <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
         <div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);">Become a care-giver</div>
         <div style="font-size:0.7333rem;color:var(--color-text-secondary);">Adopt and look after registered trees in your neighbourhood. Your application will be reviewed by the admin.</div>
@@ -38,47 +37,53 @@
     </div>
     <div class="page" id="page-caregiver-dash">
       <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Lakshmi</div></div><div class="savatar" onclick="toggleCLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">LR</span><div class="logout-drop" id="clogout-drop"><div class="dd-item" onclick="location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Lakshmi</div></div><div class="savatar" onclick="toggleCLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">LR</span><div class="logout-drop" id="clogout-drop"><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div style="font-size:0.8667rem;color:var(--color-text-secondary);margin-top:12px;">What would you like to do today?</div>
+        <div class="sdash-stats" style="margin-top:12px;">
+          <div class="sdash-stat"><div class="sdash-stat-label">Trees in care</div>
+            <div class="sdash-split">
+              <div class="sdash-split-col sdash-split-btn" onclick="goTo('caregiver-current')"><div class="sdash-split-title">Current</div><div class="sdash-split-val" id="c-tree-current">0</div></div>
+              <div class="sdash-split-divider"></div>
+              <div class="sdash-split-col sdash-split-btn" onclick="goTo('caregiver-past')"><div class="sdash-split-title">Past</div><div class="sdash-split-val" id="c-tree-past">0</div></div>
+            </div>
+          </div>
+          <div class="sdash-stat sdash-split-btn" onclick="goTo('caregiver-checks')"><div class="sdash-stat-label">Checks this month</div><div class="sdash-stat-val" id="c-monthly">8</div></div>
+          <div class="sdash-stat"><div class="sdash-stat-label">Approval waiting</div>
+            <div class="sdash-split">
+              <div class="sdash-split-col sdash-split-btn" onclick="openWaitingRequests('care')"><div class="sdash-split-title">Care request</div><div class="sdash-split-val" id="c-care-waiting">0</div></div>
+              <div class="sdash-split-divider"></div>
+              <div class="sdash-split-col sdash-split-btn" onclick="openWaitingRequests('register')"><div class="sdash-split-title">Register request</div><div class="sdash-split-val" id="c-register-waiting">0</div></div>
+            </div>
+          </div>
+          <div class="sdash-stat"><div class="sdash-stat-label">Next check</div><div class="sdash-stat-val" id="c-next" style="font-size:0.8667rem">18 Jul</div></div>
+        </div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;gap:12px;">
-        <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('caregiver-current')">
-          <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#e6eddc;">🌳</div>
-          <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Current trees</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Trees you are caring for now</div></div>
-          <span style="background:#fff;border-radius:10px;padding:2px 9px;font-size:0.8rem;font-weight:600;color:var(--color-theme);" id="caregiver-current-count">4</span>
-          <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('caregiver-past')">
-          <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#e6eddc;">🌿</div>
-          <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Past trees</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Trees you cared for earlier</div></div>
-          <span style="background:#fff;border-radius:10px;padding:2px 9px;font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);" id="caregiver-past-count">2</span>
-          <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('caregiver-browse')">
-          <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#fdf0dc;">🌱</div>
-          <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Adopt a registered tree</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Adopt an existing tree in your area</div></div>
-          <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('register-tree')">
-          <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#e6eddc;">🌳</div>
-          <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Register and adopt a tree</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Register a new tree in the registry</div></div>
-          <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-        </div>
+        <button class="ghost-btn" onclick="goTo('caregiver-browse')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
+        <button class="ghost-btn" onclick="goTo('register-tree')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Register and Care for a tree</button>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-current">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Current trees</span></div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="sdash-stats" style="margin-bottom:18px;">
-          <div class="sdash-stat"><div class="sdash-stat-label">Trees in care</div><div class="sdash-stat-val" id="c-tree-count">4</div></div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Checks this month</div><div class="sdash-stat-val" id="c-monthly">8</div></div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Since</div><div class="sdash-stat-val" style="font-size:0.8667rem">Mar 2025</div></div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Next check</div><div class="sdash-stat-val" style="font-size:0.8667rem">18 Jul</div></div>
-        </div>
         <div class="section-title" style="margin-bottom:12px;">My trees in care</div>
         <div id="caregiver-cards">
         </div>
-        <button class="ghost-btn" onclick="goTo('caregiver-browse')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-waiting">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="waiting-page-title">Waiting</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="waiting-section" id="care-waiting-section">
+          <div class="section-title" style="margin-bottom:12px;">Care requests waiting for approval</div>
+          <div id="care-waiting-cards"></div>
+          <div class="waiting-empty" id="care-waiting-empty">No pending care requests</div>
+        </div>
+        <div class="waiting-section" id="register-waiting-section" style="display:none;">
+          <div class="section-title" style="margin-bottom:12px;">Register requests waiting for approval</div>
+          <div id="register-waiting-cards"></div>
+          <div class="waiting-empty" id="register-waiting-empty">No pending register requests</div>
+        </div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-past">
@@ -87,6 +92,14 @@
         <div class="section-title" style="margin-bottom:12px;">Trees you used to care for</div>
         <div id="caregiver-past-cards"></div>
         <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:6px;"><i class="ti ti-history" style="font-size:0.8rem"></i> You can re-adopt these trees anytime</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-checks">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Checks this month</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title" style="margin-bottom:12px;">Trees checked this month</div>
+        <div id="caregiver-checks-cards"></div>
+        <div class="waiting-empty" id="caregiver-checks-empty">No checks recorded this month</div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-browse">
@@ -175,7 +188,7 @@
       </div>
     </div>
   </div>
-</div>
+<script src="js/show-tree-details.js"></script>
 <script src="js/care-giver.js"></script>
 <script src="js/append-a-tree-name.js"></script>
 <script src="js/register-a-tree.js"></script>

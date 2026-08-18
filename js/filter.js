@@ -3,14 +3,14 @@
 // Tree data for album — populated from tree_cards.json via loadTreeData
 var albumData = [];
 
-// Places for search — loaded from places_name.json: [{id, name:{en,ta}, pincode, variety}, ...]
+// Places for search — loaded from places_name.json: [{placeId, placeName:{en,ta}, pinCode, variety}, ...]
 var __PLACES = [];
 var __SUGGESTIONS = [];
 function populatePlaceList() {
   __SUGGESTIONS = [];
   __PLACES.forEach(function (p) {
-    __SUGGESTIONS.push({ value: p.name.en, label: p.name.en + ' · ' + p.pincode });
-    if (p.name.ta) __SUGGESTIONS.push({ value: p.name.ta, label: p.name.ta + ' · ' + p.pincode });
+    __SUGGESTIONS.push({ value: p.placeName.en, label: p.placeName.en + ' · ' + p.pinCode });
+    if (p.placeName.ta) __SUGGESTIONS.push({ value: p.placeName.ta, label: p.placeName.ta + ' · ' + p.pinCode });
   });
   var projects = [];
   (window.__TREE_DATA || []).forEach(function (t) {
@@ -59,7 +59,7 @@ function resolvePlace(query) {
   if (!q) return null;
   for (var i = 0; i < __PLACES.length; i++) {
     var p = __PLACES[i];
-    if (String(p.name.en).toLowerCase() === q || String(p.name.ta).toLowerCase() === q || String(p.pincode) === q || String(p.id).toLowerCase() === q) { return p; }
+    if (String(p.placeName.en).toLowerCase() === q || String(p.placeName.ta).toLowerCase() === q || String(p.pinCode) === q || String(p.placeId).toLowerCase() === q) { return p; }
   }
   return null;
 }
@@ -68,7 +68,7 @@ function loadPlaces(cb) {
     var s = localStorage.getItem('placesV1');
     if (s) { __PLACES = JSON.parse(s); populatePlaceList(); if (cb) { cb(); } return; }
   } catch (e) {}
-  fetch('../json/places_name.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('json/places_name.json').then(function (r) { return r.json(); }).then(function (data) {
     __PLACES = Array.isArray(data) ? data : [];
     try { localStorage.setItem('placesV1', JSON.stringify(__PLACES)); } catch (e) {}
     populatePlaceList();
@@ -77,15 +77,6 @@ function loadPlaces(cb) {
   }).catch(function () { if (cb) { cb(); } });
 }
 loadPlaces();
-
-var logs = [
-  { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
-  { date:'10 Jan 2026', height:'8.1 m', diam:'21 cm', note:'Some yellowing on lower leaves — likely seasonal.', photos:[{bg:'linear-gradient(135deg,#1e3d0f,#2d5a1b)',emoji:'🌳',label:'Full tree',time:'10:05 AM',main:true},{bg:'linear-gradient(135deg,#27500A,#3B6D11)',emoji:'🍂',label:'Lower leaves',time:'10:08 AM'}] },
-  { date:'15 Jul 2025', height:'7.6 m', diam:'21 cm', note:'Measurement only. Camera not available. Tree looks healthy overall.', photos:[] }
-];
-
-var profileFrom = 'main';
-var albumFrom = 'profile';
 
 // Toggle dropdown
 function toggleDD() {
@@ -101,39 +92,10 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Navigation
-function goTo(page) {
-  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-  document.getElementById('page-'+page).classList.add('active');
-  var sb = document.getElementById('sbar');
-  sb.className = 'status-bar';
-  if (['main'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['profile','album'].indexOf(page) > -1) sb.classList.add('blue');
-  var dd = document.getElementById('dropdown');
-  if (dd) dd.classList.remove('open');
-
-  if (page === 'main') {
-    applyFilters();
-  }
-}
-
-function profileBack() { goTo(profileFrom); }
-
-// Open profile
+// Open profile — navigate to the standalone tree profile page
 function openProfile(treeId) {
-  var from = document.querySelector('.page.active').id.replace('page-','');
-  profileFrom = from;
-  var id = treeId || '625001-06-0001';
-  document.getElementById('profile-id-label').textContent = id;
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (tree) {
-    document.getElementById('profile-hero-title').textContent = tree.englishName;
-    document.getElementById('profile-hero-addr').innerHTML = '<i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + (tree.address || '') + ' <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button>';
-  }
-  goTo('profile');
+  var id = treeId || '625501-06-0001';
+  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id);
 }
 
 // Open the map pinned to a tree by its ID (from a card)
@@ -142,22 +104,8 @@ function openTreeMapById(id) {
   for (var i = 0; i < albumData.length; i++) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
-  } else {
-    alert('Location not available for this tree.');
-  }
-}
-
-// Open the map pinned to the tree currently shown in the profile
-function openTreeMap() {
-  var id = document.getElementById('profile-id-label').textContent;
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -172,29 +120,6 @@ function showMap(coordsParam) {
 function closeMapModal() {
   document.getElementById('map-modal').classList.remove('open');
   document.getElementById('map-frame').src = '';
-}
-
-// Album (log photos)
-function openAlbum(i) {
-  var log = logs[i];
-  if (!log.photos.length) return;
-  albumFrom = document.querySelector('.page.active').id.replace('page-','');
-  document.getElementById('album-title').textContent = 'Log · ' + log.date;
-  document.getElementById('album-date').textContent = log.date;
-  document.getElementById('album-h').textContent = log.height;
-  document.getElementById('album-d').textContent = log.diam;
-  document.getElementById('album-c').textContent = log.photos.length + ' photo' + (log.photos.length > 1 ? 's' : '');
-  document.getElementById('album-note').textContent = log.note;
-  var grid = document.getElementById('album-grid-page');
-  grid.innerHTML = '';
-  log.photos.forEach(function(p){
-    var div = document.createElement('div');
-    div.className = 'album-photo' + (p.main ? ' album-photo-main' : '');
-    div.style.background = p.bg;
-    div.innerHTML = '<div style="font-size:'+(p.main?'38px':'26px')+'">' + p.emoji + '</div><div class="photo-label">'+p.label+'</div><div class="photo-time">'+p.time+'</div>';
-    grid.appendChild(div);
-  });
-  goTo('album');
 }
 
 // Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
@@ -273,7 +198,7 @@ function renderAlbum(place, tree) {
 
   filtered.forEach(function(t) {
     var card = document.createElement('div');
-    card.className = 'tree-card';
+    card.className = 'tree-snapshot';
     card.onclick = function() {
       openProfile(t.treeId);
     };
@@ -358,9 +283,9 @@ function clearInput(id) {
 function openMap() {
   var trees = window._mapTrees || albumData;
   var coords = trees.filter(function(t){
-    return typeof t.latitude === 'number' && typeof t.longitude === 'number';
+    return hasTreeGis(t);
   }).map(function(t){
-    return t.latitude + ',' + t.longitude + ',' + encodeURIComponent(t.englishName || 'Tree');
+    return treeMapCoords(t);
   });
   if (coords.length > 0) {
     showMap(coords.join('|'));
@@ -374,7 +299,7 @@ function loadLoginCredentials(cb) {
     var s = sessionStorage.getItem('loginCredentialsV1');
     if (s) { window._login = JSON.parse(s); if (cb) { cb(); } return; }
   } catch (e) {}
-  fetch('../json/login-credentials.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('json/login-credentials.json').then(function (r) { return r.json(); }).then(function (data) {
     window._login = data;
     try { sessionStorage.setItem('loginCredentialsV1', JSON.stringify(data)); } catch (e) {}
     if (cb) { cb(); }
@@ -387,7 +312,7 @@ function loadTreeData(cb) {
     var s = localStorage.getItem('treeDataV1');
     if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; }
   } catch (e) {}
-  fetch('../json/tree_cards.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('json/tree_cards.json').then(function (r) { return r.json(); }).then(function (data) {
     window.__TREE_DATA = data;
     try { localStorage.setItem('treeDataV1', JSON.stringify(data)); } catch (e) {}
     if (cb) { cb(); }
@@ -399,7 +324,7 @@ function loadTreeNames(cb) {
     var s = localStorage.getItem('treeNamesV1');
     if (s) { window.TREE_NAMES_DB = JSON.parse(s); if (cb) { cb(); } return; }
   } catch (e) {}
-  fetch('../json/trees_name.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('json/trees_name.json').then(function (r) { return r.json(); }).then(function (data) {
     window.TREE_NAMES_DB = Array.isArray(data) ? data : [];
     try { localStorage.setItem('treeNamesV1', JSON.stringify(window.TREE_NAMES_DB)); } catch (e) {}
     if (cb) { cb(); }
@@ -411,7 +336,7 @@ function loadTreeColours(cb) {
     var s = localStorage.getItem('treeColoursV1');
     if (s) { window.TREE_COLOURS = JSON.parse(s); if (cb) { cb(); } return; }
   } catch (e) {}
-  fetch('../json/tree-colours.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('json/tree-colours.json').then(function (r) { return r.json(); }).then(function (data) {
     window.TREE_COLOURS = Array.isArray(data) ? data : [];
     try { localStorage.setItem('treeColoursV1', JSON.stringify(window.TREE_COLOURS)); } catch (e) {}
     if (cb) { cb(); }

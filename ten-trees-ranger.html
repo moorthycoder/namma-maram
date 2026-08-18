@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="css/ten-trees-ranger.css" />
 </head>
 <body>
-<div class="phone">
   <div class="screen">
     <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
 
@@ -21,6 +20,8 @@
         <div class="dropdown" id="dropdown">
         <div class="dd-item" onclick="goTo('role-login')"><i class="ti ti-login" style="font-size:1rem;color:var(--color-theme)"></i> Login</div>
         <div class="dd-item" onclick="goTo('role-login')"><i class="ti ti-user-plus" style="font-size:1rem;color:var(--color-theme)"></i> Register</div>
+        <div class="dd-item" onclick="location.href='settings.html'"><i class="ti ti-settings" style="font-size:1rem;color:#666"></i> Settings</div>
+        <div class="dd-item" onclick="location.href='about-us.html'"><i class="ti ti-info-circle" style="font-size:1rem;color:#666"></i> About Us</div>
         </div>
       </div>
       
@@ -69,11 +70,11 @@
     </div>
     <div class="page" id="page-ranger-dash">
       <div class="dash-header">
-        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Selvam</div></div><div class="avatar" onclick="toggleLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">RK</span><div class="logout-drop" id="logout-drop"><div class="dd-item" onclick="location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
+        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Selvam</div></div><div class="avatar" onclick="toggleLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">RK</span><div class="logout-drop" id="logout-drop"><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
         <div class="dash-stats">
-          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">Your logs</div><div class="dash-stat-val">47</div></div>
-          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">This month</div><div class="dash-stat-val">6</div></div>
-          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">Trees covered</div><div class="dash-stat-val">23</div></div>
+          <div class="dash-stat dash-stat-btn" onclick="goTo('ranger-logs')"><div class="dash-stat-label">Your logs</div><div class="dash-stat-val" id="r-logs">47</div></div>
+          <div class="dash-stat dash-stat-btn" onclick="goTo('ranger-month')"><div class="dash-stat-label">This month</div><div class="dash-stat-val" id="r-month">6</div></div>
+          <div class="dash-stat dash-stat-btn" onclick="goTo('ranger-covered')"><div class="dash-stat-label">Trees covered</div><div class="dash-stat-val" id="r-covered">23</div></div>
           <div class="dash-stat"><div class="dash-stat-label">Zone</div><div class="dash-stat-val" style="font-size:0.8667rem">Anna Nagar</div></div>
         </div>
         <div class="dbl-hint">Double-tap a card to view your trees</div>
@@ -83,8 +84,8 @@
         <div class="section-title">Recent entries</div>
         <div class="info-card">
           <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-0001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625017-02-0001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625018-03-0001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625501-02-0001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
+          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625503-03-0001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
         </div>
         <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
       </div></div>
@@ -98,6 +99,24 @@
         <div id="ranger-tree-cards">
         </div>
       </div></div>
+    </div>
+    <div class="page" id="page-ranger-logs">
+      <div class="dash-header">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Your logs</span></div>
+      </div>
+      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="ranger-logs-list" style="padding:13px 14px;"></div></div>
+    </div>
+    <div class="page" id="page-ranger-month">
+      <div class="dash-header">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">This month</span></div>
+      </div>
+      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="ranger-month-list" style="padding:13px 14px;"></div></div>
+    </div>
+    <div class="page" id="page-ranger-covered">
+      <div class="dash-header">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Trees covered</span></div>
+      </div>
+      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="ranger-covered-list" style="padding:13px 14px;"></div></div>
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
@@ -177,7 +196,7 @@
       </div>
     </div>
   </div>
-</div>
+<script src="js/show-tree-details.js"></script>
 <script src="js/ten-trees-ranger.js"></script>
 <script src="js/append-a-tree-name.js"></script>
 <script src="js/register-a-tree.js"></script>

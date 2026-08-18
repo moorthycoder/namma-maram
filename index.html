@@ -16,5 +16,16 @@
     <iframe class="app-frame" id="app-frame" src="filter.html" title="Namma Maram"></iframe>
   </div>
 </div>
+<script>
+function clearTreeDataCaches() {
+  try {
+    localStorage.removeItem('placesV1');
+    localStorage.removeItem('treeDataV1');
+    localStorage.removeItem('treeNamesV1');
+    localStorage.removeItem('treeColoursV1');
+  } catch (e) {}
+}
+window.addEventListener('pagehide', clearTreeDataCaches);
+</script>
 </body>
 </html>

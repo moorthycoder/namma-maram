@@ -298,7 +298,7 @@ function searchTree() {
 function openProfile(treeId) {
   var from = document.querySelector('.page.active').id.replace('page-','');
   profileFrom = from;
-  var id = treeId || '625001-06-0001';
+  var id = treeId || '625501-06-0001';
   document.getElementById('profile-id-label').textContent = id;
   goTo('profile');
 }
@@ -311,8 +311,8 @@ function openTreeMapById(id) {
   for (var i = 0; i < albumData.length; i++) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -331,8 +331,8 @@ function openTreeMap() {
   for (var i = 0; i < albumData.length; i++) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -532,11 +532,11 @@ function clearInput(id) {
 function openMap() {
   var trees = window._mapTrees || albumData;
   var coords = trees.filter(function(t){
-    return typeof t.latitude === 'number' && typeof t.longitude === 'number';
+    return hasTreeGis(t);
   }).map(function(t){
-    return t.latitude + ',' + t.longitude;
+    return treeMapCoords(t);
   });
-if (coords.length > 0) {
+  if (coords.length > 0) {
     showMap(coords.join('|'));
   } else {
     alert('No tree locations found to show on the map.');

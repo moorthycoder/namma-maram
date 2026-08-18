@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="css/admin.css" />
 </head>
 <body>
-<div class="phone">
   <div class="screen">
     <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
 
@@ -20,6 +19,8 @@
         <button class="dots-btn" onclick="toggleDD()"><i class="ti ti-dots-vertical"></i></button>
         <div class="dropdown" id="dropdown">
         <div class="dd-item" onclick="goTo('admin-login')"><i class="ti ti-login" style="font-size:1rem;color:var(--color-theme)"></i> Login</div>
+        <div class="dd-item" onclick="location.href='settings.html'"><i class="ti ti-settings" style="font-size:1rem;color:#666"></i> Settings</div>
+        <div class="dd-item" onclick="location.href='about-us.html'"><i class="ti ti-info-circle" style="font-size:1rem;color:#666"></i> About Us</div>
         </div>
       </div>
       
@@ -68,7 +69,7 @@
     </div>
     <div class="page" id="page-admin-dash">
       <div class="dash-header">
-        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Admin</div></div><div class="avatar" onclick="toggleALogoutDrop()"><span id="user-avatar">AD</span><div class="logout-drop" id="alogout-drop"><div class="dd-item" onclick="goTo('main')"><i class="ti ti-settings" style="font-size:0.9333rem;color:var(--color-theme)"></i> Settings</div><div class="dd-item" onclick="location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Admin</div></div><div class="avatar" onclick="toggleALogoutDrop()"><span id="user-avatar">AD</span><div class="logout-drop" id="alogout-drop"><div class="dd-item" onclick="goTo('main')"><i class="ti ti-settings" style="font-size:0.9333rem;color:var(--color-theme)"></i> Settings</div><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div class="dash-stats">
           <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-trackers')"><div class="dash-stat-label">Rangers</div><div class="dash-stat-val">12</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;">4 waiting for approval</div></div>
           <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-sponsors')"><div class="dash-stat-label">Sponsors</div><div class="dash-stat-val">48</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;">2 waiting for approval</div></div>
@@ -79,7 +80,7 @@
         <div class="section-title" style="font-size:0.8rem;color:var(--color-text-secondary);margin-top:4px;">Recent activity</div>
         <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">New ranger registered</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">GRR-2026-042 · 10 min ago</div></div></div>
         <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Sponsor payment verified</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">Madhavi I · ₹300 · 2 hrs ago</div></div></div>
-        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Tree log flagged</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">625017-02-0001 · Needs review · 1 day ago</div></div></div>
+        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Tree log flagged</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">625501-02-0001 · Needs review · 1 day ago</div></div></div>
       </div>
     </div>
     <div class="page" id="page-admin-trackers">
@@ -181,16 +182,6 @@
         <div class="filter-row" style="flex-direction:column;gap:6px;">
           <select id="admin-pincode" onchange="document.getElementById('admin-id').value='';adminUpdatePlaceOptions();adminApplyFilters()">
             <option value="">All pincodes</option>
-            <option value="625001">625001</option>
-            <option value="625002">625002</option>
-            <option value="625004">625004</option>
-            <option value="625006">625006</option>
-            <option value="625008">625008</option>
-            <option value="625010">625010</option>
-            <option value="625017">625017</option>
-            <option value="625018">625018</option>
-            <option value="625020">625020</option>
-            <option value="625028">625028</option>
           </select>
           <select id="admin-place" onchange="document.getElementById('admin-id').value='';adminApplyFilters()">
             <option value="">All places</option>
@@ -279,7 +270,7 @@
         </div>
       </div>
   </div>
-</div>
+<script src="js/show-tree-details.js"></script>
 <script src="js/admin.js"></script>
 </body>
 </html>

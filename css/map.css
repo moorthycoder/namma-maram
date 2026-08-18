@@ -1,5 +1,20 @@
 
   html, body { height: 100%; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
   #map { height: 100%; width: 100%; }
-  .giw { text-align: center; }
-  .giw b { display: block; font-size: 14px; margin-bottom: 2px; }
+  .leaflet-popup-content { min-width: 0 !important; margin: 6px 6px 6px 0 !important; }
+  .leaflet-popup-content-wrapper { padding: 0 !important; border-radius: 0 !important; }
+  .giw { width: fit-content; }
+  .map-card { display: flex; gap: 10px; width: min(90vw, 340px); }
+  .map-photo { display: flex; flex-direction: column; align-items: center; width: 84px; flex-shrink: 0; background: linear-gradient(135deg,#2d5a1b,#4a7c2f); }
+  .map-emoji { font-size: 36px; margin: auto 0; }
+  .map-health { display: inline-block; margin-top: auto; padding: 1px 6px; font-size: 10px; color: #fff; background: #374151; }
+  .map-health.healthy { background: #16a34a; }
+  .map-health.dead { background: #dc2626; }
+  .map-health.weak { background: #f59e0b; }
+  .map-info { display: flex; flex-direction: column; gap: 2px; padding: 10px 0; }
+  .map-name { font-size: 14px; font-weight: 600; color: #111827; }
+  .map-id { font-size: 11px; color: #6b7280; }
+  .map-coords { font-size: 11px; color: #4b5563; }
+  .map-addr { font-size: 12px; color: #374151; }
+  .map-cg { font-size: 12px; color: #374151; }
+  .map-stats { font-size: 11px; color: #4b5563; }

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="css/sponsor.css" />
 </head>
 <body>
-<div class="phone">
   <div class="screen">
     <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
 
@@ -21,6 +20,8 @@
         <div class="dropdown" id="dropdown">
         <div class="dd-item" onclick="goTo('sponsor-login')"><i class="ti ti-login" style="font-size:1rem;color:var(--color-theme)"></i> Login</div>
         <div class="dd-item" onclick="goTo('sponsor-enroll')"><i class="ti ti-user-plus" style="font-size:1rem;color:var(--color-theme)"></i> Register</div>
+        <div class="dd-item" onclick="location.href='settings.html'"><i class="ti ti-settings" style="font-size:1rem;color:#666"></i> Settings</div>
+        <div class="dd-item" onclick="location.href='about-us.html'"><i class="ti ti-info-circle" style="font-size:1rem;color:#666"></i> About Us</div>
         </div>
       </div>
       
@@ -80,19 +81,22 @@
     </div>
     <div class="page" id="page-sponsor-dash">
       <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div class="sdash-stats">
-          <div class="sdash-stat"><div class="sdash-stat-label">Trees sponsored</div><div class="sdash-stat-val" id="s-tree-count">2</div></div>
+          <div class="sdash-stat"><div class="sdash-stat-label">Trees sponsored</div>
+            <div class="sdash-split">
+              <div class="sdash-split-col sdash-split-btn" onclick="goTo('sponsor-current')"><div class="sdash-split-title">Current</div><div class="sdash-split-val" id="s-tree-current">0</div></div>
+              <div class="sdash-split-divider"></div>
+              <div class="sdash-split-col sdash-split-btn" onclick="goTo('sponsor-past')"><div class="sdash-split-title">Past</div><div class="sdash-split-val" id="s-tree-past">0</div></div>
+            </div>
+          </div>
           <div class="sdash-stat"><div class="sdash-stat-label">Monthly total</div><div class="sdash-stat-val" id="s-monthly">₹600</div></div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Since</div><div class="sdash-stat-val" style="font-size:0.8667rem">Jan 2024</div></div>
+          <div class="sdash-stat sdash-split-btn" onclick="openSponsorWaitingRequests()"><div class="sdash-stat-label">Approval waiting</div><div class="sdash-stat-val" id="s-sponsor-waiting">0</div></div>
           <div class="sdash-stat"><div class="sdash-stat-label">Next due</div><div class="sdash-stat-val" style="font-size:0.8667rem">1 Jul</div></div>
         </div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">My sponsored trees</div>
-        <div id="sponsor-cards">
-        </div>
-        <button class="ghost-btn" onclick="goTo('browse-trees')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
+        <button class="ghost-btn" onclick="window.location.href='tree-profile.html'"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
       </div></div>
     </div>
     <div class="page" id="page-browse-trees">
@@ -101,6 +105,31 @@
       <div class="scrollable"><div style="padding:10px 14px;">
         <div class="section-title" style="margin-bottom:10px;">Available trees</div>
         <div id="sponsor-browse-cards"></div>
+      </div></div>
+    </div>
+    <div class="page" id="page-sponsor-waiting">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="swaiting-page-title">Waiting</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="waiting-section" id="sponsor-waiting-section">
+          <div class="section-title" style="margin-bottom:12px;">Sponsor requests</div>
+          <div id="sponsor-waiting-cards"></div>
+          <div class="waiting-empty" id="sponsor-waiting-empty">No pending sponsor requests</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="page" id="page-sponsor-current">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Current trees</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title" style="margin-bottom:12px;">Trees you sponsor now</div>
+        <div id="sponsor-current-cards"></div>
+      </div></div>
+    </div>
+    <div class="page" id="page-sponsor-past">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Past trees</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title" style="margin-bottom:12px;">Trees you sponsored earlier</div>
+        <div id="sponsor-past-cards"></div>
+        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:6px;"><i class="ti ti-history" style="font-size:0.8rem"></i> You can sponsor these trees again anytime</div>
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">
@@ -208,7 +237,7 @@
       </div>
     </div>
   </div>
-</div>
+<script src="js/show-tree-details.js"></script>
 <script src="js/sponsor.js"></script>
 </body>
 </html>

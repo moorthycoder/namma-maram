@@ -16,9 +16,9 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
   html { font-size: 15px; }
-  body { background: #e8e8e8; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 24px 0; }
-  .phone { background: #1a1a1a; border-radius: 36px; padding: 10px; width: 320px; box-shadow: 0 0 0 1px #333, 0 20px 60px rgba(0,0,0,0.3); }
-  .screen { background: var(--color-background-primary); border-radius: 28px; overflow: hidden; height: 600px; display: flex; flex-direction: column; position: relative; }
+  html, body { height: 100%; }
+  body { background: var(--color-background-primary); overflow: hidden; }
+  .screen { background: var(--color-background-primary); height: 100%; display: flex; flex-direction: column; position: relative; }
   .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
   .status-bar.dark span { color: var(--color-theme-light); }

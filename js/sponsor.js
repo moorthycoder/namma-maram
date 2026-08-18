@@ -3,7 +3,7 @@ var TESTING_MODE = true;
 var profileFrom = 'main';
 var albumFrom = 'profile';
 var treeLogsFrom = 'trees';
-var sponsoredCount = 2;
+var sponsoredCount = 0;
 var caredCount = 4;
 var logoutTarget = 'main';
 
@@ -118,7 +118,10 @@ function showLoginStatus(page, status) {
 
 function closeLoginStatus(go) {
   document.getElementById('login-status-modal').classList.remove('open');
-  if (go) goTo(logoutTarget);
+  if (!go) return;
+  var pending = readPendingSponsor();
+  if (pending && pending.treeId) { sponsorATree(pending); return; }
+  goTo(logoutTarget);
 }
 
 
@@ -241,7 +244,7 @@ function goTo(page) {
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['main','sponsor-login','sponsor-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  else if (['sponsor-login','sponsor-dash','sponsor-waiting','sponsor-current','sponsor-past','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   document.getElementById('dropdown').classList.remove('open');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
@@ -285,7 +288,7 @@ function searchTree() {
 function openProfile(treeId) {
   var from = document.querySelector('.page.active').id.replace('page-','');
   profileFrom = from;
-  var id = treeId || '625001-06-0001';
+  var id = treeId || '625501-06-0001';
   document.getElementById('profile-id-label').textContent = id;
   goTo('profile');
 }
@@ -298,8 +301,8 @@ function openTreeMapById(id) {
   for (var i = 0; i < albumData.length; i++) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -318,8 +321,8 @@ function openTreeMap() {
   for (var i = 0; i < albumData.length; i++) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -378,26 +381,63 @@ function selectAmt(el) { document.querySelectorAll('.amt-chip').forEach(function
 // Add tree
 
 function sponsorATree(f) {
-  var btn = f.btn;
-  var name = f.name;
-  var loc = f.loc;
-  var bg = f.bg;
-  var emoji = f.emoji;
-  var height = f.height;
-  var diam = f.diam;
-  var logs = f.logs;
-  var id = f.treeId || name.split('#')[1] || '';
-  btn.classList.add('added');
-  btn.innerHTML = '<i class="ti ti-check"></i>';
-  btn.onclick = null;
-  sponsoredCount++;
-  document.getElementById('s-tree-count').textContent = sponsoredCount;
-  document.getElementById('s-monthly').textContent = '₹' + (sponsoredCount * 300);
+  appendSponsorWaitingCard(f);
+}
+
+function readPendingSponsor() {
+  var s = null;
+  try { s = sessionStorage.getItem('pendingSponsorV1'); } catch (e) {}
+  if (!s) return null;
+  try { sessionStorage.removeItem('pendingSponsorV1'); } catch (e) {}
+  try { return JSON.parse(s); } catch (e) { return null; }
+}
+
+function setStatById(id, value) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function appendSponsorWaitingCard(form) {
+  var titleEl = document.getElementById('swaiting-page-title');
+  if (titleEl) titleEl.textContent = 'Sponsor request';
+  var btn = form.btn;
+  if (btn) {
+    btn.classList.add('added');
+    btn.innerHTML = '<i class="ti ti-check"></i>';
+    btn.onclick = null;
+  }
+  var name = form.name || '';
+  var loc = form.loc || '';
+  var bg = form.bg || '';
+  var emoji = form.emoji || '';
+  var height = form.height;
+  var diam = form.diam;
+  var logs = form.logs;
+  var id = form.treeId || name.split('#')[1] || '';
+  var cardsEl = document.getElementById('sponsor-waiting-cards');
+  var emptyEl = document.getElementById('sponsor-waiting-empty');
+  if (emptyEl) emptyEl.style.display = 'none';
+  if (!cardsEl) { return; }
   var card = document.createElement('div');
   card.className = 'tree-card-sponsor';
-  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;" onclick="openProfile(\''+id+'\')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height+'m</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#4ade80"></div><div class="status-txt">Healthy</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>';
-  document.getElementById('sponsor-cards').appendChild(card);
-  setTimeout(function(){ goTo('sponsor-dash'); }, 500);
+  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;" onclick="openProfile(\''+id+'\')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height+'m</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>';
+  cardsEl.appendChild(card);
+  setStatById('s-sponsor-waiting', cardsEl.querySelectorAll('.tree-card-sponsor').length);
+  setTimeout(function(){ goTo('sponsor-waiting'); }, 500);
+}
+
+function openSponsorWaitingRequests() {
+  var titleEl = document.getElementById('swaiting-page-title');
+  if (titleEl) titleEl.textContent = 'Sponsor request';
+  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  var ids = (role.cards || {}).waiting || [];
+  var data = window.__TREE_DATA || [];
+  var requestList = ids.length ? data.filter(function (t) { return ids.indexOf(t.treeId) > -1; }) : [];
+  var cardsEl = document.getElementById('sponsor-waiting-cards');
+  var emptyEl = document.getElementById('sponsor-waiting-empty');
+  if (cardsEl) cardsEl.innerHTML = requestList.map(sponsorCardHtml).join('');
+  if (emptyEl) emptyEl.style.display = requestList.length ? 'none' : 'block';
+  goTo('sponsor-waiting');
 }
 
 
@@ -554,9 +594,9 @@ function clearInput(id) {
 function openMap() {
   var trees = window._mapTrees || albumData;
   var coords = trees.filter(function(t){
-    return typeof t.latitude === 'number' && typeof t.longitude === 'number';
+    return hasTreeGis(t);
   }).map(function(t){
-    return t.latitude + ',' + t.longitude;
+    return treeMapCoords(t);
   });
   if (coords.length > 0) {
     showMap(coords.join('|'));
@@ -581,14 +621,24 @@ function sponsorCardHtml(t) {
     '</div>';
 }
 function renderSponsorCards() {
-  var el = document.getElementById('sponsor-cards');
-  if (!el) { return; }
   var data = window.__TREE_DATA || [];
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
   var cards = role.cards || {};
-  var ids = (cards.current || []).concat(cards.past || []);
-  var list = ids.length ? data.filter(function (t) { return ids.indexOf(t.treeId) > -1; }) : data.filter(function (t) { return t.roles && t.roles.indexOf('sponsor') > -1; });
-  el.innerHTML = list.map(sponsorCardHtml).join('');
+  var currentIds = cards.current || [];
+  var pastIds = cards.past || [];
+  var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }) : [];
+  var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }) : [];
+  var currentCards = document.getElementById('sponsor-current-cards');
+  if (currentCards) currentCards.innerHTML = currentList.map(sponsorCardHtml).join('');
+  var pastCards = document.getElementById('sponsor-past-cards');
+  if (pastCards) pastCards.innerHTML = pastList.map(sponsorCardHtml).join('');
+  sponsoredCount = currentList.length + pastList.length;
+  setStatById('s-tree-current', currentList.length);
+  setStatById('s-tree-past', pastList.length);
+  setStatById('s-current-count', currentList.length);
+  setStatById('s-past-count', pastList.length);
+  var monthlyEl = document.getElementById('s-monthly');
+  if (monthlyEl) monthlyEl.textContent = '₹' + (sponsoredCount * 300);
 }
 
 function renderSponsorBrowse() {

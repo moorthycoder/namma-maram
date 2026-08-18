@@ -270,7 +270,7 @@ function goTo(page) {
   document.getElementById('page-'+page).classList.add('active');
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
-  if (['main','role-login','role-login','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
+  if (['main','role-login','role-login','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','ranger-logs','ranger-month','ranger-covered','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
   else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   document.getElementById('dropdown').classList.remove('open');
   var alogout = document.getElementById('alogout-drop');
@@ -315,7 +315,7 @@ function searchTree() {
 function openProfile(treeId) {
   var from = document.querySelector('.page.active').id.replace('page-','');
   profileFrom = from;
-  var id = treeId || '625001-06-0001';
+  var id = treeId || '625501-06-0001';
   document.getElementById('profile-id-label').textContent = id;
   goTo('profile');
 }
@@ -328,8 +328,8 @@ function openTreeMapById(id) {
   for (var i = 0; i < albumData.length; i++) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -348,8 +348,8 @@ function openTreeMap() {
   for (var i = 0; i < albumData.length; i++) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
-  if (tree && typeof tree.latitude === 'number' && typeof tree.longitude === 'number') {
-    showMap(tree.latitude + ',' + tree.longitude);
+  if (hasTreeGis(tree)) {
+    showTreeDetailsInMap(tree);
   } else {
     alert('Location not available for this tree.');
   }
@@ -552,9 +552,9 @@ function clearInput(id) {
 function openMap() {
   var trees = window._mapTrees || albumData;
   var coords = trees.filter(function(t){
-    return typeof t.latitude === 'number' && typeof t.longitude === 'number';
+    return hasTreeGis(t);
   }).map(function(t){
-    return t.latitude + ',' + t.longitude;
+    return treeMapCoords(t);
   });
   if (coords.length > 0) {
     showMap(coords.join('|'));
@@ -607,7 +607,55 @@ function renderRoleCards(target, role, cfg) {
   el.innerHTML = list.map(function (t) { return treeCardHtml(t, cfg); }).join('');
 }
 
-loadTreeData(function () { renderRoleCards('page-trees-cards', 'ten-trees-ranger', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', btn2GoTo: true, addrMode: 'short' }); });
+function setStatById(idValue, statValue) {
+  var matchingElements = document.querySelectorAll('[id="' + idValue + '"]');
+  for (var index = 0; index < matchingElements.length; index++) { matchingElements[index].textContent = statValue; }
+}
+
+function renderRangerLogList(idValue, logList) {
+  var el = document.getElementById(idValue);
+  if (!el) { return; }
+  if (!logList.length) { el.innerHTML = '<div style="text-align:center;font-size:0.8rem;color:var(--color-text-secondary);padding:26px 10px;">No entries</div>'; return; }
+  el.innerHTML = '<div class="info-card">' + logList.map(function (l) {
+    return '<div class="recent-row"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">' + l.treeId + '</div><div class="recent-date">' + l.dateLabel + ' · ' + (l.height || '—') + ' · ' + (l.diameter || '—') + '</div></div><div class="recent-badge">Saved</div></div>';
+  }).join('') + '</div>';
+}
+
+function renderRangerDash() {
+  var data = window.__TREE_DATA || [];
+  var rangerList = data.filter(function (t) { return t.roles && t.roles.indexOf('ten-trees-ranger') > -1; });
+  var logList = [];
+  rangerList.forEach(function (t) {
+    var enc = t.encounter || {};
+    Object.keys(enc).forEach(function (key) {
+      var entry = enc[key];
+      var dateValue = (entry && (entry.registeredDate || entry.updatedDate)) || '';
+      if (dateValue) {
+        var st = entry.status || {};
+        logList.push({ treeId: t.treeId, date: dateValue, height: st.height || '—', diameter: st.diameter || '—' });
+      }
+    });
+  });
+  logList.sort(function (a, b) { return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0); });
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var formatDate = function (d) { var dt = new Date(d); return dt.getDate() + ' ' + monthNames[dt.getMonth()] + ' ' + dt.getFullYear(); };
+  logList.forEach(function (l) { l.dateLabel = formatDate(l.date); });
+  var nowDate = new Date();
+  var currentYearMonth = nowDate.getFullYear() + '-' + String(nowDate.getMonth() + 1).replace(/^(\d)$/, '0$1');
+  var monthLogList = logList.filter(function (l) { return l.date.slice(0, 7) === currentYearMonth; });
+  setStatById('r-logs', logList.length);
+  setStatById('r-month', monthLogList.length);
+  setStatById('r-covered', rangerList.length);
+  renderRangerLogList('ranger-logs-list', logList);
+  renderRangerLogList('ranger-month-list', monthLogList);
+  var coveredEl = document.getElementById('ranger-covered-list');
+  if (coveredEl) coveredEl.innerHTML = rangerList.map(function (t) { return treeCardHtml(t, { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', btn2GoTo: true, addrMode: 'short' }); }).join('');
+}
+
+loadTreeData(function () {
+  renderRoleCards('page-trees-cards', 'ten-trees-ranger', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', btn2GoTo: true, addrMode: 'short' });
+  renderRangerDash();
+});
 
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { goTo('role-login'); }

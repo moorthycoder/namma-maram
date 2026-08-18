@@ -14,9 +14,9 @@ function loadPlaces(cb) {
 
 function appendPlaceName(place) {
   var entry = {
-    id: place.pincode + '#' + place.englishName,
-    pincode: place.pincode,
-    name: {
+    placeId: place.pinCode + '#' + place.englishName,
+    pinCode: place.pinCode,
+    placeName: {
       ta: place.localName || '',
       en: place.englishName || ''
     }
@@ -42,7 +42,7 @@ function appendPlaceNameToDatabase() {
   var place = {
     englishName: document.getElementById('app-place-en').value,
     localName: document.getElementById('app-place-ta').value,
-    pincode: document.getElementById('app-place-pincode').value
+    pinCode: document.getElementById('app-place-pincode').value
   };
   loadPlaces(function () {
     appendPlaceName(place);

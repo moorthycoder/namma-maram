@@ -41,8 +41,6 @@
   .info-val { font-size: 0.8667rem; font-weight: 500; color: var(--color-text-primary); }
   .chip { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); }
   .chip-blue { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); display: flex; align-items: center; gap: 3px; }
-  .map-pin-btn { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; margin-left: 6px; background: rgba(255,255,255,0.15); border: none; border-radius: 6px; color: #fff; cursor: pointer; font-size: 0.7333rem; padding: 3px 6px; }
-  .map-pin-btn:hover { background: rgba(255,255,255,0.3); }
 
   /* MAIN - ALBUM PAGE */
   .main-topbar { background: var(--color-theme-dark); display: flex; justify-content: flex-end; padding: 4px 14px 0; flex-shrink: 0; position: relative; }
@@ -53,10 +51,12 @@
   .dd-item { padding: 12px 14px; font-size: 0.8667rem; color: var(--color-text-primary); cursor: pointer; display: flex; align-items: center; gap: 9px; border-bottom: 0.5px solid var(--color-border-tertiary); }
   .dd-item:last-child { border-bottom: none; }
   .dd-item:hover { background: var(--color-background-secondary); }
-  .main-hero { background: var(--color-theme-dark); padding: 8px 28px 12px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
-  .main-logo { width: 40px; height: 40px; border-radius: 50%; background: var(--color-theme); display: flex; align-items: center; justify-content: center; }
-  .main-logo .tree-emoji { font-size: 1.3333rem; line-height: 1; }
-  .main-title { font-size: 1.1333rem; font-weight: 500; color: var(--color-theme-light); margin-top: 4px; }
+  .main-hero { background: var(--color-theme-dark); padding: 4px 28px 12px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+  .main-logo { width: 48px; height: 48px; border-radius: 50%; background: var(--color-theme); display: flex; align-items: center; justify-content: center; }
+  .main-logo .tree-emoji { font-size: 1.6rem; line-height: 1; }
+  .main-title-ta { font-size: 1.0667rem; font-weight: 500; color: var(--color-theme-light); margin-top: 10px; letter-spacing: 0.5px; }
+  .ta-stylish { font-family: 'Baloo Thambi 2', 'Segoe UI', sans-serif; font-weight: 700; font-size: 1.2rem; color: #fbbf24; }
+  .main-title { font-size: 1.1333rem; font-weight: 500; color: var(--color-theme-light); margin-top: 2px; }
   .main-sub { font-size: 0.6667rem; color: rgba(192,221,151,0.65); margin-bottom: 8px; }
   .clear-wrap { flex: 1; position: relative; }
   .clear-wrap .id-input { width: 100%; padding-right: 30px; }
@@ -76,7 +76,7 @@
   .album-filters { background: var(--color-theme-dark); padding: 0 14px 10px; flex-shrink: 0; }
   .album-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; margin-top: 8px; }
   .album-title { font-size: 0.6667rem; color: var(--color-theme-light); display: flex; align-items: center; gap: 4px; }
-  .album-count { font-size: 0.6rem; color: var(--color-theme-light); }
+  .album-count { font-size: 0.7rem; color: var(--color-theme-light); }
   .album-toggle { display: flex; align-items: center; justify-content: center; border: none; background: rgba(192,221,151,0.15); color: var(--color-theme-light); width: 22px; height: 22px; border-radius: 6px; cursor: pointer; font-size: 0.8667rem; padding: 0; }
   .album-toggle.off { opacity: 0.4; }
   .album-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -89,8 +89,8 @@
   .map-btn:hover { opacity: 0.9; }
   .card-pin-btn { position: absolute; top: 4px; right: 4px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); border: none; border-radius: 50%; color: #fff; cursor: pointer; width: 20px; height: 20px; padding: 0; z-index: 2; }
   .card-pin-btn:hover { background: rgba(0,0,0,0.65); }
-  .tree-card { border-radius: 10px; overflow: hidden; cursor: pointer; border: 0.5px solid rgba(192,221,151,0.1); transition: opacity 0.2s; }
-  .tree-card:hover { opacity: 0.85; }
+  .tree-snapshot { border-radius: 10px; overflow: hidden; cursor: pointer; border: 0.5px solid rgba(192,221,151,0.1); transition: opacity 0.2s; }
+  .tree-snapshot:hover { opacity: 0.85; }
   .tree-photo { height: 150px; display: flex; align-items: center; justify-content: center; position: relative; }
   .tree-emoji { font-size: 3rem; }
   .tree-health { position:absolute; bottom:4px; left:4px; font-size:0.6rem; padding:2px 6px; border-radius:999px; color:#fff; z-index:2; text-transform:capitalize; }
@@ -107,46 +107,6 @@
   .tree-meta { margin-top: 8px; padding-top: 8px; border-top: 0.5px solid rgba(255,255,255,0.08); font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.55; }
   .tree-meta b { color: #ffffff; font-weight: 500; }
   .no-trees { grid-column: 1/-1; text-align: center; padding: 30px 10px; color: rgba(192,221,151,0.3); font-size: 0.7333rem; }
-
-  /* PROFILE */
-  .hero { position: relative; height: 150px; display: flex; align-items: flex-end; flex-shrink: 0; }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.55)); }
-  .hero-badge { position: absolute; top: 10px; right: 12px; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 3px 9px; font-size: 0.7333rem; color: #fff; font-weight: 500; display: flex; align-items: center; gap: 4px; }
-  .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
-  .hero-title { position: relative; z-index: 1; padding: 10px 14px; }
-  .hero-title h1 { font-size: 1.0667rem; font-weight: 500; color: #fff; }
-  .hero-title p { font-size: 0.7333rem; color: rgba(255,255,255,0.7); margin-top: 2px; display: flex; align-items: center; gap: 3px; }
-  .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-bottom: 14px; }
-  .stat-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 9px 6px; text-align: center; }
-  .stat-label { font-size: 0.6667rem; color: var(--color-text-secondary); margin-bottom: 3px; }
-  .stat-value { font-size: 1.0667rem; font-weight: 500; color: var(--color-text-primary); }
-  .stat-unit { font-size: 0.6rem; color: var(--color-text-secondary); }
-  .health-bar-wrap { margin-bottom: 14px; }
-  .health-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 5px; }
-  .health-bar { height: 6px; border-radius: 3px; background: var(--color-background-secondary); overflow: hidden; }
-  .health-fill { height: 100%; border-radius: 3px; background: var(--color-theme); width: 82%; }
-  .log-entry { display: flex; align-items: center; gap: 9px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); cursor: pointer; }
-  .log-entry:last-child { border-bottom: none; }
-  .log-entry:hover { opacity: 0.8; }
-  .log-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .log-body { flex: 1; }
-  .log-date { font-size: 0.6667rem; color: var(--color-text-secondary); margin-bottom: 2px; }
-  .log-text { font-size: 0.8rem; color: var(--color-text-primary); }
-  .log-chips { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
-  .log-thumb { width: 40px; height: 40px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 0.5px solid var(--color-border-tertiary); }
-  .log-notes { display: flex; align-items: flex-start; gap: 4px; font-size: 0.7333rem; color: var(--color-text-secondary); margin-top: 5px; line-height: 1.5; }
-  .log-todo { display: flex; align-items: flex-start; gap: 4px; font-size: 0.7333rem; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.5; }
-  .log-notes b, .log-todo b { color: var(--color-text-primary); font-weight: 500; }
-
-  /* ALBUM PAGE */
-  .album-grid-page { padding: 11px 13px; display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-  .album-photo { border-radius: 9px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 0.5px solid var(--color-border-tertiary); }
-  .album-photo-main { grid-column: 1 / -1; aspect-ratio: 16/9; }
-  .photo-label { font-size: 0.6667rem; color: rgba(255,255,255,0.85); position: absolute; bottom: 6px; left: 8px; font-weight: 500; }
-  .photo-time { font-size: 0.6rem; color: rgba(255,255,255,0.55); position: absolute; bottom: 6px; right: 8px; }
-  .album-meta { padding: 10px 13px; border-bottom: 0.5px solid var(--color-border-tertiary); flex-shrink: 0; }
-  .album-note { margin: 0 13px 13px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 9px 11px; }
-  .album-note-label { font-size: 0.6667rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
 
   /* MAP MODAL */
   .map-modal-back{display:none;position:absolute;inset:0;z-index:90;border-radius:28px;flex-direction:column;background:var(--color-background-primary);}
