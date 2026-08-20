@@ -3,9 +3,11 @@ var TESTING_MODE = true;
 var profileFrom = 'main';
 var albumFrom = 'profile';
 var treeLogsFrom = 'trees';
+var payLogsFrom = 'sponsor-dash';
 var sponsoredCount = 0;
 var caredCount = 4;
 var logoutTarget = 'main';
+var payTreeId = '';
 
 function loadCurrentUser() {
   try {
@@ -162,13 +164,8 @@ function toggleNotif(btn) {
 }
 
 
-// Tree data for album — read from cache populated by filter.js (only index reads the JSON)
+// Tree data for album — read from storage
 var albumData = [];
-loadTreeData(function () {
-  var data = window.__TREE_DATA || [];
-  albumData = Array.isArray(data) ? data : (data.albumData || []);
-  applyFilters();
-});
 
 var logs = [
   { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
@@ -238,6 +235,15 @@ function goTo(page) {
       }
     }
   }
+  if (page === 'pay-logs') {
+    var activePayPage = document.querySelector('.page.active');
+    if (activePayPage) {
+      var payFrom = activePayPage.id.replace('page-', '');
+      if (payFrom !== 'pay-logs') {
+        payLogsFrom = payFrom;
+      }
+    }
+  }
   
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.getElementById('page-'+page).classList.add('active');
@@ -258,6 +264,10 @@ function goTo(page) {
 
 function treeLogsBack() {
   goTo(treeLogsFrom);
+}
+
+function payLogsBack() {
+  goTo(payLogsFrom);
 }
 
 
@@ -375,13 +385,53 @@ function openPayNow() { document.getElementById('pay-modal').classList.add('open
 
 function closePayNow() { document.getElementById('pay-modal').classList.remove('open'); }
 
-function selectAmt(el) { document.querySelectorAll('.amt-chip').forEach(function(c){ c.classList.remove('selected'); }); el.classList.add('selected'); }
+function selectAmt(el) {
+  document.querySelectorAll('.amt-chip').forEach(function(c){ c.classList.remove('selected'); });
+  el.classList.add('selected');
+  document.getElementById('pay-now-btn').innerHTML = '<i class="ti ti-credit-card"></i> Pay ' + el.textContent + ' now';
+}
+
+function renderPayLogs() {
+  var el = document.getElementById('pay-history');
+  if (!el) { return; }
+  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  var list = (role.payments || []).filter(function (p) { return !payTreeId || p.treeId === payTreeId; });
+  el.innerHTML = list.map(function (p) {
+    var retried = p.status === 'retried';
+    return '<div class="pay-entry">' +
+      '<div class="pay-icon" style="background:' + (retried ? '#FEF3C7' : 'var(--color-theme-light)') + ';"><i class="ti ' + (retried ? 'ti-alert-triangle' : 'ti-check') + '" style="font-size:0.9333rem;color:' + (retried ? '#B45309' : 'var(--color-theme)') + '"></i></div>' +
+      '<div><div class="pay-label">' + p.month + '</div><div class="pay-date">' + p.date + '</div></div>' +
+      '<div style="margin-left:auto;text-align:right;"><div style="font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);">' + p.amount + '</div><div style="font-size:0.6667rem;padding:2px 7px;border-radius:20px;background:' + (retried ? '#FEF3C7' : 'var(--color-theme-light)') + ';color:' + (retried ? '#B45309' : 'var(--color-theme)') + ';margin-top:2px;">' + (retried ? 'Retried' : 'Paid') + '</div></div>' +
+      '</div>';
+  }).join('');
+}
+
+function recordPayment() {
+  var amtEl = document.querySelector('.amt-chip.selected');
+  var amount = amtEl ? amtEl.textContent : '₹300';
+  var login = window._login || (window._login = {});
+  var tl = login['tree-login'] || (login['tree-login'] = {});
+  var role = tl.sponsor || (tl.sponsor = {});
+  var payments = role.payments || (role.payments = []);
+  payments.push({ treeId: payTreeId, month: 'Jul 2026', date: 'Paid now · ' + new Date().toDateString(), amount: amount, status: 'paid' });
+  storage.set('login', login);
+  renderPayLogs();
+  closePayNow();
+}
 
 
 // Add tree
 
 function sponsorATree(f) {
+  var login = window._login || (window._login = {});
+  var tl = login['tree-login'] || (login['tree-login'] = {});
+  var role = tl.sponsor || (tl.sponsor = {});
+  var cards = role.cards || (role.cards = {});
+  var waiting = cards.waiting || (cards.waiting = []);
+  if (f.treeId && waiting.indexOf(f.treeId) === -1) { waiting.push(f.treeId); }
   appendSponsorWaitingCard(f);
+  storage.set('login', login);
+  if (window.render && typeof window.render.init === 'function') { window.render.init(); }
 }
 
 function readPendingSponsor() {
@@ -608,10 +658,10 @@ function openMap() {
 function sponsorCardHtml(t) {
   var q = String.fromCharCode(39);
   var c = t.card || {};
-  var enc = t.encounter || {};
+  var enc = t['encounters-list'] || {};
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
-  var st = last.status || {};
+  var st = last['health-status'] || {};
   var status = c.statusLogged || c.statusChecked || st.health || '';
   return '<div class="tree-card-sponsor">' +
     '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + (t.englishName || t.name || '') + '</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> ' + (t.address || c.addr || '') + '</p></div></div>' +
@@ -637,52 +687,32 @@ function renderSponsorCards() {
   setStatById('s-tree-past', pastList.length);
   setStatById('s-current-count', currentList.length);
   setStatById('s-past-count', pastList.length);
+  setStatById('s-sponsor-waiting', (cards.waiting || []).length);
   var monthlyEl = document.getElementById('s-monthly');
   if (monthlyEl) monthlyEl.textContent = '₹' + (sponsoredCount * 300);
 }
 
-function renderSponsorBrowse() {
-  var el = document.getElementById('sponsor-browse-cards');
-  if (!el) { return; }
-  var q = String.fromCharCode(39);
-  var data = window.__TREE_DATA || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
-  var cards = role.cards || {};
-  var taken = (cards.current || []).concat(cards.past || []);
-  var list = data.filter(function (t) { return taken.indexOf(t.treeId) === -1; });
-  el.innerHTML = list.map(function (t) {
-    var enc = t.encounter || {};
-    var keys = Object.keys(enc);
-    var last = enc[keys[keys.length - 1]] || {};
-    var st = last.status || {};
-    var loc = treeLoc(t);
-    var height = parseFloat(st.height) || 0;
-    var diam = st.diameter || '—';
-    var logs = keys.length || t.encounters || 0;
-    return '<div class="browse-card">' +
-      '<div class="browse-card-thumb" style="background:' + t.bg + ';">' + t.emoji + '</div>' +
-      '<div class="browse-card-body"><div class="browse-card-id">' + t.treeId + '</div><div class="browse-card-name">' + t.englishName + '</div><div class="browse-card-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i>' + loc + ' · ₹300/mo</div></div>' +
-      '<button class="add-btn" id="add-btn-' + t.treeId + '" onclick="sponsorATree({btn:this,treeId:' + q + t.treeId + q + ',name:' + q + t.englishName + ' #' + t.treeId + q + ',loc:' + q + loc + q + ',bg:' + q + t.bg + q + ',emoji:' + q + t.emoji + q + ',height:' + height + ',diam:' + q + diam + q + ',logs:' + logs + '})"><i class="ti ti-plus"></i></button>' +
-      '</div>';
-  }).join('');
-}
-
-function loadTreeData(cb) {
-  if (window.TREE_CARDS_DATA) { window.__TREE_DATA = window.TREE_CARDS_DATA; if (cb) { cb(); } return; }
-  var d = null;
-  try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
-  if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
-  try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
-  if (cb) { cb(); }
-}
+window.render = {
+  init: function () {
+    var data = storage.get('treeCards') || [];
+    window.__TREE_DATA = data;
+    albumData = Array.isArray(data) ? data : (data.albumData || []);
+    applyFilters();
+    renderSponsorCards();
+    var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+    var cards = role.cards || {};
+    payTreeId = (cards.current || [])[0] || '';
+    renderPayLogs();
+  }
+};
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
   cfg = cfg || {};
   var c = t.card || {};
-  var enc = t.encounter || {};
+  var enc = t['encounters-list'] || {};
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
-  var st = last.status || {};
+  var st = last['health-status'] || {};
   var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
   var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
@@ -710,9 +740,16 @@ function renderRoleCards(target, role, cfg) {
   el.innerHTML = list.map(function (t) { return treeCardHtml(t, cfg); }).join('');
 }
 
-loadTreeData(function () { renderSponsorCards(); renderSponsorBrowse(); });
+function openTreePool() {
+  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  var cards = role.cards || {};
+  var exclude = [].concat(cards.current || [], cards.past || [], cards.waiting || []).join(',');
+  var parent = encodeURIComponent('sponsor.html?hub=sponsor-dash');
+  window.location.href = 'tree-pool.html?parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
+}
 
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { goTo('sponsor-login'); }
 else if (hubMode === 'register') { goTo('sponsor-enroll'); }
+else if (hubMode === 'sponsor-dash') { goTo('sponsor-dash'); }
 

@@ -28,8 +28,16 @@
     if (!record) {
       return { type: 'Tree', localName: '', treeId: id, address: '', caregiver: '', careGiverContact: '', emoji: '🌳', health: '', height: '', diameter: '' };
     }
+    var lang = 'en';
+    try {
+      if (window.parent && window.parent !== window && window.parent._mapLang) {
+        lang = window.parent._mapLang;
+      }
+    } catch (e) {}
+    var name = storage.treeNameIn(record, lang) || record.englishName;
     return {
       type: record.englishName || 'Tree',
+      name: name || record.englishName || 'Tree',
       localName: record.localName || '',
       treeId: record.treeId || '',
       address: record.address || '',
@@ -54,13 +62,8 @@
     });
 
     var palette = ['#DC2626'];
-    if (window.TREE_COLOURS && window.TREE_COLOURS.length > 0) { palette = window.TREE_COLOURS; }
-    else {
-      try {
-        var s = localStorage.getItem('treeColoursV1');
-        if (s) { palette = JSON.parse(s); }
-      } catch (e) {}
-    }
+    var colours = storage.get('treeColours');
+    if (colours && colours.length > 0) { palette = colours; }
 
     var map;
     if (markers.length === 1) {
@@ -127,7 +130,7 @@
           (info.health ? '<span class="map-health health-' + String(info.health).toLowerCase().replace(/\s+/g, '-') + '">' + info.health + '</span>' : '') +
         '</div>' +
         '<div class="map-info">' +
-          '<div class="map-name">' + (info.localName || info.type) + '</div>' +
+          '<div class="map-name">' + (info.name || info.type) + '</div>' +
           (info.treeId ? '<div class="map-id">' + info.treeId + '</div>' : '') +
           '<div class="map-coords">' + lat.toFixed(4) + ', ' + lng.toFixed(4) + '</div>' +
           (info.address ? '<div class="map-addr">' + info.address + '</div>' : '') +

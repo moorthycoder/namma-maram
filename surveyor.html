@@ -84,46 +84,54 @@
       <div class="dash-header">
         <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Kavitha</div></div><div class="avatar" onclick="toggleSurveyorLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">KR</span><div class="logout-drop" id="logout-drop-surveyor"><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
         <div class="dash-stats">
-          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">Your logs</div><div class="dash-stat-val">31</div></div>
-          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">This month</div><div class="dash-stat-val">4</div></div>
-          <div class="dash-stat" style="cursor:pointer" onclick="goTo('trees')"><div class="dash-stat-label">Trees covered</div><div class="dash-stat-val">18</div></div>
-          <div class="dash-stat"><div class="dash-stat-label">Zone</div><div class="dash-stat-val" style="font-size:0.8667rem">Kallanai</div></div>
+          <div class="dash-stat" onclick="goTo('trees')"><div class="dash-stat-label">Total logs</div><div class="dash-stat-val" id="svy-total-logs">—</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Covered this month</div>
+            <div class="dash-split">
+              <div class="dash-split-col dash-split-btn" onclick="goTo('trees')"><div class="dash-split-title">Trees</div><div class="dash-split-val" id="svy-month-trees">—</div></div>
+              <div class="dash-split-divider"></div>
+              <div class="dash-split-col dash-split-btn" onclick="goTo('trees')"><div class="dash-split-title">Logs</div><div class="dash-split-val" id="svy-month-logs">—</div></div>
+            </div>
+          </div>
+          <div class="dash-stat"><div class="dash-stat-label">My trees</div>
+            <div class="dash-split">
+              <div class="dash-split-col dash-split-btn" onclick="goTo('trees')"><div class="dash-split-title">Current</div><div class="dash-split-val" id="svy-my-current">—</div></div>
+              <div class="dash-split-divider"></div>
+              <div class="dash-split-col dash-split-btn" onclick="goTo('trees')"><div class="dash-split-title">Past</div><div class="dash-split-val" id="svy-my-past">—</div></div>
+            </div>
+          </div>
+          <div class="dash-stat"><div class="dash-stat-label">Zone</div>
+            <div class="dash-split">
+              <div class="dash-split-col"><div class="dash-split-title">Place</div><div class="dash-split-val" id="svy-zone-place">—</div></div>
+              <div class="dash-split-divider"></div>
+              <div class="dash-split-col"><div class="dash-split-title">Future trees</div><div class="dash-split-val" id="svy-zone-future">—</div></div>
+            </div>
+          </div>
+          <div class="action-tile" onclick="goTo('append-tree-name')">
+            <div class="action-tile-icon green">🌿</div>
+            <div class="action-tile-title">Append Tree Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile" onclick="goTo('append-place-name')">
+            <div class="action-tile-icon green">📍</div>
+            <div class="action-tile-title">Append Place Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile" onclick="goTo('register-tree')">
+            <div class="action-tile-icon beige">🌱</div>
+            <div class="action-tile-title">Register a Tree</div>
+            <div class="action-tile-sub">Add to registry</div>
+          </div>
+          <div class="action-tile" onclick="goTo('selfie')">
+            <div class="action-tile-icon green">📐</div>
+            <div class="action-tile-title">Survey A Tree</div>
+            <div class="action-tile-sub">Log measurements</div>
+          </div>
         </div>
         <div class="dbl-hint">Double-tap a card to view your trees</div>
       </div>
       <div class="scrollable"><div style="padding:13px 14px;display:flex;flex-direction:column;gap:11px;">
-        <div style="display:flex;flex-direction:column;gap:11px;">
-          <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('append-tree-name')">
-            <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#e6eddc;">🌿</div>
-            <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Append Tree Name to Database</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Add a new tree name to the database</div></div>
-            <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('append-place-name')">
-            <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#e6eddc;">📍</div>
-            <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Append Place Name to Database</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Add a new place to the database</div></div>
-            <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('register-tree')">
-            <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#fdf0dc;">🌱</div>
-            <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Register a Tree</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Add a new tree to the registry</div></div>
-            <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('scan')">
-            <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#e6eddc;">📐</div>
-            <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">Survey A Tree</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Scan and log a tree's measurements</div></div>
-            <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;" onclick="goTo('trees')">
-            <div style="width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:#fdf0dc;">🌳</div>
-            <div style="flex:1;min-width:0;"><div style="font-size:0.9333rem;font-weight:600;color:var(--color-text-primary);">My Trees</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);">Your trees and their logs</div></div>
-            <i class="ti ti-chevron-right" style="color:var(--color-text-secondary);font-size:1rem;"></i>
-          </div>
-        </div>
         <div class="section-title">Recent entries</div>
-        <div class="info-card">
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-0001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625501-02-0001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625503-03-0001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
+        <div class="info-card" id="recent-entries">
         </div>
         <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
       </div></div>
@@ -214,6 +222,8 @@
       </div>
     </div>
   </div>
+<script src="js/storage.js"></script>
+<script src="js/dashboard.js"></script>
 <script src="js/show-tree-details.js"></script>
 <script src="js/surveyor.js"></script>
 <script src="js/append-a-tree-name.js"></script>

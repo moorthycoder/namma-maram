@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@600;700&display=swap" />
-<link rel="stylesheet" href="css/filter.css" />
+<link rel="stylesheet" href="css/tree-pool.css" />
 </head>
 <body>
 <div class="screen">
@@ -15,15 +15,7 @@
 
     <!-- MAIN - ALBUM PAGE -->
     <div class="page active" id="page-main">
-      <div class="main-hero">
-        <div class="main-logo"><div class="tree-emoji">🌴</div></div>
-        <div class="main-titles">
-          <div class="main-title-ta"><span class="ta-stylish">நம்ம</span> மரம்</div>
-          <div class="main-title">Namma Maram</div>
-          <div class="main-sub">Nature and us are one and same</div>
-        </div>
-      </div>
-
+      <div class="topbar"><button class="back-btn" onclick="treePoolBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Tree Pool</span></div>
       <div class="album-filters">
         <form autocomplete="off" onsubmit="return false">
           <div class="filter-row" style="flex-direction:column;gap:8px;">
@@ -67,6 +59,6 @@
 <script src="js/storage.js"></script>
 <script src="js/lang.js"></script>
 <script src="js/show-tree-details.js"></script>
-<script src="js/filter.js"></script>
+<script src="js/tree-pool.js"></script>
 </body>
 </html>

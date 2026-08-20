@@ -71,9 +71,9 @@
       <div class="dash-header">
         <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Admin</div></div><div class="avatar" onclick="toggleALogoutDrop()"><span id="user-avatar">AD</span><div class="logout-drop" id="alogout-drop"><div class="dd-item" onclick="goTo('main')"><i class="ti ti-settings" style="font-size:0.9333rem;color:var(--color-theme)"></i> Settings</div><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div class="dash-stats">
-          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-trackers')"><div class="dash-stat-label">Rangers</div><div class="dash-stat-val">12</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;">4 waiting for approval</div></div>
-          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-sponsors')"><div class="dash-stat-label">Sponsors</div><div class="dash-stat-val">48</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;">2 waiting for approval</div></div>
-          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-trees')"><div class="dash-stat-label">Trees</div><div class="dash-stat-val">247</div></div>
+          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-trackers')"><div class="dash-stat-label">Rangers</div><div class="dash-stat-val" id="admin-rangers">0</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;"><span id="admin-rangers-waiting">0</span> waiting for approval</div></div>
+          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-sponsors')"><div class="dash-stat-label">Sponsors</div><div class="dash-stat-val" id="admin-sponsors">0</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;"><span id="admin-sponsors-waiting">0</span> waiting for approval</div></div>
+          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-trees')"><div class="dash-stat-label">Trees</div><div class="dash-stat-val" id="admin-trees">0</div></div>
         </div>
       </div>
       <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:12px;">
@@ -270,6 +270,8 @@
         </div>
       </div>
   </div>
+<script src="js/storage.js"></script>
+<script src="js/dashboard.js"></script>
 <script src="js/show-tree-details.js"></script>
 <script src="js/admin.js"></script>
 </body>

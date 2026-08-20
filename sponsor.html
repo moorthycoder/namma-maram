@@ -96,15 +96,7 @@
         </div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <button class="ghost-btn" onclick="window.location.href='tree-profile.html'"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
-      </div></div>
-    </div>
-    <div class="page" id="page-browse-trees">
-      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Sponsor a tree</span></div>
-      <div style="padding:10px 14px 6px;flex-shrink:0;"><div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;display:flex;align-items:center;gap:8px;"><i class="ti ti-search" style="font-size:0.9333rem;color:var(--color-text-secondary)"></i><span style="font-size:0.8667rem;color:var(--color-text-secondary);">Search by ID or area...</span></div></div>
-      <div class="scrollable"><div style="padding:10px 14px;">
-        <div class="section-title" style="margin-bottom:10px;">Available trees</div>
-        <div id="sponsor-browse-cards"></div>
+        <button class="ghost-btn" onclick="openTreePool()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
       </div></div>
     </div>
     <div class="page" id="page-sponsor-waiting">
@@ -145,15 +137,11 @@
       </div></div>
     </div>
     <div class="page" id="page-pay-logs">
-      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — #0042</span></div>
+      <div class="topbar"><button class="back-btn" onclick="payLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — #0042</span></div>
       <div style="background:var(--color-theme-light);padding:10px 14px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;"><div><div style="font-size:0.6667rem;color:var(--color-theme);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;">Monthly plan</div><div style="font-size:1rem;font-weight:500;color:var(--color-theme-dark);">₹300 / month</div></div><div style="font-size:0.7333rem;color:var(--color-theme);background:rgba(59,109,17,0.1);padding:4px 10px;border-radius:20px;">Active</div></div>
       <div class="scrollable"><div style="padding:12px 14px;">
         <div class="section-title" style="margin-bottom:10px;">Payment history</div>
-        <div class="info-card" style="margin-bottom:14px;">
-          <div class="pay-entry"><div class="pay-icon" style="background:var(--color-theme-light);"><i class="ti ti-check" style="font-size:0.9333rem;color:var(--color-theme)"></i></div><div><div class="pay-label">Jun 2026</div><div class="pay-date">Auto-debited · 1 Jun 2026</div></div><div style="margin-left:auto;text-align:right;"><div style="font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);">₹300</div><div style="font-size:0.6667rem;padding:2px 7px;border-radius:20px;background:var(--color-theme-light);color:var(--color-theme);margin-top:2px;">Paid</div></div></div>
-          <div class="pay-entry"><div class="pay-icon" style="background:var(--color-theme-light);"><i class="ti ti-check" style="font-size:0.9333rem;color:var(--color-theme)"></i></div><div><div class="pay-label">May 2026</div><div class="pay-date">Auto-debited · 1 May 2026</div></div><div style="margin-left:auto;text-align:right;"><div style="font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);">₹300</div><div style="font-size:0.6667rem;padding:2px 7px;border-radius:20px;background:var(--color-theme-light);color:var(--color-theme);margin-top:2px;">Paid</div></div></div>
-          <div class="pay-entry"><div class="pay-icon" style="background:#FEF3C7;"><i class="ti ti-alert-triangle" style="font-size:0.9333rem;color:#B45309"></i></div><div><div class="pay-label">Mar 2026</div><div class="pay-date">Retry failed · 3 Mar 2026</div></div><div style="margin-left:auto;text-align:right;"><div style="font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);">₹300</div><div style="font-size:0.6667rem;padding:2px 7px;border-radius:20px;background:#FEF3C7;color:#B45309;margin-top:2px;">Retried</div></div></div>
-        </div>
+        <div class="info-card" style="margin-bottom:14px;" id="pay-history"></div>
         <button class="blue-btn" onclick="openPayNow()"><i class="ti ti-credit-card"></i> Pay now — Jul 2026</button>
       </div></div>
     </div>
@@ -198,11 +186,14 @@
         <div style="font-size:1rem;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;">Pay for Jul 2026</div>
         <div style="font-size:0.8rem;color:var(--color-text-secondary);margin-bottom:18px;">Neem Tree #0042 · Anna Nagar</div>
         <div class="amount-row">
+          <div class="amt-chip" onclick="selectAmt(this)">₹100</div>
+          <div class="amt-chip" onclick="selectAmt(this)">₹200</div>
           <div class="amt-chip selected" onclick="selectAmt(this)">₹300</div>
           <div class="amt-chip" onclick="selectAmt(this)">₹500</div>
           <div class="amt-chip" onclick="selectAmt(this)">₹1000</div>
+          <div class="amt-chip" onclick="selectAmt(this)">₹2000</div>
         </div>
-        <button class="blue-btn" onclick="closePayNow()"><i class="ti ti-credit-card"></i> Pay ₹300 now</button>
+        <button class="blue-btn" id="pay-now-btn" onclick="recordPayment()"><i class="ti ti-credit-card"></i> Pay ₹300 now</button>
         <button class="ghost-btn" style="margin-top:8px" onclick="closePayNow()">Cancel</button>
       </div>
     </div>
@@ -237,6 +228,7 @@
       </div>
     </div>
   </div>
+<script src="js/storage.js"></script>
 <script src="js/show-tree-details.js"></script>
 <script src="js/sponsor.js"></script>
 </body>

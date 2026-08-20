@@ -159,15 +159,20 @@ function toggleNotif(btn) {
 }
 
 
-// Tree data for album — read from cache populated by filter.js (only index reads the JSON)
+// Tree data for album — read from storage
 var albumData = [];
-loadTreeData(function () {
-  var data = window.__TREE_DATA || [];
-  albumData = Array.isArray(data) ? data : (data.albumData || []);
-  applyFilters();
-  if (document.getElementById('admin-pincode')) { adminUpdatePincodeOptions(); adminUpdatePlaceOptions(); }
-  if (document.getElementById('admin-grid')) adminApplyFilters();
-});
+
+window.render = {
+  init: function () {
+    var data = storage.get('treeCards') || [];
+    window.__TREE_DATA = data;
+    albumData = Array.isArray(data) ? data : (data.albumData || []);
+    applyFilters();
+    renderAdminDash();
+    if (document.getElementById('admin-pincode')) { adminUpdatePincodeOptions(); adminUpdatePlaceOptions(); }
+    if (document.getElementById('admin-grid')) adminApplyFilters();
+  }
+};
 
 var logs = [
   { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },

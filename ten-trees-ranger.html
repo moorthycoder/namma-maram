@@ -82,10 +82,7 @@
       <div class="scrollable"><div style="padding:13px 14px;display:flex;flex-direction:column;gap:11px;">
         <button class="green-btn" onclick="rangerRegister()"><i class="ti ti-camera"></i> Insert new log</button>
         <div class="section-title">Recent entries</div>
-        <div class="info-card">
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">625008-01-0001</div><div class="recent-date">12 Jun 2026 · 9:44 AM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#9FE1CB"></div><div><div class="recent-id">625501-02-0001</div><div class="recent-date">11 Jun 2026 · 4:12 PM</div></div><div class="recent-badge">Saved</div></div>
-          <div class="recent-row" style="cursor:pointer" onclick="goTo('tree-logs')"><div class="recent-dot" style="background:#C0DD97"></div><div><div class="recent-id">625503-03-0001</div><div class="recent-date">10 Jun 2026 · 11:30 AM</div></div><div class="recent-badge">Saved</div></div>
+        <div class="info-card" id="recent-entries">
         </div>
         <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
       </div></div>
@@ -196,6 +193,8 @@
       </div>
     </div>
   </div>
+<script src="js/storage.js"></script>
+<script src="js/dashboard.js"></script>
 <script src="js/show-tree-details.js"></script>
 <script src="js/ten-trees-ranger.js"></script>
 <script src="js/append-a-tree-name.js"></script>

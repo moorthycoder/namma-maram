@@ -169,13 +169,8 @@ function toggleNotif(btn) {
 }
 
 
-// Tree data for album — read from cache populated by filter.js (only index reads the JSON)
+// Tree data for album — read from storage
 var albumData = [];
-loadTreeData(function () {
-  var data = window.__TREE_DATA || [];
-  albumData = Array.isArray(data) ? data : (data.albumData || []);
-  applyFilters();
-});
 
 var logs = [
   { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
@@ -241,7 +236,7 @@ function rangerRegister() {
     showRegisterStatus('limit');
     return;
   }
-  goTo('scan');
+  goTo('selfie');
 }
 
 
@@ -564,22 +559,14 @@ function openMap() {
 }
 
 
-function loadTreeData(cb) {
-  if (window.TREE_CARDS_DATA) { window.__TREE_DATA = window.TREE_CARDS_DATA; if (cb) { cb(); } return; }
-  var d = null;
-  try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
-  if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
-  try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
-  if (cb) { cb(); }
-}
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
   cfg = cfg || {};
   var c = t.card || {};
-  var enc = t.encounter || {};
+  var enc = t['encounters-list'] || {};
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
-  var st = last.status || {};
+  var st = last['health-status'] || {};
   var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
   var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
@@ -626,12 +613,12 @@ function renderRangerDash() {
   var rangerList = data.filter(function (t) { return t.roles && t.roles.indexOf('ten-trees-ranger') > -1; });
   var logList = [];
   rangerList.forEach(function (t) {
-    var enc = t.encounter || {};
+    var enc = t['encounters-list'] || {};
     Object.keys(enc).forEach(function (key) {
       var entry = enc[key];
       var dateValue = (entry && (entry.registeredDate || entry.updatedDate)) || '';
       if (dateValue) {
-        var st = entry.status || {};
+        var st = entry['health-status'] || {};
         logList.push({ treeId: t.treeId, date: dateValue, height: st.height || '—', diameter: st.diameter || '—' });
       }
     });
@@ -652,10 +639,17 @@ function renderRangerDash() {
   if (coveredEl) coveredEl.innerHTML = rangerList.map(function (t) { return treeCardHtml(t, { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', btn2GoTo: true, addrMode: 'short' }); }).join('');
 }
 
-loadTreeData(function () {
-  renderRoleCards('page-trees-cards', 'ten-trees-ranger', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', btn2GoTo: true, addrMode: 'short' });
-  renderRangerDash();
-});
+window.render = {
+  init: function () {
+    var data = storage.get('treeCards') || [];
+    window.__TREE_DATA = data;
+    albumData = Array.isArray(data) ? data : (data.albumData || []);
+    applyFilters();
+    renderRoleCards('page-trees-cards', 'ten-trees-ranger', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', btn2GoTo: true, addrMode: 'short' });
+    renderRangerDash();
+    renderRecentEntries('recent-entries', 'ten-trees-ranger', 'openProfile');
+  }
+};
 
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { goTo('role-login'); }

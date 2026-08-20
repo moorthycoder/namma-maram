@@ -1,7 +1,17 @@
-// filter.js — standalone Search/Album flow (loaded by filter.html)
+// tree-pool.js — reusable Tree Pool module (loaded by tree-pool.html?from=<page>)
 
 // Tree data for album — populated from tree_cards.json via loadTreeData
 var albumData = [];
+
+// Reusable module params — ?parent=<back url>&exclude=<comma-separated tree ids>
+var treePoolParentUrl = new URLSearchParams(location.search).get('parent') || '';
+var treePoolExcludeIds = (new URLSearchParams(location.search).get('exclude') || '').split(',').filter(Boolean);
+
+function treePoolBack() {
+  if (treePoolParentUrl) { window.location.href = treePoolParentUrl; return; }
+  if (window.history.length > 1) { window.history.back(); return; }
+  window.location.href = 'filter.html';
+}
 
 // Places for search — loaded from places_name.json: [{placeId, placeName:{en,ta}, pinCode, variety}, ...]
 var __SUGGESTIONS = [];
@@ -66,7 +76,7 @@ function resolvePlace(query) {
 // Open profile — navigate to the standalone tree profile page
 function openProfile(treeId) {
   var id = treeId || '625501-06-0001';
-  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter';
+  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id);
 }
 
 // Open the map pinned to a tree by its ID (from a card)
@@ -334,6 +344,9 @@ window.render = {
       var e1 = (t['encounters-list'] || {})['1'] || {};
       return (e1.acceptance || {}).status === 'accepted';
     }).map(normalizeAlbum);
+    if (treePoolExcludeIds.length > 0) {
+      albumData = albumData.filter(function (t) { return treePoolExcludeIds.indexOf(t.treeId) === -1; });
+    }
     populatePlaceList();
     applyFilters();
   }

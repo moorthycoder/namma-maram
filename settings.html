@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
 <link rel="stylesheet" href="css/settings.css" />
+<script src="js/storage.js"></script>
+<script src="js/lang.js"></script>
 <script src="js/settings.js"></script>
 </head>
 <body>
@@ -15,6 +17,15 @@
     <div class="status-bar dark"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
     <div class="topbar"><button class="back-btn" onclick="history.back()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Settings</span></div>
     <div class="scrollable">
+      <div class="section-title">About Us</div>
+      <div class="info-card">
+        <div class="info-row"><span class="info-key"><i class="ti ti-info-circle"></i> About Us</span><span class="info-val"><button class="switch" id="about-switch" type="button" role="switch" aria-checked="false" onclick="toggleAbout(this)"><span class="knob"></span></button></span></div>
+      </div>
+      <div class="about-panel" id="about-panel">
+        <div class="about-body">Namma Maram · Nature and us are one and same.</div>
+        <a class="about-link" href="about-us.html">Open About Us page</a>
+      </div>
+
       <div class="section-title">General</div>
       <div class="info-card">
         <div class="info-row"><span class="info-key"><i class="ti ti-bell"></i> Notifications</span><span class="info-val"><button class="switch" id="notif-switch" type="button" role="switch" aria-checked="true" onclick="toggleNotif(this)"><span class="knob"></span></button></span></div>
@@ -35,16 +46,11 @@
       </div>
 
       <div class="section-title">Language</div>
-      <div class="lang-grid" id="lang-grid">
-        <div class="lang-tile sel" onclick="pickLang(this,'English')"><b>Aa</b><small>English</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Tamil')"><b>தமிழ்</b><small>Tamil</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Telugu')"><b>తెలుగు</b><small>Telugu</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Kannada')"><b>ಕನ್ನಡ</b><small>Kannada</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Malayalam')"><b>&#3374;&#3378;&#3375;&#3390;&#3379;&#3330;</b><small>Malayalam</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Marathi')"><b>&#2350;&#2352;&#2366;&#2336;&#2368;</b><small>Marathi</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Odia')"><b>ଓଡ଼ିଆ</b><small>Odia</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Bengali')"><b>&#2476;&#2494;&#2434;&#2482;&#2494;</b><small>Bengali</small></div>
-        <div class="lang-tile" onclick="pickLang(this,'Hindi')"><b>&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</b><small>Hindi</small></div>
+      <div class="lang-grid" id="lang-grid"></div>
+
+      <div class="section-title">Data</div>
+      <div class="info-card">
+        <div class="info-row"><span class="info-key"><i class="ti ti-database"></i> Reset sample data</span><span class="info-val"><button class="fs-btn" onclick="freshUpSampleData()">Reset</button></span></div>
       </div>
 
       <div class="section-title">About</div>

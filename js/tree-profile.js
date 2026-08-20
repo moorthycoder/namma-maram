@@ -16,7 +16,15 @@ function goTo(page) {
   document.getElementById('sbar').className = 'status-bar blue';
 }
 
-function profileBack() { window.location.href = 'filter.html'; }
+function profileBack() {
+  var from = new URLSearchParams(location.search).get('from');
+  if (from === 'filter') { window.location.href = 'filter.html'; return; }
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = 'filter.html';
+  }
+}
 
 function findTree(id) {
   for (var i = 0; i < albumData.length; i++) {
@@ -99,10 +107,10 @@ function openAlbum(i) {
 function normalizeAlbum(t) {
   var out = {};
   for (var k in t) { if (Object.prototype.hasOwnProperty.call(t, k)) { out[k] = t[k]; } }
-  var enc = t.encounter || {};
+  var enc = t['encounters-list'] || {};
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
-  var st = last.status || {};
+  var st = last['health-status'] || {};
   var c = t.card || {};
   out.id = t.treeId;
   out.name = t.englishName || t.name || c.addr || '';
@@ -124,19 +132,9 @@ function normalizeAlbum(t) {
   return out;
 }
 
-function loadTreeData(cb) {
-  try {
-    var s = localStorage.getItem('treeDataV1');
-    if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; }
-  } catch (e) {}
-  fetch('json/tree_cards.json').then(function (r) { return r.json(); }).then(function (data) {
-    window.__TREE_DATA = data;
-    try { localStorage.setItem('treeDataV1', JSON.stringify(data)); } catch (e) {}
-    if (cb) { cb(); }
-  }).catch(function () { if (cb) { cb(); } });
-}
-
-loadTreeData(function () {
-  albumData = (window.__TREE_DATA || []).filter(function (t) { return !t.mock; }).map(normalizeAlbum);
-  renderProfile();
-});
+window.render = {
+  init: function () {
+    albumData = (storage.get('treeCards') || []).map(normalizeAlbum);
+    renderProfile();
+  }
+};

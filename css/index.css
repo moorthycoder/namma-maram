@@ -23,3 +23,25 @@
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
   .status-bar.dark span { color: var(--color-theme-light); }
   .app-frame { flex: 1; width: 100%; border: none; }
+
+  /* BOTTOM NAV */
+  .main-bottomnav { background: var(--color-theme-dark); display: flex; justify-content: space-around; align-items: center; padding: 6px 8px 10px; border-top: 0.5px solid rgba(192,221,151,0.15); flex-shrink: 0; }
+  .bottomnav-btn { background: none; border: none; cursor: pointer; color: #ffffff; font-size: 0.6667rem; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 8px; font-family: var(--font-sans); }
+  .bottomnav-btn i { font-size: 1.1333rem; }
+  .bottomnav-btn:hover { color: var(--color-theme-accent); }
+  .bottomnav-btn.active { color: #f59e0b; }
+
+  /* LANGUAGE MINI POPUP */
+  .lang-popup-back { display: none; position: absolute; inset: 0; z-index: 95; background: rgba(0,0,0,0.35); align-items: center; justify-content: center; border-radius: 28px; }
+  .lang-popup-back.open { display: flex; }
+  .lang-popup-card { width: 86%; max-height: 78%; background: var(--color-background-primary); border-radius: var(--border-radius-lg); padding: 12px; display: flex; flex-direction: column; }
+  .lang-popup-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-shrink: 0; }
+  #lang-popup .lang-grid { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .topbar-title { font-size: 1rem; font-weight: 500; color: var(--color-text-primary); }
+  .back-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--color-text-primary); border: none; flex-shrink: 0; }
+  .lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .lang-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; text-align: center; font-family: var(--font-sans); }
+  .lang-tile:hover { border-color: var(--color-theme); }
+  .lang-tile.sel { border-color: var(--color-theme); background: var(--color-theme-light); }
+  .lang-tile b { font-size: 1rem; font-weight: 500; color: var(--color-text-primary); }
+  .lang-tile small { font-size: 0.6667rem; color: var(--color-text-secondary); }

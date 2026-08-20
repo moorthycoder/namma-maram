@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Survey A Tree</title>
+<title>Register A Tree</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
@@ -43,23 +43,23 @@ body { background: var(--color-background-primary); overflow: hidden; }
 </head>
 <body>
   <div class="screen" id="screen"></div>
-<script src="js/survey-a-tree.js"></script>
+<script src="js/register-a-tree-flow.js"></script>
 <script>
-var parentUrl = new URLSearchParams(location.search).get('parent') || 'test-bed.html';
-window._surveyUserId = new URLSearchParams(location.search).get('userid') || '';
-window._surveyTreeId = new URLSearchParams(location.search).get('treeid') || '';
+var parentUrl = new URLSearchParams(location.search).get('parent') || 'test-bed-2.html';
+window._registerUserId = new URLSearchParams(location.search).get('userid') || '';
+window._registerTreeId = new URLSearchParams(location.search).get('treeid') || '';
 
 function roleDash() {
   return parentUrl;
 }
 
-function surveyGoTo(page) {
+function registerGoTo(page) {
   if (page && /\.html/.test(page)) { window.parent.backToStart(); return; }
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   var el = document.getElementById('page-' + page);
   if (el) el.classList.add('active');
 }
-window.goTo = surveyGoTo;
+window.goTo = registerGoTo;
 goTo('selfie');
 </script>
 </body>

@@ -23,7 +23,7 @@
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
   .status-bar.dark span { color: var(--color-theme-light); }
   .page { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
-  .scrollable { overflow-y: auto; flex: 1; }
+  .scrollable { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
   .back-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--color-text-primary); border: none; flex-shrink: 0; }
   .back-btn.inv { background: rgba(255,255,255,0.12); color: var(--color-theme-light); }
   .dash-header{background:var(--color-theme-dark);padding:12px 14px 16px;flex-shrink:0;}

@@ -10,17 +10,6 @@ var registerFlowCSS = "\n\
 ";
 
 var registerFlowPages = "\n\
-<div class=\"page\" id=\"page-append-tree-name\">\n\
-  <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Append tree name</span></div>\n\
-  <div class=\"scrollable\" style=\"flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;\">\n\
-    <div style=\"font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);\">Append a tree name to the database</div>\n\
-    <div style=\"font-size:0.7333rem;color:var(--color-text-secondary);\">Add a new tree name with its scientific and local names. It will be available across the app.</div>\n\
-    <div class=\"field-group\"><div class=\"field-lbl\"><i class=\"ti ti-leaf\" style=\"font-size:0.8667rem\"></i> Tree name</div><input id=\"app-tree-name\" class=\"field-inp\" type=\"text\" placeholder=\"e.g. Rain Tree\" /></div>\n\
-    <div class=\"field-group\"><div class=\"field-lbl\"><i class=\"ti ti-abc\" style=\"font-size:0.8667rem\"></i> Scientific name</div><input id=\"app-scientific-name\" class=\"field-inp\" type=\"text\" placeholder=\"e.g. Samanea saman\" /></div>\n\
-    <div class=\"field-group\"><div class=\"field-lbl\"><i class=\"ti ti-language\" style=\"font-size:0.8667rem\"></i> Local name</div><input id=\"app-local-name\" class=\"field-inp\" type=\"text\" placeholder=\"e.g. Thoongu Moonji Maram\" /></div>\n\
-    <button class=\"green-btn\" onclick=\"appendTreeNameToDatabase()\"><i class=\"ti ti-database-plus\" style=\"font-size:0.9333rem\"></i> Append to database</button>\n\
-  </div>\n\
-</div>\n\
 <div class=\"page\" id=\"page-register-tree\">\n\
   <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Register tree</span><span class=\"topbar-step\">Step 1 of 2</span></div>\n\
   <div class=\"scrollable\" style=\"flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;\">\n\
@@ -53,16 +42,6 @@ var registerFlowPages = "\n\
     <button class=\"green-btn\" onclick=\"typeof registerAndAdoptATree === 'function' ? registerAndAdoptATree() : (registerATree(), showRegisterStatus('registered'))\"><i class=\"ti ti-check\"></i> Register tree</button>\n\
   </div>\n\
 </div>\n";
-
-function appendTreeNameToDatabase() {
-  var tree_name = {
-    englishName: document.getElementById('app-tree-name').value,
-    scientificName: document.getElementById('app-scientific-name').value,
-    localName: document.getElementById('app-local-name').value
-  };
-  appendTreeName(tree_name);
-  showRegisterStatus('added');
-}
 
 function registerATree() {
   var pincode    = document.getElementById('reg-pincode').value;

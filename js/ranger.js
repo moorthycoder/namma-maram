@@ -162,19 +162,11 @@ function toggleNotif(btn) {
 }
 
 
-// Tree data for album — read from cache populated by filter.js (only index reads the JSON)
+// Tree data for album — read from storage
 var albumData = [];
-loadTreeData(function () {
-  var data = window.__TREE_DATA || [];
-  albumData = Array.isArray(data) ? data : (data.albumData || []);
-  applyFilters();
-});
 
-var logs = [
-  { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
-  { date:'10 Jan 2026', height:'8.1 m', diam:'21 cm', note:'Some yellowing on lower leaves — likely seasonal.', photos:[{bg:'linear-gradient(135deg,#1e3d0f,#2d5a1b)',emoji:'🌳',label:'Full tree',time:'10:05 AM',main:true},{bg:'linear-gradient(135deg,#27500A,#3B6D11)',emoji:'🍂',label:'Lower leaves',time:'10:08 AM'}] },
-  { date:'15 Jul 2025', height:'7.6 m', diam:'21 cm', note:'Measurement only. Camera not available. Tree looks healthy overall.', photos:[] }
-];
+var logs = [];
+var currentTree = null;
 
 // Toggle dropdown
 
@@ -298,9 +290,119 @@ function searchTree() {
 function openProfile(treeId) {
   var from = document.querySelector('.page.active').id.replace('page-','');
   profileFrom = from;
-  var id = treeId || '625501-06-0001';
-  document.getElementById('profile-id-label').textContent = id;
+  var detail = storage.pullTreeDetail(treeId);
+  if (!detail) { alert('Tree not found'); return; }
+  currentTree = detail;
+  document.getElementById('profile-id-label').textContent = detail.treeId;
+  renderProfile();
   goTo('profile');
+}
+
+function renderProfile() {
+  if (!currentTree) { return; }
+  var t = currentTree;
+  var enc = t['encounters-list'] || {};
+  var keys = Object.keys(enc);
+  var last = enc[keys[keys.length - 1]] || {};
+  var st = last['health-status'] || {};
+  var heroTitle = document.getElementById('profile-hero-title');
+  if (heroTitle) heroTitle.textContent = (t.englishName || '') + ' #' + (t.LocalSlNo || t.treeId);
+  var heroAddr = document.getElementById('profile-hero-addr');
+  if (heroAddr) heroAddr.innerHTML = '<i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + (t.address || '') + ' <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button>';
+  var heroBadge = document.getElementById('profile-health-badge');
+  if (heroBadge) heroBadge.innerHTML = '<div class="hero-dot"></div>' + (st.health ? st.health.charAt(0).toUpperCase() + st.health.slice(1) : '—');
+  var statH = document.getElementById('profile-stat-height');
+  if (statH) statH.textContent = st.height || '—';
+  var statD = document.getElementById('profile-stat-diam');
+  if (statD) statD.textContent = st.diameter || '—';
+  var statL = document.getElementById('profile-stat-logs');
+  if (statL) statL.textContent = keys.length;
+  var infoS = document.getElementById('profile-info-species');
+  if (infoS) infoS.textContent = t.scientificName || '—';
+  var infoC = document.getElementById('profile-info-caregiver');
+  if (infoC) infoC.textContent = t['care-giver'] || '—';
+  var infoF = document.getElementById('profile-info-first');
+  if (infoF) infoF.textContent = keys.length ? formatLogDate(enc[keys[0]].registeredDate || enc[keys[0]].updatedDate) : '—';
+  var infoT = document.getElementById('profile-info-total');
+  if (infoT) infoT.textContent = keys.length + ' entries';
+  var healthScore = document.getElementById('profile-health-score');
+  if (healthScore) healthScore.textContent = (st.health === 'healthy' ? '82' : '60') + ' / 100';
+  var healthFill = document.getElementById('profile-health-fill');
+  if (healthFill) healthFill.style.width = (st.health === 'healthy' ? '82%' : '60%');
+  logs = buildLogsFromDetail(t);
+  renderProfileLogs();
+  renderTreeLogs();
+}
+
+function openTreeLogs(treeId) {
+  var detail = storage.pullTreeDetail(treeId);
+  if (!detail) { alert('Tree not found'); return; }
+  currentTree = detail;
+  renderProfile();
+  goTo('tree-logs');
+}
+
+function renderTreeLogs() {
+  var title = document.getElementById('tree-logs-title');
+  if (title) title.textContent = (currentTree.englishName || currentTree.treeId) + ' — Logs';
+  var list = document.getElementById('tree-log-list');
+  if (!list) { return; }
+  list.innerHTML = logs.map(function (log, i) {
+    var notes = log.note ? '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> ' + log.note + '</span></div>' : '';
+    var todo = log.todo ? '<div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> ' + log.todo + '</span></div>' : '';
+    var chips = log.photos.length ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + log.photos.length + ' photos</span>' : '';
+    return '<div class="log-tracker-entry" onclick="openAlbum(' + i + ')"><div class="log-dot" style="background:' + logColor(log) + ';margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">' + log.date + '</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height ' + log.height + ' · Diameter ' + log.diam + '</div><div class="log-by">By ' + log.by + '</div>' + notes + todo + (chips ? '<div class="log-chips" style="margin-top:4px;">' + chips + '</div>' : '') + '</div></div>';
+  }).join('');
+}
+
+function formatLogDate(dateStr) {
+  if (!dateStr) { return '—'; }
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var parts = String(dateStr).split('-');
+  if (parts.length < 3) { return dateStr; }
+  return parseInt(parts[2], 10) + ' ' + months[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
+}
+
+function buildLogsFromDetail(t) {
+  var enc = t['encounters-list'] || {};
+  return Object.keys(enc).map(function (key) {
+    var e = enc[key];
+    var st = e['health-status'] || {};
+    var photoFiles = e.photos || [];
+    return {
+      date: formatLogDate(e.updatedDate || e.registeredDate),
+      height: st.height || '—',
+      diam: st.diameter || '—',
+      note: e.fieldNotes || '',
+      todo: e.toDo || '',
+      by: (e.updatedBy || e.registeredBy || '—') + ' · ' + (e.updaterId || e.registererId || '—'),
+      photos: photoFiles.map(function (file, i) {
+        return { bg: t.bg || '', emoji: t.emoji || '🌳', label: 'Photo ' + (i + 1), time: '—', main: i === 0 };
+      })
+    };
+  });
+}
+
+function renderProfileLogs() {
+  var list = document.getElementById('profile-log-list');
+  if (!list) { return; }
+  list.innerHTML = logs.map(function (log, i) {
+    var dot = logColor(log);
+    var notes = log.note ? '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> ' + log.note + '</span></div>' : '';
+    var todo = log.todo ? '<div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> ' + log.todo + '</span></div>' : '';
+    var chips = log.photos.length ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + log.photos.length + ' photos</span>'
+                                 : '<span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span>';
+    var thumb = log.photos.length
+      ? '<div class="log-thumb" style="background:#2d4a2d;">' + (log.photos[0].emoji || '🌿') + '</div>'
+      : '<div class="log-thumb" style="background:var(--color-background-secondary);border:0.5px dashed var(--color-border-secondary);"><i class="ti ti-photo-off" style="font-size:1rem;color:var(--color-text-secondary)"></i></div>';
+    return '<div class="log-entry" onclick="openAlbum(' + i + ')"><div class="log-dot" style="background:' + dot + '"></div><div class="log-body"><div class="log-date">' + log.date + '</div><div class="log-text">' + log.height + ' · ' + log.diam + ' diameter</div>' + notes + todo + '<div class="log-chips">' + chips + '</div></div>' + thumb + '</div>';
+  }).join('');
+}
+
+function logColor(log) {
+  var note = (log.note || '').toLowerCase();
+  if (note.indexOf('pest') > -1 || note.indexOf('disease') > -1) { return '#C0DD97'; }
+  return '#3B6D11';
 }
 
 
@@ -544,22 +646,14 @@ function openMap() {
 }
 
 
-function loadTreeData(cb) {
-  if (window.TREE_CARDS_DATA) { window.__TREE_DATA = window.TREE_CARDS_DATA; if (cb) { cb(); } return; }
-  var d = null;
-  try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
-  if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
-  try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
-  if (cb) { cb(); }
-}
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
   cfg = cfg || {};
   var c = t.card || {};
-  var enc = t.encounter || {};
+  var enc = t['encounters-list'] || {};
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
-  var st = last.status || {};
+  var st = last['health-status'] || {};
   var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
   var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
@@ -577,7 +671,7 @@ function treeCardHtml(t, cfg) {
     '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (t.bg || c.bg || '') + ';">' + (t.emoji || c.emoji || '') + '</div>' + latest +
     '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (st.height || c.height || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
-    '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
+    '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="openTreeLogs(' + q + t.treeId + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
 }
 function renderRoleCards(target, role, cfg) {
   var el = document.getElementById(target);
@@ -587,7 +681,17 @@ function renderRoleCards(target, role, cfg) {
   el.innerHTML = list.map(function (t) { return treeCardHtml(t, cfg); }).join('');
 }
 
-loadTreeData(function () { renderRoleCards('page-trees-cards', 'ranger', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', addrMode: 'short' }); });
+window.render = {
+  init: function () {
+    var data = storage.get('treeCards') || [];
+    window.__TREE_DATA = data;
+    albumData = Array.isArray(data) ? data : (data.albumData || []);
+    applyFilters();
+    renderRoleCards('page-trees-cards', 'ranger', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', addrMode: 'short' });
+    renderLogStats('ranger');
+    renderRecentEntries('recent-entries', 'ranger', 'openTreeLogs');
+  }
+};
 
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { goTo('ranger-login'); }

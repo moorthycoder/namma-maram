@@ -1,6 +1,6 @@
-// survey-a-tree.js — shared Survey A Tree flow, injected into any role page on load.
+// register-a-tree-flow.js — shared Register A Tree flow, injected into any role page on load.
 
-var surveyFlowCSS = "\n\
+var registerFlowCSS = "\n\
   .steps { display: flex; align-items: center; justify-content: center; padding: 10px 20px 0; flex-shrink: 0; }\n\
   .step-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7333rem; font-weight: 500; }\n\
   .step-dot.active { background: var(--color-theme); color: #fff; box-shadow: 0 0 0 3px rgba(59,109,17,0.2); }\n\
@@ -72,7 +72,7 @@ var surveyFlowCSS = "\n\
   @keyframes popIn { 0% { transform: scale(0.4); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }\n\
   .check-ring { animation: popIn 0.5s ease forwards; }\n";
 
-var surveyFlowPages = "\n\
+var registerFlowPages = "\n\
 <div class=\"page\" id=\"page-selfie\">\n\
   <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Selfie with Tree</span><span class=\"topbar-step\">Step 1 of 4</span></div>\n\
   <div class=\"steps\"><div class=\"step-dot active\">1</div><div class=\"step-line\"></div><div class=\"step-dot pending\">2</div><div class=\"step-line\"></div><div class=\"step-dot pending\">3</div><div class=\"step-line\"></div><div class=\"step-dot pending\">4</div></div>\n\
@@ -80,9 +80,17 @@ var surveyFlowPages = "\n\
   <div class=\"scrollable flow-scroll\">\n\
     <div class=\"selfie-cam\">\n\
       <div class=\"selfie-full\" id=\"selfie-panel\"></div>\n\
-      <button class=\"cam-btn\" onclick=\"captureSurveySelfie()\"><i class=\"ti ti-camera\"></i></button>\n\
+      <button class=\"cam-btn\" onclick=\"captureRegisterSelfie()\"><i class=\"ti ti-camera\"></i></button>\n\
     </div>\n\
-    <input id=\"survey-address\" type=\"text\" value=\"\" hidden />\n\
+    <input id=\"register-address\" type=\"text\" value=\"\" hidden />\n\
+    <div>\n\
+      <div class=\"field-label\"><i class=\"ti ti-hash\"></i> Tree ID</div>\n\
+      <input id=\"register-tree-id\" class=\"field-input normal\" type=\"text\" value=\"\" placeholder=\"e.g. 625501-06-0001\" />\n\
+    </div>\n\
+    <div>\n\
+      <div class=\"field-label\"><i class=\"ti ti-leaf\"></i> Scientific name</div>\n\
+      <input id=\"register-scientific-name\" class=\"field-input normal\" type=\"text\" value=\"\" placeholder=\"e.g. Samanea saman\" />\n\
+    </div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
   </div>\n\
 </div>\n\
@@ -98,7 +106,7 @@ var surveyFlowPages = "\n\
           <div class=\"snap-strip\" id=\"snap-strip\"></div>\n\
         </div>\n\
       </div>\n\
-      <button class=\"cam-btn\" onclick=\"addSurveySnapshot()\"><i class=\"ti ti-camera\"></i></button>\n\
+      <button class=\"cam-btn\" onclick=\"addRegisterSnapshot()\"><i class=\"ti ti-camera\"></i></button>\n\
     </div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('selfie')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
   </div>\n\
@@ -108,13 +116,13 @@ var surveyFlowPages = "\n\
   <div class=\"steps\"><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot active\">3</div><div class=\"step-line\"></div><div class=\"step-dot pending\">4</div></div>\n\
   <div class=\"step-labels\"><span class=\"step-lbl\">Selfie</span><span class=\"step-lbl\">Snapshots</span><span class=\"step-lbl active\">Notes</span><span class=\"step-lbl\">Review</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
-    <div><div class=\"field-label\"><i class=\"ti ti-notes\"></i> Observation</div><textarea class=\"notes-box\" id=\"survey-observations\" placeholder=\"e.g. New shoots visible, no signs of disease...\"></textarea></div>\n\
-    <div><div class=\"field-label\"><i class=\"ti ti-clipboard-check\"></i> Recommendation</div><textarea class=\"notes-box\" id=\"survey-recommendations\" placeholder=\"e.g. Fertilize before monsoon...\"></textarea></div>\n\
-    <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"openSurveyReview()\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
+    <div><div class=\"field-label\"><i class=\"ti ti-notes\"></i> Observation</div><textarea class=\"notes-box\" id=\"register-observations\" placeholder=\"e.g. New shoots visible, no signs of disease...\"></textarea></div>\n\
+    <div><div class=\"field-label\"><i class=\"ti ti-clipboard-check\"></i> Recommendation</div><textarea class=\"notes-box\" id=\"register-recommendations\" placeholder=\"e.g. Fertilize before monsoon...\"></textarea></div>\n\
+    <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"openRegisterReview()\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
   </div>\n\
 </div>\n\
 <div class=\"page\" id=\"page-review\">\n\
-  <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Review Survey</span><span class=\"topbar-step\">Step 4 of 4</span></div>\n\
+  <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Review Register</span><span class=\"topbar-step\">Step 4 of 4</span></div>\n\
   <div class=\"steps\"><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot active\">4</div></div>\n\
   <div class=\"step-labels\"><span class=\"step-lbl\">Selfie</span><span class=\"step-lbl\">Snapshots</span><span class=\"step-lbl\">Notes</span><span class=\"step-lbl active\">Review</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
@@ -131,61 +139,61 @@ var surveyFlowPages = "\n\
       <div class=\"review-text\" id=\"review-observations\"></div>\n\
       <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-recommendations\"></div>\n\
     </div>\n\
-    <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"saveSurveyTree()\"><i class=\"ti ti-device-floppy\"></i> Save</button></div>\n\
+    <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"saveRegisterTree()\"><i class=\"ti ti-device-floppy\"></i> Save</button></div>\n\
   </div>\n\
 </div>\n\
 <div class=\"page\" id=\"page-success\">\n\
   <div class=\"success-top\">\n\
     <div class=\"check-ring\"><i class=\"ti ti-check\" style=\"font-size:1.8667rem;color:var(--color-theme-light)\"></i></div>\n\
-    <div style=\"font-size:1.1333rem;font-weight:500;color:#27500A;\">Survey saved!</div>\n\
-    <div style=\"font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;\">Tree survey recorded successfully.</div>\n\
+    <div style=\"font-size:1.1333rem;font-weight:500;color:#27500A;\">Tree registered!</div>\n\
+    <div style=\"font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;\">Tree registered successfully.</div>\n\
   </div>\n\
   <div class=\"scrollable flow-scroll\">\n\
     <button class=\"green-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-layout-dashboard\"></i> Back to dashboard</button>\n\
   </div>\n\
 </div>\n";
 
-var surveySelfie = '';
-var surveySnapshots = [];
-var surveyObservations = '';
-var surveyRecommendations = '';
-var surveySnapshotLimit = 10;
-var surveySelectedSnapshot = -1;
-var surveyGisLat = '';
-var surveyGisLng = '';
+var registerSelfie = '';
+var registerSnapshots = [];
+var registerObservations = '';
+var registerRecommendations = '';
+var registerSnapshotLimit = 10;
+var registerSelectedSnapshot = -1;
+var registerGisLat = '';
+var registerGisLng = '';
 
-function injectSurveyFlow() {
+function injectRegisterFlow() {
   var existing = document.getElementById('page-selfie');
   if (!existing) {
     var styleEl = document.createElement('style');
-    styleEl.id = 'survey-flow-style';
-    styleEl.textContent = surveyFlowCSS;
+    styleEl.id = 'register-flow-style';
+    styleEl.textContent = registerFlowCSS;
     document.head.appendChild(styleEl);
     var screen = document.querySelector('.screen');
-    if (screen) screen.insertAdjacentHTML('beforeend', surveyFlowPages);
+    if (screen) screen.insertAdjacentHTML('beforeend', registerFlowPages);
   }
 }
 
-function captureSurveySelfie() {
+function captureRegisterSelfie() {
   var nowStamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14);
-  surveySelfie = 'selfie-' + nowStamp + '.jpg';
-  surveyGisLat = '10.052928';
-  surveyGisLng = '78.118502';
-  var addressEl = document.getElementById('survey-address');
+  registerSelfie = 'selfie-' + nowStamp + '.jpg';
+  registerGisLat = '10.052928';
+  registerGisLng = '78.118502';
+  var addressEl = document.getElementById('register-address');
   if (addressEl) addressEl.value = 'Mettupatti Sugar Mill School, 625501, Tamil Nadu';
-  renderSurveyGis();
-  renderSurveySelfie();
+  renderRegisterGis();
+  renderRegisterSelfie();
 }
 
-function renderSurveyGis() {
+function renderRegisterGis() {
   var latEl = document.getElementById('gis-lat');
-  if (latEl) latEl.textContent = surveyGisLat || '—';
+  if (latEl) latEl.textContent = registerGisLat || '—';
   var lngEl = document.getElementById('gis-lng');
-  if (lngEl) lngEl.textContent = surveyGisLng || '—';
+  if (lngEl) lngEl.textContent = registerGisLng || '—';
 }
 
-function buildSelfiePreview() {
-  var addressEl = document.getElementById('survey-address');
+function buildRegisterSelfiePreview() {
+  var addressEl = document.getElementById('register-address');
   var address = addressEl ? addressEl.value : 'Anna Nagar, Chennai';
   return '<div class="photo-fill">📸</div>' +
     '<div class="gis-overlay">' +
@@ -193,126 +201,127 @@ function buildSelfiePreview() {
     '<div class="gis-overlay-map"><i class="ti ti-map-pin gis-overlay-pin"></i></div>' +
     '<div class="gis-overlay-right">' +
     '<div class="gis-overlay-address"><i class="ti ti-map-pin"></i> ' + address + '</div>' +
-    '<div class="gis-overlay-row"><i class="ti ti-gps"></i> ' + surveyGisLat + ', ' + surveyGisLng + '</div>' +
+    '<div class="gis-overlay-row"><i class="ti ti-gps"></i> ' + registerGisLat + ', ' + registerGisLng + '</div>' +
     '</div>' +
     '</div>' +
     '</div>' +
-    '<button class="snap-del" onclick="clearSurveySelfie()"><i class="ti ti-x"></i></button>';
+    '<button class="snap-del" onclick="clearRegisterSelfie()"><i class="ti ti-x"></i></button>';
 }
 
-function renderSurveySelfie() {
+function renderRegisterSelfie() {
   var panel = document.getElementById('selfie-panel');
   if (!panel) { return; }
-  panel.innerHTML = surveySelfie
-    ? buildSelfiePreview()
+  panel.innerHTML = registerSelfie
+    ? buildRegisterSelfiePreview()
     : '<div class="photo-fill"><i class="ti ti-camera"></i></div>';
 }
 
-function clearSurveySelfie() {
-  surveySelfie = '';
-  renderSurveySelfie();
+function clearRegisterSelfie() {
+  registerSelfie = '';
+  renderRegisterSelfie();
 }
 
-function addSurveySnapshot() {
-  if (surveySnapshots.length >= surveySnapshotLimit) { return; }
+function addRegisterSnapshot() {
+  if (registerSnapshots.length >= registerSnapshotLimit) { return; }
   var nowStamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14);
-  surveySnapshots.push({ file: 'snapshot-' + nowStamp + '-' + (surveySnapshots.length + 1) + '.jpg', num: parseInt(nowStamp.slice(12), 10) });
-  surveySelectedSnapshot = surveySnapshots.length - 1;
-  renderSurveySnapStrip();
+  registerSnapshots.push({ file: 'snapshot-' + nowStamp + '-' + (registerSnapshots.length + 1) + '.jpg', num: parseInt(nowStamp.slice(12), 10) });
+  registerSelectedSnapshot = registerSnapshots.length - 1;
+  renderRegisterSnapStrip();
 }
 
-function removeSurveySnapshot(index) {
-  if (index < 0 || index >= surveySnapshots.length) { return; }
-  surveySnapshots.splice(index, 1);
-  if (surveySelectedSnapshot >= surveySnapshots.length) {
-    surveySelectedSnapshot = surveySnapshots.length - 1;
+function removeRegisterSnapshot(index) {
+  if (index < 0 || index >= registerSnapshots.length) { return; }
+  registerSnapshots.splice(index, 1);
+  if (registerSelectedSnapshot >= registerSnapshots.length) {
+    registerSelectedSnapshot = registerSnapshots.length - 1;
   }
-  renderSurveySnapStrip();
+  renderRegisterSnapStrip();
 }
 
-function selectSurveySnapshot(index) {
-  if (index < 0 || index >= surveySnapshots.length) { return; }
-  surveySelectedSnapshot = index;
-  renderSurveySnapStrip();
+function selectRegisterSnapshot(index) {
+  if (index < 0 || index >= registerSnapshots.length) { return; }
+  registerSelectedSnapshot = index;
+  renderRegisterSnapStrip();
 }
 
-function renderSurveySnapStrip() {
+function renderRegisterSnapStrip() {
   var strip = document.getElementById('snap-strip');
   if (!strip) { return; }
-  var thumbs = surveySnapshots.map(function (snap, index) {
-    var selClass = index === surveySelectedSnapshot ? ' sel' : '';
-    return '<div class="snap-thumb' + selClass + '" onclick="selectSurveySnapshot(' + index + ')">' +
-      '<button class="snap-thumb-del" onclick="event.stopPropagation();removeSurveySnapshot(' + index + ')"><i class="ti ti-x"></i></button>' +
+  var thumbs = registerSnapshots.map(function (snap, index) {
+    var selClass = index === registerSelectedSnapshot ? ' sel' : '';
+    return '<div class="snap-thumb' + selClass + '" onclick="selectRegisterSnapshot(' + index + ')">' +
+      '<button class="snap-thumb-del" onclick="event.stopPropagation();removeRegisterSnapshot(' + index + ')"><i class="ti ti-x"></i></button>' +
       '<div class="photo-fill">' + snap.num + '</div></div>';
   });
-  if (surveySnapshots.length < surveySnapshotLimit) {
-    thumbs.push('<div class="snap-thumb-add" onclick="addSurveySnapshot()"><i class="ti ti-camera"></i></div>');
+  if (registerSnapshots.length < registerSnapshotLimit) {
+    thumbs.push('<div class="snap-thumb-add" onclick="addRegisterSnapshot()"><i class="ti ti-camera"></i></div>');
   }
   strip.innerHTML = thumbs.join('');
-  renderSurveySnapshotPanel();
+  renderRegisterSnapshotPanel();
 }
 
-function renderSurveySnapshotPanel() {
+function renderRegisterSnapshotPanel() {
   var preview = document.getElementById('snapshot-preview');
   if (!preview) { return; }
-  if (surveySnapshots.length === 0) {
+  if (registerSnapshots.length === 0) {
     preview.innerHTML = '<div class="photo-fill"><i class="ti ti-camera"></i></div>';
     return;
   }
-  if (surveySelectedSnapshot < 0) { surveySelectedSnapshot = 0; }
-  preview.innerHTML = '<button class="snap-del" onclick="removeSurveySnapshot(' + surveySelectedSnapshot + ')"><i class="ti ti-x"></i></button>' +
-    '<div class="photo-fill">' + surveySnapshots[surveySelectedSnapshot].num + '</div>';
+  if (registerSelectedSnapshot < 0) { registerSelectedSnapshot = 0; }
+  preview.innerHTML = '<button class="snap-del" onclick="removeRegisterSnapshot(' + registerSelectedSnapshot + ')"><i class="ti ti-x"></i></button>' +
+    '<div class="photo-fill">' + registerSnapshots[registerSelectedSnapshot].num + '</div>';
 }
 
-function openSurveyReview() {
-  var observationsEl = document.getElementById('survey-observations');
-  var recommendationsEl = document.getElementById('survey-recommendations');
-  if (observationsEl) surveyObservations = observationsEl.value;
-  if (recommendationsEl) surveyRecommendations = recommendationsEl.value;
-  renderSurveyReview();
+function openRegisterReview() {
+  var observationsEl = document.getElementById('register-observations');
+  var recommendationsEl = document.getElementById('register-recommendations');
+  if (observationsEl) registerObservations = observationsEl.value;
+  if (recommendationsEl) registerRecommendations = recommendationsEl.value;
+  renderRegisterReview();
   goTo('review');
 }
 
-function renderSurveyReview() {
+function renderRegisterReview() {
   var selfieEl = document.getElementById('review-selfie');
   if (selfieEl) {
-    selfieEl.innerHTML = surveySelfie
-      ? buildSelfiePreview()
+    selfieEl.innerHTML = registerSelfie
+      ? buildRegisterSelfiePreview()
       : '<span class="review-empty">No selfie captured</span>';
   }
   var gridEl = document.getElementById('review-grid');
   if (gridEl) {
-    gridEl.innerHTML = surveySnapshots.length
-      ? surveySnapshots.map(function () { return '<div class="review-grid-item"><div class="photo-fill">🌳</div></div>'; }).join('')
+    gridEl.innerHTML = registerSnapshots.length
+      ? registerSnapshots.map(function () { return '<div class="review-grid-item"><div class="photo-fill">🌳</div></div>'; }).join('')
       : '<span class="review-empty">No snapshots captured</span>';
   }
   var observationsEl = document.getElementById('review-observations');
   if (observationsEl) {
-    observationsEl.innerHTML = surveyObservations || '<span class="review-empty">No observation recorded</span>';
+    observationsEl.innerHTML = registerObservations || '<span class="review-empty">No observation recorded</span>';
   }
   var recommendationsEl = document.getElementById('review-recommendations');
   if (recommendationsEl) {
-    recommendationsEl.innerHTML = surveyRecommendations || '<span class="review-empty">No recommendation recorded</span>';
+    recommendationsEl.innerHTML = registerRecommendations || '<span class="review-empty">No recommendation recorded</span>';
   }
 }
 
-function saveSurveyTree() {
-  var surveyRecord = {
-    treeId: window._surveyTreeId || '',
-    photos: { selfie: surveySelfie, snapshots: surveySnapshots.map(function (s) { return s.file; }) },
-    fieldObservation: { notes: surveyObservations, recommendations: surveyRecommendations },
-    address: document.getElementById('survey-address').value,
-    surveyorId: window._surveyUserId || '',
+function saveRegisterTree() {
+  var registerRecord = {
+    treeId: document.getElementById('register-tree-id').value || window._registerTreeId || '',
+    treeName: document.getElementById('register-scientific-name').value || '',
+    photos: { selfie: registerSelfie, snapshots: registerSnapshots.map(function (s) { return s.file; }) },
+    fieldObservation: { notes: registerObservations, recommendations: registerRecommendations },
+    address: document.getElementById('register-address').value,
+    surveyorId: window._registerUserId || '',
     savedDate: new Date().toISOString().slice(0, 10)
   };
-  window._surveyTree = surveyRecord;
-  try { localStorage.setItem('surveyTree', JSON.stringify(surveyRecord)); } catch (e) {}
-  console.log('SURVEY OBJECT', surveyRecord);
-  surveySelfie = '';
-  surveySnapshots = [];
-  surveyObservations = '';
-  surveyRecommendations = '';
+  window._registerTree = registerRecord;
+  try { localStorage.setItem('registerTree', JSON.stringify(registerRecord)); } catch (e) {}
+  console.log('REGISTER OBJECT', registerRecord);
+  registerSelfie = '';
+  registerSnapshots = [];
+  registerObservations = '';
+  registerRecommendations = '';
   goTo(roleDash());
 }
 
-injectSurveyFlow();
+injectRegisterFlow();

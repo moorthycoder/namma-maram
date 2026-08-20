@@ -22,12 +22,12 @@
   <div class="screen">
     <div class="status-bar dark"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
     <div class="page active" id="page-start">
-      <div class="topbar"><button class="back-btn" onclick="goTo(roleDash())"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey A Tree</span></div>
+      <div class="topbar"><button class="back-btn" onclick="goTo(roleDash())"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Register A Tree</span></div>
       <div class="scrollable flow-scroll" style="justify-content:center;align-items:center;text-align:center;gap:16px;">
-        <div style="width:64px;height:64px;border-radius:50%;background:var(--color-theme-light);display:flex;align-items:center;justify-content:center;font-size:1.8667rem;">📐</div>
-        <div style="font-size:1.1333rem;font-weight:500;color:var(--color-text-primary);">Survey A Tree</div>
-        <div style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;max-width:240px;">Capture a selfie, take snapshots and record field notes for this tree.</div>
-        <button class="green-btn" onclick="startSurvey()"><i class="ti ti-camera"></i> Start Survey</button>
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--color-theme-light);display:flex;align-items:center;justify-content:center;font-size:1.8667rem;">🌱</div>
+        <div style="font-size:1.1333rem;font-weight:500;color:var(--color-text-primary);">Register A Tree</div>
+        <div style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;max-width:240px;">Take a photo and register this tree in the database.</div>
+        <button class="green-btn" onclick="startSurvey()"><i class="ti ti-camera"></i> Start Register</button>
       </div>
     </div>
     <nav class="main-bottomnav">
@@ -49,20 +49,20 @@
 <script src="js/lang.js"></script>
 <script src="js/index-nav.js"></script>
 <script>
-function roleDash() { return 'test-bed.html'; }
+function roleDash() { return 'test-bed-2.html'; }
 function goTo(page) {
-  if (page === 'test-bed.html') { window.location.href = 'test-bed.html'; return; }
+  if (page === 'test-bed-2.html') { window.location.href = 'test-bed-2.html'; return; }
   backToStart();
 }
 function startSurvey() {
   var p = new URLSearchParams(location.search);
-  var userid = p.get('userid') || 'SRV-TEST-001';
+  var userid = p.get('userid') || 'REG-TEST-001';
   var treeid = p.get('treeid') || '625501-06-0001';
   var frame = document.createElement('iframe');
   frame.className = 'app-frame';
   frame.id = 'app-frame';
-  frame.title = 'Survey A Tree';
-  frame.src = 'survey-a-tree.html?parent=test-bed.html&userid=' + encodeURIComponent(userid) + '&treeid=' + encodeURIComponent(treeid);
+  frame.title = 'Register A Tree';
+  frame.src = 'register-a-tree.html?parent=test-bed-2.html&userid=' + encodeURIComponent(userid) + '&treeid=' + encodeURIComponent(treeid);
   var startPage = document.getElementById('page-start');
   startPage.style.display = 'none';
   startPage.parentNode.insertBefore(frame, startPage.nextSibling);

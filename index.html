@@ -14,18 +14,23 @@
   <div class="screen">
     <div class="status-bar dark"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
     <iframe class="app-frame" id="app-frame" src="filter.html" title="Namma Maram"></iframe>
+    <nav class="main-bottomnav">
+      <button class="bottomnav-btn active" type="button" onclick="goNav('filter.html')"><i class="ti ti-home"></i><span>Home</span></button>
+      <button class="bottomnav-btn" type="button" onclick="openLangPopup()"><i class="ti ti-language"></i><span>Language</span></button>
+      <button class="bottomnav-btn" type="button" onclick="goNav('login-hub.html')"><i class="ti ti-login"></i><span>Login</span></button>
+      <button class="bottomnav-btn" type="button" onclick="goNav('register-hub.html')"><i class="ti ti-user-plus"></i><span>Register</span></button>
+      <button class="bottomnav-btn" type="button" onclick="goNav('settings.html')"><i class="ti ti-settings"></i><span>Settings</span></button>
+    </nav>
+    <div class="lang-popup-back" id="lang-popup">
+      <div class="lang-popup-card">
+        <div class="lang-popup-head"><span class="topbar-title">Choose Language</span><button class="back-btn" onclick="closeLangPopup()"><i class="ti ti-x"></i></button></div>
+        <div class="lang-grid" id="lang-grid"></div>
+      </div>
+    </div>
   </div>
 </div>
-<script>
-function clearTreeDataCaches() {
-  try {
-    localStorage.removeItem('placesV1');
-    localStorage.removeItem('treeDataV1');
-    localStorage.removeItem('treeNamesV1');
-    localStorage.removeItem('treeColoursV1');
-  } catch (e) {}
-}
-window.addEventListener('pagehide', clearTreeDataCaches);
-</script>
+<script src="js/storage.js"></script>
+<script src="js/lang.js"></script>
+<script src="js/index-nav.js"></script>
 </body>
 </html>

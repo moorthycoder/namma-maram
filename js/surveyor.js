@@ -162,13 +162,8 @@ function toggleNotif(btn) {
 }
 
 
-// Tree data for album — read from cache populated by filter.js (only index reads the JSON)
+// Tree data for album — read from storage
 var albumData = [];
-loadTreeData(function () {
-  var data = window.__TREE_DATA || [];
-  albumData = Array.isArray(data) ? data : (data.albumData || []);
-  applyFilters();
-});
 
 var logs = [
   { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
@@ -544,22 +539,14 @@ function openMap() {
 }
 
 
-function loadTreeData(cb) {
-  if (window.TREE_CARDS_DATA) { window.__TREE_DATA = window.TREE_CARDS_DATA; if (cb) { cb(); } return; }
-  var d = null;
-  try { if (window.name && window.name.indexOf('TREE_DATA_V1=') === 0) { d = window.name.slice(13); } } catch (e) {}
-  if (d) { try { window.__TREE_DATA = JSON.parse(d); if (cb) { cb(); } return; } catch (e) {} }
-  try { var s = localStorage.getItem('treeDataV1'); if (s) { window.__TREE_DATA = JSON.parse(s); if (cb) { cb(); } return; } } catch (e) {}
-  if (cb) { cb(); }
-}
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
   cfg = cfg || {};
   var c = t.card || {};
-  var enc = t.encounter || {};
+  var enc = t['encounters-list'] || {};
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
-  var st = last.status || {};
+  var st = last['health-status'] || {};
   var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
   var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
@@ -579,6 +566,20 @@ function treeCardHtml(t, cfg) {
     '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
     '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
 }
+function renderSurveyorStats() {
+  var stats = getRoleConfig('surveyor').stats || {};
+  var month = stats.month || {};
+  var myTrees = stats['my-trees'] || {};
+  var zone = stats.zone || {};
+  setStatById('svy-total-logs', stats['total-logs'] != null ? stats['total-logs'] : '—');
+  setStatById('svy-month-trees', month.trees != null ? month.trees : '—');
+  setStatById('svy-month-logs', month.logs != null ? month.logs : '—');
+  setStatById('svy-my-current', myTrees.current != null ? myTrees.current : '—');
+  setStatById('svy-my-past', myTrees.past != null ? myTrees.past : '—');
+  setStatById('svy-zone-place', zone.place || '—');
+  setStatById('svy-zone-future', zone.future != null ? zone.future : '—');
+}
+
 function renderRoleCards(target, role, cfg) {
   var el = document.getElementById(target);
   if (!el) { return; }
@@ -587,7 +588,17 @@ function renderRoleCards(target, role, cfg) {
   el.innerHTML = list.map(function (t) { return treeCardHtml(t, cfg); }).join('');
 }
 
-loadTreeData(function () { renderRoleCards('page-trees-cards', 'surveyor', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', addrMode: 'short' }); });
+window.render = {
+  init: function () {
+    var data = storage.get('treeCards') || [];
+    window.__TREE_DATA = data;
+    albumData = Array.isArray(data) ? data : (data.albumData || []);
+    applyFilters();
+    renderRoleCards('page-trees-cards', 'surveyor', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', addrMode: 'short' });
+    renderSurveyorStats();
+    renderRecentEntries('recent-entries', 'surveyor', 'openProfile');
+  }
+};
 
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { goTo('surveyor-login'); }

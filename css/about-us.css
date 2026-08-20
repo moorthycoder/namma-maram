@@ -21,7 +21,7 @@
   .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
   .status-bar.dark span { color: var(--color-theme-light); }
-  .scrollable { overflow-y: auto; flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+  .scrollable { overflow-y: auto; flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 12px; -webkit-overflow-scrolling: touch; }
   .topbar { display: flex; align-items: center; gap: 10px; padding: 8px 14px 10px; flex-shrink: 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
   .topbar-title { font-size: 1rem; font-weight: 500; color: var(--color-text-primary); }
   .back-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--color-text-primary); border: none; flex-shrink: 0; }
