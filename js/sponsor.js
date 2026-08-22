@@ -255,10 +255,7 @@ function goTo(page) {
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
   
-  if (page === 'main') {
-    applyFilters();
   }
-}
 
 
 
@@ -277,19 +274,6 @@ function togglePw(id, btn) {
   var inp = document.getElementById(id);
   inp.type = inp.type === 'password' ? 'text' : 'password';
   btn.querySelector('i').className = inp.type === 'password' ? 'ti ti-eye' : 'ti ti-eye-off';
-}
-
-
-// Search tree - searches scientific, english and local names
-
-function searchById() {
-  applyFilters();
-}
-
-
-
-function searchTree() {
-  searchById();
 }
 
 
@@ -337,15 +321,6 @@ function openTreeMap() {
     alert('Location not available for this tree.');
   }
 }
-
-
-// Opening the map as a fullscreen in-app modal
-
-function showMap(coordsParam) {
-  document.getElementById('map-frame').src = 'map.html?coords=' + encodeURIComponent(coordsParam);
-  document.getElementById('map-modal').classList.add('open');
-}
-
 
 
 function closeMapModal() {
@@ -491,169 +466,7 @@ function openSponsorWaitingRequests() {
 }
 
 
-// Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
 
-function treeLoc(t) { return t.address ? t.address.split(', ')[0] : ''; }
-
-
-// Album render - additive filters: place (address) + tree name (scientific/english/local)
-
-function renderAlbum(place, tree) {
-  var grid = document.getElementById('album-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  
-  var q = function(s){ return s ? String(s).toLowerCase() : ''; };
-  place = q(place);
-  tree = q(tree);
-  
-  var filtered = albumData.filter(function(t) {
-    var matchPlace = true;
-    var matchTree = true;
-    if (place) matchPlace = q(t.address).indexOf(place) > -1 || q(t.addressLocalLang || '').indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1;
-    if (tree) {
-      matchTree = q(t.scientificName).indexOf(tree) > -1 ||
-                  q(t.englishName).indexOf(tree) > -1 ||
-                  q(t.localName).indexOf(tree) > -1;
-    }
-    return matchPlace && matchTree;
-  });
-  
-  var countEl = document.getElementById('album-count');
-  if (countEl) countEl.textContent = filtered.length + ' trees';
-
-  var summaryEl = document.getElementById('album-summary');
-  window._mapTrees = filtered;
-  if (summaryEl) {
-    if (filtered.length > 0) {
-      var groups = {};
-      filtered.forEach(function(t) {
-        groups[t.englishName] = (groups[t.englishName] || 0) + 1;
-      });
-      var chips = Object.keys(groups).map(function(k) {
-        return '<span class="album-chip chip-click" onclick="filterByTree(\'' + k + '\')">' + k + ' <b>– ' + groups[k] + '</b></span>';
-      }).join('');
-      summaryEl.innerHTML = chips;
-      var mapBtn = document.createElement('button');
-      mapBtn.type = 'button';
-      mapBtn.className = 'map-btn';
-      mapBtn.innerHTML = '<i class="ti ti-map-2"></i> Show in map';
-      mapBtn.onclick = openMap;
-      summaryEl.appendChild(mapBtn);
-      summaryEl.style.display = window._summaryOpen === false ? 'none' : 'flex';
-    } else {
-      summaryEl.style.display = 'none';
-      summaryEl.innerHTML = '';
-    }
-    var toggle = document.getElementById('summary-toggle');
-    if (toggle) toggle.classList.toggle('off', window._summaryOpen === false);
-  }
-  
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="no-trees">No trees found</div>';
-    return;
-  }
-  
-  filtered.forEach(function(t) {
-    var card = document.createElement('div');
-    card.className = 'tree-card';
-    card.onclick = function() {
-      openProfile(t.treeId);
-    };
-    
-    var photo = document.createElement('div');
-    photo.className = 'tree-photo';
-    photo.style.background = t.bg;
-    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div><div class="tree-location">' + treeLoc(t) + '</div>';
-    
-    var info = document.createElement('div');
-    info.className = 'tree-info';
-    info.innerHTML = 
-      '<div class="tree-id">' + t.treeId + '</div>' +
-      '<div class="tree-name">' + t.englishName + '</div>' +
-      '<div class="tree-stats">' +
-        '<span>📏 ' + t.height + '</span>' +
-        '<span>📐 ' + t.diameter + '</span>' +
-        '<span>📋 ' + t.logs + '</span>' +
-      '</div>' +
-      '<div class="tree-meta">' +
-        (function(){ var c = t.cards && t.cards[t.cards.length - 1] || {}; return '' +
-        '<div>👀 Encounter <b>' + (c.encounter != null ? c.encounter : 0) + '</b> · 📋 Logs <b>' + t.logs + '</b></div>' +
-        '<div>Registered by <b>' + (c.registeredBy || '—') + '</b> · ' + (c.registrationDate || '—') + '</div>' +
-        '<div>ID <b>' + (c.updaterId || c.registererId || '—') + '</b> · Updated by <b>' + (c.updatedBy || '—') + '</b> · ' + (c.updatedDate || '—') + '</div>'; })() +
-      '</div>';
-    
-    card.appendChild(photo);
-    card.appendChild(info);
-    grid.appendChild(card);
-  });
-}
-
-
-
-function applyFilters() {
-  var place = document.getElementById('album-place').value.trim();
-  var tree = document.getElementById('album-tree').value.trim();
-  renderAlbum(place, tree);
-}
-
-
-// Toggle summary panel visibility (sticky via re-render)
-
-function toggleSummary() {
-  window._summaryOpen = window._summaryOpen === false ? true : false;
-  var toggle = document.getElementById('summary-toggle');
-  if (toggle) toggle.classList.toggle('off', window._summaryOpen === false);
-  applyFilters();
-}
-
-
-// Clicking a summary chip fills the tree-name box and re-applies (additive)
-
-function filterByTree(name) {
-  var el = document.getElementById('album-tree');
-  el.value = name;
-  var btn = el.parentNode.querySelector('.clear-btn');
-  if (btn) btn.disabled = false;
-  applyFilters();
-}
-
-
-// Dirty-state: X clear button disabled (greyed) when the filter has no value
-
-function onInput(el) {
-  var btn = el.parentNode.querySelector('.clear-btn');
-  if (btn) btn.disabled = !el.value;
-  applyFilters();
-}
-
-
-// Clear a filter's value
-
-function clearInput(id) {
-  var el = document.getElementById(id);
-  el.value = '';
-  var btn = el.parentNode.querySelector('.clear-btn');
-  if (btn) btn.disabled = true;
-  applyFilters();
-}
-
-
-// Spread the current result set over Google Maps (one pin per tree)
-
-function openMap() {
-  var trees = window._mapTrees || albumData;
-  var coords = trees.filter(function(t){
-    return hasTreeGis(t);
-  }).map(function(t){
-    return treeMapCoords(t);
-  });
-  if (coords.length > 0) {
-    showMap(coords.join('|'));
-  } else {
-    alert('No tree locations found to show on the map.');
-  }
-}
 
 function sponsorCardHtml(t) {
   var q = String.fromCharCode(39);
@@ -697,7 +510,6 @@ window.render = {
     var data = storage.get('treeCards') || [];
     window.__TREE_DATA = data;
     albumData = Array.isArray(data) ? data : (data.albumData || []);
-    applyFilters();
     renderSponsorCards();
     var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
     var cards = role.cards || {};
@@ -746,6 +558,17 @@ function openTreePool() {
   var exclude = [].concat(cards.current || [], cards.past || [], cards.waiting || []).join(',');
   var parent = encodeURIComponent('sponsor.html?hub=sponsor-dash');
   window.location.href = 'tree-pool.html?parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
+}
+
+function getSponsorParentUrl() {
+  var parent_url = new URLSearchParams(location.search).get('parent');
+  return parent_url ? parent_url : null;
+}
+
+function goBackFromSponsorLogin() {
+  var parent_url = getSponsorParentUrl();
+  if (parent_url) { window.location.href = parent_url; return; }
+  window.location.href = 'login-hub.html';
 }
 
 var hubMode = new URLSearchParams(location.search).get('hub');

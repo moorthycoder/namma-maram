@@ -16,8 +16,10 @@ function setAppLang(code) {
 }
 
 function setFilterLang(code) {
-  filterLang = code;
-  appLang = code;
-  window._mapLang = code;
-  try { localStorage.setItem(LANG_STORE_KEY, appLang); } catch (e) {}
+  // [future] per-page language override - disabled, filter follows appLang
+  // filterLang = code;
+  // appLang = code;
+  // window._mapLang = code;
+  // try { localStorage.setItem(LANG_STORE_KEY, code); } catch (e) {}
+  filterLang = appLang;
 }

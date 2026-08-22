@@ -66,7 +66,11 @@ function resolvePlace(query) {
 // Open profile — navigate to the standalone tree profile page
 function openProfile(treeId) {
   var id = treeId || '625501-06-0001';
-  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter';
+  var place = document.getElementById('album-place').value.trim();
+  var tree = document.getElementById('album-tree').value.trim();
+  var parentUrl = encodeURIComponent('filter.html?place=' + encodeURIComponent(place) + '&tree=' + encodeURIComponent(tree));
+  var flangParam = 'flang=' + encodeURIComponent(filterLang);
+  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter&parent=' + parentUrl + '&' + flangParam;
 }
 
 // Open the map pinned to a tree by its ID (from a card)
@@ -334,6 +338,16 @@ window.render = {
       var e1 = (t['encounters-list'] || {})['1'] || {};
       return (e1.acceptance || {}).status === 'accepted';
     }).map(normalizeAlbum);
+    var qp = new URLSearchParams(location.search);
+    var placeEl = document.getElementById('album-place');
+    var treeEl = document.getElementById('album-tree');
+    if (qp.get('place') || qp.get('tree')) {
+      placeEl.value = qp.get('place') || '';
+      treeEl.value = qp.get('tree') || '';
+      placeEl.parentNode.querySelector('.clear-btn').disabled = !placeEl.value;
+      treeEl.parentNode.querySelector('.clear-btn').disabled = !treeEl.value;
+      history.replaceState(null, '', 'filter.html');
+    }
     populatePlaceList();
     applyFilters();
   }

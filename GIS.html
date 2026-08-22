@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GIS</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/GIS.css" />
+</head>
+<body>
+  <div class="screen">
+    <button class="gis-close" onclick="captureGisValuesAndGoBack()"><i class="ti ti-x"></i></button>
+    <div class="gis-map" id="gis-map"></div>
+    <div class="bottom-bar">
+      <div class="gis-coords-row">
+        <input id="gis-lat" class="field-input" placeholder="Latitude" oninput="moveGisMarkerFromInputs()" />
+        <input id="gis-lng" class="field-input" placeholder="Longitude" oninput="moveGisMarkerFromInputs()" />
+      </div>
+      <textarea id="gis-address" class="field-input gis-address" placeholder="Address"></textarea>
+    </div>
+  </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/gis.js"></script>
+<script>
+  var gisAppLang = new URLSearchParams(location.search).get('appLang') || 'en';
+  var gisConfig = {
+    mapId: 'gis-map',
+    latInputId: 'gis-lat',
+    lngInputId: 'gis-lng',
+    useRealCapture: false,
+    onPositionChange: fillGisAddress
+  };
+  initGisMap(gisConfig);
+  fillGisAddress();
+
+  var gisAddressDebounceTimer = null;
+
+  function fillGisAddress() {
+    clearTimeout(gisAddressDebounceTimer);
+    gisAddressDebounceTimer = setTimeout(geocodeGisAddress, 800);
+  }
+
+  function geocodeGisAddress() {
+    var latEl = document.getElementById('gis-lat');
+    var lngEl = document.getElementById('gis-lng');
+    var addressEl = document.getElementById('gis-address');
+    var lat = parseFloat(latEl ? latEl.value : '');
+    var lng = parseFloat(lngEl ? lngEl.value : '');
+    if (isNaN(lat) || isNaN(lng) || !addressEl) { return; }
+    fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng, { headers: { 'Accept-Language': gisAppLang } })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data && data.display_name) { addressEl.value = data.display_name; }
+      })
+      .catch(function () {});
+  }
+
+  function captureGisValuesAndGoBack() {
+    var latEl = document.getElementById('gis-lat');
+    var lngEl = document.getElementById('gis-lng');
+    var addressEl = document.getElementById('gis-address');
+    var lat = latEl && latEl.value ? latEl.value : '';
+    var lng = lngEl && lngEl.value ? lngEl.value : '';
+    var gis_values = {
+      latitude: lat,
+      longitude: lng,
+      address: addressEl && addressEl.value ? addressEl.value : ''
+    };
+    window._gisValues = gis_values;
+    try {
+      if (window.parent && window.parent !== window) { window.parent._gisValues = gis_values; }
+    } catch (e) {}
+    console.log('GIS VALUES', gis_values);
+    fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng, { headers: { 'Accept-Language': 'en' } })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data && data.display_name) {
+          gis_values.addressEn = data.display_name;
+          window._gisValues = gis_values;
+          try {
+            if (window.parent && window.parent !== window) { window.parent._gisValues = gis_values; }
+          } catch (e) {}
+          console.log('GIS VALUES (with en)', gis_values);
+        }
+        goBackFromGIS();
+      })
+      .catch(function () { goBackFromGIS(); });
+  }
+
+  function goBackFromGIS() {
+    if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') {
+      window.parent.backToStart();
+    } else {
+      window.location.href = 'GIS.html';
+    }
+  }
+</script>
+</body>
+</html>

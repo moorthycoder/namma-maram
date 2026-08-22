@@ -31,35 +31,10 @@
         <div class="main-sub">Nature and us are one and same</div>
       </div>
       
-      <div class="album-filters">
-        <div class="filter-row" style="flex-direction:column;gap:8px;">
-          <div class="clear-wrap">
-            <input class="id-input" id="album-place" type="text" placeholder="Type Place Name" oninput="onInput(this)" />
-            <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
-          </div>
-          <div class="clear-wrap">
-            <input class="id-input" id="album-tree" type="text" placeholder="Type Tree Name" oninput="onInput(this)" />
-            <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
-          </div>
-        </div>
       </div>
-      
-      <div class="album-container">
-        <div class="album-header">
-          <span class="album-title"><i class="ti ti-photo"></i> Tree album</span>
-          <span style="display:flex;align-items:center;gap:8px;">
-            <span class="album-count" id="album-count">0 trees</span>
-            <button class="album-toggle" id="summary-toggle" type="button" onclick="toggleSummary()"><i class="ti ti-eye"></i></button>
-          </span>
-        </div>
-        
-        <div class="album-summary" id="album-summary"></div>
-        <div class="album-grid" id="album-grid"></div>
-      </div>
-    </div>
     <div class="page" id="page-sponsor-login">
       <div class="slogin-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="goTo('main')"><i class="ti ti-arrow-left"></i></button></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="goBackFromSponsorLogin()"><i class="ti ti-arrow-left"></i></button></div>
         <h2>Sponsor login</h2><p>Sign in to manage your sponsored trees</p>
       </div>
       <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
@@ -81,7 +56,7 @@
     </div>
     <div class="page" id="page-sponsor-dash">
       <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="window.top.location.href='login-hub.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div class="sdash-stats">
           <div class="sdash-stat"><div class="sdash-stat-label">Trees sponsored</div>
             <div class="sdash-split">

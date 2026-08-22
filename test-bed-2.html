@@ -28,6 +28,7 @@
         <div style="font-size:1.1333rem;font-weight:500;color:var(--color-text-primary);">Register A Tree</div>
         <div style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;max-width:240px;">Take a photo and register this tree in the database.</div>
         <button class="green-btn" onclick="startSurvey()"><i class="ti ti-camera"></i> Start Register</button>
+        <button class="green-btn" onclick="startSurveyTree()"><i class="ti ti-clipboard"></i> Start Survey</button>
       </div>
     </div>
     <nav class="main-bottomnav">
@@ -63,6 +64,19 @@ function startSurvey() {
   frame.id = 'app-frame';
   frame.title = 'Register A Tree';
   frame.src = 'register-a-tree.html?parent=test-bed-2.html&userid=' + encodeURIComponent(userid) + '&treeid=' + encodeURIComponent(treeid);
+  var startPage = document.getElementById('page-start');
+  startPage.style.display = 'none';
+  startPage.parentNode.insertBefore(frame, startPage.nextSibling);
+}
+function startSurveyTree() {
+  var p = new URLSearchParams(location.search);
+  var userid = p.get('userid') || 'SUR-TEST-001';
+  var treeid = p.get('treeid') || '625501-06-0001';
+  var frame = document.createElement('iframe');
+  frame.className = 'app-frame';
+  frame.id = 'app-frame';
+  frame.title = 'Survey A Tree';
+  frame.src = 'survey-a-tree.html?parent=test-bed-2.html&userid=' + encodeURIComponent(userid) + '&treeid=' + encodeURIComponent(treeid);
   var startPage = document.getElementById('page-start');
   startPage.style.display = 'none';
   startPage.parentNode.insertBefore(frame, startPage.nextSibling);

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GIS Widget Test</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  :root {
+    --color-theme: #3B6D11;
+    --color-theme-light: #EAF3DE;
+    --color-border-secondary: #cccccc;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f4f4f4;
+    --color-text-primary: #111111;
+    --color-text-secondary: #666666;
+    --border-radius-md: 10px;
+    --font-sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
+  html { font-size: 16px; }
+  body { background: var(--color-background-primary); padding: 16px; }
+  .panel { border: 1px solid var(--color-border-secondary); border-radius: 12px; padding: 12px; margin-bottom: 14px; }
+  .label { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 6px; }
+  .gis-panel { width: 100%; height: 280px; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--color-theme); position: relative; z-index: 0; }
+  .field-input { width: 100%; padding: 10px 12px; border-radius: var(--border-radius-md); border: 1px solid var(--color-border-secondary); font-size: 0.9rem; margin-bottom: 8px; }
+  .btn { padding: 10px 16px; border-radius: 10px; border: none; background: var(--color-theme); color: #fff; font-size: 0.9rem; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <div class="label">GIS Map</div>
+    <div class="gis-panel" id="test-gis-map"></div>
+  </div>
+  <div class="panel">
+    <div class="label">Latitude</div>
+    <input id="test-gis-lat" class="field-input" placeholder="Latitude" oninput="moveGisMarkerFromInputs()" />
+    <div class="label">Longitude</div>
+    <input id="test-gis-lng" class="field-input" placeholder="Longitude" oninput="moveGisMarkerFromInputs()" />
+  </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/gis.js"></script>
+<script>
+  var testConfig = {
+    mapId: 'test-gis-map',
+    latInputId: 'test-gis-lat',
+    lngInputId: 'test-gis-lng',
+    prefillLat: '9.919583',
+    prefillLng: '78.118861',
+    useRealCapture: false,
+    onPositionChange: function() { console.log('position changed'); }
+  };
+
+  initGisMap(testConfig);
+</script>
+</body>
+</html>

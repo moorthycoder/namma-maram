@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -15,7 +15,7 @@
 
     <div class="page active" id="page-caregiver-login">
       <div class="slogin-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="window.top.location.href='index.html'"><i class="ti ti-arrow-left"></i></button></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
         <h2>Care-giver login</h2><p>Sign in to manage the trees you care for</p>
       </div>
       <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="page" id="page-caregiver-enroll">
-      <div class="topbar"><button class="back-btn" onclick="window.top.location.href='index.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Care-giver enrollment</span></div>
+      <div class="topbar"><button class="back-btn" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Care-giver enrollment</span></div>
       <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
         <div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);">Become a care-giver</div>
         <div style="font-size:0.7333rem;color:var(--color-text-secondary);">Adopt and look after registered trees in your neighbourhood. Your application will be reviewed by the admin.</div>
@@ -37,7 +37,7 @@
     </div>
     <div class="page" id="page-caregiver-dash">
       <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Lakshmi</div></div><div class="savatar" onclick="toggleCLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">LR</span><div class="logout-drop" id="clogout-drop"><div class="dd-item" onclick="window.top.location.href='index.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Lakshmi</div></div><div class="savatar" onclick="toggleCLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">LR</span><div class="logout-drop" id="clogout-drop"><div class="dd-item" onclick="window.top.location.href='login-hub.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div style="font-size:0.8667rem;color:var(--color-text-secondary);margin-top:12px;">What would you like to do today?</div>
         <div class="sdash-stats" style="margin-top:12px;">
           <div class="sdash-stat"><div class="sdash-stat-label">Trees in care</div>
@@ -207,7 +207,6 @@
 <script src="js/show-tree-details.js"></script>
 <script src="js/care-giver.js"></script>
 <script src="js/append-a-tree-name.js"></script>
-<script src="js/register-a-tree.js"></script>
-<script src="js/survey-a-tree.js"></script>
+<script src="js/survey-a-tree-flow.js"></script>
 </body>
 </html>
