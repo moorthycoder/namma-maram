@@ -1,6 +1,6 @@
 
 var TESTING_MODE = true;
-var profileFrom = 'main';
+var profileFrom = 'caregiver-login';
 var albumFrom = 'tree-profile';
 var treeLogsFrom = 'trees';
 var sponsoredCount = 2;

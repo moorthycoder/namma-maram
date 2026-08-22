@@ -1,11 +1,11 @@
 
 var TESTING_MODE = true;
-var profileFrom = 'main';
+var profileFrom = 'surveyor-login';
 var albumFrom = 'profile';
 var treeLogsFrom = 'trees';
 var sponsoredCount = 2;
 var caredCount = 4;
-var logoutTarget = 'main';
+var logoutTarget = 'surveyor-login';
 
 function loadCurrentUser() {
   try {
@@ -40,7 +40,7 @@ var registerStatusData = {
 };
 
 // Register status modal — waiting / existing_member / blocked
-var regTarget = 'main';
+var regTarget = 'surveyor-login';
 
 function showRegisterStatus(status, page) {
   if (page) regTarget = page;
@@ -171,20 +171,8 @@ var logs = [
   { date:'15 Jul 2025', height:'7.6 m', diam:'21 cm', note:'Measurement only. Camera not available. Tree looks healthy overall.', photos:[] }
 ];
 
-// Toggle dropdown
-
-function toggleDD() {
-  var dd = document.getElementById('dropdown');
-  dd.classList.toggle('open');
-}
-
-
 // Close dropdown on outside click
 document.addEventListener('click', function(e) {
-  var dd = document.getElementById('dropdown');
-  if (!e.target.closest('.main-topbar')) {
-    dd.classList.remove('open');
-  }
   var ld = document.getElementById('logout-drop');
   if (ld && !e.target.closest('.avatar')) {
     ld.classList.remove('open');
@@ -248,15 +236,11 @@ function goTo(page) {
   document.getElementById('page-'+page).classList.add('active');
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
-  if (['main','surveyor-login','surveyor-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','append-tree-name','append-place-name','register-tree','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
+  if (['surveyor-login','surveyor-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','append-tree-name','append-place-name','register-tree','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
   else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
-  document.getElementById('dropdown').classList.remove('open');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
   
-  if (page === 'main') {
-    applyFilters();
-  }
 }
 
 
@@ -475,9 +459,10 @@ function renderAlbum(place, tree) {
 
 
 function applyFilters() {
-  var place = document.getElementById('album-place').value.trim();
-  var tree = document.getElementById('album-tree').value.trim();
-  renderAlbum(place, tree);
+  var place_el = document.getElementById('album-place');
+  var tree_el = document.getElementById('album-tree');
+  if (!place_el || !tree_el) { return; }
+  renderAlbum(place_el.value.trim(), tree_el.value.trim());
 }
 
 
@@ -603,4 +588,5 @@ window.render = {
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { goTo('surveyor-login'); }
 else if (hubMode === 'register') { goTo('surveyor-enroll'); }
+else { window.location.href = 'login-hub.html'; }
 

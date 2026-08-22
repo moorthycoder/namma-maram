@@ -13,53 +13,9 @@
   <div class="screen">
     <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
 
-    <!-- ① MAIN - ALBUM PAGE -->
-    <div class="page active" id="page-main">
-      <div class="main-topbar">
-        <button class="dots-btn" onclick="toggleDD()"><i class="ti ti-dots-vertical"></i></button>
-        <div class="dropdown" id="dropdown">
-        <div class="dd-item" onclick="goTo('role-login')"><i class="ti ti-login" style="font-size:1rem;color:var(--color-theme)"></i> Login</div>
-        <div class="dd-item" onclick="goTo('role-login')"><i class="ti ti-user-plus" style="font-size:1rem;color:var(--color-theme)"></i> Register</div>
-        <div class="dd-item" onclick="location.href='settings.html'"><i class="ti ti-settings" style="font-size:1rem;color:#666"></i> Settings</div>
-        <div class="dd-item" onclick="location.href='about-us.html'"><i class="ti ti-info-circle" style="font-size:1rem;color:#666"></i> About Us</div>
-        </div>
-      </div>
-      
-      <div class="main-hero">
-        <div class="main-logo"><div class="tree-emoji">🌴</div></div>
-        <div class="main-title">Namma Maram</div>
-        <div class="main-sub">Nature and us are one and same</div>
-      </div>
-      
-      <div class="album-filters">
-        <div class="filter-row" style="flex-direction:column;gap:8px;">
-          <div class="clear-wrap">
-            <input class="id-input" id="album-place" type="text" placeholder="Type Place Name" oninput="onInput(this)" />
-            <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
-          </div>
-          <div class="clear-wrap">
-            <input class="id-input" id="album-tree" type="text" placeholder="Type Tree Name" oninput="onInput(this)" />
-            <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="album-container">
-        <div class="album-header">
-          <span class="album-title"><i class="ti ti-photo"></i> Tree album</span>
-          <span style="display:flex;align-items:center;gap:8px;">
-            <span class="album-count" id="album-count">0 trees</span>
-            <button class="album-toggle" id="summary-toggle" type="button" onclick="toggleSummary()"><i class="ti ti-eye"></i></button>
-          </span>
-        </div>
-        
-        <div class="album-summary" id="album-summary"></div>
-        <div class="album-grid" id="album-grid"></div>
-      </div>
-    </div>
-    <div class="page" id="page-role-login">
+    <div class="page active" id="page-role-login">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn inv" onclick="goTo('main')"><i class="ti ti-arrow-left"></i></button></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn inv" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
         <h2 style="font-size:1.2rem;font-weight:500;color:var(--color-theme-light);" id="role-login-title">Role login</h2>
         <p style="font-size:0.8rem;color:rgba(192,221,151,0.6);margin-top:3px;">Sign in with your Google account</p>
       </div>
