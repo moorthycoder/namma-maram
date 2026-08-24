@@ -25,8 +25,10 @@ function populatePlaceList() {
   var projects = [];
   (window.__TREE_DATA || []).forEach(function (t) {
     if (t.project && projects.indexOf(t.project) === -1) projects.push(t.project);
-    var al = t.addressLocalLang;
-    if (al && __SUGGESTIONS.filter(function (s) { return s.value === al; }).length === 0) __SUGGESTIONS.push({ value: al, label: al });
+    Object.keys(t.address || {}).forEach(function (addr_key) {
+      var al = t.address[addr_key];
+      if (al && __SUGGESTIONS.filter(function (s) { return s.value === al; }).length === 0) __SUGGESTIONS.push({ value: al, label: al });
+    });
   });
   projects.forEach(function (pr) {
     __SUGGESTIONS.push({ value: pr, label: pr });
@@ -103,8 +105,19 @@ function closeMapModal() {
   document.getElementById('map-frame').src = '';
 }
 
+// Helpers: language-keyed readers for nested name/address on a tree card
+function cardNameText(card, lang_key) {
+  var names = (card && card.speciesName) || {};
+  return names[lang_key] || names.en || names.ta || '';
+}
+
+function cardAddressText(card, lang_key) {
+  var addr = (card && card.address) || {};
+  return addr[lang_key] || addr.en || addr.ta || '';
+}
+
 // Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
-function treeLoc(t) { return t.address ? t.address.split(', ')[0] : ''; }
+function treeLoc(t) { var addr = cardAddressText(t, 'en'); return addr ? addr.split(', ')[0] : ''; }
 
 function graphemes(s) {
   if (Intl && Intl.Segmenter) {
@@ -143,24 +156,22 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
       setFilterLang(storage.detectLanguage(place || tree || ''));
     }
     var lang = filterLang;
-    var useLocal = lang !== 'en';
     window._mapLang = lang;
     var normalizeId = function(s){ return String(s || '').toLowerCase().replace(/-/g, ''); };
     var filtered = albumData.filter(function(t) {
       var matchPlace = true;
       var matchTree = true;
       if (place) {
-        if (useLocal) {
-          matchPlace = q(t.addressLocalLang || '').indexOf(place) > -1;
-        } else {
-          var matchTreeId = q(t.treeId).indexOf(place) > -1 || normalizeId(t.treeId).indexOf(normalizeId(place)) > -1;
-          matchPlace = q(t.address).indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1 || matchTreeId;
-        }
+        var matchTreeId = q(t.treeId).indexOf(place) > -1 || normalizeId(t.treeId).indexOf(normalizeId(place)) > -1;
+        matchPlace = q(cardAddressText(t, lang)).indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1 || matchTreeId;
       }
     if (tree) {
-      matchTree = graphemeStartsWith(q(t.scientificName), tree) ||
-                  graphemeStartsWith(q(t.englishName), tree) ||
-                  graphemeStartsWith(q(t.localName), tree);
+      var names_obj = t.speciesName || {};
+      matchTree = false;
+      Object.keys(names_obj).some(function (name_key) {
+        matchTree = graphemeStartsWith(q(names_obj[name_key]), tree);
+        return matchTree;
+      });
     }
     return matchPlace && matchTree;
   });
@@ -168,7 +179,7 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
   var countEl = document.getElementById('album-count');
   if (countEl) {
     var varieties = {};
-    filtered.forEach(function(t) { varieties[t.englishName] = 1; });
+    filtered.forEach(function(t) { varieties[cardNameText(t, 'en')] = 1; });
     var vCount = Object.keys(varieties).length;
     countEl.textContent = vCount + ' varieties · ' + filtered.length + ' trees';
   }
@@ -228,7 +239,7 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     info.innerHTML =
       '<div class="tree-name">' + storage.treeNameIn(t, lang) + '</div>' +
       '<div class="tree-id">' + t.treeId + '</div>' +
-      '<div class="tree-addr"><i class="ti ti-map-pin" style="font-size:0.7rem"></i> ' + ((lang === 'ta') ? (t.addressLocalLang || t.address || '—') : (t.address || '—')) + '</div>';
+      '<div class="tree-addr"><i class="ti ti-map-pin" style="font-size:0.7rem"></i> ' + (cardAddressText(t, lang) || '—') + '</div>';
 
     card.appendChild(info);
     info.appendChild(photo);
@@ -313,13 +324,10 @@ function normalizeAlbum(t) {
   var st = last['health-status'] || {};
   var c = t.card || {};
   out.id = t.treeId;
-  out.name = t.englishName || t.name || c.addr || '';
+  out.name = cardNameText(t, 'en') || c.addr || '';
   out.emoji = t.emoji || c.emoji || '🌳';
   out.bg = t.bg || c.bg || '';
-  out.address = t.address || c.addrFull || c.addr || '';
-  out.englishName = t.englishName || t.name || '';
-  out.localName = t.localName || '';
-  out.scientificName = t.scientificName || '';
+  out.address = cardAddressText(t, 'en') || c.addrFull || c.addr || '';
   out.pincode = t.pincode || '';
   out.height = st.height || c.height || '—';
   out.diameter = st.diameter || c.diameter || '—';

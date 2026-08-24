@@ -40,7 +40,7 @@ function renderProfile() {
   document.getElementById('profile-id-label').textContent = profileTreeId;
   var tree = findTree(profileTreeId);
   if (tree) {
-    var localAddr = (filterLang !== 'en' && tree.addressLocalLang) ? tree.addressLocalLang : tree.address;
+    var localAddr = cardAddressText(tree, filterLang);
     var last = tree.cards[tree.cards.length - 1] || {};
     var first = tree.cards[0] || {};
     document.getElementById('profile-hero-title').textContent = storage.treeNameIn(tree, filterLang);
@@ -51,7 +51,7 @@ function renderProfile() {
     document.getElementById('profile-stat-logs').textContent = tree.logs;
     document.getElementById('profile-health-score').textContent = (typeof last.score === 'number' ? last.score : '—') + ' / 100';
     document.querySelector('.health-fill').style.width = (typeof last.score === 'number' ? last.score : 0) + '%';
-    document.getElementById('profile-species').textContent = tree.scientificName || '—';
+    document.getElementById('profile-species').textContent = (tree.speciesName && tree.speciesName.sn) || '—';
     document.getElementById('profile-added-by').textContent = first.registeredBy || tree['care-giver'] || '—';
     document.getElementById('profile-first-logged').textContent = formatDate(first.date);
     document.getElementById('profile-total-logs').textContent = tree.logs + ' entries';
@@ -73,8 +73,8 @@ function renderLogs(tree) {
     entry.innerHTML = '<div class="log-dot" style="background:' + dots[i % 3] + '"></div>'
       + '<div class="log-body"><div class="log-date">' + formatDate(c.date) + '</div>'
       + '<div class="log-text">' + c.height + ' · ' + c.diam + ' diameter</div>'
-      + '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> ' + (c.note || '—') + '</span></div>'
-      + '<div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> ' + (c.toDo || '—') + '</span></div>'
+      + '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Notes</b> ' + (c.note || '—') + '</span></div>'
+      + '<div class="log-recommendations"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Recommendations</b> ' + (c.recommendations || '—') + '</span></div>'
       + '<div class="log-chips">' + (delta ? '<span class="chip">' + delta + '</span>' : '')
       + (c.photos ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + c.photos + ' photo' + (c.photos > 1 ? 's' : '') + '</span>' : '<span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span>')
       + '</div></div>'
@@ -83,13 +83,24 @@ function renderLogs(tree) {
   }
 }
 
-function treeLoc(t) { return t.address ? t.address.split(', ')[0] : ''; }
+// Helpers: language-keyed readers for nested name/address on a tree card
+function cardNameText(card, lang_key) {
+  var names = (card && card.speciesName) || {};
+  return names[lang_key] || names.en || names.ta || '';
+}
+
+function cardAddressText(card, lang_key) {
+  var addr = (card && card.address) || {};
+  return addr[lang_key] || addr.en || addr.ta || '';
+}
+
+function treeLoc(t) { var addr = cardAddressText(t, 'en'); return addr ? addr.split(', ')[0] : ''; }
 
 function addToSponsor() {
   var tree = findTree(profileTreeId) || {};
   var form = {
     treeId: profileTreeId,
-    name: (tree.englishName || '') + ' #' + profileTreeId,
+    name: cardNameText(tree, 'en') + ' #' + profileTreeId,
     loc: treeLoc(tree),
     bg: tree.bg || '',
     emoji: tree.emoji || '🌳',
@@ -105,15 +116,15 @@ function addToSponsor() {
 function openTreeMap() {
   var tree = findTree(profileTreeId);
   if (hasTreeGis(tree)) {
-    showTreeDetailsInMap(tree);
+    showMap(tree.treeId);
   } else {
     alert('Location not available for this tree.');
   }
 }
 
 // Opening the map as a fullscreen in-app modal
-function showMap(coordsParam) {
-  document.getElementById('map-frame').src = 'map.html?coords=' + encodeURIComponent(coordsParam);
+function showMap(idsParam) {
+  document.getElementById('map-frame').src = 'map.html?ids=' + encodeURIComponent(idsParam);
   document.getElementById('map-modal').classList.add('open');
 }
 
@@ -132,7 +143,7 @@ function openAlbum(i) {
   document.getElementById('album-h').textContent = log.height;
   document.getElementById('album-d').textContent = log.diam;
   document.getElementById('album-c').textContent = log.photos + ' photo' + (log.photos === 1 ? '' : 's');
-  document.getElementById('album-note').textContent = log.note + (log.toDo ? ' To do: ' + log.toDo : '');
+  document.getElementById('album-note').textContent = log.note;
   var grid = document.getElementById('album-grid-page');
   grid.innerHTML = '';
   var bgs = ['linear-gradient(135deg,#2d5a1b,#4a7c2f)', 'linear-gradient(135deg,#1a3a0a,#2d5a1b)', 'linear-gradient(135deg,#3B6D11,#639922)', 'linear-gradient(135deg,#1e3d0f,#2d5a1b)', 'linear-gradient(135deg,#27500A,#3B6D11)'];
@@ -155,13 +166,9 @@ function normalizeAlbum(t) {
   var st = last['health-status'] || {};
   var c = t.card || {};
   out.id = t.treeId;
-  out.name = t.englishName || t.name || c.addr || '';
+  out.name = cardNameText(t, 'en') || c.addr || '';
   out.emoji = t.emoji || c.emoji || '🌳';
   out.bg = t.bg || c.bg || '';
-  out.address = t.address || c.addrFull || c.addr || '';
-  out.englishName = t.englishName || t.name || '';
-  out.localName = t.localName || '';
-  out.scientificName = t.scientificName || '';
   out.pincode = t.pincode || '';
   out.height = st.height || c.height || '—';
   out.diameter = st.diameter || c.diameter || '—';
@@ -170,14 +177,15 @@ function normalizeAlbum(t) {
   out.cards = keys.map(function (key) {
     var e = enc[key];
     var hs = e['health-status'] || {};
-    return { encounter: key, date: e.registeredDate || e.updatedDate || '—', registeredBy: e.registeredBy || e.updatedBy || '—', height: hs.height || '—', diam: hs.diameter || '—', health: hs.health || '', score: hs['health-score'], emoji: e.thumb || t.emoji || '🌳', note: e.fieldNotes || (e.fieldObservation && e.fieldObservation.notes) || '', toDo: e.toDo || '', photos: ((e.photos && e.photos.snapshots) || []).length };
+    return { encounter: key, date: e.registeredDate || e.updatedDate || '—', registeredBy: e.registeredBy || e.updatedBy || '—', height: hs.height || '—', diam: hs.diameter || '—', health: hs.health || '', score: hs['health-score'], emoji: e.thumb || t.emoji || '🌳', note: (e.fieldObservation && e.fieldObservation.notes) || '', recommendations: (e.fieldObservation && e.fieldObservation.recommendations) || '', photos: ((e.photos && e.photos.snapshots) || []).length };
   });
   return out;
 }
 
 window.render = {
   init: function () {
-    albumData = (storage.get('treeCards') || []).map(normalizeAlbum);
+    storage.syncTreeCards();
+    albumData = (window.__TREE_DATA || []).map(normalizeAlbum);
     renderProfile();
   }
 };

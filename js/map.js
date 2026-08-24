@@ -1,46 +1,35 @@
 
-  function initMap() {
-    var src = new URLSearchParams(location.search).get('coords') || '';
-
-    var markers = src.split('|')
-      .filter(function(p){ return p && p.indexOf(',') > -1; })
-      .map(function(p){ var a = p.split(','); return { lat: parseFloat(a[0]), lng: parseFloat(a[1]), id: a.length > 2 ? decodeURIComponent(a[2]) : '' }; })
-      .filter(function(c){ return !isNaN(c.lat) && !isNaN(c.lng); });
-
-    if (!markers.length) {
-      document.getElementById('map').innerHTML = '<div style="padding:40px;font-size:15px;">No coordinates provided.</div>';
-      return;
-    }
-
-    var byId = {};
-    try {
-      if (window.parent && window.parent !== window && Array.isArray(window.parent.albumData)) {
-        window.parent.albumData.forEach(function(t){
-          if (t && t.treeId) { byId[t.treeId] = t; }
-        });
-      }
-    } catch (e) {}
-
-    drawMap(markers, byId);
+  function decodeTreeIds(url) {
+    var query = new URLSearchParams(url).get('ids') || '';
+    var ids = query.split('|')
+      .map(function (s) { return s.trim(); })
+      .filter(function (s, i, all) { return s && all.indexOf(s) === i; });
+    return ids;
   }
 
-  function recordToInfo(record, id) {
-    if (!record) {
-      return { type: 'Tree', localName: '', treeId: id, address: '', caregiver: '', careGiverContact: '', emoji: '🌳', health: '', height: '', diameter: '' };
-    }
-    var lang = 'en';
+  function parentAppLang() {
     try {
-      if (window.parent && window.parent !== window && window.parent._mapLang) {
-        lang = window.parent._mapLang;
+      if (window.parent && window.parent !== window) {
+        return window.parent.appLang || null;
       }
     } catch (e) {}
-    var name = storage.treeNameIn(record, lang) || record.englishName;
+    return null;
+  }
+
+  function treeDetails(treeId, appLang) {
+    var record = storage.pullTreeDetail(treeId);
+    if (!record) {
+      return { type: 'Tree', localName: '', treeId: treeId, address: '', caregiver: '', careGiverContact: '', emoji: '🌳', health: '', height: '', diameter: '' };
+    }
+    var lang = appLang || getAppLang();
+    var name = record.speciesName[lang] || record.speciesName.en || record.speciesName.ta || '';
+    var addr = record.address || {};
     return {
       type: record.englishName || 'Tree',
       name: name || record.englishName || 'Tree',
       localName: record.localName || '',
       treeId: record.treeId || '',
-      address: record.address || '',
+      address: addr[lang] || addr.en || addr.ta || '',
       caregiver: record['care-giver'] || '',
       careGiverContact: record['care-giver-contact-number'] || '',
       emoji: record.emoji || '🌳',
@@ -50,11 +39,44 @@
     };
   }
 
-  function drawMap(markers, byId) {
+  function constructDetailCard(treeId) {
+    var info = treeDetails(treeId, parentAppLang() || getAppLang());
+    var record = storage.pullTreeDetail(treeId);
+    var lat = record && record.GIS ? record.GIS.latitude : 0;
+    var lng = record && record.GIS ? record.GIS.longitude : 0;
+    return '<div class="giw">' + treeCardHtml(info, lat, lng) + '</div>';
+  }
+
+  function initMap() {
+    var ids = decodeTreeIds(location.search);
+    if (!ids.length) {
+      document.getElementById('map').innerHTML = '<div style="padding:40px;font-size:15px;">No coordinates provided.</div>';
+      return;
+    }
+
+    var mapLang = parentAppLang() || getAppLang();
+    var cards = {};
+    var markers = [];
+    ids.forEach(function (id) {
+      var record = storage.pullTreeDetail(id);
+      if (!record || !record.GIS || typeof record.GIS.latitude !== 'number' || typeof record.GIS.longitude !== 'number') { return; }
+      cards[id] = record;
+      markers.push({ lat: record.GIS.latitude, lng: record.GIS.longitude, id: id });
+    });
+
+    if (!markers.length) {
+      document.getElementById('map').innerHTML = '<div style="padding:40px;font-size:15px;">No coordinates provided.</div>';
+      return;
+    }
+
+    drawMap(markers, cards, mapLang);
+  }
+
+  function drawMap(markers, cards, mapLang) {
     var typeColor = {};
     var colorOrder = [];
     markers.forEach(function(c) {
-      var treeType = recordToInfo(byId[c.id], c.id).type;
+      var treeType = treeDetails(c.id, mapLang).type;
       if (typeColor[treeType] === undefined) {
         typeColor[treeType] = colorOrder.length;
         colorOrder.push(treeType);
@@ -78,7 +100,7 @@
     }).addTo(map);
 
     function buildTreeMarker(c) {
-      var info = recordToInfo(byId[c.id], c.id);
+      var info = treeDetails(c.id, mapLang);
       var fill = typeColor[info.type] < palette.length ? palette[typeColor[info.type]] : '#DC2626';
       var icon = L.divIcon({
         className: 'tree-pin',
@@ -88,7 +110,9 @@
         popupAnchor: [0, -30]
       });
       var marker = L.marker([c.lat, c.lng], { icon: icon });
-      marker.bindPopup('<div class="giw">' + treeCardHtml(info, c.lat, c.lng) + '</div>');
+      marker.bindPopup(function () {
+        return constructDetailCard(c.id);
+      });
       return marker;
     }
 

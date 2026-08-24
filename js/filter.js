@@ -15,8 +15,10 @@ function populatePlaceList() {
   var projects = [];
   (window.__TREE_DATA || []).forEach(function (t) {
     if (t.project && projects.indexOf(t.project) === -1) projects.push(t.project);
-    var al = t.addressLocalLang;
-    if (al && __SUGGESTIONS.filter(function (s) { return s.value === al; }).length === 0) __SUGGESTIONS.push({ value: al, label: al });
+    Object.keys(t.address || {}).forEach(function (addr_key) {
+      var al = t.address[addr_key];
+      if (al && __SUGGESTIONS.filter(function (s) { return s.value === al; }).length === 0) __SUGGESTIONS.push({ value: al, label: al });
+    });
   });
   projects.forEach(function (pr) {
     __SUGGESTIONS.push({ value: pr, label: pr });
@@ -80,15 +82,15 @@ function openTreeMapById(id) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
   if (hasTreeGis(tree)) {
-    showTreeDetailsInMap(tree);
+    showMap(id);
   } else {
     alert('Location not available for this tree.');
   }
 }
 
 // Opening the map as a fullscreen in-app modal
-function showMap(coordsParam) {
-  document.getElementById('map-frame').src = 'map.html?coords=' + encodeURIComponent(coordsParam);
+function showMap(idsParam) {
+  document.getElementById('map-frame').src = 'map.html?ids=' + encodeURIComponent(idsParam);
   document.getElementById('map-modal').classList.add('open');
 }
 
@@ -97,8 +99,24 @@ function closeMapModal() {
   document.getElementById('map-frame').src = '';
 }
 
+// Helpers: language-keyed readers for nested name/address on a tree card
+function cardNameText(card, lang_key) {
+  var names = (card && card.speciesName) || {};
+  return names[lang_key] || names.en || names.ta || '';
+}
+
+function cardAddressText(card, lang_key) {
+  var addr = (card && card.address) || {};
+  return addr[lang_key] || addr.en || addr.ta || '';
+}
+
 // Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
-function treeLoc(t) { return t.address ? t.address.split(', ')[0] : ''; }
+function treeLoc(t) { var addr = cardAddressText(t, 'en'); return addr ? addr.split(', ')[0] : ''; }
+
+function treeNameFromCard(t, lang) {
+  if (!t) { return ''; }
+  return cardNameText(t, lang);
+}
 
 function graphemes(s) {
   if (Intl && Intl.Segmenter) {
@@ -122,6 +140,34 @@ function graphemeStartsWith(value, prefix) {
   return true;
 }
 
+function searchInTreePlace(place_query) {
+  var query = String(place_query || '').toLowerCase().trim();
+  if (!query) { return albumData.slice(); }
+  var normalized_query = query.replace(/-/g, '');
+  return albumData.filter(function (t) {
+    var tree_id = String(t.treeId || '').toLowerCase();
+    return String(cardAddressText(t, filterLang)).toLowerCase().indexOf(query) > -1 ||
+           String(t.pincode || '').toLowerCase().indexOf(query) > -1 ||
+           String(t.project || '').toLowerCase().indexOf(query) > -1 ||
+           tree_id.indexOf(query) > -1 ||
+           tree_id.replace(/-/g, '').indexOf(normalized_query) > -1;
+  });
+}
+
+function searchInTreeName(tree_query) {
+  var query = String(tree_query || '').toLowerCase().trim();
+  if (!query) { return albumData.slice(); }
+  return albumData.filter(function (t) {
+    var names = t.speciesName || {};
+    var matched = false;
+    Object.keys(names).some(function (key) {
+      matched = graphemeStartsWith(String(names[key]).toLowerCase(), query);
+      return matched;
+    });
+    return matched;
+  });
+}
+
 // Album render - additive filters: place (address) + tree name (scientific/english/local)
 function renderAlbum(place, tree) {
   var grid = document.getElementById('album-grid');
@@ -137,32 +183,15 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
       setFilterLang(storage.detectLanguage(place || tree || ''));
     }
     var lang = filterLang;
-    var useLocal = lang !== 'en';
     window._mapLang = lang;
-    var normalizeId = function(s){ return String(s || '').toLowerCase().replace(/-/g, ''); };
-    var filtered = albumData.filter(function(t) {
-      var matchPlace = true;
-      var matchTree = true;
-      if (place) {
-        if (useLocal) {
-          matchPlace = q(t.addressLocalLang || '').indexOf(place) > -1;
-        } else {
-          var matchTreeId = q(t.treeId).indexOf(place) > -1 || normalizeId(t.treeId).indexOf(normalizeId(place)) > -1;
-          matchPlace = q(t.address).indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1 || matchTreeId;
-        }
-      }
-    if (tree) {
-      matchTree = graphemeStartsWith(q(t.scientificName), tree) ||
-                  graphemeStartsWith(q(t.englishName), tree) ||
-                  graphemeStartsWith(q(t.localName), tree);
-    }
-    return matchPlace && matchTree;
-  });
+    var filtered = searchInTreePlace(place).filter(function (t) {
+      return searchInTreeName(tree).indexOf(t) > -1;
+    });
 
   var countEl = document.getElementById('album-count');
   if (countEl) {
     var varieties = {};
-    filtered.forEach(function(t) { varieties[t.englishName] = 1; });
+    filtered.forEach(function(t) { varieties[cardNameText(t, 'en')] = 1; });
     var vCount = Object.keys(varieties).length;
     countEl.textContent = vCount + ' varieties · ' + filtered.length + ' trees';
   }
@@ -173,10 +202,10 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     if (filtered.length > 0) {
       var groups = {};
       filtered.forEach(function(t) {
-        var name = storage.treeNameIn(t, lang);
+        var name = treeNameFromCard(t, lang);
         groups[name] = (groups[name] || 0) + 1;
       });
-      var chips = Object.keys(groups).map(function(k) {
+      var chips = Object.keys(groups).sort().map(function(k) {
         return '<span class="album-chip chip-click" onclick="filterByTree(\'' + k + '\')">' + k + ' <b>– ' + groups[k] + '</b></span>';
       }).join('');
       summaryEl.innerHTML = chips;
@@ -220,9 +249,9 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     var info = document.createElement('div');
     info.className = 'tree-info';
     info.innerHTML =
-      '<div class="tree-name">' + storage.treeNameIn(t, lang) + '</div>' +
+      '<div class="tree-name">' + treeNameFromCard(t, lang) + '</div>' +
       '<div class="tree-id">' + t.treeId + '</div>' +
-      '<div class="tree-addr"><i class="ti ti-map-pin" style="font-size:0.7rem"></i> ' + ((lang === 'ta') ? (t.addressLocalLang || t.address || '—') : (t.address || '—')) + '</div>';
+      '<div class="tree-addr"><i class="ti ti-map-pin" style="font-size:0.7rem"></i> ' + (cardAddressText(t, lang) || '—') + '</div>';
 
     card.appendChild(info);
     info.appendChild(photo);
@@ -283,16 +312,16 @@ function clearInput(id) {
   applyFilters();
 }
 
-// Spread the current result set over Google Maps (one pin per tree)
+// Spread the current result set over the map (one pin per tree, ids only)
 function openMap() {
   var trees = window._mapTrees || albumData;
-  var coords = trees.filter(function(t){
+  var ids = trees.filter(function(t){
     return hasTreeGis(t);
   }).map(function(t){
-    return treeMapCoords(t);
+    return t.treeId;
   });
-  if (coords.length > 0) {
-    showMap(coords.join('|'));
+  if (ids.length > 0) {
+    showMap(ids.join('|'));
   } else {
     alert('No tree locations found to show on the map.');
   }
@@ -307,13 +336,9 @@ function normalizeAlbum(t) {
   var st = last['health-status'] || {};
   var c = t.card || {};
   out.id = t.treeId;
-  out.name = t.englishName || t.name || c.addr || '';
+  out.name = cardNameText(t, 'en') || c.addr || '';
   out.emoji = t.emoji || c.emoji || '🌳';
   out.bg = t.bg || c.bg || '';
-  out.address = t.address || c.addrFull || c.addr || '';
-  out.englishName = t.englishName || t.name || '';
-  out.localName = t.localName || '';
-  out.scientificName = t.scientificName || '';
   out.pincode = t.pincode || '';
   out.height = st.height || c.height || '—';
   out.diameter = st.diameter || c.diameter || '—';
@@ -329,8 +354,7 @@ function normalizeAlbum(t) {
 window.render = {
   init: function () {
     __PLACES = storage.get('places') || [];
-    window.__TREE_DATA = storage.get('treeCards') || [];
-    window.TREE_NAMES_DB = storage.get('treeNames') || [];
+    storage.syncTreeCards();
     window.TREE_COLOURS = storage.get('treeColours') || [];
     window._login = storage.get('login') || {};
     filterLang = appLang;

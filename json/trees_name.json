@@ -1,157 +1,21 @@
 [
   {
-    "Acacia auriculiformis": {
-      "en": [
-        "Earleaf acacia"
-      ],
-      "ta": [
-        "கத்திக் கருவேல்"
-      ],
-      "te": [
-        "సీమ తుమ్మ"
-      ],
-      "kn": [
-        "ಸೀಮೆ ಜಾಲಿ"
-      ],
-      "ml": [
-        "വേൽവേലകം"
-      ],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Acacia leucophloea": {
-      "en": [
-        "White bark acacia"
-      ],
-      "ta": [
-        "வெள்வேலம்"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Acacia mangium": {
-      "en": [
-        "Mangium wattle"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Acrocarpus fraxinifolius": {
-      "en": [
-        "Pink cedar"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
     "Adenanthera pavonina": {
-      "en": [
-        "Red sandalwood tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Red Bead Tree", "Red Sandalwood"],
+      "ta": ["மஞ்சாடி", "ஆனை குண்டுமணி", "மஞ்சாடி முத்து"],
+      "te": ["పెద్దగురుగింజ"],
+      "kn": ["ಮಂಜಾಡಿ"],
+      "ml": ["മഞ്ചാടി"],
       "si": [],
-      "kok": [],
+      "kok": ["गूंज"],
       "tcy": []
     },
     "variety": []
   },
   {
-    "Adansonia digitata": {
-      "en": [
-        "Baobab tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Aegle marmelos": {
-      "en": [
-        "Bael tree"
-      ],
-      "ta": [
-        "வில்வம்"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ailanthus excelsa": {
-      "en": [
-        "Indian tree of heaven"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ailanthus triphysa": {
-      "en": [
-        "White siris"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Alangium salvifolium": {
-      "en": [
-        "Sage-leaved alangium"
-      ],
-      "ta": [],
+    "Albizia amara": {
+      "en": ["Bitter Albizia"],
+      "ta": ["அரப்பு மரம்", "உசிலை", "ஊஞ்ச மரம்", "கருவாகை"],
       "te": [],
       "kn": [],
       "ml": [],
@@ -163,438 +27,34 @@
   },
   {
     "Albizia lebbeck": {
-      "en": [
-        "Siris tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Siris"],
+      "ta": ["வாகை"],
+      "te": ["దోరిసెన"],
+      "kn": ["ಬಾಗೆ"],
+      "ml": ["വാക"],
       "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Albizia odoratissima": {
-      "en": [
-        "Black siris"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Albizia procera": {
-      "en": [
-        "White siris tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "kok": ["सिरस"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Alstonia scholaris": {
-      "en": [
-        "Devil tree"
-      ],
-      "ta": [
-        "ஏழிலைப்பாலை"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "en": ["Shaitan Wood"],
+      "ta": ["ஏழிலைப்பாலை"],
+      "te": ["ఏడాకుపాల"],
+      "kn": ["ಹಾಲೆ"],
+      "ml": ["പാല"],
+      "si": ["රුක් අත්තන"],
+      "kok": ["सातवीन"],
       "tcy": []
     },
     "variety": []
   },
   {
-    "Anacardium occidentale": {
-      "en": [
-        "Cashew tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Anogeissus latifolia": {
-      "en": [
-        "Axlewood tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Annona reticulata": {
-      "en": [
-        "Bullock's heart custard apple"
-      ],
-      "ta": [
-        "இராமசீத்தா"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Annona squamosa": {
-      "en": [
-        "Sugar apple tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Aquilaria malaccensis": {
-      "en": [
-        "Agarwood tree"
-      ],
-      "ta": [
-        "அகில் மரம்"
-      ],
-      "te": [
-        "అగరు"
-      ],
-      "kn": [
-        "ಅಗರು"
-      ],
-      "ml": [
-        "അകിൽ"
-      ],
-      "si": [
-        "අගිල්"
-      ],
-      "kok": [
-        "अगरू (Agaru)"
-      ],
-      "tcy": [
-        "ಅಗರು (Agaru)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Areca catechu": {
-      "en": [
-        "Arecanut tree"
-      ],
-      "ta": [
-        "பாக்கு மரம்"
-      ],
-      "te": [
-        "అరెక"
-      ],
-      "kn": [
-        "ಅಡಿಕೆ"
-      ],
-      "ml": [
-        "അടയ്ക്ക"
-      ],
-      "si": [
-        "පුවක්"
-      ],
-      "kok": [
-        "सुपारी (Supari)"
-      ],
-      "tcy": [
-        "ಅಡಿಕೆ (Adike)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Artocarpus altilis": {
-      "en": [
-        "Breadfruit tree"
-      ],
-      "ta": [
-        "ஈரப்பலா"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Artocarpus gomezianus": {
-      "en": [
-        "Monkey jack tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Artocarpus heterophyllus": {
-      "en": [
-        "Jackfruit tree"
-      ],
-      "ta": [
-        "பலா மரம்"
-      ],
-      "te": [
-        "పనస"
-      ],
-      "kn": [
-        "ಹಲಸು"
-      ],
-      "ml": [
-        "പ്ലാവ്"
-      ],
-      "si": [
-        "කොස්"
-      ],
-      "kok": [
-        "फणस (Fanas)"
-      ],
-      "tcy": [
-        "ಪಲಸು (Palasu)"
-      ]
-    },
-    "variety": [
-      {
-        "en": "Varikka",
-        "ta": "வரிக்கா",
-        "te": "వరిక్క",
-        "kn": "ವರಿಕ್ಕಾ",
-        "ml": "വരിക്ക",
-        "si": "වරික්ක",
-        "kok": "वरिक्क",
-        "tcy": "ವರಿಕ್ಕ"
-      },
-      {
-        "en": "Koozha",
-        "ta": "கூழா",
-        "te": "కూజా",
-        "kn": "ಕೂಜಾ",
-        "ml": "കൂഴ",
-        "si": "කූජා",
-        "kok": "कूजा",
-        "tcy": "ಕೂಜಾ"
-      },
-      {
-        "en": "Singapore Jackfruit",
-        "ta": "சிங்கப்பூர் பலா",
-        "te": "సింగపూర్ పనస",
-        "kn": "ಸಿಂಗಪೂರ್ ಹಲಸು",
-        "ml": "സിംഗപ്പൂർ പ്ലാവ്",
-        "si": "සිංගප්පූරු කොස්",
-        "kok": "सिंगापूर फणस",
-        "tcy": "ಸಿಂಗಪೂರ್ ಪಲಸು"
-      }
-    ]
-  },
-  {
-    "Artocarpus hirsutus": {
-      "en": [
-        "Wild jack tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Atlantia racemosa": {
-      "en": [
-        "Wild lime"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Azadirachta indica": {
-      "en": [
-        "Neem tree"
-      ],
-      "ta": [
-        "வேப்பமரம்"
-      ],
-      "te": [
-        "వేప"
-      ],
-      "kn": [
-        "ಬೇವು"
-      ],
-      "ml": [
-        "വേപ്പ്"
-      ],
-      "si": [
-        "නිම්"
-      ],
-      "kok": [
-        "निंब (Nimb)"
-      ],
-      "tcy": [
-        "ಬೇವು (Bevu)"
-      ]
-    },
-    "variety": [
-      {
-        "en": "Indian Neem",
-        "ta": "இந்திய வேம்பு",
-        "te": "ఇండియన్ వేప",
-        "kn": "ಭಾರತೀಯ ಬೇವು",
-        "ml": "ഇന്ത്യൻ വേപ്പ്",
-        "si": "ඉන්දියානු නිම්",
-        "kok": "भारतीय निंब",
-        "tcy": "ಭಾರತೀಯ ಬೇವು"
-      },
-      {
-        "en": "Thai Neem",
-        "ta": "தாய் வேம்பு",
-        "te": "థాయ్ వేప",
-        "kn": "ಥಾಯ್ ಬೇವು",
-        "ml": "തായ് വേപ്പ്",
-        "si": "තායි නිම්",
-        "kok": "थाई निंब",
-        "tcy": "ಥಾಯ್ ಬೇವು"
-      }
-    ]
-  },
-  {
-    "Bambusa balcooa": {
-      "en": [
-        "Balcooa bamboo"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Bambusa vulgaris": {
-      "en": [
-        "Bamboo tree"
-      ],
-      "ta": [
-        "மூங்கில் மரம்"
-      ],
-      "te": [
-        "వెదురు"
-      ],
-      "kn": [
-        "ಬಿದಿರು"
-      ],
-      "ml": [
-        "മുള"
-      ],
-      "si": [
-        "උණ"
-      ],
-      "kok": [
-        "बांबू (Baambu)"
-      ],
-      "tcy": [
-        "ಬಿದಿರು (Bidiru)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Barringtonia acutangula": {
-      "en": [
-        "Indian oak"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Barringtonia asiatica": {
-      "en": [
-        "Fish poison tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Bauhinia blakeana": {
-      "en": [
-        "Hong Kong orchid tree"
-      ],
-      "ta": [],
+    "Bambusa nutans": {
+      "en": ["Nodding Bamboo", "Giant Bamboo"],
+      "ta": ["மூங்கில்"],
       "te": [],
       "kn": [],
       "ml": [],
@@ -606,13 +66,11 @@
   },
   {
     "Bauhinia purpurea": {
-      "en": [
-        "Purple orchid tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Geranium Tree"],
+      "ta": ["மந்தாரை", "செம்மந்தாரை", "ஊதா மந்தாரை"],
+      "te": ["దేవకాంచనము"],
+      "kn": ["ಕೆಂಪು ಮಂದಾರ"],
+      "ml": ["ചുവന്നമന്ദാരം"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -621,70 +79,11 @@
   },
   {
     "Bauhinia racemosa": {
-      "en": [
-        "Bidi leaf tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Bauhinia tomentosa": {
-      "en": [
-        "Yellow bauhinia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Bauhinia variegata": {
-      "en": [
-        "Orchid tree"
-      ],
-      "ta": [
-        "மந்தாரை மரம்"
-      ],
-      "te": [
-        "మందారం"
-      ],
-      "kn": [
-        "ದೇವಕಾಂಚನ"
-      ],
-      "ml": [
-        "മന്ദാരം"
-      ],
-      "si": [
-        "පතුල්"
-      ],
-      "kok": [
-        "मंदार (Mandara)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Biancaea sappan": {
-      "en": [
-        "Sappanwood tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Bidi Leaf Tree"],
+      "ta": ["ஆத்தி", "மலை ஆத்தி", "கொக்குமந்தாரை", "தாதகி", "வட்டாத்தி"],
+      "te": ["తెల్ల అరచెట్టు"],
+      "kn": ["ಆಪ್ಟ"],
+      "ml": ["അരമ്പാളി"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -693,950 +92,102 @@
   },
   {
     "Bombax ceiba": {
-      "en": [
-        "Red silk cotton tree"
-      ],
-      "ta": [
-        "இலவு"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Borassus flabellifer": {
-      "en": [
-        "Palm tree"
-      ],
-      "ta": [
-        "பனை மரம்"
-      ],
-      "te": [
-        "తాటి"
-      ],
-      "kn": [
-        "ತಾಳೆ"
-      ],
-      "ml": [
-        "പന"
-      ],
-      "si": [
-        "තල්"
-      ],
-      "kok": [
-        "ताड (Tad)"
-      ],
-      "tcy": [
-        "ತಾರಿ (Taari)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Brownea coccinea": {
-      "en": [
-        "Scarlet flame bean"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Buchanania axillaris": {
-      "en": [
-        "Small wild almond"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "en": ["Red Silk Cotton Tree"],
+      "ta": ["முள்ளிலவு ", "புலியுகிர்"],
+      "te": ["బూరుగ"],
+      "kn": ["ಕೆಮ್ಪುಬೂರುಗ"],
+      "ml": ["മുളളിലവ്"],
+      "si": ["ඉඹුල්"],
+      "kok": ["सावर"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Butea monosperma": {
-      "en": [
-        "Flame of the forest"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Flame of the Forest"],
+      "ta": ["பரசு", "பலாசு", "பொரசு", "நாட்டு முருக்கன்"],
+      "te": ["పలాశము"],
+      "kn": ["ಮುತ್ತುಗ"],
+      "ml": ["പ്ലാശ്"],
       "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Caesalpinia coriaria": {
-      "en": [
-        "Divi-divi tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Caesalpinia pulcherrima": {
-      "en": [
-        "Peacock flower"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Calophyllum inophyllum": {
-      "en": [
-        "Oil-nut tree"
-      ],
-      "ta": [
-        "புன்னை மரம்"
-      ],
-      "te": [
-        "పున్నాగ"
-      ],
-      "kn": [
-        "ಹೊನ್ನೆ"
-      ],
-      "ml": [
-        "പുന്ന"
-      ],
-      "si": [
-        "පුන්න"
-      ],
-      "kok": [
-        "उंडी (Undi)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Callistemon lanceolatus": {
-      "en": [
-        "Bottlebrush tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Callistemon viminalis": {
-      "en": [
-        "Weeping bottlebrush"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cananga odorata": {
-      "en": [
-        "Ylang-ylang tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Capparis spinosa": {
-      "en": [
-        "Caper bush"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Capparis zeylanica": {
-      "en": [
-        "Ceylon caper"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Carica papaya": {
-      "en": [
-        "Papaya tree"
-      ],
-      "ta": [
-        "பப்பாளி மரம்"
-      ],
-      "te": [
-        "బొప్పాయి"
-      ],
-      "kn": [
-        "ಪಪ್ಪಾಯಿ"
-      ],
-      "ml": [
-        "പപ്പായ"
-      ],
-      "si": [
-        "පැපොල්"
-      ],
-      "kok": [
-        "पपय (Papaya)"
-      ],
-      "tcy": [
-        "ಪಪ್ಪಾಯಿ (Pappayi)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Cassia auriculata": {
-      "en": [
-        "Tanner's cassia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "kok": ["पळस"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Cassia fistula": {
-      "en": [
-        "Golden shower tree"
-      ],
-      "ta": [
-        "கொன்றை மரம்"
-      ],
-      "te": [
-        "రేల"
-      ],
-      "kn": [
-        "ಕಕ್ಕೆ"
-      ],
-      "ml": [
-        "കണിക്കൊന്ന"
-      ],
-      "si": [
-        "එර ගස"
-      ],
-      "kok": [
-        "अमलताश (Amaltash)"
-      ],
-      "tcy": [
-        "ಕೊನ್ನೆ (Konne)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Cassia grandis": {
-      "en": [
-        "Pink shower tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cassia javanica": {
-      "en": [
-        "Java cassia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cassia nodosa": {
-      "en": [
-        "Pink and white shower tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cassia renigera": {
-      "en": [
-        "Kidney cassia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cassia siamea": {
-      "en": [
-        "Kassod tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Casuarina equisetifolia": {
-      "en": [
-        "Casuarina tree"
-      ],
-      "ta": [
-        "சவுக்கு மரம்"
-      ],
-      "te": [
-        "సరుగుడు"
-      ],
-      "kn": [
-        "ಸವಕು"
-      ],
-      "ml": [
-        "കാറ്റാടി"
-      ],
-      "si": [
-        "කසුරිනා"
-      ],
-      "kok": [
-        "सरु (Saru)"
-      ],
-      "tcy": [
-        "ಸವುಕು (Savuku)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Casuarina junghuhniana": {
-      "en": [
-        "Junghuhn's she-oak"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cedrus deodara": {
-      "en": [
-        "Cedar tree"
-      ],
-      "ta": [
-        "தேவதாரு மரம்"
-      ],
-      "te": [
-        "దేవదారు"
-      ],
-      "kn": [
-        "ದೇವದಾರು"
-      ],
-      "ml": [
-        "ദേവദാരു"
-      ],
-      "si": [
-        "දේවදාර"
-      ],
-      "kok": [
-        "देवदार (Devdar)"
-      ],
-      "tcy": [
-        "ದೇವದಾರು (Devadaru)"
-      ]
+      "en": ["Golden Shower"],
+      "ta": ["கொன்றை", "சரக்கொன்றை"],
+      "te": ["రేల"],
+      "kn": ["ಕಕ್ಕೆ"],
+      "ml": ["കണിക്കൊന്ന"],
+      "si": ["එර ගස"],
+      "kok": ["अमलताश"],
+      "tcy": ["ಕೊನ್ನೆ"]
     },
     "variety": []
   },
   {
     "Ceiba pentandra": {
-      "en": [
-        "Java cotton tree"
-      ],
-      "ta": [
-        "இலவம்பஞ்சு மரம்"
-      ],
-      "te": [
-        "సిల్క్ కాటన్"
-      ],
-      "kn": [
-        "ಸಿಲ್ಕ್ ಕಾಟನ್"
-      ],
-      "ml": [
-        "ഇലവ്"
-      ],
-      "si": [
-        "ඉලව්"
-      ],
-      "kok": [
-        "शिम्बो (Shimbo)"
-      ],
+      "en": ["Kapok Tree"],
+      "ta": ["இலவம்", "பூலா மரம்"],
+      "te": ["సిల్క్ కాటన్"],
+      "kn": ["ಸಿಲ್ಕ್ ಕಾಟನ್"],
+      "ml": ["ഇലവ്"],
+      "si": ["ඉලව්"],
+      "kok": ["शिम्बो"],
       "tcy": []
     },
     "variety": []
   },
   {
-    "Chrysalidocarpus lutescens": {
-      "en": [
-        "Golden cane palm"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cinnamomum macrocarpum": {
-      "en": [
-        "Wild cinnamon tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cinnamomum verum": {
-      "en": [
-        "Cinnamon tree"
-      ],
-      "ta": [
-        "பட்டை மரம்"
-      ],
-      "te": [
-        "దాల్చిన చెక్క"
-      ],
-      "kn": [
-        "ಚಕ್ಕೆ"
-      ],
-      "ml": [
-        "കറുവപ്പട്ട"
-      ],
-      "si": [
-        "කුරුඳු"
-      ],
-      "kok": [
-        "दालचिनी (Dalchini)"
-      ],
-      "tcy": [
-        "ದಾಲ್ಚಿನ್ನಿ (Dalchini)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Citrus aurantifolia": {
-      "en": [
-        "Lime tree"
-      ],
-      "ta": [
-        "எலுமிச்சை"
-      ],
-      "te": [
-        "నిమ్మ"
-      ],
-      "kn": [
-        "ನಿಂಬೆ"
-      ],
-      "ml": [
-        "വടുകപ്പുളി നാരകം"
-      ],
-      "si": [
-        "දෙහි"
-      ],
-      "kok": [
-        "लिंबियॉ"
-      ],
-      "tcy": [
-        "ಲಿಂಬೆಪುಳಿ"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Citrus limetta": {
-      "en": [
-        "Sweet lime tree"
-      ],
-      "ta": [
-        "சாத்துக்குடி"
-      ],
-      "te": [
-        "బత్తాయి"
-      ],
-      "kn": [
-        "ಸಿಹಿ ನಿಂಬೆ"
-      ],
-      "ml": [
-        "മധുര നാരകം"
-      ],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Citrus limon": {
-      "en": [
-        "Lemon tree"
-      ],
-      "ta": [
-        "மலை எலுமிச்சை"
-      ],
-      "te": [
-        "నిమ్మపండు"
-      ],
-      "kn": [
-        "ಗಜನಿಂಬೆ"
-      ],
-      "ml": [
-        "ചെറുനാരകം"
-      ],
-      "si": [
-        "දෙහි"
-      ],
-      "kok": [
-        "लिंबू"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Citrus maxima": {
-      "en": [
-        "Pomelo tree"
-      ],
-      "ta": [
-        "பம்பளிமாசு"
-      ],
-      "te": [
-        "పంపరపనస"
-      ],
-      "kn": [
-        "ಚಕೋತ್ರ"
-      ],
-      "ml": [
-        "ബംബളിനാരകം"
-      ],
-      "si": [
-        "ජම්බෝල"
-      ],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Citrus sinensis": {
-      "en": [
-        "Sweet orange tree"
-      ],
-      "ta": [
-        "ஆரஞ்சு"
-      ],
-      "te": [
-        "బత్తాయి"
-      ],
-      "kn": [
-        "ಕಿತ್ತಳೆ"
-      ],
-      "ml": [
-        "നാരങ്ങ"
-      ],
-      "si": [
-        "දොඩම්"
-      ],
-      "kok": [
-        "संत्रो"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Citrus spp.": {
-      "en": [
-        "Citrus tree"
-      ],
-      "ta": [
-        "சிட்ரஸ்"
-      ],
-      "te": [
-        "నారింజ జాతి"
-      ],
-      "kn": [
-        "ಸಿಟ್ರಸ್"
-      ],
-      "ml": [
-        "സിട്രസ്"
-      ],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cocos nucifera": {
-      "en": [
-        "Coconut tree"
-      ],
-      "ta": [
-        "தென்னை மரம்"
-      ],
-      "te": [
-        "కొబ్బరి"
-      ],
-      "kn": [
-        "ತೆಂಗು"
-      ],
-      "ml": [
-        "തെങ്ങ്"
-      ],
-      "si": [
-        "පොල්"
-      ],
-      "kok": [
-        "नारळ (Naral)"
-      ],
-      "tcy": [
-        "ತೆಂಗು (Tengu)"
-      ]
-    },
-    "variety": [
-      {
-        "en": "Tall Coconut",
-        "ta": "உயரமான தென்னை",
-        "te": "పొడవైన కొబ్బరి",
-        "kn": "ಎತ್ತರದ ತೆಂಗು",
-        "ml": "ഉയരമുള്ള തെങ്ങ്",
-        "si": "උස පොල්",
-        "kok": "उंच नारळ",
-        "tcy": "ಎತ್ತರದ ತೆಂಗು"
-      },
-      {
-        "en": "Dwarf Coconut",
-        "ta": "குள்ள தென்னை",
-        "te": "మరగు కొబ్బరి",
-        "kn": "ಕುಳ್ಳ ತೆಂಗು",
-        "ml": "കുള്ളൻ തെങ്ങ്",
-        "si": "කුරු පොල්",
-        "kok": "खुर्दा नारळ",
-        "tcy": "ಕುಳ್ಳ ತೆಂಗು"
-      },
-      {
-        "en": "King Coconut",
-        "ta": "இளநீர் தென்னை",
-        "te": "రాజ కొబ్బరి",
-        "kn": "ರಾಜ ತೆಂಗು",
-        "ml": "രാജ തെങ്ങ്",
-        "si": "රජ පොල්",
-        "kok": "राजा नारळ",
-        "tcy": "ರಾಜ ತೆಂಗು"
-      }
-    ]
-  },
-  {
-    "Coffea spp.": {
-      "en": [
-        "Coffee tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cordia ghara": {
-      "en": [
-        "Gharo tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cordia mixa": {
-      "en": [
-        "Assyrian plum"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cordia obliqua": {
-      "en": [
-        "Indian cherry"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Cordia sebestena": {
-      "en": [
-        "Geiger tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
+    "Cinnamomum zeylanicum": {
+      "en": ["Cinnamon"],
+      "ta": ["கருவாப்பட்டை", "இலவங்கப்பட்டை"],
+      "te": ["దాల్చిన చెక్క"],
+      "kn": ["ಚಕ್ಕೆ"],
+      "ml": ["കറുവപ്പട്ട"],
+      "si": ["කුරුඳු"],
+      "kok": ["दालचिनी"],
+      "tcy": ["ದಾಲ್ಚಿನ್ನಿ"]
     },
     "variety": []
   },
   {
     "Couroupita guianensis": {
-      "en": [
-        "Cannon ball tree"
-      ],
-      "ta": [
-        "நாகலிங்கப்பூ மரம்"
-      ],
-      "te": [
-        "నాగలింగ"
-      ],
-      "kn": [
-        "ನಾಗಲಿಂಗ"
-      ],
-      "ml": [
-        "നാഗലിംഗം"
-      ],
-      "si": [
-        "නාගලිංග"
-      ],
-      "kok": [
-        "नागलिंग (Nagling)"
-      ],
-      "tcy": [
-        "ನಾಗಲಿಂಗ (Nagalinga)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Cupressus macrocarpa": {
-      "en": [
-        "Monterey cypress"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Dalbergia horrida": {
-      "en": [
-        "Climbing rosewood"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Dalbergia latifolia": {
-      "en": [
-        "Indian rosewood tree"
-      ],
-      "ta": [
-        "ஈட்டி மரம்"
-      ],
-      "te": [
-        "బీటె"
-      ],
-      "kn": [
-        "ಬೀಟೆ"
-      ],
-      "ml": [
-        "ഈട്ടി"
-      ],
-      "si": [
-        "ඊටි"
-      ],
-      "kok": [
-        "बीटी (Biti)"
-      ],
-      "tcy": [
-        "ಬೀಟೆ (Bite)"
-      ]
+      "en": ["Cannon Ball Tree"],
+      "ta": ["நாகலிங்கம்"],
+      "te": ["నాగలింగ"],
+      "kn": ["ನಾಗಲಿಂಗ"],
+      "ml": ["നാഗലിംഗം"],
+      "si": ["නාගලිංග"],
+      "kok": ["नागलिंग"],
+      "tcy": ["ನಾಗಲಿಂಗ"]
     },
     "variety": []
   },
   {
     "Dalbergia sissoo": {
-      "en": [
-        "Indian rosewood"
-      ],
-      "ta": [],
+      "en": ["Indian Rosewood"],
+      "ta": ["தோதகத்தி", "நூக்கம்"],
       "te": [],
-      "kn": [],
-      "ml": [],
+      "kn": ["ಬೀಟೆ ಮರ"],
+      "ml": ["ഈട്ടി"],
       "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Delonix alata": {
-      "en": [
-        "White gulmohar"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "kok": ["शिसव"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Delonix elata": {
-      "en": [
-        "White gulmohar tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Creamy Peacock Flower", "White Gulmohar"],
+      "ta": ["வாத நாராயணன்"],
+      "te": ["చిట్టి కేశ్వరము"],
+      "kn": ["ವಾತನಾರಾಯಣ"],
+      "ml": ["വാദനാരായണൻ"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -1645,1197 +196,47 @@
   },
   {
     "Delonix regia": {
-      "en": [
-        "Gul muhur tree"
-      ],
-      "ta": [
-        "வாதநாராயண மரம்"
-      ],
-      "te": [
-        "గుల్మోహర్"
-      ],
-      "kn": [
-        "ಗುಲ್ಮೊಹರ್"
-      ],
-      "ml": [
-        "ഗുൽമോഹർ"
-      ],
-      "si": [
-        "ගුල්මොහූර්"
-      ],
-      "kok": [
-        "गुलमोहर (Gulmohar)"
-      ],
-      "tcy": [
-        "ಗುಲ್ಮೊಹರ್ (Gulmohar)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Dichrostachys cinerea": {
-      "en": [
-        "Sicklebush"
-      ],
-      "ta": [
-        "விடத்தலை"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Dillenia indica": {
-      "en": [
-        "Elephant apple tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Diospyros chloroxylon": {
-      "en": [
-        "Bastard ebony"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Diospyros cordifolia": {
-      "en": [
-        "Corky-fruited ebony"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Diospyros ebenum": {
-      "en": [
-        "Indian Ebony tree"
-      ],
-      "ta": [
-        "கருங்காலி மரம்"
-      ],
-      "te": [
-        "నల్ల కర్ర"
-      ],
-      "kn": [
-        "ಕರಿಮರ"
-      ],
-      "ml": [
-        "കരിമരം"
-      ],
-      "si": [
-        "කළුවර"
-      ],
-      "kok": [
-        "काळी लाकड (Kali Lakad)"
-      ],
-      "tcy": [
-        "ಕರಿಮರ (Karimara)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Diospyros ferrea": {
-      "en": [
-        "Ceylon ebony"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Diospyros malabarica": {
-      "en": [
-        "Malabar ebony"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Diospyros melanoxylon": {
-      "en": [
-        "Tendu tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Dolichandrone falcata": {
-      "en": [
-        "Wild snake climber"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Dracaena reflexa": {
-      "en": [
-        "Song of India"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Elaeocarpus ganitrus": {
-      "en": [
-        "Rudraksham tree"
-      ],
-      "ta": [
-        "ருத்ராட்ச மரம்"
-      ],
-      "te": [
-        "రుద్రాక్ష"
-      ],
-      "kn": [
-        "ರುದ್ರಾಕ್ಷಿ"
-      ],
-      "ml": [
-        "രുദ്രാക്ഷം"
-      ],
-      "si": [
-        "රුද්රාක්ෂ"
-      ],
-      "kok": [
-        "रुद्राक्ष (Rudraksh)"
-      ],
-      "tcy": [
-        "ರುದ್ರಾಕ್ಷಿ (Rudrakshi)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Elaeodendron glaucum": {
-      "en": [
-        "Ceylon tea tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Enterolobium contortisiliquum": {
-      "en": [
-        "Ear pod tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Enterolobium cyclocarpum": {
-      "en": [
-        "Guanacaste tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Erythrina crista-galli": {
-      "en": [
-        "Cockspur coral tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Erythrina suberosa": {
-      "en": [
-        "Indian coral tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
+      "en": ["Flame Tree"],
+      "ta": ["மயில் கொன்றை", "செம்மயிற்கொன்றை", "நெருப்புக் கொன்றை"],
+      "te": ["గుల్మోహర్"],
+      "kn": ["ಗುಲ್ಮೊಹರ್"],
+      "ml": ["ഗുൽമോഹർ"],
+      "si": ["ගුල්මොහූර්"],
+      "kok": ["गुलमोहर"],
+      "tcy": ["ಗುಲ್ಮೊಹರ್"]
     },
     "variety": []
   },
   {
     "Erythrina variegata": {
-      "en": [
-        "Indian coral tree"
-      ],
-      "ta": [
-        "கல்யாண முருங்கை மரம்"
-      ],
-      "te": [
-        "ముల్లుమురికి"
-      ],
-      "kn": [
-        "ಮಂದಾರ"
-      ],
-      "ml": [
-        "മുരുക്ക്"
-      ],
-      "si": [
-        "මුරුක්"
-      ],
-      "kok": [
-        "मुरुक (Muruk)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Eucalyptus camaldulensis": {
-      "en": [
-        "River red gum"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Eucalyptus globulus": {
-      "en": [
-        "Eucalyptus tree"
-      ],
-      "ta": [
-        "தைல மரம்"
-      ],
-      "te": [
-        "నీలగిరి"
-      ],
-      "kn": [
-        "ಯೂಕಲಿಪ್ಟಸ್"
-      ],
-      "ml": [
-        "നീലഗിരി"
-      ],
-      "si": [
-        "යුකලිප්ටස්"
-      ],
-      "kok": [
-        "युकलिप्टस (Yukaliptus)"
-      ],
-      "tcy": [
-        "ಯೂಕಲಿಪ್ಟಸ್ (Yukaliptus)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Eucalyptus spp.": {
-      "en": [
-        "Eucalyptus tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Eucalyptus tereticornis": {
-      "en": [
-        "Forest red gum"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Euphorbia pulcherrima": {
-      "en": [
-        "Poinsettia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus altissima": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "கல்லத்தி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus amplissima": {
-      "en": [
-        "Indian pillar fig"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus arnottiana": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "கொடியரசு"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus benghalensis": {
-      "en": [
-        "Banyan tree"
-      ],
-      "ta": [
-        "ஆலமரம்"
-      ],
-      "te": [
-        "మర్రి"
-      ],
-      "kn": [
-        "ಆಲದ ಮರ"
-      ],
-      "ml": [
-        "ആൽ"
-      ],
-      "si": [
-        "නුග"
-      ],
-      "kok": [
-        "बर (Bar)"
-      ],
-      "tcy": [
-        "ಆಲ (Aala)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Ficus benjamina": {
-      "en": [
-        "Weeping fig"
-      ],
-      "ta": [
-        "வெள்ளால்"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus carica": {
-      "en": [
-        "Common fig tree"
-      ],
-      "ta": [
-        "சீமையத்தி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus elastica": {
-      "en": [
-        "Rubber fig tree"
-      ],
-      "ta": [
-        "சீமையால்"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus hispida": {
-      "en": [
-        "Hairy fig tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus infectoria": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "இத்தி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus macrophylla": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "மலையத்தி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus microcarpa": {
-      "en": [
-        "Indian laurel fig"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus polycarpa": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "சிறியபேயத்தி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus racemosa": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "அத்திமரம்"
-      ],
-      "te": [
-        "మేడి"
-      ],
-      "kn": [
-        "ಅತ್ತಿ"
-      ],
-      "ml": [
-        "അത്തി"
-      ],
-      "si": [
-        "අත්ති"
-      ],
-      "kok": [
-        "अंजीर (Anjir)"
-      ],
-      "tcy": [
-        "ಅತ್ತಿ (Atti)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Ficus religiosa": {
-      "en": [
-        "Peepul tree"
-      ],
-      "ta": [
-        "அரசமரம்"
-      ],
-      "te": [
-        "రావి"
-      ],
-      "kn": [
-        "ಅಶ್ವತ್ಥ"
-      ],
-      "ml": [
-        "അരയാൽ"
-      ],
-      "si": [
-        "බෝ"
-      ],
-      "kok": [
-        "पिंपळ (Pimpal)"
-      ],
-      "tcy": [
-        "ಅರಸು (Arasu)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Ficus retusa": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "கல்லித்தி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus setosa": {
-      "en": [
-        "Fig tree"
-      ],
-      "ta": [
-        "அட்டாலை"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ficus virens": {
-      "en": [
-        "White fig tree"
-      ],
-      "ta": [
-        "குருகட்டி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "en": ["Coral Tree"],
+      "ta": ["கல்யாண முருங்கை", "முள் முருங்கை"],
+      "te": ["ముల్లుమురికి"],
+      "kn": ["ಮಂದಾರ"],
+      "ml": ["മുരുക്ക്"],
+      "si": ["මුරුක්"],
+      "kok": ["मुरुक"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Filicium decipiens": {
-      "en": [
-        "Fern tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
+      "en": ["Fern Tree"],
+      "ta": ["நீங்கல்", "நீர்கொங்கு", "ஆதடலி", "இருவில்லிப்பாளை"],
+      "te": ["పట్ట కుంకుడు"],
+      "kn": ["ಕಾಡು ಹೂವರಸಿ"],
+      "ml": ["വാൾമുരിച്ച"],
+      "si": ["පිහිම්බිය"],
       "kok": [],
       "tcy": []
     },
     "variety": []
   },
   {
-    "Garcinia gummi-gutta": {
-      "en": [
-        "Garcinia tree"
-      ],
-      "ta": [
-        "கொறுக்காய்ப்புளி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Garcinia indica": {
-      "en": [
-        "Kokum tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Garcinia mangostana": {
-      "en": [
-        "Mangosteen"
-      ],
-      "ta": [
-        "மங்குஸ்தான்"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Garcinia morella": {
-      "en": [
-        "Garcinia tree"
-      ],
-      "ta": [
-        "இரேவற்சின்னி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Gmelina arborea": {
-      "en": [
-        "Gamhar tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Gmelina asiatica": {
-      "en": [
-        "Badhara tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Grevillea robusta": {
-      "en": [
-        "Silky oak"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Grewia tilifolia": {
-      "en": [
-        "Dhaman tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Guaiacum officinale": {
-      "en": [
-        "Lignum vitae"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Guazuma tomentosa": {
-      "en": [
-        "West Indian elm"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Guazuma ulmifolia": {
-      "en": [
-        "West Indian elm"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Haldina cordifolia": {
-      "en": [
-        "Haldu tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Hardwickia binata": {
-      "en": [
-        "Anjan tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Hevea brasiliensis": {
-      "en": [
-        "Rubber tree"
-      ],
-      "ta": [
-        "ரப்பர் மரம்"
-      ],
-      "te": [
-        "రబ్బరు"
-      ],
-      "kn": [
-        "ರಬ್ಬರ್"
-      ],
-      "ml": [
-        "റബ്ബർ"
-      ],
-      "si": [
-        "රබර්"
-      ],
-      "kok": [
-        "रबराचें झाड (Rabarachem Zhaad)"
-      ],
-      "tcy": [
-        "ರಬ್ಬರ್ (Rabbar)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Hibiscus tiliaceus": {
-      "en": [
-        "Sea hibiscus"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Holarrhena pubescens": {
-      "en": [
-        "Kurchi tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Holoptelea integrifolia": {
-      "en": [
-        "Indian elm"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Hopea parviflora": {
-      "en": [
-        "Malabar iron wood tree"
-      ],
-      "ta": [
-        "கோங்கு மரம்"
-      ],
-      "te": [
-        "కోంగు"
-      ],
-      "kn": [
-        "ಬಲಮರ"
-      ],
-      "ml": [
-        "ഇരുമ്പുമരം"
-      ],
-      "si": [
-        "බලමර"
-      ],
-      "kok": [
-        "किंदळ (Kindal)"
-      ],
-      "tcy": [
-        "ಅಲಿಮಾರು (Alimaru)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Hura crepitans": {
-      "en": [
-        "Sandbox tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Illicium verum": {
-      "en": [
-        "Star anise tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ixora pavetta": {
-      "en": [
-        "Torch tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Jacaranda mimosifolia": {
-      "en": [
-        "Jacaranda tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Jatropha curcas": {
-      "en": [
-        "Physic nut tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Juglans regia": {
-      "en": [
-        "Walnut tree"
-      ],
-      "ta": [
-        "வால்நட் மரம்"
-      ],
-      "te": [
-        "వాల్‌నట్"
-      ],
-      "kn": [
-        "ವಾಲ್ನಟ್"
-      ],
-      "ml": [
-        "വാൾനട്ട്"
-      ],
-      "si": [
-        "වෝල්නට්"
-      ],
-      "kok": [
-        "अक्रोड (Akrod)"
-      ],
-      "tcy": [
-        "ವಾಲ್ನಟ್ (Walnut)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Khaya senegalensis": {
-      "en": [
-        "African mahogany"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Kigelia pinnata": {
-      "en": [
-        "Sausage tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Lagerstroemia floribunda": {
-      "en": [
-        "Thai crepe myrtle"
-      ],
-      "ta": [],
+    "Gliricidia sepium": {
+      "en": ["Quick Stick", "Gliricidia"],
+      "ta": ["சீமை அகத்தி"],
       "te": [],
       "kn": [],
       "ml": [],
@@ -2847,13 +248,11 @@
   },
   {
     "Lagerstroemia parviflora": {
-      "en": [
-        "Small-flowered crepe myrtle"
-      ],
-      "ta": [],
+      "en": ["Venteak", "Benteak"],
+      "ta": ["பேய்க்கடுக்காய்", "சினங்கி", "சுச்சக்கட்டை மரம்"],
       "te": [],
-      "kn": [],
-      "ml": [],
+      "kn": ["ಚೆಳ್ಳೆ"],
+      "ml": ["അടമ്പ്"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -2862,321 +261,12 @@
   },
   {
     "Lagerstroemia speciosa": {
-      "en": [
-        "Queen's crepe myrtle"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Lannea coromandelica": {
-      "en": [
-        "Indian ash tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Leucaena leucocephala": {
-      "en": [
-        "White lead tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Limonia acidissima": {
-      "en": [
-        "Elephant apple tree"
-      ],
-      "ta": [
-        "விளா மரம்"
-      ],
-      "te": [
-        "వెలగ"
-      ],
-      "kn": [
-        "ಬೆಲವಿನ ಮರ"
-      ],
-      "ml": [
-        "വില്വപ്പഴം"
-      ],
-      "si": [
-        "දිවුල්"
-      ],
-      "kok": [
-        "कवठ (Kavath)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Litchi chinensis": {
-      "en": [
-        "Lychee tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Madhuca longifolia": {
-      "en": [
-        "Mahua tree"
-      ],
-      "ta": [
-        "இலுப்பை மரம்"
-      ],
-      "te": [
-        "ఇప్ప"
-      ],
-      "kn": [
-        "ಇಪ್ಪೆ"
-      ],
-      "ml": [
-        "ഇലുപ്പ"
-      ],
-      "si": [
-        "ඉලුප්ප"
-      ],
-      "kok": [
-        "महुआ (Mahua)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Magnolia champaca": {
-      "en": [
-        "Champak tree"
-      ],
-      "ta": [
-        "செண்பக மரம்"
-      ],
-      "te": [
-        "చంపక"
-      ],
-      "kn": [
-        "ಚಂಪಕ"
-      ],
-      "ml": [
-        "ചമ്പകം"
-      ],
-      "si": [
-        "චම්පක"
-      ],
-      "kok": [
-        "चंपक (Champak)"
-      ],
-      "tcy": [
-        "ಚಂಪಕ (Champaka)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Magnolia grandiflora": {
-      "en": [
-        "Southern magnolia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Malus domestica": {
-      "en": [
-        "Apple tree"
-      ],
-      "ta": [
-        "ஆப்பிள் மரம்"
-      ],
-      "te": [
-        "ఆపిల్"
-      ],
-      "kn": [
-        "ಸೇಬು"
-      ],
-      "ml": [
-        "ആപ്പിൾ"
-      ],
-      "si": [
-        "ඇපල්"
-      ],
-      "kok": [
-        "आपल (Aapal)"
-      ],
-      "tcy": [
-        "ಆಪಲ್ (Aapal)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Mangifera indica": {
-      "en": [
-        "Mango tree"
-      ],
-      "ta": [
-        "மாமரம்"
-      ],
-      "te": [
-        "మామిడి"
-      ],
-      "kn": [
-        "ಮಾವು"
-      ],
-      "ml": [
-        "മാവ്"
-      ],
-      "si": [
-        "අඹ"
-      ],
-      "kok": [
-        "आंबो (Ambo)"
-      ],
-      "tcy": [
-        "ಮಾವು (Maavu)"
-      ]
-    },
-    "variety": [
-      {
-        "en": "Banganapalli",
-        "ta": "பங்கனப்பள்ளி",
-        "te": "బంగనపల్లి",
-        "kn": "ಬಂಗನಪಲ್ಲಿ",
-        "ml": "ബംഗനപ്പള്ളി",
-        "si": "බංගනපල්ලි",
-        "kok": "बंगनपल्ली (Banganapalli)",
-        "tcy": "ಬಂಗನಪಲ್ಲಿ (Banganapalli)"
-      },
-      {
-        "en": "Alphonso",
-        "ta": "அல்போன்சா",
-        "te": "ఆల్ఫోన్సో",
-        "kn": "ಆಲ್ಫೊನ್ಸೊ",
-        "ml": "ആൽഫോൻസോ",
-        "si": "ඇල්ෆොන්සෝ",
-        "kok": "आल्फोन्सो (Alphonso)",
-        "tcy": "ಆಲ್ಫೊನ್ಸೊ (Alphonso)"
-      },
-      {
-        "en": "Totapuri",
-        "ta": "தோட்டாபுரி",
-        "te": "తోటాపురి",
-        "kn": "ತೋಟಾಪುರಿ",
-        "ml": "തോട്ടാപുരി",
-        "si": "තෝටාපුරි",
-        "kok": "तोतापुरी (Totapuri)",
-        "tcy": "ತೋಟಪುರಿ (Totapuri)"
-      }
-    ]
-  },
-  {
-    "Manilkara hexandra": {
-      "en": [
-        "Khirni tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Manilkara zapota": {
-      "en": [
-        "Sapodilla tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Markhamia platycalyx": {
-      "en": [
-        "Nile tulip tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Melaleuca bracteata": {
-      "en": [
-        "Black tea tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Melaleuca linariifolia": {
-      "en": [
-        "Snow-in-summer myrtle"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
+      "en": ["Queen's Flower"],
+      "ta": ["பூமருது", "கதலி", "செம்மருதம்"],
+      "te": ["చెన్నంగి"],
+      "kn": ["ಹೊಳೆ ದಾಸವಾಳ"],
+      "ml": ["മണിമരുത്"],
+      "si": ["මුරුත"],
       "kok": [],
       "tcy": []
     },
@@ -3184,13 +274,11 @@
   },
   {
     "Melia azedarach": {
-      "en": [
-        "Chinaberry tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Indian Lilac", "Pride of India"],
+      "ta": ["மலைவேம்பு"],
+      "te": ["తురక వేప"],
+      "kn": ["ಹಳ್ಳಿ ಬೇವು"],
+      "ml": ["മലവേപ്പ്"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -3198,266 +286,51 @@
     "variety": []
   },
   {
-    "Melia dubia": {
-      "en": [
-        "Chinaberry tree"
-      ],
-      "ta": [
-        "மலைவேம்பு மரம்"
-      ],
-      "te": [
-        "మలైవేప"
-      ],
-      "kn": [
-        "ಬೆಟ್ಟದ ಬೇವು"
-      ],
-      "ml": [
-        "മലയ്‌വേമ്പ്"
-      ],
-      "si": [
-        "කහ නිම්"
-      ],
-      "kok": [
-        "कडूनिंब (Kadunimb)"
-      ],
-      "tcy": []
+    "Michelia champaca": {
+      "en": ["Champak tree"],
+      "ta": ["செண்பகம்"],
+      "te": ["చంపక"],
+      "kn": ["ಚಂಪಕ"],
+      "ml": ["ചമ്പകം"],
+      "si": ["චම්පක"],
+      "kok": ["चंपक"],
+      "tcy": ["ಚಂಪಕ"]
     },
     "variety": []
   },
   {
-    "Memecylon umbellatum": {
-      "en": [
-        "Iron wood tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Millettia peguensis": {
-      "en": [
-        "Pegu ironwood"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Millingtonia hortensis": {
-      "en": [
-        "Indian cork tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+    "Millettia pinnata": {
+      "en": ["Indian Beech Tree"],
+      "ta": ["புங்கை", "புங்கு"],
+      "te": ["కానుగ"],
+      "kn": ["ಹೊಂಗೆ ಮರ"],
+      "ml": ["ഉങ്ങ്"],
+      "si": ["කරඳ"],
+      "kok": ["करंज"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Mimusops elengi": {
-      "en": [
-        "Spanish cherry tree"
-      ],
-      "ta": [
-        "மகிழம்பூ மரம்"
-      ],
-      "te": [
-        "పొగడ"
-      ],
-      "kn": [
-        "ಬಕುಳ"
-      ],
-      "ml": [
-        "ഇലഞ്ഞി"
-      ],
-      "si": [
-        "මුනමල"
-      ],
-      "kok": [
-        "बकुळ (Bakul)"
-      ],
-      "tcy": [
-        "ಬಕುಳ (Bakula)"
-      ]
+      "en": ["Spanish Cherry"],
+      "ta": ["மகிழம் பூ ", "வகுளம்", "இலஞ்சி", "மகிழ்"],
+      "te": ["పొగడ"],
+      "kn": ["ಬಕುಳ"],
+      "ml": ["ഇലഞ്ഞി"],
+      "si": ["මුනමල"],
+      "kok": ["बकुळ"],
+      "tcy": ["ಬಕುಳ"]
     },
     "variety": []
-  },
-  {
-    "Mitragyna parviflora": {
-      "en": [
-        "Kaim tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Monoon longifolium": {
-      "en": [
-        "Mast tree"
-      ],
-      "ta": [
-        "அசோகமரம்"
-      ],
-      "te": [
-        "నెట్టిలింగం"
-      ],
-      "kn": [
-        "ಅಶೋಕ ಮರ"
-      ],
-      "ml": [
-        "അശോകമരം"
-      ],
-      "si": [
-        "අශෝක"
-      ],
-      "kok": [
-        "अशोक"
-      ],
-      "tcy": [
-        "ಅಶೋಕ"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Morinda citrifolia": {
-      "en": [
-        "Indian mulberry"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Morinda pubescens": {
-      "en": [
-        "Morinda tree"
-      ],
-      "ta": [
-        "நுணா மரம்"
-      ],
-      "te": [
-        "మద్ది చెట్టు"
-      ],
-      "kn": [
-        "ನೂನಾ"
-      ],
-      "ml": [
-        "നുണ"
-      ],
-      "si": [
-        "නුණ"
-      ],
-      "kok": [
-        "नोणा (Nona)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Moringa concanensis": {
-      "en": [
-        "Wild drumstick tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Moringa oleifera": {
-      "en": [
-        "Moringa tree"
-      ],
-      "ta": [
-        "முருங்கை மரம்"
-      ],
-      "te": [
-        "మునగ"
-      ],
-      "kn": [
-        "ನುಗ್ಗೆ"
-      ],
-      "ml": [
-        "മുരിങ്ങ"
-      ],
-      "si": [
-        "මුරුංගා"
-      ],
-      "kok": [
-        "शेवग्याचें झाड (Shevgyachem Zhaad)"
-      ],
-      "tcy": [
-        "ನುಗ್ಗೆ (Nugge)"
-      ]
-    },
-    "variety": [
-      {
-        "en": "PKM-1",
-        "ta": "பிகேஎம்-1",
-        "te": "పికేఎమ్-1",
-        "kn": "ಪಿಕೆಎಮ್-1",
-        "ml": "പികെഎം-1",
-        "si": "පිකේඑම්-1",
-        "kok": "पिकेएम-1",
-        "tcy": "ಪಿಕೆಎಮ್-1"
-      },
-      {
-        "en": "PKM-2",
-        "ta": "பிகேஎம்-2",
-        "te": "పికేఎమ్-2",
-        "kn": "ಪಿಕೆಎಮ್-2",
-        "ml": "പികെഎം-2",
-        "si": "පිකේඑම්-2",
-        "kok": "पिकेएम-2",
-        "tcy": "ಪಿಕೆಎಮ್-2"
-      }
-    ]
   },
   {
     "Morus alba": {
-      "en": [
-        "White mulberry tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["White Mulberry"],
+      "ta": ["முசுக்கட்டை", "மல்பெரி"],
+      "te": ["మల్బరీ చెట్టు"],
+      "kn": ["ಹಿಪ್ಪುನೇರಳೆ"],
+      "ml": ["പട്ടുനൂൽപ്പുഴുചെടി"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -3466,10 +339,8 @@
   },
   {
     "Muntingia calabura": {
-      "en": [
-        "Jamaica cherry"
-      ],
-      "ta": [],
+      "en": ["Bird's Cherry"],
+      "ta": ["தேன் பழம்", " நெய் பழம்", "சீனி பழம்"],
       "te": [],
       "kn": [],
       "ml": [],
@@ -3480,478 +351,61 @@
     "variety": []
   },
   {
-    "Musa acuminata": {
-      "en": [
-        "Banana tree"
-      ],
-      "ta": [
-        "வாழைமரம்"
-      ],
-      "te": [
-        "అరటి"
-      ],
-      "kn": [
-        "ಬಾಳೆ"
-      ],
-      "ml": [
-        "വാഴ"
-      ],
-      "si": [
-        "කෙසෙල්"
-      ],
-      "kok": [
-        "केळीचें झाड (Keliachem Zhaad)"
-      ],
-      "tcy": [
-        "ಬಾಳೆ (Baale)"
-      ]
+    "Murraya koenigii": {
+      "en": ["Curry Leaf"],
+      "ta": ["கறிவேப்பிலை", "கறிவேம்பு"],
+      "te": [],
+      "kn": [],
+      "ml": [],
+      "si": [],
+      "kok": [],
+      "tcy": []
     },
-    "variety": [
-      {
-        "en": "Cavendish",
-        "ta": "கவென்டிஷ்",
-        "te": "కావెండిష్",
-        "kn": "ಕ್ಯಾವೆಂಡಿಷ್",
-        "ml": "കാവെൻഡിഷ്",
-        "si": "කැවෙන්ඩිෂ්",
-        "kok": "कॅव्हेंडिश",
-        "tcy": "ಕ್ಯಾವೆಂಡಿಷ್"
-      },
-      {
-        "en": "Red Banana",
-        "ta": "சிவப்பு வாழை",
-        "te": "ఎర్ర అరటి",
-        "kn": "ಕೆಂಪು ಬಾಳೆ",
-        "ml": "ചുവന്ന വാഴ",
-        "si": "රතු කෙසෙල්",
-        "kok": "लाल केळी",
-        "tcy": "ಕೆಂಪು ಬಾಳೆ"
-      },
-      {
-        "en": "Nendran",
-        "ta": "நேந்திரன்",
-        "te": "నేంద్రన్",
-        "kn": "ನೇಂದ್ರನ್",
-        "ml": "നേന്ദ്രൻ",
-        "si": "නේන්ද්‍රන්",
-        "kok": "नेंद्रन",
-        "tcy": "ನೇಂದ್ರನ್"
-      },
-      {
-        "en": "Poovan",
-        "ta": "பூவன்",
-        "te": "పూవన్",
-        "kn": "ಪೂವನ್",
-        "ml": "പൂവൻ",
-        "si": "පූවන්",
-        "kok": "पूवन",
-        "tcy": "ಪೂವನ್"
-      }
-    ]
-  },
-  {
-    "Musa spp.": {
-      "en": [
-        "Banana tree"
-      ],
-      "ta": [
-        "வாழைமரம்"
-      ],
-      "te": [
-        "అరటి"
-      ],
-      "kn": [
-        "ಬಾಳೆ"
-      ],
-      "ml": [
-        "വാഴ"
-      ],
-      "si": [
-        "කෙසෙල්"
-      ],
-      "kok": [
-        "केळीचें झाड"
-      ],
-      "tcy": [
-        "ಬಾಳೆ"
-      ]
-    },
-    "variety": [
-      {
-        "en": "Cavendish",
-        "ta": "கவென்டிஷ்",
-        "te": "కావెండిష్",
-        "kn": "ಕ್ಯಾವೆಂಡಿಷ್",
-        "ml": "കാവെൻഡിഷ്",
-        "si": "කැවෙන්ඩිෂ්",
-        "kok": "कॅव्हेंडिश",
-        "tcy": "ಕ್ಯಾವೆಂಡಿಷ್"
-      },
-      {
-        "en": "Red Banana",
-        "ta": "சிவப்பு வாழை",
-        "te": "ఎర్ర అరటి",
-        "kn": "ಕೆಂಪು ಬಾಳೆ",
-        "ml": "ചുവന്ന വാഴ",
-        "si": "රතු කෙසෙල්",
-        "kok": "लाल केळी",
-        "tcy": "ಕೆಂಪು ಬಾಳೆ"
-      },
-      {
-        "en": "Nendran",
-        "ta": "நேந்திரன்",
-        "te": "నేంద్రన్",
-        "kn": "ನೇಂದ್ರನ್",
-        "ml": "നേന്ദ്രൻ",
-        "si": "නේන්ද්‍රන්",
-        "kok": "नेंद्रन",
-        "tcy": "ನೇಂದ್ರನ್"
-      },
-      {
-        "en": "Poovan",
-        "ta": "பூவன்",
-        "te": "పూవన్",
-        "kn": "ಪೂವನ್",
-        "ml": "പൂവൻ",
-        "si": "පූවන්",
-        "kok": "पूवन",
-        "tcy": "ಪೂವನ್"
-      }
-    ]
+    "variety": []
   },
   {
     "Myristica fragrans": {
-      "en": [
-        "Nutmeg tree"
-      ],
-      "ta": [
-        "ஆதிபலம்"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "en": ["Nutmeg Tree"],
+      "ta": ["ஜாதிக்காய்", "சாதிப்பத்திரி", "சாதிக்காய்"],
+      "te": ["జాజికాయ"],
+      "kn": ["ಜಾಜಿಕಾಯಿ"],
+      "ml": ["ജാതിക്ക"],
+      "si": ["සාදික්කා"],
+      "kok": ["जायफळ"],
       "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Neolamarckia cadamba": {
-      "en": [
-        "Burflower tree"
-      ],
-      "ta": [
-        "கடம்ப மரம்"
-      ],
-      "te": [
-        "కదంబ"
-      ],
-      "kn": [
-        "ಕದಂಬ"
-      ],
-      "ml": [
-        "കടമ്പ്"
-      ],
-      "si": [
-        "කඩඹ"
-      ],
-      "kok": [
-        "कदंब (Kadamb)"
-      ],
-      "tcy": [
-        "ಕದಂಬ (Kadamba)"
-      ]
     },
     "variety": []
   },
   {
     "Nyctanthes arbor-tristis": {
-      "en": [
-        "Night jasmine"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Night Jasmine"],
+      "ta": ["பவளமல்லி", "பாரிஜாதம்"],
+      "te": ["పారిజాతం"],
+      "kn": ["ಪಾರಿಜಾತ"],
+      "ml": ["പവിഴമല്ലി"],
       "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ochna squarrosa": {
-      "en": [
-        "Mickey Mouse plant"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Olea europaea": {
-      "en": [
-        "Olive tree"
-      ],
-      "ta": [
-        "ஆலிவ் மரம்"
-      ],
-      "te": [
-        "ఆలివ్"
-      ],
-      "kn": [
-        "ಆಲಿವ್"
-      ],
-      "ml": [
-        "ഒലീവ്"
-      ],
-      "si": [
-        "ඔලීව"
-      ],
-      "kok": [
-        "ऑलिव (Oliv)"
-      ],
-      "tcy": [
-        "ಆಲಿವ್ (Oliv)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Parkia biglandulosa": {
-      "en": [
-        "African locust tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Paraserianthes falcataria": {
-      "en": [
-        "Batai tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "kok": ["पारिजातक"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Peltophorum pterocarpum": {
-      "en": [
-        "Yellow flame tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Copper Pod Tree"],
+      "ta": ["மஞ்சள் வாகை", "இயல்வாகை"],
+      "te": ["కొండ చింత"],
+      "kn": ["ಕಬ್ಬಿನ ಕೇಶ"],
+      "ml": ["ചരക്കൊന്ന"],
       "si": [],
       "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Persea americana": {
-      "en": [
-        "Avocado tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Phoenix canariensis": {
-      "en": [
-        "Canary Island date palm"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Phoenix dactylifera": {
-      "en": [
-        "Date palm"
-      ],
-      "ta": [
-        "பேரீச்சை"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Phoenix pusilla": {
-      "en": [
-        "Ceylon date palm"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Phoenix sylvestris": {
-      "en": [
-        "Sugar date palm tree"
-      ],
-      "ta": [
-        "ஈச்சமரம்"
-      ],
-      "te": [
-        "ఈత"
-      ],
-      "kn": [
-        "ಕಾಡು ಖರ್ಜೂರ"
-      ],
-      "ml": [
-        "ഈന്തപ്പന"
-      ],
-      "si": [
-        "රට ඉඳි"
-      ],
-      "kok": [
-        "खजूर (Khajur)"
-      ],
-      "tcy": [
-        "ಖರ್ಜೂರ (Khajoor)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Phyllanthus acidus": {
-      "en": [
-        "Star gooseberry tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Phyllanthus emblica": {
-      "en": [
-        "Indian gooseberry tree"
-      ],
-      "ta": [
-        "நெல்லி மரம்"
-      ],
-      "te": [
-        "ఉసిరి"
-      ],
-      "kn": [
-        "ನೆಲ್ಲಿಕಾಯಿ"
-      ],
-      "ml": [
-        "നെല്ലിക്ക"
-      ],
-      "si": [
-        "නෙල්ලි"
-      ],
-      "kok": [
-        "आवळो (Aavalo)"
-      ],
-      "tcy": [
-        "ನೆಲ್ಲಿಕಾಯಿ (Nellikayi)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Pithecellobium dulce": {
-      "en": [
-        "Manila tamarind tree"
-      ],
-      "ta": [
-        "கொடுக்காய்ப் புளி மரம்"
-      ],
-      "te": [
-        "సీమ చింత"
-      ],
-      "kn": [
-        "ಸೀಮೆ ಹುಣಸೆ"
-      ],
-      "ml": [
-        "സീമപ്പുളി"
-      ],
-      "si": [
-        "කොඩුක්කාපුලි"
-      ],
-      "kok": [
-        "विलायती चिंच (Vilayati Chinch)"
-      ],
       "tcy": []
     },
     "variety": []
   },
   {
     "Plumeria alba": {
-      "en": [
-        "White frangipani"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Plumeria obtusa": {
-      "en": [
-        "Singapore graveyard flower"
-      ],
-      "ta": [],
+      "en": ["White Frangipani"],
+      "ta": ["பெருங்கள்ளி", "நத்த மல்லிகை", "பெருந்தாழை"],
       "te": [],
       "kn": [],
       "ml": [],
@@ -3963,40 +417,8 @@
   },
   {
     "Plumeria rubra": {
-      "en": [
-        "Common frangipani"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Plumeria spp.": {
-      "en": [
-        "Frangipani"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Pongamia pinnata": {
-      "en": [
-        "Indian beech tree"
-      ],
-      "ta": [],
+      "en": ["Common White Frangipani"],
+      "ta": ["ஈழத்தலரி", "நெல சம்பங்கி", "அலரி"],
       "te": [],
       "kn": [],
       "ml": [],
@@ -4008,689 +430,63 @@
   },
   {
     "Polyalthia longifolia": {
-      "en": [
-        "Mast tree"
-      ],
-      "ta": [
-        "அசோகமரம்"
-      ],
-      "te": [
-        "నెట్టిలింగం"
-      ],
-      "kn": [
-        "ಅಶೋಕ ಮರ"
-      ],
-      "ml": [
-        "അശോകമരം"
-      ],
-      "si": [
-        "අශෝක"
-      ],
-      "kok": [
-        "अशोक (Ashok)"
-      ],
-      "tcy": [
-        "ಅಶೋಕ (Ashoka)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Populus deltoides": {
-      "en": [
-        "Eastern cottonwood"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Prosopis cineraria": {
-      "en": [
-        "Ghaf tree"
-      ],
-      "ta": [
-        "வன்னி மரம்"
-      ],
-      "te": [
-        "జమ్మి"
-      ],
-      "kn": [
-        "ಬನ್ನಿ"
-      ],
-      "ml": [
-        "വന്നി"
-      ],
-      "si": [
-        "වන්නි"
-      ],
-      "kok": [
-        "शमी (Shami)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Prosopis juliflora": {
-      "en": [
-        "Juliflora tree"
-      ],
-      "ta": [
-        "சீமைக் கருவேல மரம்"
-      ],
-      "te": [
-        "సీమ తుమ్మ"
-      ],
-      "kn": [
-        "ಸೀಮೆ ಬಬೂಲ್"
-      ],
-      "ml": [
-        "സീമക്കരുവേലം"
-      ],
-      "si": [
-        "සීමා කර්වේල්"
-      ],
-      "kok": [
-        "विलायती बाभूळ (Vilayati Babhuul)"
-      ],
-      "tcy": [
-        "ಸೀಮೆ ಬಬೂಲ್ (Seeme Babool)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Prunus domestica": {
-      "en": [
-        "Plum tree"
-      ],
-      "ta": [
-        "ஊட்டி ஆப்பிள் மரம்"
-      ],
-      "te": [
-        "ప్లమ్"
-      ],
-      "kn": [
-        "ಪ್ಲಮ್"
-      ],
-      "ml": [
-        "പ്ലം"
-      ],
-      "si": [
-        "ප්ලම්"
-      ],
-      "kok": [
-        "प्लम (Plum)"
-      ],
-      "tcy": [
-        "ಪ್ಲಮ್ (Plum)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Prunus dulcis": {
-      "en": [
-        "Badam tree"
-      ],
-      "ta": [
-        "வாதுமை மரம்"
-      ],
-      "te": [
-        "బాదం"
-      ],
-      "kn": [
-        "ಬಾದಾಮಿ"
-      ],
-      "ml": [
-        "ബദാം"
-      ],
-      "si": [
-        "බදාම්"
-      ],
-      "kok": [
-        "बादाम (Badam)"
-      ],
-      "tcy": [
-        "ಬಾದಂ (Badam)"
-      ]
-    },
-    "variety": [
-      {
-        "en": "Tropical Almond",
-        "ta": "நாட்டு வாதுமை",
-        "te": "కాడు బాదం",
-        "kn": "ಕಾಡು ಬಾದಾಮಿ",
-        "ml": "കാട്ടു ബദാം",
-        "si": "කළු බදාම්",
-        "kok": "जंगली बादाम (Jangli Badam)",
-        "tcy": "ಕಾಡ್ ಬಾದಂ (Kaad Badam)"
-      }
-    ]
-  },
-  {
-    "Psidium guajava": {
-      "en": [
-        "Guava tree"
-      ],
-      "ta": [
-        "கொய்யா"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Pterocarpus dalbergioides": {
-      "en": [
-        "Andaman padauk"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Pterocarpus erinaceus": {
-      "en": [
-        "Zebra wood tree"
-      ],
-      "ta": [
-        "பன்னீர்ப்பூ மரம்"
-      ],
-      "te": [
-        "నాగకేసర"
-      ],
-      "kn": [
-        "ನಾಗಕೇಸರಿ"
-      ],
-      "ml": [
-        "നാഗകേസരം"
-      ],
-      "si": [
-        "නාගකේසර"
-      ],
-      "kok": [
-        "नागकेसर (Nagkesar)"
-      ],
-      "tcy": [
-        "ನಾಗಕೇಸರಿ (Nagakesari)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Pterocarpus marsupium": {
-      "en": [
-        "Indian kino tree"
-      ],
-      "ta": [
-        "வேங்கை மரம்"
-      ],
-      "te": [
-        "వేగి"
-      ],
-      "kn": [
-        "ಬಿಜಾಸಾಲ"
-      ],
-      "ml": [
-        "വേങ്ങ"
-      ],
-      "si": [
-        "වේංග"
-      ],
-      "kok": [
-        "आसन (Asan)"
-      ],
-      "tcy": [
-        "ಮಂಜೊಟ್ಟಿ (Manjotti)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Pterocarpus santalinus": {
-      "en": [
-        "Red sandalwood tree"
-      ],
-      "ta": [
-        "செஞ்சந்தன மரம்"
-      ],
-      "te": [
-        "ఎర్రచందనం"
-      ],
-      "kn": [
-        "ಕೆಂಪು ಚಂದನದ ಮರ"
-      ],
-      "ml": [
-        "ചുവന്ന ചന്ദനമരം"
-      ],
-      "si": [
-        "රත් චන්දන"
-      ],
-      "kok": [
-        "तांबडा चंदन (Tambada Chandan)"
-      ],
-      "tcy": [
-        "ಕೆಂಪು ಚಂದನ (Kempu Chandana)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Pterospermum acerifolium": {
-      "en": [
-        "Bayur tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Punica granatum": {
-      "en": [
-        "Pomegranate tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Putranjiva roxburghii": {
-      "en": [
-        "Wild olive"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Pyrus communis": {
-      "en": [
-        "Pear tree"
-      ],
-      "ta": [
-        "பேரிக்காய் மரம்"
-      ],
-      "te": [
-        "పియర్"
-      ],
-      "kn": [
-        "ಪೇರು"
-      ],
-      "ml": [
-        "പിയർ"
-      ],
-      "si": [
-        "පියර්"
-      ],
-      "kok": [
-        "पेर (Per)"
-      ],
-      "tcy": [
-        "ಪೇರ್ (Per)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Quercus robur": {
-      "en": [
-        "Oak tree"
-      ],
-      "ta": [
-        "ஓக் மரம்"
-      ],
-      "te": [
-        "ఓక్"
-      ],
-      "kn": [
-        "ಓಕ್"
-      ],
-      "ml": [
-        "ഓക്ക്"
-      ],
-      "si": [
-        "ඕක්"
-      ],
-      "kok": [
-        "ओक (Ok)"
-      ],
-      "tcy": [
-        "ಓಕ್ (Ok)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Ravenala madagascariensis": {
-      "en": [
-        "Traveller's tree"
-      ],
-      "ta": [
-        "விசிறி வாழை மரம்"
-      ],
-      "te": [
-        "విస్తారి అరటి"
-      ],
-      "kn": [
-        "ಪ್ರಯಾಣಿಕರ ಮರ"
-      ],
-      "ml": [
-        "ട്രാവലേഴ്സ് പാം"
-      ],
-      "si": [
-        "සංචාරක ගස"
-      ],
-      "kok": [
-        "प्रवासी झाड (Pravasi Zhaad)"
-      ],
-      "tcy": [
-        "ಪ್ರಯಾಣಿಕರ ಮರ (Prayanikara Mara)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Roystonea regia": {
-      "en": [
-        "Royal palm"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Salix alba": {
-      "en": [
-        "Willow tree"
-      ],
-      "ta": [
-        "வில்லோ மரம்"
-      ],
-      "te": [
-        "విల్లో"
-      ],
-      "kn": [
-        "ವಿಲೋ"
-      ],
-      "ml": [
-        "വില്ലോ"
-      ],
-      "si": [
-        "විලෝ"
-      ],
-      "kok": [
-        "विलो (Vilo)"
-      ],
-      "tcy": [
-        "ವಿಲೋ (Vilo)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Salvadora persica": {
-      "en": [
-        "Toothbrush tree"
-      ],
-      "ta": [
-        "ஓமை"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
+      "en": ["False Ashoka"],
+      "ta": ["நெட்டிலிங்கம்", "நடுனார்"],
+      "te": ["నెట్టిలింగం"],
+      "kn": ["ಅಶೋಕ ಮರ"],
+      "ml": ["അശോകമരം"],
+      "si": ["අශෝක"],
+      "kok": ["अशोक"],
+      "tcy": ["ಅಶೋಕ"]
     },
     "variety": []
   },
   {
     "Samanea saman": {
-      "en": [
-        "Rain tree"
-      ],
-      "ta": [
-        "தூங்கு மூஞ்சி மரம்"
-      ],
-      "te": [
-        "నిద్రగన్నేరు"
-      ],
-      "kn": [
-        "ಮಳೆ ಮರ"
-      ],
-      "ml": [
-        "മഴമരം"
-      ],
-      "si": [
-        "වැසි ගස"
-      ],
-      "kok": [
-        "वृष्टीचें झाड (Vrustichem Zhaad)"
-      ],
+      "en": ["Rain Tree"],
+      "ta": ["தூங்குமூஞ்சி", "மழை மரம்", "பன்னி வாகை"],
+      "te": ["నిద్రగన్నేరు"],
+      "kn": ["ಮಳೆ ಮರ"],
+      "ml": ["മഴമരം"],
+      "si": ["වැසි ගස"],
+      "kok": ["वृष्टीचें झाड"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Santalum album": {
-      "en": [
-        "Sandalwood tree"
-      ],
-      "ta": [
-        "சந்தன மரம்"
-      ],
-      "te": [
-        "చందనం"
-      ],
-      "kn": [
-        "ಚಂದನದ ಮರ"
-      ],
-      "ml": [
-        "ചന്ദനമരം"
-      ],
-      "si": [
-        "චන්දන"
-      ],
-      "kok": [
-        "चंदन (Chandan)"
-      ],
-      "tcy": [
-        "ಚಂದನ (Chandana)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Sapindus emarginatus": {
-      "en": [
-        "Soapnut tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Sapindus mukorossi": {
-      "en": [
-        "Indian soapberry"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Sapindus trifoliatus": {
-      "en": [
-        "South Indian soapnut"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
+      "en": ["Sandalwood"],
+      "ta": ["சந்தனம்"],
+      "te": ["చందనం"],
+      "kn": ["ಚಂದನದ ಮರ"],
+      "ml": ["ചന്ദനമരം"],
+      "si": ["චන්දන"],
+      "kok": ["चंदन"],
+      "tcy": ["ಚಂದನ"]
     },
     "variety": []
   },
   {
     "Saraca asoca": {
-      "en": [
-        "Ashoka tree"
-      ],
-      "ta": [
-        "அசோகு"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Asoka Tree"],
+      "ta": ["அசோகு", "அசோகம்", "ஆயில மரம்"],
+      "te": ["అశోకము"],
+      "kn": ["ಅಶೋಕ"],
+      "ml": ["അശോകം"],
       "si": [],
-      "kok": [],
-      "tcy": []
+      "kok": ["असोक"],
+      "tcy": ["ಅಶೋಕ ಮರ"]
     },
     "variety": []
   },
   {
-    "Schleichera oleosa": {
-      "en": [
-        "Ceylon oak"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Semecarpus anacardium": {
-      "en": [
-        "Marking nut tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Senegalia catechu": {
-      "en": [
-        "Khair tree"
-      ],
-      "ta": [
-        "செங்கருங்காலி"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Senegalia ferruginea": {
-      "en": [
-        "Rusty acacia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Sesbania grandiflora": {
-      "en": [
-        "Vegetable hummingbird tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Simarouba glauca": {
-      "en": [
-        "Paradise tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+    "Senna siamea": {
+      "en": ["Senna", "Iron Wood"],
+      "ta": ["மஞ்சள் கொன்றை", "மங்கா கொன்றை"],
+      "te": ["సీమ తంగేడు"],
+      "kn": ["ಸೀಮೆ ತಂಗಡಿ"],
+      "ml": ["മഞ്ഞക്കൊന്ന"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -4699,14 +495,12 @@
   },
   {
     "Spathodea campanulata": {
-      "en": [
-        "African tulip tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
+      "en": ["African Tulip Tree"],
+      "ta": ["பட்டாடி", "தண்ணீர்காய் மரம்"],
+      "te": ["పటడే"],
+      "kn": ["ನೀರುಕಾಯಿ ಮರ"],
+      "ml": ["പൂമരം"],
+      "si": ["කුදුල්ල"],
       "kok": [],
       "tcy": []
     },
@@ -4714,132 +508,24 @@
   },
   {
     "Sterculia foetida": {
-      "en": [
-        "Java olive tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Java Olive"],
+      "ta": ["பீநாறி", "குதிரைப்பிடுக்கன்"],
+      "te": ["గుర్రపుబాదము"],
+      "kn": ["ಭಟಲ ಪೆನಾರಿ"],
+      "ml": ["പിണര്"],
       "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Sterculia urens": {
-      "en": [
-        "Gum karaya tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Streblus asper": {
-      "en": [
-        "Siamese rough bush"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Strychnos nux-vomica": {
-      "en": [
-        "Nux vomica tree"
-      ],
-      "ta": [
-        "எட்டிக்காய் மரம்"
-      ],
-      "te": [
-        "ముష్టి"
-      ],
-      "kn": [
-        "ಕಾಸರಕ"
-      ],
-      "ml": [
-        "കാഞ്ഞിരം"
-      ],
-      "si": [
-        "කනිරා"
-      ],
-      "kok": [
-        "काजरा (Kajra)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Strychnos potatorum": {
-      "en": [
-        "Clearing nut tree"
-      ],
-      "ta": [
-        "தேற்றா"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Swietenia macrophylla": {
-      "en": [
-        "Big-leaf mahogany"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "kok": ["नागिन"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Swietenia mahagoni": {
-      "en": [
-        "West Indian mahogany"
-      ],
-      "ta": [],
-      "te": [],
+      "en": ["Small-leaved Mahogany"],
+      "ta": ["மகோகனி", "சீமை நூக்கு", "காட்டுவேப்பன் மரம்"],
+      "te": ["మహాగాని సెట్టు"],
       "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Syzygium aromaticum": {
-      "en": [
-        "Clove tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "ml": ["ചെറിയ മഹാഗണി"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -4848,173 +534,24 @@
   },
   {
     "Syzygium cumini": {
-      "en": [
-        "Jambalano tree"
-      ],
-      "ta": [
-        "நாவல் மரம்"
-      ],
-      "te": [
-        "నేరేడు"
-      ],
-      "kn": [
-        "ನೇರಳೆ"
-      ],
-      "ml": [
-        "ഞാവൽ"
-      ],
-      "si": [
-        "ජම්බු"
-      ],
-      "kok": [
-        "जांब (Jamb)"
-      ],
-      "tcy": [
-        "ನೇರಳೆ (Nerale)"
-      ]
-    },
-    "variety": [
-      {
-        "en": "Rajamun",
-        "ta": "ராஜமுன்",
-        "te": "రాజమున్",
-        "kn": "ರಾಜಮುನ್",
-        "ml": "രാജമുൻ",
-        "si": "රාජමුන්",
-        "kok": "राजमुन",
-        "tcy": "ರಾಜಮುನ್"
-      },
-      {
-        "en": "Guntur",
-        "ta": "குண்டூர்",
-        "te": "గుంటూరు",
-        "kn": "ಗುಂಟೂರು",
-        "ml": "ഗുണ്ടൂർ",
-        "si": "ගුන්ටූර්",
-        "kok": "गुंटूर",
-        "tcy": "ಗುಂಟೂರು"
-      },
-      {
-        "en": "Narikela",
-        "ta": "நரிகேளா",
-        "te": "నారికేళ",
-        "kn": "ನಾರಿಕೇಳ",
-        "ml": "നാരികേള",
-        "si": "නාරිකේළ",
-        "kok": "नारिकेळ",
-        "tcy": "ನಾರಿಕೇಳ"
-      },
-      {
-        "en": "Badami",
-        "ta": "பாதாமி",
-        "te": "బాదామి",
-        "kn": "ಬಾದಾಮಿ",
-        "ml": "ബദാമി",
-        "si": "බදාමි",
-        "kok": "बादामी",
-        "tcy": "ಬಾದಾಮಿ"
-      }
-    ]
-  },
-  {
-    "Syzygium jambos": {
-      "en": [
-        "Rose apple tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Syzygium samarangense": {
-      "en": [
-        "Wax apple tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Tabebuia argentea": {
-      "en": [
-        "Silver trumpet tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Tabebuia aurea": {
-      "en": [
-        "Yellow trumpet tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Tabebuia pallida": {
-      "en": [
-        "White cedar"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
+      "en": ["Jambalano tree"],
+      "ta": ["நாவல்"],
+      "te": ["నేరేడు"],
+      "kn": ["ನೇರಳೆ"],
+      "ml": ["ഞാവൽ"],
+      "si": ["ජම්බු"],
+      "kok": ["जांब"],
+      "tcy": ["ನೇರಳೆ"]
     },
     "variety": []
   },
   {
     "Tabebuia rosea": {
-      "en": [
-        "Pink trumpet tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Tabebuia roseo-alba": {
-      "en": [
-        "White trumpet tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Rosy Trumpet Tree", "Pink Poui"],
+      "ta": ["வசந்த ராணி"],
+      "te": ["పచ్చగవి చెట్టు"],
+      "kn": ["ಗುಲಾಬಿ ಮರ"],
+      "ml": ["റോസ മരം"],
       "si": [],
       "kok": [],
       "tcy": []
@@ -5023,115 +560,21 @@
   },
   {
     "Tamarindus indica": {
-      "en": [
-        "Tamarind tree"
-      ],
-      "ta": [
-        "புளியமரம்"
-      ],
-      "te": [
-        "చింత"
-      ],
-      "kn": [
-        "ಹುಣಸೆ"
-      ],
-      "ml": [
-        "പുളി"
-      ],
-      "si": [
-        "සියඹලා"
-      ],
-      "kok": [
-        "चिंच (Chinch)"
-      ],
-      "tcy": [
-        "ಪುಳಿ (Puli)"
-      ]
+      "en": ["Tamarind"],
+      "ta": ["புளி"],
+      "te": ["చింత"],
+      "kn": ["ಹುಣಸೆ"],
+      "ml": ["പുളി"],
+      "si": ["සියඹලා"],
+      "kok": ["चिंच"],
+      "tcy": ["ಪುಳಿ"]
     },
     "variety": []
   },
   {
     "Tecoma stans": {
-      "en": [
-        "Yellow bells"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Tecomella undulata": {
-      "en": [
-        "Desert teak"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Tectona grandis": {
-      "en": [
-        "Teak wood tree"
-      ],
-      "ta": [
-        "தேக்கு மரம்"
-      ],
-      "te": [
-        "టేకు"
-      ],
-      "kn": [
-        "ತೇಗ"
-      ],
-      "ml": [
-        "തേക്ക്"
-      ],
-      "si": [
-        "තේක්කු"
-      ],
-      "kok": [
-        "साग (Sag)"
-      ],
-      "tcy": [
-        "ತೇಗು (Tegu)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Terminalia arjuna": {
-      "en": [
-        "Arjuna tree"
-      ],
-      "ta": [
-        "வெண் மருது"
-      ],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Terminalia bellirica": {
-      "en": [
-        "Bahera tree"
-      ],
-      "ta": [],
+      "en": ["Trumpet Flower"],
+      "ta": ["நாகசெண்பகம்"],
       "te": [],
       "kn": [],
       "ml": [],
@@ -5143,360 +586,52 @@
   },
   {
     "Terminalia catappa": {
-      "en": [
-        "Indian almond tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Terminalia chebula": {
-      "en": [
-        "Chebulic tree"
-      ],
-      "ta": [
-        "கடுக்காய் மரம்"
-      ],
-      "te": [
-        "కరక్కాయ"
-      ],
-      "kn": [
-        "ಅಳಲೆಕಾಯಿ"
-      ],
-      "ml": [
-        "കടുക്ക"
-      ],
-      "si": [
-        "කඩුක්කා"
-      ],
-      "kok": [
-        "घोटींग (Ghoting)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Terminalia elliptica": {
-      "en": [
-        "Indian laurel tree"
-      ],
-      "ta": [
-        "மருதமரம்"
-      ],
-      "te": [
-        "మద్ది"
-      ],
-      "kn": [
-        "ಮತ್ತಿ"
-      ],
-      "ml": [
-        "കരിമരുത്"
-      ],
-      "si": [
-        "මද්දි"
-      ],
-      "kok": [
-        "मत्ती (Matti)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Terminalia metallica": {
-      "en": [
-        "Metallic terminalia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Terminalia phillyreifolia": {
-      "en": [
-        "Terminalia tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Terminalia spp.": {
-      "en": [
-        "Terminalia tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Terminalia tomentosa": {
-      "en": [
-        "Indian laurel"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Theobroma cacao": {
-      "en": [
-        "Cacao tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
+      "en": ["Indian Almond Wood"],
+      "ta": ["நாட்டுவாதுமை"],
+      "te": ["అడవి బాదం"],
+      "kn": ["ಕಾಡು ಬಾದಾಮಿ"],
+      "ml": ["നാട്ടുബദാം"],
+      "si": ["කොට්ටම්බ"],
+      "kok": ["जंगली बदाम"],
       "tcy": []
     },
     "variety": []
   },
   {
     "Thespesia populnea": {
-      "en": [
-        "Portia tree"
-      ],
-      "ta": [
-        "பூவரச மரம்"
-      ],
-      "te": [
-        "గంగరావి"
-      ],
-      "kn": [
-        "ಹೂವರಸಿ"
-      ],
-      "ml": [
-        "പൂവരശ്"
-      ],
-      "si": [
-        "පූවරසු"
-      ],
-      "kok": [
-        "पारस पिंपळ (Paras Pimpal)"
-      ],
-      "tcy": [
-        "ಪೂಪಾರ್ಥಿ (Pooparthi)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Thevetia peruviana": {
-      "en": [
-        "Yellow oleander"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
+      "en": ["Indian Tulip Tree"],
+      "ta": ["பூவரசு"],
+      "te": ["గంగరావి"],
+      "kn": ["ಹೂವರಸಿ"],
+      "ml": ["പൂവരശ്"],
+      "si": ["පූවරසු"],
+      "kok": ["पारस पिंपळ"],
+      "tcy": ["ಪೂಪಾರ್ಥಿ"]
     },
     "variety": []
   },
   {
     "Toona ciliata": {
-      "en": [
-        "Toon tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
+      "en": ["Red Cedar"],
+      "ta": ["சந்தன வேம்பு", "தூணாமரம்", "துணுமரம்"],
+      "te": ["నంది చెట్టు"],
+      "kn": ["ತುಂಡು"],
+      "ml": ["ചന്ദനവേമ്പ്"],
       "si": [],
-      "kok": [],
+      "kok": ["तुनि"],
       "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Vachellia nilotica": {
-      "en": [
-        "Babul tree"
-      ],
-      "ta": [
-        "வேல மரம்"
-      ],
-      "te": [
-        "తుమ్మ"
-      ],
-      "kn": [
-        "ಬಬೂಲ್"
-      ],
-      "ml": [
-        "കരുവേലം"
-      ],
-      "si": [
-        "කර්වේල්"
-      ],
-      "kok": [
-        "बाभूळ (Babhuul)"
-      ],
-      "tcy": [
-        "ಬಬೂಲ್ (Babool)"
-      ]
-    },
-    "variety": []
-  },
-  {
-    "Vachellia planifrons": {
-      "en": [
-        "Flat-topped acacia"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Vatica spp.": {
-      "en": [
-        "Vatica tree"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Vitex negundo": {
-      "en": [
-        "Chinese chaste tree"
-      ],
-      "ta": [
-        "நொச்சி மரம்"
-      ],
-      "te": [
-        "వావిలి"
-      ],
-      "kn": [
-        "ನಿರ್ಗುಂಡಿ"
-      ],
-      "ml": [
-        "കരിനൊച്ചി"
-      ],
-      "si": [
-        "නිර්ගුණ්ඩි"
-      ],
-      "kok": [
-        "निर्गुंडी (Nirgundi)"
-      ],
-      "tcy": [
-        "ನಿರ್ಗುಂಡಿ (Nirgundi)"
-      ]
     },
     "variety": []
   },
   {
     "Wrightia tinctoria": {
-      "en": [
-        "Pala indigo tree"
-      ],
-      "ta": [
-        "வெப்பாலை மரம்"
-      ],
-      "te": [
-        "తెల్లపాల"
-      ],
-      "kn": [
-        "ಅಜ್ಜಿಹಳ್ಳಿ"
-      ],
-      "ml": [
-        "വെപ്പാല"
-      ],
-      "si": [
-        "වෙප්පාල"
-      ],
-      "kok": [
-        "ऐन (Ain)"
-      ],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ziziphus jujuba": {
-      "en": [
-        "Jujube"
-      ],
-      "ta": [],
-      "te": [],
-      "kn": [],
-      "ml": [],
-      "si": [],
-      "kok": [],
-      "tcy": []
-    },
-    "variety": []
-  },
-  {
-    "Ziziphus mauritiana": {
-      "en": [
-        "Jujube tree"
-      ],
-      "ta": [
-        "இலந்தை மரம்"
-      ],
-      "te": [
-        "రేగి"
-      ],
-      "kn": [
-        "ಬೋರೆ"
-      ],
-      "ml": [
-        "ലന്ത"
-      ],
-      "si": [
-        "දෙගු"
-      ],
-      "kok": [
-        "बोर (Bor)"
-      ],
+      "en": ["Sweet Indrajao", "Ivory Tree"],
+      "ta": ["வெட்பாலை", "வெப்பாலை"],
+      "te": ["తెల్లపాల"],
+      "kn": ["ಅಜ್ಜಿಹಳ್ಳಿ"],
+      "ml": ["വെപ്പാല"],
+      "si": ["වෙප්පාල"],
+      "kok": ["ऐन"],
       "tcy": []
     },
     "variety": []

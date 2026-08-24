@@ -60,6 +60,12 @@ var storage = {
     return null;
   },
 
+  syncTreeCards: function () {
+    var cards = storage.get('treeCards');
+    if (cards != null) { window.__TREE_DATA = cards; }
+    return cards;
+  },
+
   detectLanguage: function (text) {
     var t = String(text || '');
     if (!t) { return 'en'; }
@@ -79,19 +85,19 @@ var storage = {
   },
 
   treeNameIn: function (t, lang) {
-    if (!t) { return ''; }
+    if (!t || !t.speciesName) { return ''; }
     lang = lang || 'en';
-    if (lang === 'en') { return t.englishName || t.localName || ''; }
+    if (lang === 'en') { return t.speciesName.en || t.speciesName.ta || ''; }
     var db = storage.get('treeNames') || [];
-    var sci = t.scientificName || '';
+    var sci = t.speciesName.sn || '';
     for (var i = 0; i < db.length; i++) {
       if (db[i][sci]) {
         var names = db[i][sci][lang];
         if (Array.isArray(names)) { return names.join(', '); }
       }
     }
-    if (lang === 'ta') { return t.localName || t.englishName || ''; }
-    return t.englishName || t.localName || '';
+    if (lang === 'ta') { return t.speciesName.ta || t.speciesName.en || ''; }
+    return t.speciesName.en || t.speciesName.ta || '';
   },
 
   save: function () {
