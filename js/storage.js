@@ -13,6 +13,14 @@ var STORE = {
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
   login:       { url: 'json/login-credentials.json', ram: '_login', session: 'loginCredentialsV1' }
 };
+var storage_backend = 'session';
+function switchStorageMode(new_backend) {
+  storage_backend = new_backend === 'session' ? 'session' : 'local';
+  return storage_backend;
+}
+function getBackingStore() {
+  return storage_backend === 'session' ? sessionStorage : localStorage;
+}
 
 function parentRam(name) {
   try {
@@ -24,7 +32,7 @@ function parentRam(name) {
 }
 
 var storage = {
-  tree: (function () { try { return JSON.parse(localStorage.getItem(TREE_KEY) || 'null') || {}; } catch (e) { return {}; } })(),
+  tree: (function () { try { return JSON.parse(getBackingStore().getItem(TREE_KEY) || 'null') || {}; } catch (e) { return {}; } })(),
 
   get: function (name) {
     var item = STORE[name];
@@ -33,7 +41,7 @@ var storage = {
     if (fromParent != null) { return fromParent; }
     if (storage.tree[name] != null) { return storage.tree[name]; }
     try {
-      var cached = JSON.parse(localStorage.getItem(TREE_KEY) || 'null');
+      var cached = JSON.parse(getBackingStore().getItem(TREE_KEY) || 'null');
       if (cached && cached[name] != null) {
         storage.tree[name] = cached[name];
         window[item.ram] = cached[name];
@@ -110,8 +118,8 @@ var storage = {
 
   save: function () {
     try {
-      localStorage.removeItem(TREE_KEY);
-      localStorage.setItem(TREE_KEY, JSON.stringify(storage.tree));
+      getBackingStore().removeItem(TREE_KEY);
+      getBackingStore().setItem(TREE_KEY, JSON.stringify(storage.tree));
     } catch (e) {}
   },
 
@@ -134,7 +142,7 @@ var storage = {
 
   destroy: function () {
     storage.tree = {};
-    try { localStorage.removeItem(TREE_KEY); } catch (e) {}
+    try { getBackingStore().removeItem(TREE_KEY); } catch (e) {}
   },
 
   freshUp: function () {

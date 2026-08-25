@@ -44,6 +44,9 @@
 
   /* MAIN - ALBUM PAGE */
   .main-hero { background: var(--color-theme-dark); padding: 10px 28px 12px; flex-shrink: 0; display: flex; flex-direction: row; align-items: center; gap: 14px; }
+  .main-hero[data-role] .main-logo,
+  .main-hero[data-role] .main-titles { display: none; }
+  .main-hero[data-role] { padding: 8px 14px; }
   .main-logo { width: 48px; height: 48px; border-radius: 50%; background: var(--color-theme); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .main-logo .tree-emoji { font-size: 1.6rem; line-height: 1; }
   .main-titles { display: flex; flex-direction: column; align-items: flex-start; }

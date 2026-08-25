@@ -83,15 +83,11 @@
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">
-      <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Neem Tree #0042 — Logs</span></div>
+      <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="tree-logs-title">Tree — Logs</span></div>
       <div class="scrollable"><div style="padding:12px 14px;">
         <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;margin-bottom:10px;">Double-tap a log to view photos</div>
         <div class="section-title">Growth logs</div>
-        <div class="info-card">
-          <div class="log-tracker-entry" onclick="openAlbum(0)"><div class="log-dot" style="background:#3B6D11;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">12 Jun 2026</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 8.4 m · Diameter 22 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>3 photos</span></div></div></div>
-          <div class="log-tracker-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">10 Jan 2026</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 8.1 m · Diameter 21 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div></div>
-          <div class="log-tracker-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">15 Jul 2025</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 7.6 m · Diameter 21 cm</div><div class="log-by">By Priya S. · GRR-2023-042</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.4 m</span></div></div></div>
-        </div>
+        <div class="info-card" id="tree-logs-list"></div>
       </div></div>
     </div>
     <div class="page" id="page-pay-logs">
@@ -162,10 +158,10 @@
           <div class="lsm-icon" id="lsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
           <div class="lsm-title" id="lsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
           <div class="lsm-text" id="lsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your login request is waiting for admin approval.</div>
-          <button class="green-btn" onclick="closeLoginStatus(true)"><i class="ti ti-check"></i> Okay</button>
-          </div>
+          <button class="green-btn" onclick="handleSponsorLoginOkay()"><i class="ti ti-check"></i> Okay</button>
         </div>
       </div>
+    </div>
     <div class="modal-back" id="register-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
@@ -185,9 +181,35 @@
         </div>
       </div>
     </div>
+    <div class="modal-back" id="conflict-resolution-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div style="text-align:center;padding:6px 0;">
+          <div class="conflict-icon" id="conflict-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;"><i class="ti ti-alert-triangle" style="font-size:24px;"></i></div>
+          <div class="conflict-title" id="conflict-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Already in your list</div>
+          <div class="conflict-text" id="conflict-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">This tree is already in your sponsored list. You cannot sponsor it again.</div>
+          <button class="green-btn" onclick="closeSponsorConflictModal()"><i class="ti ti-check"></i> Okay</button>
+          <button class="ghost-btn" style="margin-top:8px" onclick="closeSponsorConflictModal(); goTo('sponsor-waiting')"><i class="ti ti-eye"></i> View list</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-back" id="delete-confirm-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div style="text-align:center;padding:6px 0;">
+          <div style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;"><i class="ti ti-trash" style="font-size:24px;"></i></div>
+          <div style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Remove tree?</div>
+          <div style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;" id="delete-confirm-text">This will remove the tree from your list.</div>
+          <button class="green-btn" style="background:#dc2626;" onclick="confirmDeleteCard()"><i class="ti ti-trash"></i> Delete</button>
+          <button class="ghost-btn" style="margin-top:8px" onclick="cancelDeleteCard()">Cancel</button>
+        </div>
+      </div>
+    </div>
   </div>
 <script src="js/storage.js"></script>
+<script src="js/lang.js"></script>
 <script src="js/show-tree-details.js"></script>
+<script src="js/map.js"></script>
 <script src="js/sponsor.js"></script>
 </body>
 </html>

@@ -81,7 +81,9 @@ function openProfile(treeId) {
   qp_cur.set('tree', tree);
   var parentUrl = encodeURIComponent('filter.html?' + qp_cur.toString());
   var flangParam = 'flang=' + encodeURIComponent(filterLang);
-  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter&parent=' + parentUrl + '&' + flangParam;
+  var userid_q = new URLSearchParams(location.search).get('userid') || new URLSearchParams(location.search).get('role');
+  var userid_param = userid_q ? '&userid=' + encodeURIComponent(userid_q) : '';
+  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter&parent=' + parentUrl + '&' + flangParam + userid_param;
 }
 
 // Open the map pinned to a tree by its ID (from a card)
@@ -465,16 +467,16 @@ window.render = {
     filterLang = appLang;
     (function() {
       var qp_hero = new URLSearchParams(location.search);
-      var role = (qp_hero.get('role') || '').trim();
+      var userid = (qp_hero.get('userid') || qp_hero.get('role') || '').trim();
       var hero = document.getElementById('main-hero');
       var back_btn = document.getElementById('filter-back');
       if (hero) {
-        if (role) {
-          hero.style.display = 'none';
-          hero.setAttribute('data-role', role.toLowerCase());
-        } else {
+        if (userid) {
+          hero.setAttribute('data-role', userid.toLowerCase());
           hero.style.display = '';
+        } else {
           hero.removeAttribute('data-role');
+          hero.style.display = '';
         }
       }
       if (back_btn) {

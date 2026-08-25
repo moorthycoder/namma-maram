@@ -9,6 +9,26 @@ var caredCount = 4;
 var logoutTarget = 'sponsor-login';
 var payTreeId = '';
 
+function getSponsorLang() {
+  if (typeof appLang !== 'undefined' && appLang) return appLang;
+  if (typeof filterLang !== 'undefined' && filterLang) return filterLang;
+  try { return localStorage.getItem('nm-app-lang') || 'en'; } catch (e) { return 'en'; }
+}
+function sponsorCardName(t) {
+  if (!t) return '';
+  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { return storage.treeNameIn(t, getSponsorLang()) || ''; } catch (e) {} }
+  var n = (t.speciesName) || {};
+  var lang = getSponsorLang();
+  return n[lang] || n.en || n.ta || t.englishName || t.name || '';
+}
+function sponsorCardAddr(t) {
+  if (!t) return '';
+  var lang = getSponsorLang();
+  var a = (t.address) || {};
+  if (typeof a === 'string') return a;
+  return a[lang] || a.en || a.ta || '';
+}
+
 function loadCurrentUser() {
   try {
     var s = sessionStorage.getItem('loginCredentialsV1');
@@ -25,7 +45,59 @@ function loadCurrentUser() {
 }
 loadCurrentUser();
 function continueAsSponsor() {
-  goTo('sponsor-dash');
+  console.log('[sponsor] continueAsSponsor click pending', sessionStorage.getItem('pendingSponsor'));
+  updateWaitingListFromPendingSponsor();
+}
+function updateWaitingListFromPendingSponsor() {
+  try {
+    var raw_data = sessionStorage.getItem('pendingSponsor');
+    console.log('[sponsor] updateWaitingListFromPendingSponsor raw', raw_data);
+    if (!raw_data) { goTo('sponsor-dash'); return false; }
+    var pending_data = JSON.parse(raw_data);
+    var pending_tree_id = null;
+    for (var pending_key in pending_data) { if (Object.prototype.hasOwnProperty.call(pending_data, pending_key)) { pending_tree_id = pending_data[pending_key]; break; } }
+    if (!pending_tree_id) { goTo('sponsor-dash'); return false; }
+    var existing_list = isTreeIdAlreadyInSponsorLists(pending_tree_id);
+    if (existing_list) {
+      try { sessionStorage.removeItem('pendingSponsor'); } catch (e) {}
+      openSponsorConflictModal(pending_tree_id, existing_list);
+      return true;
+    }
+    try { sessionStorage.removeItem('pendingSponsor'); } catch (e) {}
+    sponsorATree({ treeId: pending_tree_id });
+    return true;
+  } catch (e) { console.log('[sponsor] updateWaitingListFromPendingSponsor error', e); goTo('sponsor-dash'); return false; }
+}
+function isTreeIdAlreadyInSponsorLists(check_tree_id) {
+  var login_data = window._login || {};
+  var tree_login = login_data['tree-login'] || {};
+  var sponsor_role = tree_login.sponsor || {};
+  var sponsor_cards = sponsor_role.cards || {};
+  var waiting_list = sponsor_cards.waiting || [];
+  var current_list = sponsor_cards.current || [];
+  var past_list = sponsor_cards.past || [];
+  var waiting_ids = waiting_list.map(function(e){ return typeof e === 'string' ? e : e.treeId; });
+  var current_ids = current_list.map(function(e){ return typeof e === 'string' ? e : e.treeId; });
+  var past_ids = past_list.map(function(e){ return typeof e === 'string' ? e : e.treeId; });
+  var is_in_waiting = waiting_ids.indexOf(check_tree_id) > -1;
+  var is_in_current = current_ids.indexOf(check_tree_id) > -1;
+  var is_in_past = past_ids.indexOf(check_tree_id) > -1;
+  return is_in_waiting ? 'waiting' : is_in_current ? 'current' : is_in_past ? 'past' : null;
+}
+function openSponsorConflictModal(conflict_tree_id, conflict_list) {
+  var title_el = document.getElementById('conflict-title');
+  var text_el = document.getElementById('conflict-text');
+  if (title_el) title_el.textContent = 'Already in ' + conflict_list;
+  if (text_el) text_el.textContent = 'Tree ' + conflict_tree_id + ' is already in your ' + conflict_list + ' list.';
+  document.getElementById('conflict-resolution-modal').classList.add('open');
+}
+function closeSponsorConflictModal() {
+  document.getElementById('conflict-resolution-modal').classList.remove('open');
+}
+function handleSponsorLoginOkay() {
+  var modal_el = document.getElementById('login-status-modal');
+  if (modal_el) modal_el.classList.remove('open');
+  updateWaitingListFromPendingSponsor();
 }
 function sponsorLogout() {
   try {
@@ -142,13 +214,7 @@ function showLoginStatus(page, status) {
 
 
 
-function closeLoginStatus(go) {
-  document.getElementById('login-status-modal').classList.remove('open');
-  if (!go) return;
-  var pending = readPendingSponsor();
-  if (pending && pending.treeId) { sponsorATree(pending); return; }
-  goTo(logoutTarget);
-}
+
 
 
 // Font size (S/M/L) — text-only scaling via root html font-size (all fonts are rem)
@@ -191,11 +257,29 @@ function toggleNotif(btn) {
 // Tree data for album — read from storage
 var albumData = [];
 
-var logs = [
-  { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
-  { date:'10 Jan 2026', height:'8.1 m', diam:'21 cm', note:'Some yellowing on lower leaves — likely seasonal.', photos:[{bg:'linear-gradient(135deg,#1e3d0f,#2d5a1b)',emoji:'🌳',label:'Full tree',time:'10:05 AM',main:true},{bg:'linear-gradient(135deg,#27500A,#3B6D11)',emoji:'🍂',label:'Lower leaves',time:'10:08 AM'}] },
-  { date:'15 Jul 2025', height:'7.6 m', diam:'21 cm', note:'Measurement only. Camera not available. Tree looks healthy overall.', photos:[] }
-];
+var logs = [];
+function loadLogsFromRam() {
+  var ram_data = window.__TREE_DATA || storage.get('treeCards') || [];
+  var target_id = payTreeId || (ram_data[0] && ram_data[0].treeId) || '';
+  var target_tree = null;
+  for (var i = 0; i < ram_data.length; i++) { if (ram_data[i].treeId === target_id) { target_tree = ram_data[i]; break; } }
+  if (!target_tree && ram_data.length) target_tree = ram_data[0];
+  if (!target_tree) { logs = []; return; }
+  var enc = target_tree['encounters-list'] || {};
+  var keys = Object.keys(enc);
+  logs = keys.map(function(k){
+    var e = enc[k] || {};
+    var hs = e['health-status'] || {};
+    var photos = (e.photos && e.photos.snapshots) || [];
+    return {
+      date: e.registeredDate || e.updatedDate || k,
+      height: hs.height || '—',
+      diam: hs.diameter || '—',
+      note: (e.fieldObservation && e.fieldObservation.notes) || '',
+      photos: photos.map(function(p, idx){ return {bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)', emoji: target_tree.emoji || '🌳', label:'Photo '+(idx+1), time: e.registeredDate || '', main: idx===0}; })
+    };
+  });
+}
 
 
 
@@ -309,7 +393,7 @@ function openTreeMapById(id) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
   if (hasTreeGis(tree)) {
-    showTreeDetailsInMap(tree);
+    showInMap([id]);
   } else {
     alert('Location not available for this tree.');
   }
@@ -329,7 +413,7 @@ function openTreeMap() {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
   if (hasTreeGis(tree)) {
-    showTreeDetailsInMap(tree);
+    showInMap([id]);
   } else {
     alert('Location not available for this tree.');
   }
@@ -341,10 +425,45 @@ function closeMapModal() {
   document.getElementById('map-frame').src = '';
 }
 
+function openTreeLogs(treeId) {
+  var data = window.__TREE_DATA || storage.get('treeCards') || [];
+  var tree = null;
+  for (var i = 0; i < data.length; i++) { if (data[i].treeId === treeId) { tree = data[i]; break; } }
+  if (!tree) return;
+  var title_el = document.getElementById('tree-logs-title');
+  if (title_el) title_el.textContent = (sponsorCardName(tree) || treeId) + ' — Logs';
+  var list_el = document.getElementById('tree-logs-list');
+  if (list_el) {
+    var enc = tree['encounters-list'] || {};
+    var keys = Object.keys(enc);
+    var dots = ['#3B6D11','#9FE1CB','#C0DD97'];
+    var html = '';
+    for (var idx = keys.length - 1; idx >= 0; idx--) {
+      var k = keys[idx];
+      var e = enc[k] || {};
+      var hs = e['health-status'] || {};
+      var note_val = e.notes || (e.fieldObservation && e.fieldObservation.notes) || '';
+      var rec_val = e.recommendations || (e.fieldObservation && e.fieldObservation.recommendations) || '';
+      var c = tree.card || {};
+      html += '<div class="log-tracker-entry" onclick="openAlbumForTree(\'' + treeId + '\', ' + idx + ')"><div class="log-dot" style="background:' + dots[idx % 3] + ';margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">' + (e.registeredDate || e.updatedDate || k) + '</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height ' + (hs.height || c.height || '—') + ' · Diameter ' + (hs.diameter || c.diameter || '—') + '</div><div class="log-by">By ' + (e.registeredBy || e.updatedBy || '—') + '</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b style="color:red">Note</b> ' + (note_val || '—') + '</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b style="color:red">Recommendation</b> ' + (rec_val || '—') + '</span></div><div class="log-chips" style="margin-top:4px;">' + (hs.height ? '<span class="chip">' + hs.height + '</span>' : '') + (e.photos && e.photos.snapshots && e.photos.snapshots.length ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + e.photos.snapshots.length + ' photos</span>' : '') + '</div></div></div>';
+    }
+    list_el.innerHTML = html || '<div style="font-size:0.8rem;color:var(--color-text-secondary);text-align:center;padding:20px;">No logs yet</div>';
+  }
+  payTreeId = treeId;
+  loadLogsFromRam();
+  goTo('tree-logs');
+}
+function openAlbumForTree(treeId, logIdx) {
+  payTreeId = treeId;
+  loadLogsFromRam();
+  openAlbum(logIdx);
+}
+
 
 // Album
 
 function openAlbum(i) {
+  if (!logs.length) loadLogsFromRam();
   var log = logs[i];
   if (!log.photos.length) return;
   albumFrom = document.querySelector('.page.active').id.replace('page-','');
@@ -411,23 +530,19 @@ function recordPayment() {
 // Add tree
 
 function sponsorATree(f) {
+  console.log('[sponsor] sponsorATree called', f);
   var login = window._login || (window._login = {});
   var tl = login['tree-login'] || (login['tree-login'] = {});
   var role = tl.sponsor || (tl.sponsor = {});
   var cards = role.cards || (role.cards = {});
   var waiting = cards.waiting || (cards.waiting = []);
-  if (f.treeId && waiting.indexOf(f.treeId) === -1) { waiting.push(f.treeId); }
+  var waiting_ids = waiting.map(function(e){ return e.treeId; });
+  if (f.treeId && waiting_ids.indexOf(f.treeId) === -1) { waiting.push({ treeId: f.treeId, addedAt: getCurrentAddedAtString() }); console.log('[sponsor] sponsorATree added to waiting', f.treeId); } else { console.log('[sponsor] sponsorATree already in waiting or no treeId', f.treeId); }
   appendSponsorWaitingCard(f);
   storage.set('login', login);
+  console.log('[sponsor] sponsorATree saved login waiting', waiting);
   if (window.render && typeof window.render.init === 'function') { window.render.init(); }
-}
-
-function readPendingSponsor() {
-  var s = null;
-  try { s = sessionStorage.getItem('pendingSponsorV1'); } catch (e) {}
-  if (!s) return null;
-  try { sessionStorage.removeItem('pendingSponsorV1'); } catch (e) {}
-  try { return JSON.parse(s); } catch (e) { return null; }
+  setTimeout(function(){ console.log('[sponsor] sponsorATree open full waiting list'); openSponsorWaitingRequests(); }, 700);
 }
 
 function setStatById(id, value) {
@@ -444,33 +559,75 @@ function appendSponsorWaitingCard(form) {
     btn.innerHTML = '<i class="ti ti-check"></i>';
     btn.onclick = null;
   }
-  var name = form.name || '';
-  var loc = form.loc || '';
-  var bg = form.bg || '';
-  var emoji = form.emoji || '';
-  var height = form.height;
-  var diam = form.diam;
-  var logs = form.logs;
-  var id = form.treeId || name.split('#')[1] || '';
+  var id = form.treeId || (form.name && form.name.split('#')[1]) || '';
+  var tree = null;
+  try { tree = storage.pullTreeDetail ? storage.pullTreeDetail(id) : null; } catch (e) {}
+  if (!tree) {
+    var data = window.__TREE_DATA || storage.get('treeCards') || [];
+    for (var i = 0; i < data.length; i++) { if (data[i].treeId === id) { tree = data[i]; break; } }
+  }
+  var enc = tree && tree['encounters-list'] || {};
+  var keys = tree ? Object.keys(enc) : [];
+  var last = tree && enc[keys[keys.length - 1]] || {};
+  var st = last['health-status'] || {};
+  var full_name = tree ? (sponsorCardName(tree) || '') : '';
+  var name = form.name || (tree ? (full_name ? full_name + ' #' + id : '#' + id) : '');
+  var full_addr = tree ? sponsorCardAddr(tree) : '';
+  var loc = form.loc || (tree ? (full_addr ? full_addr.split(', ')[0] : full_addr) : '');
+  var bg = form.bg || (tree ? tree.bg || '' : '');
+  var emoji = form.emoji || (tree ? tree.emoji || '🌳' : '🌳');
+  var height = form.height != null ? form.height : (st.height || (tree && tree.card && tree.card.height) || '—');
+  var diam = form.diam || st.diameter || (tree && tree.card && tree.card.diameter) || '—';
+  var logs = form.logs != null ? form.logs : (keys.length || (tree && tree.encounters) || 0);
   var cardsEl = document.getElementById('sponsor-waiting-cards');
   var emptyEl = document.getElementById('sponsor-waiting-empty');
   if (emptyEl) emptyEl.style.display = 'none';
   if (!cardsEl) { return; }
   var card = document.createElement('div');
   card.className = 'tree-card-sponsor';
-  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;" onclick="openProfile(\''+id+'\')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height+'m</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>';
+  var height_display = height === '—' ? '—' : String(height).replace(/\s*m$/, '') + 'm';
+  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;position:relative;" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>';
   cardsEl.appendChild(card);
+  console.log('[sponsor] appendSponsorWaitingCard added card', id, 'now count', cardsEl.querySelectorAll('.tree-card-sponsor').length);
   setStatById('s-sponsor-waiting', cardsEl.querySelectorAll('.tree-card-sponsor').length);
-  setTimeout(function(){ goTo('sponsor-waiting'); }, 500);
+  setTimeout(function(){ console.log('[sponsor] appendSponsorWaitingCard goTo sponsor-waiting'); goTo('sponsor-waiting'); }, 500);
 }
 
+function getCurrentAddedAtString() {
+  var now_date = new Date();
+  var yyyy = String(now_date.getFullYear());
+  var mm = String(now_date.getMonth() + 1).padStart(2, '0');
+  var dd = String(now_date.getDate()).padStart(2, '0');
+  var hh = String(now_date.getHours()).padStart(2, '0');
+  var mi = String(now_date.getMinutes()).padStart(2, '0');
+  var ss = String(now_date.getSeconds()).padStart(2, '0');
+  return yyyy + mm + dd + 'T' + hh + mi + ss;
+}
+function getSortedWaitingList(waiting_list, sort_order) {
+  var sorted_list = (waiting_list || []).slice();
+  sorted_list.sort(function(a, b) {
+    var a_time = a.addedAt || 0;
+    var b_time = b.addedAt || 0;
+    var a_is_str = typeof a_time === 'string';
+    var b_is_str = typeof b_time === 'string';
+    if (a_is_str && b_is_str) { return sort_order === 'asc' ? a_time.localeCompare(b_time) : b_time.localeCompare(a_time); }
+    if (a_is_str) { a_time = parseInt(a_time.replace(/\D/g, ''), 10) || 0; }
+    if (b_is_str) { b_time = parseInt(b_time.replace(/\D/g, ''), 10) || 0; }
+    return sort_order === 'asc' ? a_time - b_time : b_time - a_time;
+  });
+  return sorted_list;
+}
 function openSponsorWaitingRequests() {
   var titleEl = document.getElementById('swaiting-page-title');
   if (titleEl) titleEl.textContent = 'Sponsor request';
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
-  var ids = (role.cards || {}).waiting || [];
+  var waiting_raw = (role.cards || {}).waiting || [];
+  var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
+  var ids = sorted_waiting.map(function(e){ return e.treeId; });
+  var added_map = {};
+  sorted_waiting.forEach(function(e){ added_map[e.treeId] = e.addedAt; });
   var data = window.__TREE_DATA || [];
-  var requestList = ids.length ? data.filter(function (t) { return ids.indexOf(t.treeId) > -1; }) : [];
+  var requestList = ids.map(function(id){ for(var i=0;i<data.length;i++){ if(data[i].treeId===id) { var copy_t = {}; for(var k in data[i]) copy_t[k]=data[i][k]; copy_t.addedAt = added_map[id]; return copy_t; } } return null; }).filter(function(t){ return !!t; });
   var cardsEl = document.getElementById('sponsor-waiting-cards');
   var emptyEl = document.getElementById('sponsor-waiting-empty');
   if (cardsEl) cardsEl.innerHTML = requestList.map(sponsorCardHtml).join('');
@@ -489,21 +646,57 @@ function sponsorCardHtml(t) {
   var last = enc[keys[keys.length - 1]] || {};
   var st = last['health-status'] || {};
   var status = c.statusLogged || c.statusChecked || st.health || '';
+  var name_txt = sponsorCardName(t) || t.englishName || t.name || '';
+  var addr_txt = sponsorCardAddr(t) || c.addr || '';
   return '<div class="tree-card-sponsor">' +
-    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + (t.englishName || t.name || '') + '</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> ' + (t.address || c.addr || '') + '</p></div></div>' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
+    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;position:relative;" onclick="openProfile(' + q + t.treeId + q + ')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(' + q + t.treeId + q + ')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> ' + addr_txt + '</p></div></div>' +
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tree-card-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div></div>' +
-    '<div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'pay-logs' + q + ')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>' +
+    '<div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="openTreeLogs(\'' + t.treeId + '\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>' +
     '</div>';
+}
+function removeSponsorCard(remove_tree_id) {
+  var login_data = window._login || {};
+  var tree_login = login_data['tree-login'] || {};
+  var sponsor_role = tree_login.sponsor || {};
+  var sponsor_cards = sponsor_role.cards || {};
+  ['waiting','current','past'].forEach(function(list_name){
+    var list_data = sponsor_cards[list_name] || [];
+    sponsor_cards[list_name] = list_data.filter(function(e){ var id = typeof e === 'string' ? e : e.treeId; return id !== remove_tree_id; });
+  });
+  storage.set('login', login_data);
+  if (window.render && typeof window.render.init === 'function') window.render.init();
+}
+var pending_delete_id = '';
+function openDeleteConfirm(delete_tree_id) {
+  pending_delete_id = delete_tree_id;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove tree ' + delete_tree_id + ' from your list?';
+  document.getElementById('delete-confirm-modal').classList.add('open');
+}
+function confirmDeleteCard() {
+  document.getElementById('delete-confirm-modal').classList.remove('open');
+  if (pending_delete_id) { removeSponsorCard(pending_delete_id); pending_delete_id = ''; }
+}
+function cancelDeleteCard() {
+  pending_delete_id = '';
+  document.getElementById('delete-confirm-modal').classList.remove('open');
 }
 function renderSponsorCards() {
   var data = window.__TREE_DATA || [];
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
   var cards = role.cards || {};
-  var currentIds = cards.current || [];
-  var pastIds = cards.past || [];
-  var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }) : [];
-  var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }) : [];
+  var current_raw = cards.current || [];
+  var past_raw = cards.past || [];
+  var sorted_current = getSortedWaitingList(current_raw, 'desc');
+  var sorted_past = getSortedWaitingList(past_raw, 'desc');
+  var currentIds = sorted_current.map(function(e){ return e.treeId || e; });
+  var pastIds = sorted_past.map(function(e){ return e.treeId || e; });
+  var current_map = {}; sorted_current.forEach(function(e){ if(e && e.treeId) current_map[e.treeId]=e.addedAt; });
+  var past_map = {}; sorted_past.forEach(function(e){ if(e && e.treeId) past_map[e.treeId]=e.addedAt; });
+  var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return currentIds.indexOf(a.treeId) - currentIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=current_map[t.treeId]; return c; }) : [];
+  var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; return c; }) : [];
   var currentCards = document.getElementById('sponsor-current-cards');
   if (currentCards) currentCards.innerHTML = currentList.map(sponsorCardHtml).join('');
   var pastCards = document.getElementById('sponsor-past-cards');
@@ -518,8 +711,43 @@ function renderSponsorCards() {
   if (monthlyEl) monthlyEl.textContent = '₹' + (sponsoredCount * 300);
 }
 
+function consumePendingSponsorRequest() {
+  try {
+    var raw = sessionStorage.getItem('pendingSponsor');
+    console.log('[sponsor] consumePendingSponsor raw', raw);
+    if (!raw) return false;
+    var pending = JSON.parse(raw);
+    var login = storage.get('login') || window._login || {};
+    var tl = login['tree-login'] || (login['tree-login'] = {});
+    var changed = false;
+    for (var userid in pending) {
+      if (!Object.prototype.hasOwnProperty.call(pending, userid)) continue;
+      var treeId = pending[userid];
+      console.log('[sponsor] processing pending', userid, treeId);
+      var target = null; var target_key = null;
+      for (var k in tl) { if (tl[k] && tl[k].userId === userid) { target = tl[k]; target_key = k; break; } }
+      if (!target && userid === 'sponsor') {
+        for (var kk in tl) { if (tl[kk] && tl[kk].type === 'sponsor') { target = tl[kk]; target_key = kk; break; } }
+      }
+      console.log('[sponsor] target found', target_key, !!target);
+      if (target) {
+        var cards = target.cards || (target.cards = {});
+        var waiting = cards.waiting || (cards.waiting = []);
+        var waiting_ids = waiting.map(function(e){ return e.treeId; });
+        if (waiting_ids.indexOf(treeId) === -1) { waiting.push({treeId: treeId, addedAt: getCurrentAddedAtString()}); changed = true; console.log('[sponsor] added to waiting', treeId); } else { console.log('[sponsor] already in waiting', treeId); }
+        cards.waiting = waiting; target.cards = cards; tl[target_key] = target;
+      } else { console.log('[sponsor] no target for userid', userid); }
+    }
+    if (changed) { login['tree-login'] = tl; storage.set('login', login); window._login = login; console.log('[sponsor] saved login', login); }
+    sessionStorage.removeItem('pendingSponsor');
+    console.log('[sponsor] consume done changed', changed);
+    return changed;
+  } catch (e) { console.log('[sponsor] consume error', e); try { sessionStorage.removeItem('pendingSponsor'); } catch (e2) {} return false; }
+}
 window.render = {
   init: function () {
+    var had_pending = false;
+    if (hubMode === 'sponsor-dash' || hubMode === 'sponsor-waiting') { had_pending = consumePendingSponsorRequest(); }
     var data = storage.get('treeCards') || [];
     window.__TREE_DATA = data;
     albumData = Array.isArray(data) ? data : (data.albumData || []);
@@ -528,6 +756,8 @@ window.render = {
     var cards = role.cards || {};
     payTreeId = (cards.current || [])[0] || '';
     renderPayLogs();
+    if (had_pending) { openSponsorWaitingRequests(); return; }
+    if (hubMode === 'sponsor-waiting') { openSponsorWaitingRequests(); }
   }
 };
 function treeCardHtml(t, cfg) {
@@ -538,7 +768,8 @@ function treeCardHtml(t, cfg) {
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
   var st = last['health-status'] || {};
-  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
+  var addr_raw = sponsorCardAddr(t) || c.addr || '';
+  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : addr_raw;
   var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
   var todo = (cfg.showTodo && c.todo) ? '<div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.todo + '</span></div>' : '';
@@ -566,11 +797,15 @@ function renderRoleCards(target, role, cfg) {
 }
 
 function openTreePool() {
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  var login = storage.get('login') || window._login || {};
+  var role = (login['tree-login'] && login['tree-login']['sponsor']) || (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['sponsor']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var cards = role.cards || {};
   var exclude = [].concat(cards.current || [], cards.past || [], cards.waiting || []).join(',');
   var parent = encodeURIComponent('sponsor.html?hub=sponsor-dash');
-  window.location.href = 'tree-pool.html?parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
+  var userid = role.userId || '';
+  console.log('[sponsor] openTreePool userid', userid, 'exclude', exclude);
+  window.location.href = 'filter.html?userid=' + encodeURIComponent(userid) + '&parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
 }
 
 function getSponsorParentUrl() {
@@ -585,8 +820,10 @@ function goBackFromSponsorLogin() {
 }
 
 var hubMode = new URLSearchParams(location.search).get('hub');
+console.log('[sponsor] hubMode', hubMode, 'href', location.href);
 if (hubMode === 'login') { goTo('sponsor-login'); }
 else if (hubMode === 'register') { goTo('sponsor-enroll'); }
 else if (hubMode === 'sponsor-dash') { goTo('sponsor-dash'); }
-else { window.location.href = 'login-hub.html'; }
+else if (hubMode === 'sponsor-waiting') { goTo('sponsor-waiting'); }
+else { console.log('[sponsor] unknown hubMode, redirect to login-hub'); window.location.href = 'login-hub.html'; }
 
