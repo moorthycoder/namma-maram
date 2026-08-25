@@ -151,32 +151,55 @@ function graphemeStartsWith(value, prefix) {
   return true;
 }
 
+function normalizeQuery(s) {
+  return String(s || '').toLowerCase().trim().replace(/\s+/g, ' ').replace(/[\u00A0\u200B\u200C\u200D\uFEFF]/g, '').trim();
+}
+
 function searchInTreePlace(place_query) {
-  var query = String(place_query || '').toLowerCase().trim();
+  var query = normalizeQuery(place_query);
   if (!query) { return albumData.slice(); }
   var normalized_query = query.replace(/-/g, '');
-  return albumData.filter(function (t) {
-    var tree_id = String(t.treeId || '').toLowerCase();
-    return String(cardAddressText(t, filterLang)).toLowerCase().indexOf(query) > -1 ||
-           String(t.pincode || '').toLowerCase().indexOf(query) > -1 ||
-           String(t.project || '').toLowerCase().indexOf(query) > -1 ||
-           tree_id.indexOf(query) > -1 ||
-           tree_id.replace(/-/g, '').indexOf(normalized_query) > -1;
+  var hit = {};
+  var pool = window.__SEARCH_POOL || [];
+  pool.forEach(function(p) {
+    var tree_id = normalizeQuery(p.treeId);
+    var addr = normalizeQuery(cardAddressText(p, filterLang));
+    var pin = normalizeQuery(p.pincode);
+    var proj = normalizeQuery(p.project);
+    if (addr.indexOf(query) > -1 ||
+        pin.indexOf(query) > -1 ||
+        proj.indexOf(query) > -1 ||
+        tree_id.indexOf(query) > -1 ||
+        tree_id.replace(/-/g, '').indexOf(normalized_query) > -1) {
+      hit[p.treeId] = 1;
+    }
   });
+  return albumData.filter(function(t) { return hit[t.treeId]; });
 }
 
 function searchInTreeName(tree_query) {
-  var query = String(tree_query || '').toLowerCase().trim();
+  var query = normalizeQuery(tree_query);
   if (!query) { return albumData.slice(); }
-  return albumData.filter(function (t) {
-    var names = t.speciesName || {};
-    var matched = false;
-    Object.keys(names).some(function (key) {
-      matched = graphemeStartsWith(String(names[key]).toLowerCase(), query);
-      return matched;
+  var q_parts = query.split(',').map(function(s) { return s.trim(); }).filter(function(s) { return s; });
+  if (q_parts.length === 0) q_parts = [query];
+  var hit = {};
+  var pool = window.__SEARCH_POOL || [];
+  pool.forEach(function(p) {
+    var names = p.speciesName || {};
+    var matched = Object.keys(names).some(function(key) {
+      var raw = String(names[key] || '');
+      if (!raw) return false;
+      var parts = raw.split(',').map(function(s) { return s.trim(); }).filter(function(s) { return s; });
+      if (parts.length === 0) return q_parts.some(function(qp) { return graphemeStartsWith(normalizeQuery(raw), qp); });
+      return q_parts.some(function(qp) {
+        return parts.some(function(part) {
+          return graphemeStartsWith(normalizeQuery(part), qp);
+        });
+      });
     });
-    return matched;
+    if (matched) hit[p.treeId] = 1;
   });
+  return albumData.filter(function(t) { return hit[t.treeId]; });
 }
 
 // Album render - additive filters: place (address) + tree name (scientific/english/local)
@@ -214,10 +237,26 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
       var groups = {};
       filtered.forEach(function(t) {
         var name = treeNameFromCard(t, lang);
-        groups[name] = (groups[name] || 0) + 1;
+        if (!groups[name]) groups[name] = { count: 0, isFallback: true };
+        groups[name].count++;
+        var has_native = t.speciesName && t.speciesName[lang] && String(t.speciesName[lang]).trim() !== '';
+        if (has_native) groups[name].isFallback = false;
       });
-      var chips = Object.keys(groups).sort().map(function(k) {
-        return '<span class="album-chip chip-click" data-tree-name="' + k.replace(/"/g, '&quot;') + '">' + k + ' <b>– ' + groups[k] + '</b></span>';
+      var native_keys = [];
+      var fallback_keys = [];
+      Object.keys(groups).forEach(function(k) {
+        if (groups[k].isFallback) fallback_keys.push(k);
+        else native_keys.push(k);
+      });
+      native_keys.sort(function(a, b) {
+        try { return a.localeCompare(b, lang, { sensitivity: 'base' }); } catch (e) { return a.localeCompare(b); }
+      });
+      fallback_keys.sort(function(a, b) {
+        try { return a.localeCompare(b, 'en', { sensitivity: 'base' }); } catch (e) { return a.localeCompare(b); }
+      });
+      var sorted_keys = native_keys.concat(fallback_keys);
+      var chips = sorted_keys.map(function(k) {
+        return '<span class="album-chip chip-click" data-tree-name="' + k.replace(/"/g, '&quot;') + '">' + k + ' <b>– ' + groups[k].count + '</b></span>';
       }).join('');
       summaryEl.innerHTML = chips;
       summaryEl.querySelectorAll('.chip-click').forEach(function (chip) {
@@ -242,6 +281,31 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     grid.innerHTML = '<div class="no-trees">No trees found</div>';
     return;
   }
+
+  var native_trees = [];
+  var fallback_trees = [];
+  filtered.forEach(function(t) {
+    var has_native = t.speciesName && t.speciesName[lang] && String(t.speciesName[lang]).trim() !== '';
+    if (has_native) native_trees.push(t);
+    else fallback_trees.push(t);
+  });
+  function sortTreeBucket(arr, locale_code) {
+    arr.sort(function(a, b) {
+      var name_a = treeNameFromCard(a, lang) || '';
+      var name_b = treeNameFromCard(b, lang) || '';
+      var cmp = 0;
+      try { cmp = name_a.localeCompare(name_b, locale_code, { sensitivity: 'base' }); } catch (e) { cmp = name_a.localeCompare(name_b); }
+      if (cmp !== 0) return cmp;
+      var id_a = String(a.treeId || '');
+      var id_b = String(b.treeId || '');
+      if (id_a < id_b) return -1;
+      if (id_a > id_b) return 1;
+      return 0;
+    });
+  }
+  sortTreeBucket(native_trees, lang);
+  sortTreeBucket(fallback_trees, 'en');
+  filtered = native_trees.concat(fallback_trees);
 
   var frag = document.createDocumentFragment();
   filtered.forEach(function(t) {
@@ -285,10 +349,24 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
   grid.appendChild(frag);
 }
 
+var search_timer = null;
+function setSearching(is_on) {
+  var el = document.getElementById('search-overlay');
+  if (el) el.classList.toggle('open', !!is_on);
+}
+
 function applyFilters() {
-  var place = document.getElementById('album-place').value.trim();
-  var tree = document.getElementById('album-tree').value.trim();
-  renderAlbum(place, tree);
+  if (search_timer) clearTimeout(search_timer);
+  setSearching(true);
+  var place_el = document.getElementById('album-place');
+  var tree_el = document.getElementById('album-tree');
+  var place_val = place_el ? place_el.value : '';
+  var tree_val = tree_el ? tree_el.value : '';
+  search_timer = setTimeout(function() {
+    search_timer = null;
+    renderAlbum(normalizeQuery(place_val), normalizeQuery(tree_val));
+    setSearching(false);
+  }, 80);
 }
 
 // Toggle summary panel visibility (sticky via re-render)
@@ -310,8 +388,16 @@ function filterByTree(name) {
 
 // Dirty-state: X clear button disabled (greyed) when the filter has no value
 function onInput(el) {
+  if (el.isComposing) return;
+  var raw = String(el.value || '');
+  var stripped = raw.replace(/[\u00A0\u200B\u200C\u200D\uFEFF]+$/g, '').replace(/\s+$/g, '');
+  if (stripped !== raw) {
+    var pos = el.selectionStart;
+    el.value = stripped;
+    try { el.setSelectionRange(pos - (raw.length - stripped.length), pos - (raw.length - stripped.length)); } catch (e) {}
+  }
   var btn = el.parentNode.querySelector('.clear-btn');
-  if (btn) btn.disabled = !el.value;
+  if (btn) btn.disabled = !String(el.value).trim();
   if (el.id === 'album-place') renderSuggestions(el.value);
   applyFilters();
 }
@@ -368,10 +454,35 @@ window.render = {
     window.TREE_COLOURS = storage.get('treeColours') || [];
     window._login = storage.get('login') || {};
     filterLang = appLang;
+    (function() {
+      var qp_hero = new URLSearchParams(location.search);
+      var role = (qp_hero.get('role') || '').trim();
+      var hero = document.getElementById('main-hero');
+      if (!hero) return;
+      if (role) {
+        hero.style.display = 'none';
+        hero.setAttribute('data-role', role.toLowerCase());
+      } else {
+        hero.style.display = '';
+        hero.removeAttribute('data-role');
+      }
+    })();
     albumData = (window.__TREE_DATA || []).filter(function (t) {
       var e1 = (t['encounters-list'] || {})['1'] || {};
       return (e1.acceptance || {}).status === 'accepted';
     }).map(normalizeAlbum);
+    (function() {
+      var raw = new URLSearchParams(location.search).get('exclude');
+      if (!raw) return;
+      var list = [];
+      try { var j = JSON.parse(raw); if (Array.isArray(j)) list = j; else list = [j]; } catch (e) { var s = String(raw).trim().replace(/^\[/, '').replace(/\]$/, ''); list = s.split(',').map(function(x) { return String(x).trim().replace(/^\"|\"$/g, '').replace(/^'|'$/g, ''); }).filter(Boolean); }
+      if (!list.length) return;
+      var ex = {}; list.forEach(function(id) { ex[String(id).trim()] = 1; });
+      albumData = albumData.filter(function(t) { return !ex[t.treeId]; });
+    })();
+    window.__SEARCH_POOL = albumData.map(function(t) {
+      return { treeId: t.treeId, pincode: t.pincode, project: t.project, speciesName: t.speciesName, address: t.address };
+    });
     var qp = new URLSearchParams(location.search);
     var placeEl = document.getElementById('album-place');
     var treeEl = document.getElementById('album-tree');
