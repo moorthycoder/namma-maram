@@ -2,6 +2,12 @@
 
 // Tree data for album — populated from tree_cards.json via loadTreeData
 var albumData = [];
+var filterParentUrl = new URLSearchParams(location.search).get('parent') || '';
+function filterBack() {
+  if (filterParentUrl) { window.location.href = filterParentUrl; return; }
+  if (window.history.length > 1) { window.history.back(); return; }
+  window.location.href = 'filter.html';
+}
 
 // Places for search — loaded from places_name.json: [{placeId, placeName:{en,ta}, pinCode, variety}, ...]
 var __SUGGESTIONS = [];
@@ -70,7 +76,10 @@ function openProfile(treeId) {
   var id = treeId || '625501-06-0001';
   var place = document.getElementById('album-place').value.trim();
   var tree = document.getElementById('album-tree').value.trim();
-  var parentUrl = encodeURIComponent('filter.html?place=' + encodeURIComponent(place) + '&tree=' + encodeURIComponent(tree));
+  var qp_cur = new URLSearchParams(location.search);
+  qp_cur.set('place', place);
+  qp_cur.set('tree', tree);
+  var parentUrl = encodeURIComponent('filter.html?' + qp_cur.toString());
   var flangParam = 'flang=' + encodeURIComponent(filterLang);
   window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter&parent=' + parentUrl + '&' + flangParam;
 }
@@ -458,13 +467,20 @@ window.render = {
       var qp_hero = new URLSearchParams(location.search);
       var role = (qp_hero.get('role') || '').trim();
       var hero = document.getElementById('main-hero');
-      if (!hero) return;
-      if (role) {
-        hero.style.display = 'none';
-        hero.setAttribute('data-role', role.toLowerCase());
-      } else {
-        hero.style.display = '';
-        hero.removeAttribute('data-role');
+      var back_btn = document.getElementById('filter-back');
+      if (hero) {
+        if (role) {
+          hero.style.display = 'none';
+          hero.setAttribute('data-role', role.toLowerCase());
+        } else {
+          hero.style.display = '';
+          hero.removeAttribute('data-role');
+        }
+      }
+      if (back_btn) {
+        filterParentUrl = qp_hero.get('parent') || filterParentUrl;
+        if (filterParentUrl) back_btn.style.display = 'flex';
+        else back_btn.style.display = 'none';
       }
     })();
     albumData = (window.__TREE_DATA || []).filter(function (t) {
