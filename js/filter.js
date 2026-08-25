@@ -82,21 +82,30 @@ function openTreeMapById(id) {
     if (albumData[i].treeId === id) { tree = albumData[i]; break; }
   }
   if (hasTreeGis(tree)) {
-    showMap(id);
+    showInMap([id]);
   } else {
     alert('Location not available for this tree.');
   }
 }
 
-// Opening the map as a fullscreen in-app modal
-function showMap(idsParam) {
-  document.getElementById('map-frame').src = 'map.html?ids=' + encodeURIComponent(idsParam);
-  document.getElementById('map-modal').classList.add('open');
-}
-
 function closeMapModal() {
   document.getElementById('map-modal').classList.remove('open');
   document.getElementById('map-frame').src = '';
+}
+
+function yearsSince(dateStr) {
+  var d = new Date(dateStr);
+  if (isNaN(d.getTime())) return '—';
+  return ((Date.now() - d.getTime()) / (365.25 * 24 * 60 * 60 * 1000)).toFixed(1);
+}
+function ageLabel(dateStr) {
+  var d = new Date(dateStr);
+  if (isNaN(d.getTime())) return '';
+  var years = ((Date.now() - d.getTime()) / (365.25 * 24 * 60 * 60 * 1000)).toFixed(1);
+  var dd = String(d.getDate()).padStart(2, '0');
+  var mm = String(d.getMonth() + 1).padStart(2, '0');
+  var yyyy = d.getFullYear();
+  return 'Age:' + years + 'y(' + dd + '-' + mm + '-' + yyyy + ')';
 }
 
 // Helpers: language-keyed readers for nested name/address on a tree card
@@ -118,9 +127,11 @@ function treeNameFromCard(t, lang) {
   return cardNameText(t, lang);
 }
 
+var _segmenter = null;
 function graphemes(s) {
   if (Intl && Intl.Segmenter) {
-    return Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(String(s || '')), function (seg) { return seg.segment; });
+    if (!_segmenter) { _segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' }); }
+    return Array.from(_segmenter.segment(String(s || '')), function (seg) { return seg.segment; });
   }
   var combining = /[\u0300-\u036f\u1ab0-\u1aff\u1dc0-\u1dff\u20d0-\u20ff\ufe20-\ufe2f\u0bbe-\u0bcc\u0bcd\u0c3e-\u0c4c\u0cbe-\u0ccc\u0d3e-\u0d4c\u0dca]/;
   var chars = Array.from(String(s || ''));
@@ -206,9 +217,12 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
         groups[name] = (groups[name] || 0) + 1;
       });
       var chips = Object.keys(groups).sort().map(function(k) {
-        return '<span class="album-chip chip-click" onclick="filterByTree(\'' + k + '\')">' + k + ' <b>– ' + groups[k] + '</b></span>';
+        return '<span class="album-chip chip-click" data-tree-name="' + k.replace(/"/g, '&quot;') + '">' + k + ' <b>– ' + groups[k] + '</b></span>';
       }).join('');
       summaryEl.innerHTML = chips;
+      summaryEl.querySelectorAll('.chip-click').forEach(function (chip) {
+        chip.onclick = function () { filterByTree(this.getAttribute('data-tree-name')); };
+      });
       var mapBtn = document.createElement('button');
       mapBtn.type = 'button';
       mapBtn.className = 'map-btn';
@@ -229,17 +243,16 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     return;
   }
 
+  var frag = document.createDocumentFragment();
   filtered.forEach(function(t) {
     var card = document.createElement('div');
     card.className = 'tree-snapshot';
-    card.onclick = function() {
-      openProfile(t.treeId);
-    };
+    card.onclick = (function (id) { return function () { openProfile(id); }; })(t.treeId);
 
     var photo = document.createElement('div');
     photo.className = 'tree-photo';
     photo.style.background = t.bg;
-    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div>' + (t.health ? '<div class="tree-health health-' + String(t.health).toLowerCase().replace(/\s+/g, '-') + '">' + t.health + '</div>' : '');
+    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div>' + (t.health ? '<div class="tree-health health-' + String(t.health).toLowerCase().replace(/\s+/g, '-') + '">' + t.health + '</div>' : '') + (t['date-of-planting'] ? '<div class="tree-planted" style="color:white">' + ageLabel(t['date-of-planting']) + '</div>' : '');
 
     var lastCard = t.cards && t.cards[t.cards.length - 1] || {};
     var isFirst = String(lastCard.encounter) === '1';
@@ -267,8 +280,9 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     meta.innerHTML = '<div>👀 Encounter <b>' + (lastCard.encounter != null ? lastCard.encounter : 0) + '</b> · ' + (updDate || '—') + '</div><div>' + updLabel + ' <b>' + (upd || '—') + '</b></div>';
     info.appendChild(meta);
 
-    grid.appendChild(card);
+    frag.appendChild(card);
   });
+  grid.appendChild(frag);
 }
 
 function applyFilters() {
@@ -320,11 +334,7 @@ function openMap() {
   }).map(function(t){
     return t.treeId;
   });
-  if (ids.length > 0) {
-    showMap(ids.join('|'));
-  } else {
-    alert('No tree locations found to show on the map.');
-  }
+  showInMap(ids);
 }
 
 function normalizeAlbum(t) {

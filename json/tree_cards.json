@@ -29,6 +29,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2022-05-03",
         "encounters":  5,
         "encounter-due-date":  "2026-08-25",
         "encounters-list":  {
@@ -203,6 +204,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2023-07-07",
         "encounters":  1,
         "encounter-due-date":  "2026-04-22",
         "encounters-list":  {
@@ -269,6 +271,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2023-06-17",
         "encounters":  1,
         "encounter-due-date":  "2026-04-29",
         "encounters-list":  {
@@ -335,6 +338,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Kannan",
+        "date-of-planting":  "2024-11-27",
         "encounters":  4,
         "encounter-due-date":  "2026-05-06",
         "encounters-list":  {
@@ -482,6 +486,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Vijay",
+        "date-of-planting":  "2023-08-13",
         "encounters":  1,
         "encounter-due-date":  "2026-05-13",
         "encounters-list":  {
@@ -548,6 +553,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2023-12-16",
         "encounters":  2,
         "encounter-due-date":  "2026-07-05",
         "encounters-list":  {
@@ -641,6 +647,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2023-04-15",
         "encounters":  1,
         "encounter-due-date":  "2026-05-27",
         "encounters-list":  {
@@ -707,6 +714,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Devi",
+        "date-of-planting":  "2024-11-14",
         "encounters":  1,
         "encounter-due-date":  "2026-06-03",
         "encounters-list":  {
@@ -773,6 +781,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Pandian",
+        "date-of-planting":  "2023-08-20",
         "encounters":  4,
         "encounter-due-date":  "2026-08-20",
         "encounters-list":  {
@@ -920,6 +929,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Govindan",
+        "date-of-planting":  "2025-10-10",
         "encounters":  6,
         "encounter-due-date":  "2026-11-15",
         "encounters-list":  {
@@ -1121,6 +1131,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2023-11-09",
         "encounters":  1,
         "encounter-due-date":  "2026-06-24",
         "encounters-list":  {
@@ -1187,6 +1198,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2023-12-09",
         "encounters":  1,
         "encounter-due-date":  "2026-07-01",
         "encounters-list":  {
@@ -1253,6 +1265,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Bala",
+        "date-of-planting":  "2022-01-05",
         "encounters":  5,
         "encounter-due-date":  "2026-07-08",
         "encounters-list":  {
@@ -1427,6 +1440,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2024-03-02",
         "encounters":  5,
         "encounter-due-date":  "2026-11-24",
         "encounters-list":  {
@@ -1601,6 +1615,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Chandran",
+        "date-of-planting":  "2024-05-22",
         "encounters":  1,
         "encounter-due-date":  "2026-07-22",
         "encounters-list":  {
@@ -1667,6 +1682,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2023-12-13",
         "encounters":  7,
         "encounter-due-date":  "2026-10-24",
         "encounters-list":  {
@@ -1895,6 +1911,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2024-11-20",
         "encounters":  1,
         "encounter-due-date":  "2026-04-22",
         "encounters-list":  {
@@ -1961,6 +1978,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2023-02-17",
         "encounters":  1,
         "encounter-due-date":  "2026-04-29",
         "encounters-list":  {
@@ -2027,6 +2045,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Kannan",
+        "date-of-planting":  "2023-07-09",
         "encounters":  1,
         "encounter-due-date":  "2026-05-06",
         "encounters-list":  {
@@ -2093,6 +2112,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Vijay",
+        "date-of-planting":  "2025-02-07",
         "encounters":  1,
         "encounter-due-date":  "2026-05-13",
         "encounters-list":  {
@@ -2159,6 +2179,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2024-06-13",
         "encounters":  1,
         "encounter-due-date":  "2026-05-20",
         "encounters-list":  {
@@ -2225,6 +2246,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2023-07-22",
         "encounters":  3,
         "encounter-due-date":  "2026-05-27",
         "encounters-list":  {
@@ -2345,6 +2367,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Devi",
+        "date-of-planting":  "2023-05-01",
         "encounters":  1,
         "encounter-due-date":  "2026-06-03",
         "encounters-list":  {
@@ -2411,6 +2434,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Pandian",
+        "date-of-planting":  "2025-07-28",
         "encounters":  1,
         "encounter-due-date":  "2026-06-10",
         "encounters-list":  {
@@ -2477,6 +2501,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Govindan",
+        "date-of-planting":  "2022-08-19",
         "encounters":  1,
         "encounter-due-date":  "2026-06-17",
         "encounters-list":  {
@@ -2543,6 +2568,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2024-12-20",
         "encounters":  1,
         "encounter-due-date":  "2026-06-24",
         "encounters-list":  {
@@ -2609,6 +2635,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2023-02-28",
         "encounters":  4,
         "encounter-due-date":  "2026-09-30",
         "encounters-list":  {
@@ -2756,6 +2783,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Bala",
+        "date-of-planting":  "2025-08-05",
         "encounters":  1,
         "encounter-due-date":  "2026-07-08",
         "encounters-list":  {
@@ -2822,6 +2850,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2023-07-16",
         "encounters":  1,
         "encounter-due-date":  "2026-07-15",
         "encounters-list":  {
@@ -2888,6 +2917,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Chandran",
+        "date-of-planting":  "2026-04-22",
         "encounters":  1,
         "encounter-due-date":  "2026-07-22",
         "encounters-list":  {
@@ -2954,6 +2984,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2023-03-16",
         "encounters":  6,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -3155,6 +3186,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2024-11-18",
         "encounters":  1,
         "encounter-due-date":  "2026-04-22",
         "encounters-list":  {
@@ -3221,6 +3253,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2023-09-06",
         "encounters":  1,
         "encounter-due-date":  "2026-04-29",
         "encounters-list":  {
@@ -3287,6 +3320,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Kannan",
+        "date-of-planting":  "2023-02-25",
         "encounters":  1,
         "encounter-due-date":  "2026-05-06",
         "encounters-list":  {
@@ -3353,6 +3387,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Vijay",
+        "date-of-planting":  "2024-02-15",
         "encounters":  1,
         "encounter-due-date":  "2026-05-13",
         "encounters-list":  {
@@ -3419,6 +3454,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2025-02-15",
         "encounters":  1,
         "encounter-due-date":  "2026-05-20",
         "encounters-list":  {
@@ -3485,6 +3521,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2022-08-23",
         "encounters":  1,
         "encounter-due-date":  "2026-05-27",
         "encounters-list":  {
@@ -3551,6 +3588,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Devi",
+        "date-of-planting":  "2023-01-06",
         "encounters":  1,
         "encounter-due-date":  "2026-06-03",
         "encounters-list":  {
@@ -3617,6 +3655,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Pandian",
+        "date-of-planting":  "2024-12-14",
         "encounters":  4,
         "encounter-due-date":  "2026-09-25",
         "encounters-list":  {
@@ -3764,6 +3803,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Govindan",
+        "date-of-planting":  "2025-12-08",
         "encounters":  1,
         "encounter-due-date":  "2026-06-17",
         "encounters-list":  {
@@ -3830,6 +3870,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2025-09-23",
         "encounters":  2,
         "encounter-due-date":  "2026-06-24",
         "encounters-list":  {
@@ -3923,6 +3964,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2024-05-27",
         "encounters":  1,
         "encounter-due-date":  "2026-07-01",
         "encounters-list":  {
@@ -3989,6 +4031,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Bala",
+        "date-of-planting":  "2021-10-19",
         "encounters":  1,
         "encounter-due-date":  "2026-07-08",
         "encounters-list":  {
@@ -4055,6 +4098,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2023-02-05",
         "encounters":  1,
         "encounter-due-date":  "2026-07-15",
         "encounters-list":  {
@@ -4121,6 +4165,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Chandran",
+        "date-of-planting":  "2023-03-09",
         "encounters":  1,
         "encounter-due-date":  "2026-07-22",
         "encounters-list":  {
@@ -4187,6 +4232,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2025-11-07",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -4253,6 +4299,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2025-04-14",
         "encounters":  1,
         "encounter-due-date":  "2026-04-22",
         "encounters-list":  {
@@ -4319,6 +4366,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2023-06-03",
         "encounters":  1,
         "encounter-due-date":  "2026-04-29",
         "encounters-list":  {
@@ -4385,6 +4433,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Kannan",
+        "date-of-planting":  "2021-07-02",
         "encounters":  1,
         "encounter-due-date":  "2026-05-06",
         "encounters-list":  {
@@ -4451,6 +4500,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Vijay",
+        "date-of-planting":  "2025-10-25",
         "encounters":  1,
         "encounter-due-date":  "2026-05-13",
         "encounters-list":  {
@@ -4517,6 +4567,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2024-01-21",
         "encounters":  1,
         "encounter-due-date":  "2026-05-20",
         "encounters-list":  {
@@ -4583,6 +4634,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2025-05-13",
         "encounters":  4,
         "encounter-due-date":  "2026-08-31",
         "encounters-list":  {
@@ -4730,6 +4782,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Devi",
+        "date-of-planting":  "2023-07-11",
         "encounters":  1,
         "encounter-due-date":  "2026-06-03",
         "encounters-list":  {
@@ -4796,6 +4849,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Pandian",
+        "date-of-planting":  "2023-03-01",
         "encounters":  1,
         "encounter-due-date":  "2026-06-10",
         "encounters-list":  {
@@ -4862,6 +4916,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Govindan",
+        "date-of-planting":  "2022-12-23",
         "encounters":  7,
         "encounter-due-date":  "2026-12-26",
         "encounters-list":  {
@@ -5090,6 +5145,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2024-11-18",
         "encounters":  4,
         "encounter-due-date":  "2026-06-24",
         "encounters-list":  {
@@ -5237,6 +5293,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2023-03-09",
         "encounters":  1,
         "encounter-due-date":  "2026-07-01",
         "encounters-list":  {
@@ -5303,6 +5360,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Bala",
+        "date-of-planting":  "2024-07-13",
         "encounters":  1,
         "encounter-due-date":  "2026-07-08",
         "encounters-list":  {
@@ -5369,6 +5427,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2025-07-30",
         "encounters":  1,
         "encounter-due-date":  "2026-07-15",
         "encounters-list":  {
@@ -5435,6 +5494,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Chandran",
+        "date-of-planting":  "2025-04-17",
         "encounters":  1,
         "encounter-due-date":  "2026-07-22",
         "encounters-list":  {
@@ -5501,6 +5561,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2021-06-09",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -5567,6 +5628,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2023-01-18",
         "encounters":  1,
         "encounter-due-date":  "2026-04-22",
         "encounters-list":  {
@@ -5633,6 +5695,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2024-05-01",
         "encounters":  7,
         "encounter-due-date":  "2026-10-28",
         "encounters-list":  {
@@ -5861,6 +5924,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Kannan",
+        "date-of-planting":  "2023-12-23",
         "encounters":  1,
         "encounter-due-date":  "2026-05-06",
         "encounters-list":  {
@@ -5927,6 +5991,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Vijay",
+        "date-of-planting":  "2023-04-02",
         "encounters":  1,
         "encounter-due-date":  "2026-05-13",
         "encounters-list":  {
@@ -5993,6 +6058,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2025-08-14",
         "encounters":  1,
         "encounter-due-date":  "2026-05-20",
         "encounters-list":  {
@@ -6059,6 +6125,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2021-08-06",
         "encounters":  1,
         "encounter-due-date":  "2026-05-27",
         "encounters-list":  {
@@ -6125,6 +6192,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Devi",
+        "date-of-planting":  "2024-09-10",
         "encounters":  1,
         "encounter-due-date":  "2026-06-03",
         "encounters-list":  {
@@ -6191,6 +6259,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Pandian",
+        "date-of-planting":  "2023-01-17",
         "encounters":  1,
         "encounter-due-date":  "2026-06-10",
         "encounters-list":  {
@@ -6257,6 +6326,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Govindan",
+        "date-of-planting":  "2025-11-28",
         "encounters":  5,
         "encounter-due-date":  "2026-10-17",
         "encounters-list":  {
@@ -6431,6 +6501,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2024-08-07",
         "encounters":  5,
         "encounter-due-date":  "2026-08-05",
         "encounters-list":  {
@@ -6605,6 +6676,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2024-11-14",
         "encounters":  5,
         "encounter-due-date":  "2026-10-28",
         "encounters-list":  {
@@ -6779,6 +6851,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Bala",
+        "date-of-planting":  "2021-12-31",
         "encounters":  1,
         "encounter-due-date":  "2026-07-08",
         "encounters-list":  {
@@ -6845,6 +6918,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2023-01-12",
         "encounters":  7,
         "encounter-due-date":  "2027-01-30",
         "encounters-list":  {
@@ -7073,6 +7147,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Chandran",
+        "date-of-planting":  "2026-01-09",
         "encounters":  6,
         "encounter-due-date":  "2026-12-22",
         "encounters-list":  {
@@ -7274,6 +7349,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2023-01-18",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -7340,6 +7416,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2023-01-05",
         "encounters":  1,
         "encounter-due-date":  "2026-04-22",
         "encounters-list":  {
@@ -7406,6 +7483,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2023-03-26",
         "encounters":  1,
         "encounter-due-date":  "2026-04-29",
         "encounters-list":  {
@@ -7472,6 +7550,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Kannan",
+        "date-of-planting":  "2023-02-08",
         "encounters":  1,
         "encounter-due-date":  "2026-05-06",
         "encounters-list":  {
@@ -7538,6 +7617,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Vijay",
+        "date-of-planting":  "2023-02-16",
         "encounters":  1,
         "encounter-due-date":  "2026-05-13",
         "encounters-list":  {
@@ -7604,6 +7684,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2026-05-01",
         "encounters":  7,
         "encounter-due-date":  "2026-12-02",
         "encounters-list":  {
@@ -7832,6 +7913,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2026-05-22",
         "encounters":  5,
         "encounter-due-date":  "2026-09-26",
         "encounters-list":  {
@@ -8006,6 +8088,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Devi",
+        "date-of-planting":  "2024-09-06",
         "encounters":  4,
         "encounter-due-date":  "2026-09-07",
         "encounters-list":  {
@@ -8153,6 +8236,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Pandian",
+        "date-of-planting":  "2024-05-14",
         "encounters":  1,
         "encounter-due-date":  "2026-06-10",
         "encounters-list":  {
@@ -8219,6 +8303,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Govindan",
+        "date-of-planting":  "2022-03-27",
         "encounters":  7,
         "encounter-due-date":  "2027-01-01",
         "encounters-list":  {
@@ -8447,6 +8532,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2023-03-01",
         "encounters":  1,
         "encounter-due-date":  "2026-06-24",
         "encounters-list":  {
@@ -8513,6 +8599,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2024-05-11",
         "encounters":  1,
         "encounter-due-date":  "2026-07-01",
         "encounters-list":  {
@@ -8579,6 +8666,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Bala",
+        "date-of-planting":  "2023-07-08",
         "encounters":  1,
         "encounter-due-date":  "2026-07-08",
         "encounters-list":  {
@@ -8645,6 +8733,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2024-08-05",
         "encounters":  3,
         "encounter-due-date":  "2026-07-15",
         "encounters-list":  {
@@ -8765,6 +8854,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Chandran",
+        "date-of-planting":  "2025-11-21",
         "encounters":  1,
         "encounter-due-date":  "2026-07-22",
         "encounters-list":  {
@@ -8831,6 +8921,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2022-10-16",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -8897,6 +8988,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2024-06-17",
         "encounters":  1,
         "encounter-due-date":  "2026-04-22",
         "encounters-list":  {
@@ -8963,6 +9055,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2024-02-01",
         "encounters":  3,
         "encounter-due-date":  "2026-07-05",
         "encounters-list":  {
@@ -9083,6 +9176,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Kannan",
+        "date-of-planting":  "2026-04-23",
         "encounters":  1,
         "encounter-due-date":  "2026-05-06",
         "encounters-list":  {
@@ -9149,6 +9243,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Vijay",
+        "date-of-planting":  "2025-02-20",
         "encounters":  1,
         "encounter-due-date":  "2026-05-13",
         "encounters-list":  {
@@ -9215,6 +9310,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2025-09-06",
         "encounters":  1,
         "encounter-due-date":  "2026-05-20",
         "encounters-list":  {
@@ -9281,6 +9377,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2021-01-15",
         "encounters":  5,
         "encounter-due-date":  "2026-10-02",
         "encounters-list":  {
@@ -9455,6 +9552,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Devi",
+        "date-of-planting":  "2026-03-20",
         "encounters":  1,
         "encounter-due-date":  "2026-06-03",
         "encounters-list":  {
@@ -9521,6 +9619,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Pandian",
+        "date-of-planting":  "2026-06-29",
         "encounters":  1,
         "encounter-due-date":  "2026-06-10",
         "encounters-list":  {
@@ -9587,6 +9686,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Govindan",
+        "date-of-planting":  "2024-03-19",
         "encounters":  1,
         "encounter-due-date":  "2026-06-17",
         "encounters-list":  {
@@ -9653,6 +9753,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2025-08-04",
         "encounters":  1,
         "encounter-due-date":  "2026-09-10",
         "encounters-list":  {
@@ -9719,6 +9820,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Vijay",
+        "date-of-planting":  "2021-11-01",
         "encounters":  4,
         "encounter-due-date":  "2026-12-13",
         "encounters-list":  {
@@ -9866,6 +9968,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2023-05-18",
         "encounters":  1,
         "encounter-due-date":  "2026-09-03",
         "encounters-list":  {
@@ -9932,6 +10035,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kannan",
+        "date-of-planting":  "2024-08-25",
         "encounters":  4,
         "encounter-due-date":  "2026-11-24",
         "encounters-list":  {
@@ -10079,6 +10183,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2024-03-19",
         "encounters":  1,
         "encounter-due-date":  "2026-06-18",
         "encounters-list":  {
@@ -10145,6 +10250,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2025-10-30",
         "encounters":  1,
         "encounter-due-date":  "2026-02-13",
         "encounters-list":  {
@@ -10211,6 +10317,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2023-07-17",
         "encounters":  1,
         "encounter-due-date":  "2026-09-03",
         "encounters-list":  {
@@ -10277,6 +10384,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Muthu",
+        "date-of-planting":  "2023-06-29",
         "encounters":  1,
         "encounter-due-date":  "2026-09-18",
         "encounters-list":  {
@@ -10343,6 +10451,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Selvam",
+        "date-of-planting":  "2023-10-15",
         "encounters":  1,
         "encounter-due-date":  "2026-09-16",
         "encounters-list":  {
@@ -10409,6 +10518,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Selvam",
+        "date-of-planting":  "2025-02-27",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -10475,6 +10585,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Selvam",
+        "date-of-planting":  "2024-11-14",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -10541,6 +10652,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Selvam",
+        "date-of-planting":  "2026-08-07",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -10607,6 +10719,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2025-10-17",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -10673,6 +10786,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2025-06-14",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -10739,6 +10853,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2025-08-10",
         "encounters":  1,
         "encounter-due-date":  "2026-04-15",
         "encounters-list":  {
@@ -10805,6 +10920,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Selvam",
+        "date-of-planting":  "2024-01-21",
         "encounters":  1,
         "encounter-due-date":  "2026-05-11",
         "encounters-list":  {
@@ -10871,6 +10987,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Selvam",
+        "date-of-planting":  "2025-01-05",
         "encounters":  1,
         "encounter-due-date":  "2026-05-11",
         "encounters-list":  {
@@ -10937,6 +11054,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Selvam",
+        "date-of-planting":  "2026-08-11",
         "encounters":  1,
         "encounter-due-date":  "2026-05-11",
         "encounters-list":  {
@@ -11003,6 +11121,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2025-05-16",
         "encounters":  1,
         "encounter-due-date":  "2026-05-11",
         "encounters-list":  {
@@ -11069,6 +11188,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2023-02-02",
         "encounters":  1,
         "encounter-due-date":  "2026-05-11",
         "encounters-list":  {
@@ -11135,6 +11255,7 @@
         "care-giver":  "",
         "care-giver-contact-number":  "",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2024-04-05",
         "encounters":  1,
         "encounter-due-date":  "2026-05-11",
         "encounters-list":  {
@@ -11201,6 +11322,7 @@
         "care-giver":  "Lakshmi",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2026-05-22",
         "encounters":  1,
         "encounter-due-date":  "2026-08-05",
         "encounters-list":  {
@@ -11267,6 +11389,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Bala",
+        "date-of-planting":  "2023-02-06",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11333,6 +11456,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Chandran",
+        "date-of-planting":  "2023-10-20",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11399,6 +11523,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Devi",
+        "date-of-planting":  "2023-12-20",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11465,6 +11590,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Govindan",
+        "date-of-planting":  "2023-02-21",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11531,6 +11657,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kamal",
+        "date-of-planting":  "2023-10-15",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11597,6 +11724,7 @@
         "care-giver":  "Lakshmi",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Kannan",
+        "date-of-planting":  "2025-02-27",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11663,6 +11791,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2024-07-16",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11729,6 +11858,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Muthu",
+        "date-of-planting":  "2023-05-05",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11795,6 +11925,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Pandian",
+        "date-of-planting":  "2026-08-16",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11861,6 +11992,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2023-06-11",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11927,6 +12059,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2023-05-22",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -11993,6 +12126,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2024-03-03",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12059,6 +12193,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Selvam",
+        "date-of-planting":  "2024-03-07",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12125,6 +12260,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Vijay",
+        "date-of-planting":  "2025-09-27",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12191,6 +12327,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Anbu",
+        "date-of-planting":  "2026-01-05",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12257,6 +12394,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Bala",
+        "date-of-planting":  "2023-01-13",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12323,6 +12461,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Chandran",
+        "date-of-planting":  "2023-02-26",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12389,6 +12528,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Devi",
+        "date-of-planting":  "2026-01-24",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12455,6 +12595,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Govindan",
+        "date-of-planting":  "2026-04-08",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12521,6 +12662,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Kamal",
+        "date-of-planting":  "2023-11-14",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12587,6 +12729,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Kannan",
+        "date-of-planting":  "2026-05-18",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12653,6 +12796,7 @@
         "care-giver":  "Lakshmi",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2026-01-30",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12719,6 +12863,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Muthu",
+        "date-of-planting":  "2024-01-08",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12785,6 +12930,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Pandian",
+        "date-of-planting":  "2024-12-27",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12851,6 +12997,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2025-04-25",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12917,6 +13064,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2025-04-12",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -12983,6 +13131,7 @@
         "care-giver":  "Ravi K.",
         "care-giver-contact-number":  "9876512350",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2023-09-14",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13049,6 +13198,7 @@
         "care-giver":  "Selvi B.",
         "care-giver-contact-number":  "9876512351",
         "ttr":  "Selvam",
+        "date-of-planting":  "2024-01-31",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13115,6 +13265,7 @@
         "care-giver":  "Senthil K.",
         "care-giver-contact-number":  "9876512352",
         "ttr":  "Vijay",
+        "date-of-planting":  "2023-09-01",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13181,6 +13332,7 @@
         "care-giver":  "Suresh M.",
         "care-giver-contact-number":  "9876512353",
         "ttr":  "Anbu",
+        "date-of-planting":  "2023-02-09",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13247,6 +13399,7 @@
         "care-giver":  "Venkat G.",
         "care-giver-contact-number":  "9876512354",
         "ttr":  "Bala",
+        "date-of-planting":  "2023-11-04",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13313,6 +13466,7 @@
         "care-giver":  "Arun R.",
         "care-giver-contact-number":  "9876512340",
         "ttr":  "Chandran",
+        "date-of-planting":  "2026-05-28",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13379,6 +13533,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Devi",
+        "date-of-planting":  "2026-08-08",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13445,6 +13600,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Govindan",
+        "date-of-planting":  "2025-11-07",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13511,6 +13667,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Kamal",
+        "date-of-planting":  "2023-06-30",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13577,6 +13734,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Kannan",
+        "date-of-planting":  "2026-03-22",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13643,6 +13801,7 @@
         "care-giver":  "Kavitha N.",
         "care-giver-contact-number":  "9876512345",
         "ttr":  "Mahesh",
+        "date-of-planting":  "2023-09-06",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13709,6 +13868,7 @@
         "care-giver":  "Lakshmi",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Muthu",
+        "date-of-planting":  "2024-01-28",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13775,6 +13935,7 @@
         "care-giver":  "Lakshmi P.",
         "care-giver-contact-number":  "9876512346",
         "ttr":  "Pandian",
+        "date-of-planting":  "2025-01-15",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13841,6 +14002,7 @@
         "care-giver":  "Madhavi I.",
         "care-giver-contact-number":  "9876512347",
         "ttr":  "Raj Kumar",
+        "date-of-planting":  "2025-01-10",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13907,6 +14069,7 @@
         "care-giver":  "Murugan T.",
         "care-giver-contact-number":  "9876512348",
         "ttr":  "Ramesh",
+        "date-of-planting":  "2025-08-07",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -13973,6 +14136,7 @@
         "care-giver":  "Priya S.",
         "care-giver-contact-number":  "9876512349",
         "ttr":  "Saraswathi",
+        "date-of-planting":  "2023-06-12",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -14039,6 +14203,7 @@
         "care-giver":  "Deepa V.",
         "care-giver-contact-number":  "9876512341",
         "ttr":  "Bala",
+        "date-of-planting":  "2025-03-07",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -14105,6 +14270,7 @@
         "care-giver":  "Ganesh A.",
         "care-giver-contact-number":  "9876512342",
         "ttr":  "Chandran",
+        "date-of-planting":  "2024-06-05",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -14171,6 +14337,7 @@
         "care-giver":  "Gomathi R.",
         "care-giver-contact-number":  "9876512343",
         "ttr":  "Devi",
+        "date-of-planting":  "2026-03-19",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {
@@ -14237,6 +14404,7 @@
         "care-giver":  "Jyothi D.",
         "care-giver-contact-number":  "9876512344",
         "ttr":  "Govindan",
+        "date-of-planting":  "2024-08-15",
         "encounters":  1,
         "encounter-due-date":  "2026-09-23",
         "encounters-list":  {

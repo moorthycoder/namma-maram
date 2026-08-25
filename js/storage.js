@@ -24,7 +24,7 @@ function parentRam(name) {
 }
 
 var storage = {
-  tree: {},
+  tree: (function () { try { return JSON.parse(localStorage.getItem(TREE_KEY) || 'null') || {}; } catch (e) { return {}; } })(),
 
   get: function (name) {
     var item = STORE[name];
@@ -32,6 +32,14 @@ var storage = {
     var fromParent = parentRam(name);
     if (fromParent != null) { return fromParent; }
     if (storage.tree[name] != null) { return storage.tree[name]; }
+    try {
+      var cached = JSON.parse(localStorage.getItem(TREE_KEY) || 'null');
+      if (cached && cached[name] != null) {
+        storage.tree[name] = cached[name];
+        window[item.ram] = cached[name];
+        return cached[name];
+      }
+    } catch (e) {}
     return null;
   },
 
@@ -141,8 +149,21 @@ var storage = {
   }
 };
 
+// populate window globals from the hydrated localStorage mirror
+try {
+  Object.keys(STORE).forEach(function (n) {
+    if (storage.tree[n] != null) { window[STORE[n].ram] = storage.tree[n]; }
+  });
+} catch (e) {}
+
 if (window.top === window.self) {
-  storage.loadData();
+  var _cachedCards = storage.get('treeCards');
+  if (_cachedCards == null || !_cachedCards.length || !_cachedCards[0]['date-of-planting']) {
+    storage.loadData();
+  } else {
+    // data already in RAM (from localStorage) — just render
+    storage.renderAll();
+  }
 } else {
   var attemptCount = 0;
   var waitTimer = setInterval(function () {

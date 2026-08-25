@@ -116,16 +116,10 @@ function addToSponsor() {
 function openTreeMap() {
   var tree = findTree(profileTreeId);
   if (hasTreeGis(tree)) {
-    showMap(tree.treeId);
+    showInMap([tree.treeId]);
   } else {
     alert('Location not available for this tree.');
   }
-}
-
-// Opening the map as a fullscreen in-app modal
-function showMap(idsParam) {
-  document.getElementById('map-frame').src = 'map.html?ids=' + encodeURIComponent(idsParam);
-  document.getElementById('map-modal').classList.add('open');
 }
 
 function closeMapModal() {

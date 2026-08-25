@@ -1,4 +1,22 @@
 
+  function showInMap(treeIds) {
+    var ids = Array.isArray(treeIds) ? treeIds.slice() : [treeIds];
+    ids = ids.filter(function (id) { return id && String(id).trim(); })
+             .map(function (id) { return String(id).trim(); });
+    var seen = {};
+    ids = ids.filter(function (id) { if (seen[id]) return false; seen[id] = 1; return true; });
+    if (!ids.length) { alert('No tree locations found to show on the map.'); return; }
+    var param = ids.join('|');
+    var frame = document.getElementById('map-frame');
+    var modal = document.getElementById('map-modal');
+    if (frame && modal) {
+      frame.src = 'map.html?ids=' + encodeURIComponent(param);
+      modal.classList.add('open');
+    } else {
+      window.location.href = 'map.html?ids=' + encodeURIComponent(param);
+    }
+  }
+
   function decodeTreeIds(url) {
     var query = new URLSearchParams(url).get('ids') || '';
     var ids = query.split('|')
@@ -16,11 +34,33 @@
     return null;
   }
 
+  function yearsSince(dateStr) {
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '—';
+    return ((Date.now() - d.getTime()) / (365.25 * 24 * 60 * 60 * 1000)).toFixed(1);
+  }
+  function ageLabel(dateStr) {
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '';
+    var years = ((Date.now() - d.getTime()) / (365.25 * 24 * 60 * 60 * 1000)).toFixed(1);
+    var dd = String(d.getDate()).padStart(2, '0');
+    var mm = String(d.getMonth() + 1).padStart(2, '0');
+    var yyyy = d.getFullYear();
+    return 'Age:' + years + 'y(' + dd + '-' + mm + '-' + yyyy + ')';
+  }
+
   function treeDetails(treeId, appLang) {
     var record = storage.pullTreeDetail(treeId);
     if (!record) {
-      return { type: 'Tree', localName: '', treeId: treeId, address: '', caregiver: '', careGiverContact: '', emoji: '🌳', health: '', height: '', diameter: '' };
+      return { type: 'Tree', localName: '', treeId: treeId, address: '', caregiver: '', careGiverContact: '', emoji: '🌳', health: '', height: '', diameter: '', plantedDate: '' };
     }
+    var enc = record['encounters-list'] || {};
+    var maxNum = -1, lastEnc = null;
+    Object.keys(enc).forEach(function (k) {
+      var n = parseInt(k, 10);
+      if (!isNaN(n) && n > maxNum) { maxNum = n; lastEnc = enc[k]; }
+    });
+    var st = lastEnc ? (lastEnc['health-status'] || {}) : {};
     var lang = appLang || getAppLang();
     var name = record.speciesName[lang] || record.speciesName.en || record.speciesName.ta || '';
     var addr = record.address || {};
@@ -33,9 +73,10 @@
       caregiver: record['care-giver'] || '',
       careGiverContact: record['care-giver-contact-number'] || '',
       emoji: record.emoji || '🌳',
-      health: record.health || '',
-      height: record.height || '',
-      diameter: record.diameter || ''
+      health: st.health || '',
+      height: st.height || '',
+      diameter: st.diameter || '',
+      plantedDate: record['date-of-planting'] || ''
     };
   }
 
@@ -151,7 +192,10 @@
     return '' +
       '<div class="map-card">' +
         '<div class="map-photo"><span class="map-emoji">' + info.emoji + '</span>' +
-          (info.health ? '<span class="map-health health-' + String(info.health).toLowerCase().replace(/\s+/g, '-') + '">' + info.health + '</span>' : '') +
+          '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center">' +
+            (info.health ? '<span class="map-health health-' + String(info.health).toLowerCase().replace(/\s+/g, '-') + '">' + info.health + '</span>' : '') +
+            (info.plantedDate ? '<span class="map-planted" style="color:white">' + ageLabel(info.plantedDate) + '</span>' : '') +
+          '</div>' +
         '</div>' +
         '<div class="map-info">' +
           '<div class="map-name">' + (info.name || info.type) + '</div>' +
@@ -166,4 +210,4 @@
       '</div>';
   }
 
-  initMap();
+  if (document.getElementById('map')) { initMap(); }

@@ -87,6 +87,7 @@
   .tree-photo { height: 150px; display: flex; align-items: center; justify-content: center; position: relative; }
   .tree-emoji { font-size: 3rem; }
   .tree-health { position:absolute; bottom:4px; left:4px; font-size:0.6rem; padding:2px 6px; border-radius:999px; color:#fff; z-index:2; text-transform:capitalize; }
+  .tree-planted { position:absolute; bottom:4px; right:4px; font-size:0.6rem; padding:2px 6px; border-radius:999px; background:rgba(0,0,0,0.45); z-index:2; }
   .tree-health.health-healthy { background:#16a34a; }
   .tree-health.health-dead { background:#6b7280; }
   .tree-health.health-sick { background:#dc2626; }
