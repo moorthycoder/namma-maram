@@ -109,7 +109,23 @@ function addToSponsor() {
     logs: tree.logs || 0
   };
   try { sessionStorage.setItem('pendingSponsorV1', JSON.stringify(form)); } catch (e) {}
-  window.location.href = 'sponsor.html?hub=login&parent=' + encodeURIComponent('tree-profile.html' + location.search);
+  window.location.href = 'sponsor.html?hub=login&parent=' + encodeURIComponent('tree-profile.html' + location.search) + '&addSponsorTree=' + encodeURIComponent(profileTreeId);
+}
+
+function addToCare() {
+  var tree = findTree(profileTreeId) || {};
+  var form = {
+    treeId: profileTreeId,
+    name: cardNameText(tree, 'en') + ' #' + profileTreeId,
+    loc: treeLoc(tree),
+    bg: tree.bg || '',
+    emoji: tree.emoji || '🌳',
+    height: parseFloat(tree.height) || 0,
+    diam: tree.diameter || '—',
+    logs: tree.logs || 0
+  };
+  try { sessionStorage.setItem('pendingCareV1', JSON.stringify(form)); } catch (e) {}
+  window.location.href = 'care-giver.html?hub=login&parent=' + encodeURIComponent('tree-profile.html' + location.search);
 }
 
 // Open the map pinned to the tree shown in the profile

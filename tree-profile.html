@@ -15,7 +15,7 @@
 
   <!-- TREE PROFILE -->
   <div class="page active" id="page-profile">
-    <div class="topbar"><button class="back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-heart-plus"></i></button></div>
+    <div class="topbar"><button class="back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span><span style="margin-left:auto;display:flex;gap:6px"><button class="add-care-btn" type="button" onclick="addToCare()" title="Care for this tree"><i class="ti ti-heart-handshake"></i></button><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-currency-rupee"></i></button></span></div>
     <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">Healthy</span></div><div class="hero-title"><h1 id="profile-hero-title">Neem Tree #0042</h1><p id="profile-hero-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
     <div class="scrollable" style="padding:12px 14px 20px;">
       <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value"><span id="profile-stat-height">8.4</span><span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value"><span id="profile-stat-diam">22</span><span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">14</div></div></div>
@@ -32,7 +32,8 @@
         <div id="profile-logs"></div>
       </div>
       <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
-      <button class="sponsor-cta" type="button" onclick="addToSponsor()"><i class="ti ti-heart"></i> Sponsor this tree</button>
+      <button class="care-cta" type="button" onclick="addToCare()"><i class="ti ti-heart-handshake"></i> Care for this tree</button>
+      <button class="sponsor-cta" type="button" onclick="addToSponsor()"><i class="ti ti-currency-rupee"></i> Sponsor this tree</button>
     </div>
   </div>
 

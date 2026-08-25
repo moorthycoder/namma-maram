@@ -24,6 +24,30 @@ function loadCurrentUser() {
   } catch (e) {}
 }
 loadCurrentUser();
+function continueAsSponsor() {
+  goTo('sponsor-dash');
+}
+function sponsorLogout() {
+  try {
+    if (window.parent && window.parent.goNav) { window.parent.goNav('login-hub.html'); return; }
+    if (window.top && window.top.goNav) { window.top.goNav('login-hub.html'); return; }
+  } catch (e) {}
+  window.top.location.href = 'login-hub.html';
+}
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    var cred = null;
+    try { cred = storage.get('login'); } catch (e) {}
+    if (!cred) { var s = sessionStorage.getItem('loginCredentialsV1'); if (s) cred = JSON.parse(s); }
+    var role = cred && cred['tree-login'] && cred['tree-login']['sponsor'];
+    if (role) {
+      var btn = document.getElementById('continue-as-btn');
+      var name_el = document.getElementById('continue-as-name');
+      if (btn) btn.style.display = 'flex';
+      if (name_el) name_el.textContent = role.name || 'Sponsor';
+    }
+  } catch (e) {}
+});
 
 var loginStatusData = {
   waiting:   { icon:'ti ti-clock',        color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your login request is waiting for admin approval. We will notify you once it is reviewed.' },
