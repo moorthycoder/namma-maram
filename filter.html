@@ -6,7 +6,8 @@
 <title>Namma Maram · Search</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@600;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="css/app.css" />
 <link rel="stylesheet" href="css/filter.css" />
 </head>
 <body>
@@ -21,13 +22,12 @@
         <div class="main-titles">
           <div class="main-title-ta"><span class="ta-stylish">நம்ம</span> மரம்</div>
           <div class="main-title">Namma Maram</div>
-          <div class="main-sub">Nature and us are one and same</div>
         </div>
       </div>
 
       <div class="album-filters">
         <form autocomplete="off" onsubmit="return false">
-          <div class="filter-row" style="flex-direction:column;gap:8px;">
+          <div class="filter-row filter-row-stack">
             <div class="clear-wrap">
               <input class="id-input" id="album-place" type="text" placeholder="Type Place, Pincode, Project or Tree Id" autocomplete="off" oninput="onInput(this)" onkeyup="onInput(this)" />
               <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
@@ -44,7 +44,7 @@
       <div class="album-container">
         <div class="album-header">
           <span class="album-title"><i class="ti ti-search"></i> Search Results</span>
-          <span style="display:flex;align-items:center;gap:8px;">
+          <span class="album-controls">
             <span class="album-count" id="album-count">0 trees</span>
             <button class="album-toggle" id="summary-toggle" type="button" onclick="toggleSummary()"><i class="ti ti-eye"></i></button>
           </span>
