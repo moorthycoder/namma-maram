@@ -238,7 +238,7 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     var varieties = {};
     filtered.forEach(function(t) { varieties[cardNameText(t, 'en')] = 1; });
     var vCount = Object.keys(varieties).length;
-    countEl.textContent = vCount + ' varieties · ' + filtered.length + ' trees';
+    countEl.innerHTML = '<span class="album-count-line">' + vCount + ' varieties</span><span class="album-count-line">' + filtered.length + ' trees</span>';
   }
 
   var summaryEl = document.getElementById('album-summary');

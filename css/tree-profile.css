@@ -17,7 +17,7 @@
   html { font-size: 16px; }
   html, body { height: 100%; }
   body { background: var(--color-background-primary); overflow: hidden; }
-  .screen { background: var(--color-background-primary); height: 100%; display: flex; flex-direction: column; position: relative; }
+  .screen { background: var(--color-background-primary); height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
   .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
   .status-bar.blue span { color: var(--color-theme-light); }
@@ -93,10 +93,10 @@
   .album-note-label { font-size: 0.6667rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
 
   /* MAP MODAL */
-  .map-modal-back{display:none;position:absolute;inset:0;z-index:90;border-radius:28px;flex-direction:column;background:var(--color-background-primary);}
+  .map-modal-back{display:none;position:absolute;inset:0;z-index:90;border-radius:0;flex-direction:column;background:var(--color-background-primary);overflow:hidden;}
   .map-modal-back.open{display:flex;}
   .map-modal-head{display:flex;align-items:center;gap:10px;padding:8px 12px;}
-  .map-frame{flex:1;width:100%;border:none;}
+  .map-frame{flex:1;width:100%;border:none;display:block;}
   /* REPORT MODAL */
   .report-modal-back{display:none;position:absolute;inset:0;z-index:90;border-radius:28px;flex-direction:column;background:var(--color-background-primary);}
   .report-modal-back.open{display:flex;}
