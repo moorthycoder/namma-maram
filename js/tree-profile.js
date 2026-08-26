@@ -152,8 +152,17 @@ function addToSponsor() {
   window.location.href = 'sponsor.html?hub=login&userid=' + encodeURIComponent(userid_q || '') + '&parent=' + encodeURIComponent('tree-profile.html' + location.search);
 }
 
+function storePendingCareRequest(userid, treeId) {
+  try {
+    var pending = JSON.parse(sessionStorage.getItem('pendingCare') || '{}');
+    pending[userid || 'caregiver'] = treeId;
+    sessionStorage.setItem('pendingCare', JSON.stringify(pending));
+  } catch (e) {}
+}
 function addToCare() {
-  window.location.href = 'care-giver.html?hub=login&parent=' + encodeURIComponent('tree-profile.html' + location.search) + '&addCareTree=' + encodeURIComponent(profileTreeId);
+  var userid_q = new URLSearchParams(location.search).get('userid') || new URLSearchParams(location.search).get('role') || '';
+  try { storePendingCareRequest(userid_q || 'caregiver', profileTreeId); } catch (e) {}
+  window.location.href = 'care-giver.html?hub=login&userid=' + encodeURIComponent(userid_q) + '&parent=' + encodeURIComponent('tree-profile.html' + location.search);
 }
 
 // Open the map pinned to the tree shown in the profile
