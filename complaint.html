@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Report Issue</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/tree-profile.css" />
+</head>
+<body>
+<div class="screen">
+  <div class="topbar"><button class="back-btn" onclick="complaintBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Report issue — <span id="complaint-tree-id">—</span></span></div>
+  <div class="report-form-wrap">
+    <div class="report-field-group">
+      <label class="report-label"><i class="ti ti-user"></i> From</label>
+      <input class="report-input" id="complaint-from" type="text" placeholder="Your name" />
+    </div>
+    <div class="report-field-group">
+      <label class="report-label"><i class="ti ti-phone"></i> Contact number</label>
+      <input class="report-input" id="complaint-contact" type="tel" placeholder="e.g. 9876543210" />
+    </div>
+    <div class="report-field-group">
+      <label class="report-label"><i class="ti ti-notes"></i> Issue details</label>
+      <textarea class="report-textarea" id="complaint-message" rows="6" placeholder="Describe the issue…"></textarea>
+    </div>
+    <button class="report-submit-btn" type="button" onclick="submitComplaintForm()"><i class="ti ti-send"></i> Submit report</button>
+    <div class="report-hint">Your report will be saved under “complaints” in storage</div>
+  </div>
+  <div class="report-modal-back" id="complaint-success-modal">
+    <div class="report-success-sheet">
+      <div class="report-success-icon"><i class="ti ti-check"></i></div>
+      <div class="report-success-title">Report sent</div>
+      <div class="report-success-text">Your report for <span id="complaint-success-tree-id">—</span> has been received. Thank you!</div>
+      <button class="report-submit-btn" type="button" onclick="closeComplaintSuccessModal()"><i class="ti ti-check"></i> Okay</button>
+    </div>
+  </div>
+  <div class="report-modal-back" id="complaint-error-modal">
+    <div class="report-success-sheet">
+      <div class="report-error-icon"><i class="ti ti-alert-circle"></i></div>
+      <div class="report-success-title">Required Fields Missing</div>
+      <div class="report-success-text" id="complaint-error-text">Please fill From, Contact number and Issue details</div>
+      <button class="report-submit-btn" type="button" onclick="closeComplaintErrorModal()"><i class="ti ti-check"></i> Okay</button>
+    </div>
+  </div>
+</div>
+<script src="js/storage.js"></script>
+<script>
+  var complaintTreeId = new URLSearchParams(location.search).get('treeId') || new URLSearchParams(location.search).get('treeid') || '';
+  var complaintParent = new URLSearchParams(location.search).get('parent') || '';
+  document.getElementById('complaint-tree-id').textContent = complaintTreeId || '—';
+  function openComplaintErrorModal(message_text) {
+    var error_text_el = document.getElementById('complaint-error-text');
+    var error_modal_el = document.getElementById('complaint-error-modal');
+    if (error_text_el) error_text_el.textContent = message_text;
+    if (error_modal_el) error_modal_el.classList.add('open');
+  }
+  function closeComplaintErrorModal() {
+    var error_modal_el = document.getElementById('complaint-error-modal');
+    if (error_modal_el) error_modal_el.classList.remove('open');
+  }
+  function complaintBack() {
+    if (complaintParent) { window.location.href = complaintParent; return; }
+    if (window.history.length > 1) window.history.back(); else window.location.href = 'tree-profile.html';
+  }
+  function getComplaintsArray() {
+    var stored = null;
+    try { stored = storage.get('complaints'); } catch (e) {}
+    return Array.isArray(stored) ? stored : (storage.tree && Array.isArray(storage.tree.complaints) ? storage.tree.complaints : []);
+  }
+  function submitComplaintForm() {
+    var from_el = document.getElementById('complaint-from');
+    var contact_el = document.getElementById('complaint-contact');
+    var message_el = document.getElementById('complaint-message');
+    var from_val = from_el ? from_el.value.trim() : '';
+    var contact_val = contact_el ? contact_el.value.trim() : '';
+    var message_val = message_el ? message_el.value.trim() : '';
+    var is_invalid = (!from_val || !contact_val || !message_val) ? true : false;
+    if (is_invalid) {
+      openComplaintErrorModal('Please fill From, Contact number and Issue details');
+      return;
+    }
+    var userid_q = new URLSearchParams(location.search).get('userid') || '';
+    var complaint_obj = { treeId: complaintTreeId, from: from_val, contact_number: contact_val, message: message_val, created_at: new Date().toISOString(), userid: userid_q };
+    var arr = getComplaintsArray();
+    arr.push(complaint_obj);
+    try { storage.tree.complaints = arr; try { window.__COMPLAINTS = arr; } catch (e) {} if (typeof storage.set === 'function') storage.set('complaints', arr); else storage.save(); } catch (e) { try { getBackingStore().setItem('tree', JSON.stringify(storage.tree)); } catch (e2) {} }
+    if (from_el) from_el.value = '';
+    if (contact_el) contact_el.value = '';
+    if (message_el) message_el.value = '';
+    var id_el = document.getElementById('complaint-success-tree-id');
+    if (id_el) id_el.textContent = complaintTreeId || '—';
+    document.getElementById('complaint-success-modal').classList.add('open');
+  }
+  function closeComplaintSuccessModal() {
+    document.getElementById('complaint-success-modal').classList.remove('open');
+    complaintBack();
+  }
+</script>
+</body>
+</html>

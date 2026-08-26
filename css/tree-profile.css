@@ -113,5 +113,9 @@
   .report-hint{font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;margin-top:4px;}
   .report-success-sheet{background:var(--color-background-primary);margin:auto;width:88%;max-width:360px;border-radius:20px;padding:22px 18px 18px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.15);}
   .report-success-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#dcfce7;color:#16a34a;font-size:24px;}
+  .report-error-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;font-size:24px;}
+  .report-info-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#e0f2fe;color:#0284c7;font-size:24px;}
   .report-success-title{font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;}
   .report-success-text{font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;}
+  .btn-disabled{opacity:0.6;cursor:not-allowed;}
+  .btn-added{opacity:0.9;}
