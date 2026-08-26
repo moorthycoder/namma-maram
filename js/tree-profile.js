@@ -101,8 +101,10 @@ function isLoggedInAs(userid_q) {
     var s = sessionStorage.getItem('loginCredentialsV1');
     if (s) {
       var c = JSON.parse(s);
-      var sp = c['tree-login'] && c['tree-login']['sponsor'];
-      if (sp && sp.userId && sp.userId === userid_q) return true;
+      var tl = c['tree-login'] || {};
+      for (var k in tl) {
+        if (tl[k] && tl[k].userId && tl[k].userId === userid_q) return true;
+      }
     }
   } catch (e) {}
   return false;
@@ -161,7 +163,39 @@ function storePendingCareRequest(userid, treeId) {
 }
 function addToCare() {
   var userid_q = new URLSearchParams(location.search).get('userid') || new URLSearchParams(location.search).get('role') || '';
-  try { storePendingCareRequest(userid_q || 'caregiver', profileTreeId); } catch (e) {}
+  console.log('[tree-profile] addToCare click', {userid_q: userid_q, treeId: profileTreeId, href: location.href});
+  try { storePendingCareRequest(userid_q || 'caregiver', profileTreeId); console.log('[tree-profile] stored pendingCare', sessionStorage.getItem('pendingCare')); } catch (e) { console.log('[tree-profile] store pending failed', e); }
+  console.log('[tree-profile] isLoggedInAs', userid_q, isLoggedInAs(userid_q));
+  if (userid_q && isLoggedInAs(userid_q)) {
+    var found = false;
+    try {
+      var login = storage.get('login') || window._login || {};
+      var tl = login['tree-login'] || (login['tree-login'] = {});
+      var target = null;
+      var target_key = null;
+      for (var k in tl) { if (tl[k] && tl[k].userId === userid_q) { target = tl[k]; target_key = k; break; } }
+      if (target) {
+        var cards = target.cards || (target.cards = {});
+        var waiting = cards.waiting || (cards.waiting = []);
+        var waiting_ids = waiting.map(function(e){ return typeof e === 'string' ? e : e.treeId; });
+        if (waiting_ids.indexOf(profileTreeId) === -1) waiting.push(profileTreeId);
+        cards.waiting = waiting;
+        target.cards = cards;
+        tl[target_key] = target;
+        login['tree-login'] = tl;
+        storage.set('login', login);
+        window._login = login;
+        found = true;
+        try { var pp = JSON.parse(sessionStorage.getItem('pendingCare')||'{}'); delete pp[userid_q]; sessionStorage.setItem('pendingCare', JSON.stringify(pp)); } catch (e) {}
+      }
+    } catch (e) {}
+    console.log('[tree-profile] direct add found', found);
+    if (found) { console.log('[tree-profile] direct add success -> caregiver-waiting'); window.location.href = 'care-giver.html?hub=caregiver-waiting'; return; }
+    console.log('[tree-profile] direct add failed, target not found');
+  } else {
+    console.log('[tree-profile] not logged in as userid, will go to login');
+  }
+  console.log('[tree-profile] redirect to caregiver login with pending');
   window.location.href = 'care-giver.html?hub=login&userid=' + encodeURIComponent(userid_q) + '&parent=' + encodeURIComponent('tree-profile.html' + location.search);
 }
 
