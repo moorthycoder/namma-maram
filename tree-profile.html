@@ -15,7 +15,7 @@
 
   <!-- TREE PROFILE -->
   <div class="page active" id="page-profile">
-    <div class="topbar"><button class="back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span><span style="margin-left:auto;display:flex;gap:6px"><button class="add-care-btn" type="button" onclick="addToCare()" title="Care for this tree"><i class="ti ti-heart-handshake"></i></button><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-currency-rupee"></i></button></span></div>
+    <div class="topbar"><button class="back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span><span style="margin-left:auto;display:flex;gap:6px"><button class="add-care-btn" type="button" onclick="addToCare()" title="Care for this tree"><i class="ti ti-heart-handshake"></i></button><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-currency-rupee"></i></button><button class="add-report-btn" type="button" onclick="openReportForm()" title="Report issue"><i class="ti ti-phone"></i></button></span></div>
     <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">Healthy</span></div><div class="hero-title"><h1 id="profile-hero-title">Neem Tree #0042</h1><p id="profile-hero-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
     <div class="scrollable" style="padding:12px 14px 20px;">
       <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value"><span id="profile-stat-height">8.4</span><span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value"><span id="profile-stat-diam">22</span><span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">14</div></div></div>
@@ -34,6 +34,7 @@
       <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
       <button class="care-cta" type="button" onclick="addToCare()"><i class="ti ti-heart-handshake"></i> Care for this tree</button>
       <button class="sponsor-cta" type="button" onclick="addToSponsor()"><i class="ti ti-currency-rupee"></i> Sponsor this tree</button>
+      <button class="report-cta" type="button" onclick="openReportForm()"><i class="ti ti-phone"></i> Report issue</button>
     </div>
   </div>
 
@@ -51,6 +52,39 @@
       <span class="topbar-title">Tree map</span>
     </div>
     <iframe class="map-frame" id="map-frame" title="Tree map"></iframe>
+  </div>
+
+  <!-- REPORT FORM MODAL -->
+  <div class="report-modal-back" id="report-modal">
+    <div class="report-modal-head">
+      <button class="back-btn" onclick="closeReportForm()"><i class="ti ti-arrow-left"></i></button>
+      <span class="topbar-title">Report issue — <span id="report-tree-id">625008-01-0001</span></span>
+    </div>
+    <div class="report-form-wrap">
+      <div class="report-field-group">
+        <label class="report-label"><i class="ti ti-user"></i> From</label>
+        <input class="report-input" id="report-from" type="text" placeholder="Your name" />
+      </div>
+      <div class="report-field-group">
+        <label class="report-label"><i class="ti ti-phone"></i> Contact number</label>
+        <input class="report-input" id="report-contact" type="tel" placeholder="e.g. 9876543210" />
+      </div>
+      <div class="report-field-group">
+        <label class="report-label"><i class="ti ti-notes"></i> Issue details</label>
+        <textarea class="report-textarea" id="report-message" rows="6" placeholder="Describe the issue…"></textarea>
+      </div>
+      <button class="report-submit-btn" type="button" onclick="submitReportForm()"><i class="ti ti-send"></i> Submit report</button>
+      <div class="report-hint">Your report will be saved under “complaints” in storage</div>
+    </div>
+  </div>
+  <!-- REPORT SUCCESS MODAL -->
+  <div class="report-modal-back" id="report-success-modal">
+    <div class="report-success-sheet">
+      <div class="report-success-icon"><i class="ti ti-check"></i></div>
+      <div class="report-success-title">Report sent</div>
+      <div class="report-success-text">Your report for <span id="report-success-tree-id">—</span> has been received. Thank you!</div>
+      <button class="report-submit-btn" type="button" onclick="closeReportSuccessModal()"><i class="ti ti-check"></i> Okay</button>
+    </div>
   </div>
 
 </div>

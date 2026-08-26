@@ -213,6 +213,58 @@ function closeMapModal() {
   document.getElementById('map-modal').classList.remove('open');
   document.getElementById('map-frame').src = '';
 }
+function openReportForm() {
+  document.getElementById('report-tree-id').textContent = profileTreeId;
+  document.getElementById('report-modal').classList.add('open');
+}
+function closeReportForm() {
+  document.getElementById('report-modal').classList.remove('open');
+}
+function getCurrentComplaintsArray() {
+  var stored = null;
+  try { stored = storage.get('complaints'); } catch (e) {}
+  return Array.isArray(stored) ? stored : (storage.tree && Array.isArray(storage.tree.complaints) ? storage.tree.complaints : []);
+}
+function submitReportForm() {
+  var from_el = document.getElementById('report-from');
+  var contact_el = document.getElementById('report-contact');
+  var message_el = document.getElementById('report-message');
+  var from_val = from_el ? from_el.value.trim() : '';
+  var contact_val = contact_el ? contact_el.value.trim() : '';
+  var message_val = message_el ? message_el.value.trim() : '';
+  if (!from_val || !contact_val || !message_val) { alert('Please fill From, Contact number and Issue details'); return; }
+  var userid_q = new URLSearchParams(location.search).get('userid') || '';
+  var now = new Date();
+  var complaint_obj = {
+    treeId: profileTreeId,
+    from: from_val,
+    contact_number: contact_val,
+    message: message_val,
+    created_at: now.toISOString(),
+    userid: userid_q
+  };
+  var complaints_arr = getCurrentComplaintsArray();
+  complaints_arr.push(complaint_obj);
+  try {
+    storage.tree.complaints = complaints_arr;
+    try { window.__COMPLAINTS = complaints_arr; } catch (e) {}
+    if (typeof storage.set === 'function') { storage.set('complaints', complaints_arr); }
+    else { storage.save(); }
+  } catch (e) { try { getBackingStore().setItem('tree', JSON.stringify(storage.tree)); } catch (e2) {} }
+  if (from_el) from_el.value = '';
+  if (contact_el) contact_el.value = '';
+  if (message_el) message_el.value = '';
+  closeReportForm();
+  showReportSuccessModal(profileTreeId);
+}
+function showReportSuccessModal(treeId) {
+  var id_el = document.getElementById('report-success-tree-id');
+  if (id_el) id_el.textContent = treeId || profileTreeId;
+  document.getElementById('report-success-modal').classList.add('open');
+}
+function closeReportSuccessModal() {
+  document.getElementById('report-success-modal').classList.remove('open');
+}
 
 // Album (log photos)
 function openAlbum(i) {
@@ -263,10 +315,40 @@ function normalizeAlbum(t) {
   return out;
 }
 
+function getCurrentRoleType() {
+  var urlRole = new URLSearchParams(location.search).get('role');
+  if (urlRole) {
+    var r = String(urlRole).toLowerCase();
+    return r.indexOf('sponsor') === 0 || r.indexOf('spn') === 0 ? 'sponsor' : r.indexOf('care') === 0 || r.indexOf('car') === 0 ? 'caregiver' : r;
+  }
+  var userid_q = new URLSearchParams(location.search).get('userid');
+  if (userid_q) {
+    try {
+      var loginByUserid = storage.get('login') || window._login || {};
+      var tlByUserid = loginByUserid['tree-login'] || {};
+      for (var k in tlByUserid) { if (tlByUserid[k] && tlByUserid[k].userId === userid_q) { var t = tlByUserid[k].type || k; return t === 'sponsor' || k === 'sponsor' ? 'sponsor' : 'caregiver'; } }
+      var s = sessionStorage.getItem('loginCredentialsV1');
+      if (s) { var c = JSON.parse(s); var tl2 = c['tree-login'] || {}; for (var k2 in tl2) { if (tl2[k2] && tl2[k2].userId === userid_q) { var t2 = tl2[k2].type || k2; return t2 === 'sponsor' || k2 === 'sponsor' ? 'sponsor' : 'caregiver'; } } }
+    } catch (e) {}
+  }
+  return null;
+}
+function applyRoleVisibility() {
+  var role = getCurrentRoleType();
+  var showCare = true;
+  var showSponsor = true;
+  if (role === 'sponsor') { showCare = false; showSponsor = true; }
+  else if (role === 'caregiver') { showCare = true; showSponsor = false; }
+  var careBtns = document.querySelectorAll('.add-care-btn, .care-cta');
+  var sponsorBtns = document.querySelectorAll('.add-sponsor-btn, .sponsor-cta');
+  careBtns.forEach(function(el){ el.style.display = showCare ? '' : 'none'; });
+  sponsorBtns.forEach(function(el){ el.style.display = showSponsor ? '' : 'none'; });
+}
 window.render = {
   init: function () {
     storage.syncTreeCards();
     albumData = (window.__TREE_DATA || []).map(normalizeAlbum);
     renderProfile();
+    try { applyRoleVisibility(); } catch (e) {}
   }
 };
