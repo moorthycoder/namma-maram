@@ -129,6 +129,15 @@ function cardAddressText(card, lang_key) {
   var addr = (card && card.address) || {};
   return addr[lang_key] || addr.en || addr.ta || '';
 }
+function applyFilterPlaceholders(){
+  var placeholders = storage.get('placeholderTexts') || {};
+  var lang = filterLang || appLang || 'en';
+  var ph = placeholders[lang] || placeholders['en'] || {};
+  var place_el = document.getElementById('album-place');
+  var tree_el = document.getElementById('album-tree');
+  if(place_el && ph['album-place']) place_el.placeholder = ph['album-place'];
+  if(tree_el && ph['album-tree']) tree_el.placeholder = ph['album-tree'];
+}
 
 // Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
 function treeLoc(t) { var addr = cardAddressText(t, 'en'); return addr ? addr.split(', ')[0] : ''; }
@@ -523,6 +532,7 @@ window.render = {
       history.replaceState(null, '', 'filter.html');
     }
     populatePlaceList();
+    applyFilterPlaceholders();
     applyFilters();
   }
 };

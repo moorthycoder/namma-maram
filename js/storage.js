@@ -11,7 +11,8 @@ var STORE = {
   treeNames:   { url: 'json/trees_name.json',       ram: 'TREE_NAMES_DB' },
   treeColours: { url: 'json/tree-colours-in-map-drops.json', ram: 'TREE_COLOURS' },
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
-  login:       { url: 'json/login-credentials.json', ram: '_login', session: 'loginCredentialsV1' }
+  login:       { url: 'json/login-credentials.json', ram: '_login', session: 'loginCredentialsV1' },
+  placeholderTexts: { url: 'json/placeholder_text.json', ram: '__PLACEHOLDERS' }
 };
 function getBackingStore() {
   return sessionStorage;

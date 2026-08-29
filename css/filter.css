@@ -273,6 +273,7 @@ body {
 .id-input::placeholder {
   color: rgba(234, 243, 222, 0.6);
   font-family: var(--font-sans);
+  font-size: 0.6rem;
 }
 
 .album-suggest {
