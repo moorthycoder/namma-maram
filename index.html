@@ -21,7 +21,7 @@
       <button class="bottomnav-btn" type="button" onclick="goNav('register-hub.html')"><i class="ti ti-user-plus"></i><span>Register</span></button>
       <button class="bottomnav-btn" type="button" onclick="goNav('settings.html')"><i class="ti ti-settings"></i><span>Settings</span></button>
     </nav>
-    <div class="lang-popup-back" id="lang-popup">
+    <div class="lang-popup-back" id="lang-popup" onclick="handleLangPopupBackdropClick(event)">
       <div class="lang-popup-card">
         <div class="lang-popup-head"><span class="topbar-title">Choose Language</span><button class="back-btn" onclick="closeLangPopup()"><i class="ti ti-x"></i></button></div>
         <div class="lang-grid" id="lang-grid"></div>

@@ -6,6 +6,12 @@ function goNav(page) {
 
 function openLangPopup() { document.getElementById('lang-popup').classList.add('open'); }
 function closeLangPopup() { document.getElementById('lang-popup').classList.remove('open'); }
+function handleLangPopupBackdropClick(event) {
+  if (event.target === event.currentTarget) { closeLangPopup(); }
+}
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') { closeLangPopup(); }
+});
 
 function renderLangGrid() {
   var currentLang = getAppLang();
