@@ -1,9 +1,10 @@
 [
+  { "code": "sn",  "name": "Scientific","script": "Sn" },
   { "code": "en",  "name": "English",   "script": "Aa" },
   { "code": "ta",  "name": "Tamil",     "script": "தமிழ்" },
   { "code": "te",  "name": "Telugu",    "script": "తెలుగు" },
   { "code": "kn",  "name": "Kannada",   "script": "ಕನ್ನಡ" },
-  { "code": "ml",  "name": "Malayalam", "script": "മലയാളം" },
+  { "code": "ml",  "name": "Malayalam", "script": "மലയാളം" },
   { "code": "mr",  "name": "Marathi",   "script": "मराठी" },
   { "code": "or",  "name": "Odia",      "script": "ଓଡ଼ିଆ" },
   { "code": "as",  "name": "Assamese",  "script": "অসমীয়া" },

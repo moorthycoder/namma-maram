@@ -238,7 +238,7 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     var varieties = {};
     filtered.forEach(function(t) { varieties[cardNameText(t, 'en')] = 1; });
     var vCount = Object.keys(varieties).length;
-    countEl.innerHTML = '<span class="album-count-line">' + vCount + ' varieties</span><span class="album-count-line">' + filtered.length + ' trees</span>';
+    countEl.innerHTML = '<span class="album-count-line">' + vCount + ' species</span><span class="album-count-line">' + filtered.length + ' trees</span>';
   }
 
   var summaryEl = document.getElementById('album-summary');
@@ -337,8 +337,8 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     var info = document.createElement('div');
     info.className = 'tree-info';
     info.innerHTML =
-      '<div class="tree-name">' + treeNameFromCard(t, lang) + '</div>' +
-      '<div class="tree-id">' + t.treeId + '</div>' +
+      '<div class="tree-name-row"><div class="tree-name">' + treeNameFromCard(t, lang) + '</div>' +
+      '<div class="tree-id">' + t.treeId + '</div></div>' +
       '<div class="tree-addr"><i class="ti ti-map-pin" style="font-size:0.7rem"></i> ' + (cardAddressText(t, lang) || '—') + '</div>';
 
     card.appendChild(info);
@@ -346,13 +346,13 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
 
     var stats = document.createElement('div');
     stats.className = 'tree-stats';
-    stats.innerHTML = '<span>📏 ' + t.height + '</span><span>📐 ' + t.diameter + '</span>';
+    stats.innerHTML = '<span>📏 ' + t.height + '</span><span>⭕ ' + t.diameter + '</span>';
     info.appendChild(stats);
 
     var meta = document.createElement('div');
     meta.className = 'tree-meta';
-    var updLabel = isFirst ? 'Registered by' : 'Updated by';
-    meta.innerHTML = '<div>👀 Encounter <b>' + (lastCard.encounter != null ? lastCard.encounter : 0) + '</b> · ' + (updDate || '—') + '</div><div>' + updLabel + ' <b>' + (upd || '—') + '</b></div>';
+    var updLabel = isFirst ? 'Registered by' : 'Surveyed by';
+    meta.innerHTML = '<div>Encounter <b>' + (lastCard.encounter != null ? lastCard.encounter : 0) + '</b> · ' + (updDate || '—') + '</div><div>' + updLabel + ' <b>' + (upd || '—') + '</b></div>';
     info.appendChild(meta);
 
     frag.appendChild(card);

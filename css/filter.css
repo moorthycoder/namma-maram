@@ -558,6 +558,10 @@ body {
   font-weight: 600;
 }
 
+.tree-name-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tree-name-row .tree-name { margin-top: 0; flex: 1; }
+.tree-name-row .tree-id { flex-shrink: 0; }
+
 .tree-name {
   font-size: 1.1rem;
   font-weight: 600;
