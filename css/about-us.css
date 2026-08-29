@@ -35,3 +35,5 @@
   .info-block-title { font-size: 0.8667rem; font-weight: 500; color: var(--color-text-primary); display: flex; align-items: center; gap: 6px; }
   .info-block-title i { color: var(--color-theme); }
   .info-block-text { font-size: 0.8rem; color: var(--color-text-secondary); line-height: 1.7; }
+  .close-about-btn { margin: 12px auto; display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); color: var(--color-text-primary); font-size: 0.8667rem; font-weight: 500; cursor: pointer; font-family: var(--font-sans); }
+  .close-about-btn:hover { background: var(--color-background-secondary); }

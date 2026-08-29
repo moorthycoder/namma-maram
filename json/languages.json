@@ -1,17 +1,77 @@
 [
-  { "code": "sn",  "name": "Scientific","script": "Sn" },
-  { "code": "en",  "name": "English",   "script": "Aa" },
-  { "code": "ta",  "name": "Tamil",     "script": "தமிழ்" },
-  { "code": "te",  "name": "Telugu",    "script": "తెలుగు" },
-  { "code": "kn",  "name": "Kannada",   "script": "ಕನ್ನಡ" },
-  { "code": "ml",  "name": "Malayalam", "script": "மലയാളം" },
-  { "code": "mr",  "name": "Marathi",   "script": "मराठी" },
-  { "code": "or",  "name": "Odia",      "script": "ଓଡ଼ିଆ" },
-  { "code": "as",  "name": "Assamese",  "script": "অসমীয়া" },
-  { "code": "bn",  "name": "Bengali",   "script": "বাংলা" },
-  { "code": "hi",  "name": "Hindi",     "script": "हिन्दी" },
-  { "code": "ne",  "name": "Nepali",    "script": "नेपाली" },
-  { "code": "si",  "name": "Sinhala",   "script": "සිංහල" },
-  { "code": "kok", "name": "Konkani",   "script": "कोंकणी" },
-  { "code": "tcy", "name": "Tulu",      "script": "ತುಳು" }
+  {
+    "code": "sn",
+    "name": "Scientific",
+    "script": "Sn"
+  },
+  {
+    "code": "en",
+    "name": "English",
+    "script": "Aa"
+  },
+  {
+    "code": "ta",
+    "name": "Tamil",
+    "script": "தமிழ்"
+  },
+  {
+    "code": "ml",
+    "name": "Malayalam",
+    "script": "മലയാളം"
+  },
+  {
+    "code": "te",
+    "name": "Telugu",
+    "script": "తెలుగు"
+  },
+  {
+    "code": "kn",
+    "name": "Kannada",
+    "script": "ಕನ್ನಡ"
+  },
+  {
+    "code": "tcy",
+    "name": "Tulu",
+    "script": "ತುಳು"
+  },
+  {
+    "code": "kok",
+    "name": "Konkani",
+    "script": "कोंकणी"
+  },
+  {
+    "code": "mr",
+    "name": "Marathi",
+    "script": "मराठी"
+  },
+  {
+    "code": "or",
+    "name": "Odia",
+    "script": "ଓଡ଼ିଆ"
+  },
+  {
+    "code": "hi",
+    "name": "Hindi",
+    "script": "हिन्दी"
+  },
+  {
+    "code": "bn",
+    "name": "Bengali",
+    "script": "বাংলা"
+  },
+  {
+    "code": "as",
+    "name": "Assamese",
+    "script": "অসমীয়া"
+  },
+  {
+    "code": "ne",
+    "name": "Nepali",
+    "script": "नेपाली"
+  },
+  {
+    "code": "si",
+    "name": "Sinhala",
+    "script": "සිංහල"
+  }
 ]
