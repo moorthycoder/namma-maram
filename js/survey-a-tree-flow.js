@@ -426,7 +426,7 @@ function saveSurveyTree() {
     purpose: 'survey'
   };
   window._surveyTree = surveyRecord;
-  try { localStorage.setItem('surveyTree', JSON.stringify(surveyRecord)); } catch (e) {}
+  try { sessionStorage.setItem('surveyTree', JSON.stringify(surveyRecord)); } catch (e) {}
   console.log('SURVEY OBJECT', JSON.stringify(surveyRecord, null, 2));
   surveySelfie = '';
   surveySnapshotSlots = SURVEY_SNAPSHOT_BASE_SLOTS.slice();

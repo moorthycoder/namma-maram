@@ -327,7 +327,7 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     var photo = document.createElement('div');
     photo.className = 'tree-photo';
     photo.style.background = t.bg;
-    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div>' + (t.health ? '<div class="tree-health health-' + String(t.health).toLowerCase().replace(/\s+/g, '-') + '">' + t.health + '</div>' : '') + (t['date-of-planting'] ? '<div class="tree-planted" style="color:white">' + ageLabel(t['date-of-planting']) + '</div>' : '');
+    photo.innerHTML = '<div class="tree-emoji">' + t.emoji + '</div>';
 
     var lastCard = t.cards && t.cards[t.cards.length - 1] || {};
     var isFirst = String(lastCard.encounter) === '1';
@@ -337,22 +337,33 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     var info = document.createElement('div');
     info.className = 'tree-info';
     info.innerHTML =
-      '<div class="tree-name-row"><div class="tree-name">' + treeNameFromCard(t, lang) + '</div>' +
-      '<div class="tree-id">' + t.treeId + '</div></div>' +
-      '<div class="tree-addr"><i class="ti ti-map-pin" style="font-size:0.7rem"></i> ' + (cardAddressText(t, lang) || '—') + '</div>';
+      '<div class="tree-name">' + treeNameFromCard(t, lang).replace(/, /g, ',<br>') + '</div>' +
+      '<div class="tree-id">' + t.treeId + '</div>' +
+      '<div class="tree-addr"><button class="addr-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + (cardAddressText(t, lang) || '—') + '</span></div>';
 
     card.appendChild(info);
     info.appendChild(photo);
 
+    var health_stats_row = document.createElement('div');
+    health_stats_row.className = 'health-stats-row';
+
+    if (t.health) {
+      var health_chip = document.createElement('div');
+      health_chip.className = 'health-inline health-' + String(t.health).toLowerCase().replace(/\s+/g, '-');
+      health_chip.textContent = t.health;
+      health_stats_row.appendChild(health_chip);
+    }
+
     var stats = document.createElement('div');
     stats.className = 'tree-stats';
     stats.innerHTML = '<span>📏 ' + t.height + '</span><span>⭕ ' + t.diameter + '</span>';
-    info.appendChild(stats);
+    health_stats_row.appendChild(stats);
+    info.appendChild(health_stats_row);
 
     var meta = document.createElement('div');
     meta.className = 'tree-meta';
-    var updLabel = isFirst ? 'Registered by' : 'Surveyed by';
-    meta.innerHTML = '<div>Encounter <b>' + (lastCard.encounter != null ? lastCard.encounter : 0) + '</b> · ' + (updDate || '—') + '</div><div>' + updLabel + ' <b>' + (upd || '—') + '</b></div>';
+    var formatted_date = (function(d){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d||''); return m? m[3]+'-'+m[2]+'-'+m[1] : (d||'—'); })(updDate);
+    meta.innerHTML = '<div>survey ' + (lastCard.encounter != null ? lastCard.encounter : 0) + ' · ' + formatted_date + ' · ' + (upd || '—') + '</div>';
     info.appendChild(meta);
 
     frag.appendChild(card);

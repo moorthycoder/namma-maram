@@ -3,31 +3,38 @@ var profileTreeId = new URLSearchParams(location.search).get("treeId") ;
 
 // tree-profile.js — reordered for vetting: core fns top, helpers bottom
 function findTree(id) {
-  for (var i = 0; i < albumData.length; i++)
-    if (albumData[i].treeId === id) return albumData[i];
+  var raw = window.__TREE_DATA || storage.get('treeCards') || [];
+  for (var i = 0; i < raw.length; i++) if (raw[i].treeId===id) return raw[i];
+  for (var i = 0; i < albumData.length; i++) if (albumData[i].treeId === id) return albumData[i];
   return null;
 }
 
 function renderProfile() {
-  var id =  profileTreeId;
-  document.getElementById('profile-id-label').textContent = id;
-  var tree = findTree(id);
+  var tree = (window.__TREE_DATA || storage.get('treeCards') || []).find(function(t){ return t.treeId===profileTreeId; });
+  console.log('RAM card', tree);
   if (!tree) return;
-  var localAddr = cardAddressText(tree, filterLang);
-  var last = tree.cards[tree.cards.length - 1] || {};
-  var first = tree.cards[0] || {};
-  document.getElementById('profile-hero-title').textContent = storage.treeNameIn(tree, filterLang);
-  document.getElementById('profile-hero-addr').innerHTML = '<i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + (localAddr || '') + ' <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button>';
-  document.getElementById('profile-health-badge').textContent = tree.health ? tree.health.charAt(0).toUpperCase() + tree.health.slice(1) : '—';
-  document.getElementById('profile-stat-height').textContent = parseFloat(last.height) || '—';
-  document.getElementById('profile-stat-diam').textContent = parseInt(last.diam, 10) || '—';
-  document.getElementById('profile-stat-logs').textContent = tree.logs;
-  document.getElementById('profile-health-score').textContent = (typeof last.score === 'number' ? last.score : '—') + ' / 100';
-  document.querySelector('.health-fill').style.width = (typeof last.score === 'number' ? last.score : 0) + '%';
-  document.getElementById('profile-species').textContent = (tree.speciesName && tree.speciesName.sn) || '—';
-  document.getElementById('profile-added-by').textContent = first.registeredBy || tree['care-giver'] || '—';
-  document.getElementById('profile-first-logged').textContent = formatDate(first.date);
-  document.getElementById('profile-total-logs').textContent = tree.logs + ' entries';
+  document.getElementById('profile-id-label').textContent = '';
+  var enc_keys = Object.keys(tree['encounters-list'] || {});
+  var first_key = enc_keys[0];
+  var last_key = enc_keys[enc_keys.length-1];
+  var first_enc = tree['encounters-list'][first_key] || {};
+  var last_enc = tree['encounters-list'][last_key] || {};
+  var last_status = last_enc['health-status'] || {};
+  var title_text = (tree.speciesName[appLang] || tree.speciesName.en || tree.speciesName.sn || '');
+  document.getElementById('profile-hero-title').innerHTML = title_text.replace(/, /g, ',<br>') + '<br><span style="font-size:0.8rem;opacity:0.8">' + tree.treeId + '</span>';
+  document.getElementById('profile-hero-addr').innerHTML = '<button class="addr-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + tree.address.en + '</span>';
+  document.getElementById('profile-stat-health').textContent = last_status.health;
+  document.getElementById('profile-stat-height').textContent = last_status.height;
+  document.getElementById('profile-stat-diam').textContent = last_status.diameter;
+  document.querySelector('.health-fill').style.width = (last_status['health-score'] || 0) + '%';
+  document.getElementById('profile-health-score').textContent = (last_status['health-score'] || 0) + ' / 100';
+  document.getElementById('profile-species').textContent = tree.speciesName.sn;
+  document.getElementById('profile-registered-by').textContent = first_enc.registeredBy;
+  document.getElementById('profile-user-id').textContent = first_enc.registererId;
+  document.getElementById('profile-registered-date').textContent = formatDate(first_enc.registeredDate);
+  document.getElementById('profile-planted-date').textContent = formatDate(tree['date-of-planting']);
+  document.getElementById('profile-age').textContent = (function(d){ var dt=new Date(d); var now=new Date(); var y=now.getFullYear()-dt.getFullYear(); var m=now.getMonth()-dt.getMonth(); var total=y*12+m; var yy=Math.floor(total/12); var mm=total%12; return (yy? yy+' year'+(yy>1?'s':'')+' ':'')+(mm? mm+' month'+(mm>1?'s':''):''); })(tree['date-of-planting']);
+  document.getElementById('profile-total-logs').textContent = enc_keys.length;
   renderLogs(tree);
   syncAddButtonStates();
 }
@@ -39,7 +46,7 @@ function goBack(url) {
 function updateLang(lang) {
   var l = lang || filterLang || 'en';
   try { setFilterLang(l); } catch (e) {}
-  try { localStorage.setItem('nm-app-lang', l); } catch (e) {}
+  try { sessionStorage.setItem('nm-app-lang', l); } catch (e) {}
   renderProfile();
 }
 function isTreeInSponsorWaiting() {
@@ -191,17 +198,20 @@ function goTo(page) {
   document.getElementById('page-'+page).classList.add('active');
   document.getElementById('sbar').className = 'status-bar blue';
 }
-function formatDate(iso) { var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return m? parseInt(m[3],10)+' '+months[parseInt(m[2],10)-1]+' '+m[1] : (iso||'—'); }
+function formatDate(iso) { var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso); var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return m? parseInt(m[3],10)+' '+months[parseInt(m[2],10)-1]+' '+m[1] : iso; }
 function renderLogs(tree) {
-  var wrap=document.getElementById('profile-logs'); wrap.innerHTML=''; var dots=['#3B6D11','#9FE1CB','#C0DD97'];
-  for(var i=tree.cards.length-1;i>=0;i--){ var c=tree.cards[i]; var prev=tree.cards[i-1]; var delta=(prev&&parseFloat(c.height)&&parseFloat(prev.height))? '+'+(parseFloat(c.height)-parseFloat(prev.height)).toFixed(1)+' m':''; var entry=document.createElement('div'); entry.className='log-entry'; entry.onclick=(function(idx){return function(){openAlbum(idx);};})(i); entry.innerHTML='<div class="log-dot" style="background:'+dots[i%3]+'"></div><div class="log-body"><div class="log-date">'+formatDate(c.date)+'</div><div class="log-text">'+c.height+' · '+c.diam+' diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Notes</b> '+(c.note||'—')+'</span></div><div class="log-recommendations"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Recommendations</b> '+(c.recommendations||'—')+'</span></div><div class="log-chips">'+(delta?'<span class="chip">'+delta+'</span>':'')+(c.photos?'<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>'+c.photos+' photo'+(c.photos>1?'s':'')+'</span>':'<span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span>')+'</div></div><div class="log-thumb" style="background:'+(tree.bg||'#2d4a2d')+';">'+(c.emoji||tree.emoji||'🌳')+'</div>'; wrap.appendChild(entry); }
+  var wrap=document.getElementById('profile-logs'); wrap.innerHTML='';
+  var enc_keys = Object.keys(tree['encounters-list'] || {});
+  for(var idx=enc_keys.length-1; idx>=0; idx--){ var key=enc_keys[idx]; var e=tree['encounters-list'][key]; var hs=e['health-status']||{}; var c={encounter:key, date:e.registeredDate||e.updatedDate, registeredBy:e.registeredBy, updatedBy:e.updatedBy, registererId:e.registererId, updaterId:e.updaterId, height:hs.height, diam:hs.diameter, health:hs.health, note:(e.fieldObservation&&e.fieldObservation.notes), recommendations:(e.fieldObservation&&e.fieldObservation.recommendations), photos:((e.photos&&e.photos.snapshots)||[]).length, emoji:e.thumb||tree.emoji}; var who_name = String(c.encounter)==='1' ? c.registeredBy : c.updatedBy; var who_id = String(c.encounter)==='1' ? c.registererId : c.updaterId; var entry=document.createElement('div'); entry.className='log-entry'; var thumbs_html=''; for(var p=0;p<c.photos;p++){ var bg_arr=['linear-gradient(135deg,#2d5a1b,#4a7c2f)','linear-gradient(135deg,#1a3a0a,#2d5a1b)','linear-gradient(135deg,#3B6D11,#639922)']; var bg=bg_arr[p%bg_arr.length]; var emoji_arr=['🌳','🌴','🌲','🍃','🌱','🌿','🍀','🌵']; var emoji=emoji_arr[p%emoji_arr.length]; thumbs_html+='<div class="log-thumb" style="background:'+bg+'" onclick="event.stopPropagation(); openPhotoModal(\''+emoji+'\', \''+bg+'\')">'+emoji+'<button class="zoom-btn" type="button" onclick="event.stopPropagation(); openPhotoModal(\''+emoji+'\', \''+bg+'\')"><i class="ti ti-zoom-in zoom-btn-icon"></i></button></div>'; } entry.innerHTML='<div class="log-header"><span>#'+c.encounter+'</span><span>'+formatDate(c.date)+'</span></div><div class="log-who-line">'+who_name+' · '+who_id+'</div><div class="health-stats-row"><div class="health-inline health-'+c.health+'">'+c.health+'</div><div class="tree-stats"><span>📏 '+c.height+'</span><span>⭕ '+c.diam+'</span></div></div><div class="photo-scroll-wrap"><button class="photo-scroll-arrow left" type="button" onclick="event.stopPropagation(); this.nextElementSibling.scrollBy({left:-88,behavior:\'smooth\'})"><i class="ti ti-chevron-left"></i></button><div class="photo-scroll">'+thumbs_html+'</div><button class="photo-scroll-arrow right" type="button" onclick="event.stopPropagation(); this.previousElementSibling.scrollBy({left:88,behavior:\'smooth\'})"><i class="ti ti-chevron-right"></i></button></div>'; wrap.appendChild(entry); }
 }
 function cardNameText(card, lang_key) { var names=(card&&card.speciesName)||{}; return names[lang_key]||names.en||names.ta||''; }
 function cardAddressText(card, lang_key) { var addr=(card&&card.address)||{}; return addr[lang_key]||addr.en||addr.ta||''; }
-function openTreeMap() { var tree=findTree(profileTreeId); if(hasTreeGis(tree)) showInMap([tree.treeId]); else alert('Location not available for this tree.'); }
+function openTreeMap() { var tree=(window.__TREE_DATA||[]).find(function(t){return t.treeId===profileTreeId})||findTree(profileTreeId); if(hasTreeGis(tree)) showInMap([tree.treeId]); else alert('Location not available for this tree.'); }
 function closeMapModal() { document.getElementById('map-modal').classList.remove('open'); document.getElementById('map-frame').src=''; }
-function openAlbum(i) { var tree=findTree(profileTreeId); var log=tree&&tree.cards[i]; if(!log||!log.photos) return; document.getElementById('album-title').textContent='Log · '+formatDate(log.date); document.getElementById('album-date').textContent=formatDate(log.date); document.getElementById('album-h').textContent=log.height; document.getElementById('album-d').textContent=log.diam; document.getElementById('album-c').textContent=log.photos+' photo'+(log.photos===1?'':'s'); document.getElementById('album-note').textContent=log.note; var grid=document.getElementById('album-grid-page'); grid.innerHTML=''; var bgs=['linear-gradient(135deg,#2d5a1b,#4a7c2f)','linear-gradient(135deg,#1a3a0a,#2d5a1b)','linear-gradient(135deg,#3B6D11,#639922)','linear-gradient(135deg,#1e3d0f,#2d5a1b)','linear-gradient(135deg,#27500A,#3B6D11)']; for(var p=0;p<log.photos;p++){ var div=document.createElement('div'); div.className='album-photo'+(p===0?' album-photo-main':''); div.style.background=bgs[(i+p)%bgs.length]; div.innerHTML='<div style="font-size:'+(p===0?'38px':'26px')+'">'+(log.emoji||tree.emoji||'🌳')+'</div><div class="photo-label">Photo '+(p+1)+'</div>'; grid.appendChild(div); } goTo('album'); }
+function openPhotoModal(emoji, bg) { var m=document.getElementById('photo-modal'); var e=document.getElementById('photo-modal-emoji'); if(e) e.textContent=emoji||'🌳'; if(m){ m.style.background=bg||'rgba(0,0,0,0.9)'; m.classList.add('open'); } }
+function closePhotoModal() { var m=document.getElementById('photo-modal'); if(m) m.classList.remove('open'); }
+function openAlbum(key) { var tree=(window.__TREE_DATA||[]).find(function(t){return t.treeId===profileTreeId})||findTree(profileTreeId); var enc=tree&&tree['encounters-list']&&tree['encounters-list'][key]; if(!enc||!enc.photos||!enc.photos.snapshots||!enc.photos.snapshots.length) return; var hs=enc['health-status']||{}; var log={date:enc.registeredDate||enc.updatedDate, height:hs.height, diam:hs.diameter, photos:enc.photos.snapshots.length, note:(enc.fieldObservation&&enc.fieldObservation.notes), emoji:enc.thumb||tree.emoji}; document.getElementById('album-title').textContent='Log · '+formatDate(log.date); document.getElementById('album-date').textContent=formatDate(log.date); document.getElementById('album-h').textContent=log.height; document.getElementById('album-d').textContent=log.diam; document.getElementById('album-c').textContent=log.photos+' photo'+(log.photos===1?'':'s'); document.getElementById('album-note').textContent=log.note; var grid=document.getElementById('album-grid-page'); grid.innerHTML=''; var bgs=['linear-gradient(135deg,#2d5a1b,#4a7c2f)','linear-gradient(135deg,#1a3a0a,#2d5a1b)','linear-gradient(135deg,#3B6D11,#639922)','linear-gradient(135deg,#1e3d0f,#2d5a1b)','linear-gradient(135deg,#27500A,#3B6D11)']; for(var p=0;p<log.photos;p++){ var div=document.createElement('div'); div.className='album-photo'+(p===0?' album-photo-main':''); div.style.background=bgs[(parseInt(key)+p)%bgs.length]; div.innerHTML='<div style="font-size:'+(p===0?'38px':'26px')+'">'+(log.emoji||tree.emoji||'🌳')+'</div><div class="photo-label">Photo '+(p+1)+'</div>'; grid.appendChild(div); } goTo('album'); }
 function normalizeAlbum(t) { var out={}; for(var k in t) if(Object.prototype.hasOwnProperty.call(t,k)) out[k]=t[k]; var enc=t['encounters-list']||{}; var keys=Object.keys(enc); var last=enc[keys[keys.length-1]]||{}; var st=last['health-status']||{}; var c=t.card||{}; out.id=t.treeId; out.name=cardNameText(t,'en')||c.addr||''; out.emoji=t.emoji||c.emoji||'🌳'; out.bg=t.bg||c.bg||''; out.pincode=t.pincode||''; out.height=st.height||c.height||'—'; out.diameter=st.diameter||c.diameter||'—'; out.health=st.health||''; out.logs=t.encounters||keys.length||c.logs||0; out.cards=keys.map(function(key){ var e=enc[key]; var hs=e['health-status']||{}; return {encounter:key, date:e.registeredDate||e.updatedDate||'—', registeredBy:e.registeredBy||e.updatedBy||'—', height:hs.height||'—', diam:hs.diameter||'—', health:hs.health||'', score:hs['health-score'], emoji:e.thumb||t.emoji||'🌳', note:(e.fieldObservation&&e.fieldObservation.notes)||'', recommendations:(e.fieldObservation&&e.fieldObservation.recommendations)||'', photos:((e.photos&&e.photos.snapshots)||[]).length}; }); return out; }
 function getCurrentRoleType() { var urlRole=new URLSearchParams(location.search).get('role'); if(urlRole){ var r=String(urlRole).toLowerCase(); return r.indexOf('sponsor')===0||r.indexOf('spn')===0?'sponsor':r.indexOf('care')===0||r.indexOf('car')===0?'caregiver':r; } var userid_q=new URLSearchParams(location.search).get('userid'); if(userid_q){ try{ var l=storage.get('login')||window._login||{}; var tl=l['tree-login']||{}; for(var k in tl) if(tl[k]&&tl[k].userId===userid_q){ var t=tl[k].type||k; return t==='sponsor'||k==='sponsor'?'sponsor':'caregiver'; } var s=sessionStorage.getItem('loginCredentialsV1'); if(s){ var c=JSON.parse(s); var tl2=c['tree-login']||{}; for(var k2 in tl2) if(tl2[k2]&&tl2[k2].userId===userid_q){ var t2=tl2[k2].type||k2; return t2==='sponsor'||k2==='sponsor'?'sponsor':'caregiver'; } } }catch(e){} } return null; }
 function applyRoleVisibility() { var role=getCurrentRoleType(); var showCare=true; var showSponsor=true; if(role==='sponsor'){ showCare=false; showSponsor=true; } else if(role==='caregiver'){ showCare=true; showSponsor=false; } var careBtns=document.querySelectorAll('.add-care-btn, .care-cta'); var sponsorBtns=document.querySelectorAll('.add-sponsor-btn, .sponsor-cta'); careBtns.forEach(function(el){ el.style.display=showCare?'':'none'; }); sponsorBtns.forEach(function(el){ el.style.display=showSponsor?'':'none'; }); }
-window.render={ init:function(){ storage.syncTreeCards(); albumData=(window.__TREE_DATA||[]).map(normalizeAlbum); renderProfile(); try{ applyRoleVisibility(); }catch(e){} } };
+window.render={ init:function(){ storage.syncTreeCards(); console.log('RAM __TREE_DATA', (window.__TREE_DATA||[]).length, (window.__TREE_DATA||[])[0]); albumData=(window.__TREE_DATA||[]).map(normalizeAlbum); console.log('RAM albumData', albumData.length, albumData[0]); renderProfile(); try{ applyRoleVisibility(); }catch(e){} } };

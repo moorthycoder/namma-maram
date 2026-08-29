@@ -1,14 +1,14 @@
 var LANG_STORE_KEY = 'nm-app-lang';
 
 function getAppLang() {
-  try { return localStorage.getItem(LANG_STORE_KEY) || 'en'; } catch (e) { return 'en'; }
+  try { return sessionStorage.getItem(LANG_STORE_KEY) || 'en'; } catch (e) { return 'en'; }
 }
 
 var appLang = getAppLang();
 var filterLang = appLang;
 
 function setAppLang(code) {
-  try { localStorage.setItem(LANG_STORE_KEY, code); } catch (e) {}
+  try { sessionStorage.setItem(LANG_STORE_KEY, code); } catch (e) {}
   appLang = code;
   filterLang = code;
   window._mapLang = code;
@@ -20,6 +20,6 @@ function setFilterLang(code) {
   // filterLang = code;
   // appLang = code;
   // window._mapLang = code;
-  // try { localStorage.setItem(LANG_STORE_KEY, code); } catch (e) {}
+  // try { sessionStorage.setItem(LANG_STORE_KEY, code); } catch (e) {}
   filterLang = appLang;
 }

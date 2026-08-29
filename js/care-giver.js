@@ -10,7 +10,7 @@ var logoutTarget = 'caregiver-login';
 function getCaregiverLang() {
   if (typeof appLang !== 'undefined' && appLang) return appLang;
   if (typeof filterLang !== 'undefined' && filterLang) return filterLang;
-  try { return localStorage.getItem('nm-app-lang') || 'en'; } catch (e) { return 'en'; }
+  try { return sessionStorage.getItem('nm-app-lang') || 'en'; } catch (e) { return 'en'; }
 }
 function caregiverCardName(t) {
   if (!t) return '';

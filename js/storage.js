@@ -1,6 +1,6 @@
 // storage.js — single master of all app data. Loaded by index.html and every page.
 // index (top window) pulls all datasets from the JSON files (or a fetch API) into
-// RAM globals and mirrors them as a `tree` object in localStorage. Every other page
+// RAM globals and mirrors them as a `tree` object in sessionStorage. Every other page
 // reads straight from index's RAM — no page ever reads the JSON again.
 
 var TREE_KEY = 'tree';
@@ -13,13 +13,8 @@ var STORE = {
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
   login:       { url: 'json/login-credentials.json', ram: '_login', session: 'loginCredentialsV1' }
 };
-var storage_backend = 'session';
-function switchStorageMode(new_backend) {
-  storage_backend = new_backend === 'session' ? 'session' : 'local';
-  return storage_backend;
-}
 function getBackingStore() {
-  return storage_backend === 'session' ? sessionStorage : localStorage;
+  return sessionStorage;
 }
 
 function parentRam(name) {
@@ -157,7 +152,7 @@ var storage = {
   }
 };
 
-// populate window globals from the hydrated localStorage mirror
+// populate window globals from the hydrated sessionStorage mirror
 try {
   Object.keys(STORE).forEach(function (n) {
     if (storage.tree[n] != null) { window[STORE[n].ram] = storage.tree[n]; }
@@ -169,7 +164,7 @@ if (window.top === window.self) {
   if (_cachedCards == null || !_cachedCards.length || !_cachedCards[0]['date-of-planting']) {
     storage.loadData();
   } else {
-    // data already in RAM (from localStorage) — just render
+    // data already in RAM (from sessionStorage) — just render
     storage.renderAll();
   }
 } else {

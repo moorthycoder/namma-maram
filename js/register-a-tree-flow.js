@@ -612,7 +612,7 @@ function saveRegisterTree() {
     purpose: 'register'
   };
   window._registerTree = registerRecord;
-  try { localStorage.setItem('registerTree', JSON.stringify(registerRecord)); } catch (e) {}
+  try { sessionStorage.setItem('registerTree', JSON.stringify(registerRecord)); } catch (e) {}
   console.log('REGISTER OBJECT', JSON.stringify(registerRecord, null, 2));
   registerSelfie = '';
   registerSnapshotSlots = REGISTER_SNAPSHOT_BASE_SLOTS.slice();

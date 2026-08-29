@@ -37,6 +37,10 @@ window.render = {
   }
 };
 
+function clearSessionOnClose() { try { sessionStorage.clear(); } catch(e){} }
+window.addEventListener('beforeunload', clearSessionOnClose);
+window.addEventListener('pagehide', clearSessionOnClose);
+
 if (window.top === window.self) {
   window.render.init();
 }
