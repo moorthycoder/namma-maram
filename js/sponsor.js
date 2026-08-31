@@ -1,34 +1,26 @@
 
 var TESTING_MODE = true;
 var profileFrom = 'sponsor-login';
-var albumFrom = 'profile';
-var treeLogsFrom = 'trees';
+var treeLogsFrom = 'sponsor-dash';
 var payLogsFrom = 'sponsor-dash';
 var sponsoredCount = 0;
-var caredCount = 4;
-var logoutTarget = 'sponsor-login';
 var payTreeId = '';
 
-function getSponsorLang() {
-  if (typeof appLang !== 'undefined' && appLang) return appLang;
-  if (typeof filterLang !== 'undefined' && filterLang) return filterLang;
-  try { return sessionStorage.getItem('nm-app-lang') || 'en'; } catch (e) { return 'en'; }
-}
 function sponsorCardName(t) {
   if (!t) return '';
-  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { return storage.treeNameIn(t, getSponsorLang()) || ''; } catch (e) {} }
   var n = (t.speciesName) || {};
-  var lang = getSponsorLang();
-  return n[lang] || n.en || n.ta || t.englishName || t.name || '';
+  var lang = getAppLang();
+  return n[lang] || n.en || n.ta || '';
 }
 function sponsorCardAddr(t) {
   if (!t) return '';
-  var lang = getSponsorLang();
+  var lang = getAppLang();
   var a = (t.address) || {};
   if (typeof a === 'string') return a;
   return a[lang] || a.en || a.ta || '';
 }
 
+// LOGIN BLOCK
 function loadCurrentUser() {
   try {
     var s = sessionStorage.getItem('loginCredentialsV1');
@@ -44,6 +36,69 @@ function loadCurrentUser() {
   } catch (e) {}
 }
 loadCurrentUser();
+
+function checkNewSponserTrees() {
+  var sponsor_waiting_str = sessionStorage.getItem('sponsorWaiting');
+  if (sponsor_waiting_str === null) return [];
+  var new_ids = [];
+  try { var arr = JSON.parse(sponsor_waiting_str); if (Array.isArray(arr)) new_ids = arr.filter(function(e){ return typeof e === 'string' && e; }); } catch (e) { new_ids = []; }
+  if (!new_ids.length) return [];
+  var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
+  var pending_trees = [];
+  for (var i = 0; i < new_ids.length; i++) { var id = new_ids[i]; for (var r = 0; r < ram_data.length; r++) { if (ram_data[r].treeId === id) { pending_trees.push(ram_data[r]); break; } } }
+  if (pending_trees.length) openSponsorSeeingModal(pending_trees);
+  return new_ids;
+}
+
+function loadDashboard() {
+  var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
+  console.log('[sponsor] loadDashboard RAM', ram_data.length, 'login', (storage.get('login')||{}));
+  window.__TREE_DATA = ram_data;
+  albumData = Array.isArray(ram_data) ? ram_data : (ram_data.albumData || []);
+  var login_data = storage.get('login') || window._login || {};
+  var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
+  function normalizeIds(list) { return (list || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; }).filter(Boolean); }
+  var waiting_ids = normalizeIds(sponsor_cards.waiting);
+  var current_ids = normalizeIds(sponsor_cards.current);
+  var past_ids = normalizeIds(sponsor_cards.past);
+  renderSponsorCards();
+  sponsoredCount = current_ids.length + past_ids.length;
+  setStatById('s-sponsor-waiting', waiting_ids.length);
+  setStatById('s-tree-current', current_ids.length);
+  setStatById('s-tree-past', past_ids.length);
+  if (!ram_data.length) console.warn('[sponsor] loadDashboard: RAM empty');
+  var new_sponsor_ids = checkNewSponserTrees();
+  setStatById('s-sponsor-seeing', new_sponsor_ids.length);
+  if (new_sponsor_ids.length) console.log('[sponsor] checkNewSponserTrees', new_sponsor_ids);
+  return { ram_data: ram_data, waiting_ids: waiting_ids, current_ids: current_ids, past_ids: past_ids, new_sponsor_ids: new_sponsor_ids };
+}
+
+function loadListForDashBoardBtns(btn_name) {
+  var login_data = storage.get('login') || window._login || {};
+  var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
+  var snake_case = String(btn_name || '').toLowerCase();
+  var key = snake_case.indexOf('waiting') > -1 ? 'waiting' : snake_case.indexOf('current') > -1 ? 'current' : snake_case.indexOf('past') > -1 ? 'past' : '';
+  if (!key) return [];
+  var raw_list = sponsor_cards[key] || [];
+  var sorted_list = getSortedWaitingList(raw_list, 'desc');
+  var ids = sorted_list.map(function(e){ return typeof e === 'string' ? e : e.treeId; });
+  var added_map = {}; sorted_list.forEach(function(e){ if (e && e.treeId) added_map[e.treeId] = e.addedAt; });
+  var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
+  var tree_list = ids.map(function(id){
+    for (var i = 0; i < ram_data.length; i++) { if (ram_data[i].treeId === id) { var c = {}; for (var k in ram_data[i]) c[k] = ram_data[i][k]; c.addedAt = added_map[id]; c.isPast = (key === 'past'); return c; }
+    } return null;
+  }).filter(Boolean);
+  var html = tree_list.map(sponsorTreeCardHtml).join('');
+  var target_map = { waiting: 'sponsor-waiting-cards', current: 'sponsor-current-cards', past: 'sponsor-past-cards' };
+  var empty_map = { waiting: 'sponsor-waiting-empty' };
+  var el = document.getElementById(target_map[key]);
+  if (el) el.innerHTML = html;
+  var empty_el = document.getElementById(empty_map[key]);
+  if (empty_el) empty_el.style.display = tree_list.length ? 'none' : 'block';
+  if (key === 'waiting' || key === 'current' || key === 'past') goTo('sponsor-' + key);
+  return tree_list;
+}
+
 function continueAsSponsor() {
   console.log('[sponsor] continueAsSponsor click pending', sessionStorage.getItem('pendingSponsor'));
   updateWaitingListFromPendingSponsor();
@@ -186,14 +241,7 @@ function googleAuth(page, status) {
 }
 
 
-// Open the shared role login page (Care-giver, Ten Tree Ranger, Surveyor)
-var currentRole = 'caregiver';
 
-
-
-function roleDash() {
-  return currentRole === 'surveyor' ? 'surveyor-dash' : 'ranger-dash';
-}
 
 
 // Show login-result modal based on status
@@ -217,41 +265,7 @@ function showLoginStatus(page, status) {
 
 
 
-// Font size (S/M/L) — text-only scaling via root html font-size (all fonts are rem)
-var fontSizeLevel = 1; // 0=S, 1=M, 2=L
-var fontLevels = [
-  { label:'S', mul:0.85 },
-  { label:'M', mul:1.0 },
-  { label:'L', mul:1.15 }
-];
-
-function fontSize(dir) {
-  if (dir === 'up') { if (fontSizeLevel < 2) fontSizeLevel++; }
-  else { if (fontSizeLevel > 0) fontSizeLevel--; }
-  applyFontSize();
-}
-
-function applyFontSize() {
-  var lv = fontLevels[fontSizeLevel];
-  document.getElementById('fs-val').textContent = lv.label;
-  document.getElementById('fs-minus').disabled = fontSizeLevel === 0;
-  document.getElementById('fs-plus').disabled = fontSizeLevel === 2;
-  document.documentElement.style.fontSize = (15 * lv.mul) + 'px';
-}
-
-function pickLang(tile, name) {
-  document.querySelectorAll('.lang-tile').forEach(function(t){ t.classList.remove('sel'); });
-  tile.classList.add('sel');
-  alert('Language set to ' + name);
-}
-
-
-// Notifications on/off switch
-
-function toggleNotif(btn) {
-  var on = btn.getAttribute('aria-checked') === 'true';
-  btn.setAttribute('aria-checked', String(!on));
-}
+// Tree data for album — read from storage
 
 
 // Tree data for album — read from storage
@@ -348,7 +362,7 @@ function goTo(page) {
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['sponsor-login','sponsor-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['sponsor-login','sponsor-dash','sponsor-waiting','sponsor-current','sponsor-past','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  else if (['sponsor-login','sponsor-dash','sponsor-waiting','sponsor-current','sponsor-past','sponsor-seeing','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
   
@@ -356,68 +370,42 @@ function goTo(page) {
 
 
 
-function treeLogsBack() {
-  goTo(treeLogsFrom);
+function sponsorGoBack() {
+  var active = document.querySelector('.page.active');
+  var cur = active ? active.id.replace('page-', '') : '';
+  if (cur === 'tree-logs') { goTo(treeLogsFrom); return; }
+  if (cur === 'pay-logs') { goTo(payLogsFrom); return; }
+  if (cur === 'profile') {
+    var parent = new URLSearchParams(location.search).get('parent');
+    if (parent) { window.location.href = decodeURIComponent(parent); return; }
+    goTo(profileFrom); return;
+  }
+  var parent2 = new URLSearchParams(location.search).get('parent');
+  if (parent2) { window.location.href = decodeURIComponent(parent2); return; }
+  if (window.history.length > 1) window.history.back(); else goTo('sponsor-dash');
 }
-
-function payLogsBack() {
-  goTo(payLogsFrom);
-}
-
-
-// Password toggle
-
-function togglePw(id, btn) {
-  var inp = document.getElementById(id);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  btn.querySelector('i').className = inp.type === 'password' ? 'ti ti-eye' : 'ti ti-eye-off';
-}
-
-
-// Open profile
-
+function treeLogsBack() { sponsorGoBack(); }
+function payLogsBack() { sponsorGoBack(); }
+function profileBack() { sponsorGoBack(); }
 function openProfile(treeId) {
-  var from = document.querySelector('.page.active').id.replace('page-','');
-  profileFrom = from;
   var id = treeId || '625501-06-0001';
-  document.getElementById('profile-id-label').textContent = id;
-  goTo('profile');
+  var active = document.querySelector('.page.active');
+  var current_hub = active ? active.id.replace('page-','') : 'sponsor-dash';
+  var parent = encodeURIComponent('sponsor.html?hub=' + current_hub);
+  var userid = '';
+  try {
+    var login = storage.get('login') || window._login || {};
+    var role = (login['tree-login'] && login['tree-login']['sponsor']) || {};
+    userid = role.userId || new URLSearchParams(location.search).get('userid') || '';
+  } catch (e) {}
+  var userid_param = userid ? '&userid=' + encodeURIComponent(userid) : '';
+  var flang = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
+  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent + '&flang=' + encodeURIComponent(flang) + userid_param;
 }
-
-
-// Open the map pinned to a tree by its ID (from a card)
-
-function openTreeMapById(id) {
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (hasTreeGis(tree)) {
-    showInMap([id]);
-  } else {
-    alert('Location not available for this tree.');
-  }
-}
+function profileBack() { try { if (window.history.length > 1) window.history.back(); else goTo(profileFrom); } catch (e) { goTo(profileFrom); } }
 
 
 
-function profileBack() { goTo(profileFrom); }
-
-
-// Open the map pinned to the tree currently shown in the profile
-
-function openTreeMap() {
-  var id = document.getElementById('profile-id-label').textContent;
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (hasTreeGis(tree)) {
-    showInMap([id]);
-  } else {
-    alert('Location not available for this tree.');
-  }
-}
 
 
 function closeMapModal() {
@@ -502,7 +490,8 @@ function renderPayLogs() {
   var el = document.getElementById('pay-history');
   if (!el) { return; }
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
-  var list = (role.payments || []).filter(function (p) { return !payTreeId || p.treeId === payTreeId; });
+  var cards = role.cards || {};
+  var list = (cards.payments || []).filter(function (p) { return !payTreeId || p.treeId === payTreeId; });
   el.innerHTML = list.map(function (p) {
     var retried = p.status === 'retried';
     return '<div class="pay-entry">' +
@@ -519,7 +508,8 @@ function recordPayment() {
   var login = window._login || (window._login = {});
   var tl = login['tree-login'] || (login['tree-login'] = {});
   var role = tl.sponsor || (tl.sponsor = {});
-  var payments = role.payments || (role.payments = []);
+  var cards = role.cards || (role.cards = {});
+  var payments = cards.payments || (cards.payments = []);
   payments.push({ treeId: payTreeId, month: 'Jul 2026', date: 'Paid now · ' + new Date().toDateString(), amount: amount, status: 'paid' });
   storage.set('login', login);
   renderPayLogs();
@@ -584,12 +574,12 @@ function appendSponsorWaitingCard(form) {
   if (emptyEl) emptyEl.style.display = 'none';
   if (!cardsEl) { return; }
   var card = document.createElement('div');
-  card.className = 'tree-card-sponsor';
+  card.className = 'sponsor-tree-card';
   var height_display = height === '—' ? '—' : String(height).replace(/\s*m$/, '') + 'm';
   card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;position:relative;" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>';
   cardsEl.appendChild(card);
-  console.log('[sponsor] appendSponsorWaitingCard added card', id, 'now count', cardsEl.querySelectorAll('.tree-card-sponsor').length);
-  setStatById('s-sponsor-waiting', cardsEl.querySelectorAll('.tree-card-sponsor').length);
+  console.log('[sponsor] appendSponsorWaitingCard added card', id, 'now count', cardsEl.querySelectorAll('.sponsor-tree-card').length);
+  setStatById('s-sponsor-waiting', cardsEl.querySelectorAll('.sponsor-tree-card').length);
   setTimeout(function(){ console.log('[sponsor] appendSponsorWaitingCard goTo sponsor-waiting'); goTo('sponsor-waiting'); }, 500);
 }
 
@@ -630,15 +620,19 @@ function openSponsorWaitingRequests() {
   var requestList = ids.map(function(id){ for(var i=0;i<data.length;i++){ if(data[i].treeId===id) { var copy_t = {}; for(var k in data[i]) copy_t[k]=data[i][k]; copy_t.addedAt = added_map[id]; return copy_t; } } return null; }).filter(function(t){ return !!t; });
   var cardsEl = document.getElementById('sponsor-waiting-cards');
   var emptyEl = document.getElementById('sponsor-waiting-empty');
-  if (cardsEl) cardsEl.innerHTML = requestList.map(sponsorCardHtml).join('');
+  if (cardsEl) cardsEl.innerHTML = requestList.map(sponsorTreeCardHtml).join('');
   if (emptyEl) emptyEl.style.display = requestList.length ? 'none' : 'block';
   goTo('sponsor-waiting');
+}
+
+function openSponsorSeeing() {
+  checkNewSponserTrees();
 }
 
 
 
 
-function sponsorCardHtml(t) {
+function sponsorTreeCardHtml(t) {
   var q = String.fromCharCode(39);
   var c = t.card || {};
   var enc = t['encounters-list'] || {};
@@ -648,12 +642,18 @@ function sponsorCardHtml(t) {
   var status = c.statusLogged || c.statusChecked || st.health || '';
   var name_txt = sponsorCardName(t) || t.englishName || t.name || '';
   var addr_txt = sponsorCardAddr(t) || c.addr || '';
-  return '<div class="tree-card-sponsor">' +
-    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
-    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;position:relative;" onclick="openProfile(' + q + t.treeId + q + ')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(' + q + t.treeId + q + ')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> ' + addr_txt + '</p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
-    '<div class="tree-card-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div></div>' +
-    '<div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="openTreeLogs(\'' + t.treeId + '\')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button></div>' +
+  var login_for_pay = storage.get('login') || window._login || {};
+  var pay_list = (((login_for_pay['tree-login'] && login_for_pay['tree-login']['sponsor'] && login_for_pay['tree-login']['sponsor'].cards) || {}).payments || []);
+  var paid_amount = 0;
+  for (var pi = 0; pi < pay_list.length; pi++) { if (pay_list[pi].treeId === t.treeId && pay_list[pi].status !== 'retried') { var amt = parseInt(String(pay_list[pi].amount || '').replace(/\D/g, '') || 0); paid_amount += amt; } }
+  var paid_display = paid_amount ? '₹' + paid_amount : '—';
+  var logs_display = keys.length || c.logs || 0;
+  console.log('[sponsorTreeCard] treeId', t.treeId, 'logs', logs_display, 'paid', paid_display, 'pay_list_len', pay_list.length);
+  return '<div class="sponsor-tree-card">' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + t.addedAt + '</span>' + (t.isPast ? '' : '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + t.treeId + '\')"><i class="ti ti-trash"></i></button>') + '</div>' +
+    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;position:relative;" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title" style="display:flex;flex-direction:column;gap:8px;"><h3 style="margin:0;">' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p style="margin:0;"><button class="addr-pin-btn" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>' +
+    '<div style="display:flex;flex-direction:row;gap:6px;padding:8px 11px;border-top:0.5px solid var(--color-border-tertiary);"><div style="flex:1;display:flex;flex-direction:column;gap:4px;align-items:center;"><span style="font-size:0.8rem;color:var(--color-text-secondary);">Logs</span><div style="display:flex;gap:6px;align-items:center;"><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="openTreeLogs(\'' + t.treeId + '\')">' + logs_display + '</span><span style="font-size:0.7333rem;">:</span><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="openTreeLogs(\'' + t.treeId + '\')">View</span></div></div><div style="width:1px;background:var(--color-border-tertiary);"></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;align-items:center;"><span style="font-size:0.8rem;color:var(--color-text-secondary);">Payments</span><div style="display:flex;gap:6px;align-items:center;"><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="payTreeId=\'' + t.treeId + '\';renderPayLogs();goTo(\'pay-logs\')">' + paid_display + '</span><span style="font-size:0.7333rem;">:</span><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="payTreeId=\'' + t.treeId + '\';openPayNow()">Pay now</span></div></div></div>' +
     '</div>';
 }
 function removeSponsorCard(remove_tree_id) {
@@ -695,12 +695,21 @@ function renderSponsorCards() {
   var pastIds = sorted_past.map(function(e){ return e.treeId || e; });
   var current_map = {}; sorted_current.forEach(function(e){ if(e && e.treeId) current_map[e.treeId]=e.addedAt; });
   var past_map = {}; sorted_past.forEach(function(e){ if(e && e.treeId) past_map[e.treeId]=e.addedAt; });
-  var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return currentIds.indexOf(a.treeId) - currentIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=current_map[t.treeId]; return c; }) : [];
-  var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; return c; }) : [];
+  var currentList = currentIds.length ? data.filter(function sponsorCardName(t) { return currentIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return currentIds.indexOf(a.treeId) - currentIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=current_map[t.treeId]; return c; }) : [];
+  var pastList = pastIds.length ? data.filter(function sponsorCardName(t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; c.isPast=true; return c; }) : [];
+  var waiting_raw = cards.waiting || [];
+  var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
+  var waiting_map = {}; sorted_waiting.forEach(function(e){ if(e && e.treeId) waiting_map[e.treeId]=e.addedAt; });
+  var waitingIds = sorted_waiting.map(function(e){ return e.treeId || e; });
+  var waitingList = waitingIds.length ? data.filter(function sponsorCardName(t) { return waitingIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return waitingIds.indexOf(a.treeId) - waitingIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=waiting_map[t.treeId]; return c; }) : [];
   var currentCards = document.getElementById('sponsor-current-cards');
-  if (currentCards) currentCards.innerHTML = currentList.map(sponsorCardHtml).join('');
+  if (currentCards) currentCards.innerHTML = currentList.map(sponsorTreeCardHtml).join('');
   var pastCards = document.getElementById('sponsor-past-cards');
-  if (pastCards) pastCards.innerHTML = pastList.map(sponsorCardHtml).join('');
+  if (pastCards) pastCards.innerHTML = pastList.map(sponsorTreeCardHtml).join('');
+  var waitingCards = document.getElementById('sponsor-waiting-cards');
+  if (waitingCards) waitingCards.innerHTML = waitingList.map(sponsorTreeCardHtml).join('');
+  var waitingEmpty = document.getElementById('sponsor-waiting-empty');
+  if (waitingEmpty) waitingEmpty.style.display = waitingList.length ? 'none' : 'block';
   sponsoredCount = currentList.length + pastList.length;
   setStatById('s-tree-current', currentList.length);
   setStatById('s-tree-past', pastList.length);
@@ -711,6 +720,56 @@ function renderSponsorCards() {
   if (monthlyEl) monthlyEl.textContent = '₹' + (sponsoredCount * 300);
 }
 
+function sponsorSeeingCardHtml(t) {
+  var q = String.fromCharCode(39);
+  var c = t.card || {};
+  var enc = t['encounters-list'] || {};
+  var keys = Object.keys(enc);
+  var last = enc[keys[keys.length - 1]] || {};
+  var st = last['health-status'] || {};
+  var status = c.statusLogged || c.statusChecked || st.health || '';
+  var name_txt = sponsorCardName(t) || t.englishName || t.name || '';
+  var addr_txt = sponsorCardAddr(t) || c.addr || '';
+  var login_for_pay = storage.get('login') || window._login || {};
+  var pay_list = (((login_for_pay['tree-login'] && login_for_pay['tree-login']['sponsor'] && login_for_pay['tree-login']['sponsor'].cards) || {}).payments || []);
+  var paid_amount = 0;
+  for (var pi = 0; pi < pay_list.length; pi++) { if (pay_list[pi].treeId === t.treeId && pay_list[pi].status !== 'retried') { var amt = parseInt(String(pay_list[pi].amount || '').replace(/\D/g, '') || 0); paid_amount += amt; } }
+  var paid_display = paid_amount ? '₹' + paid_amount : '—';
+  var logs_display = keys.length || c.logs || 0;
+  return '<div class="sponsor-tree-card">'
+    + '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;position:relative;" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title" style="display:flex;flex-direction:column;gap:8px;"><h3 style="margin:0;">' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p style="margin:0;"><button class="addr-pin-btn" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>'
+    + '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>'
+    + '<div style="display:flex;flex-direction:row;gap:6px;padding:8px 11px;border-top:0.5px solid var(--color-border-tertiary);"><div style="flex:1;display:flex;flex-direction:column;gap:4px;align-items:center;"><span style="font-size:0.8rem;color:var(--color-text-secondary);">Logs</span><div style="display:flex;gap:6px;align-items:center;"><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="openTreeLogs(\'' + t.treeId + '\')">' + logs_display + '</span><span style="font-size:0.7333rem;">:</span><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="openTreeLogs(\'' + t.treeId + '\')">View</span></div></div><div style="width:1px;background:var(--color-border-tertiary);"></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;align-items:center;"><span style="font-size:0.8rem;color:var(--color-text-secondary);">Payments</span><div style="display:flex;gap:6px;align-items:center;"><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="payTreeId=\'' + t.treeId + '\';renderPayLogs();goTo(\'pay-logs\')">' + paid_display + '</span><span style="font-size:0.7333rem;">:</span><span class="sponsor-underline" style="font-size:0.7333rem;" onclick="payTreeId=\'' + t.treeId + '\';openPayNow()">Pay now</span></div></div></div>'
+    + '<div class="sponsor-seeing-actions" style="display:flex;gap:6px;padding:8px 11px;border-top:0.5px solid var(--color-border-tertiary);"><button class="tcbtn tcbtn-logs" style="flex:1;" onclick="event.stopPropagation();confirmPendingSponsor(' + q + t.treeId + q + ')"><i class="ti ti-check"></i> Confirm</button><button class="tcbtn" style="flex:1;color:#dc2626;" onclick="event.stopPropagation();removePendingSponsor(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i> Decline</button></div>'
+    + '</div>';
+}
+function openSponsorSeeingModal(pending_trees) {
+  var grid = document.getElementById('sponsor-seeing-grid');
+  var empty = document.getElementById('sponsor-seeing-empty');
+  if (grid) grid.innerHTML = pending_trees.map(sponsorSeeingCardHtml).join('');
+  if (empty) empty.style.display = pending_trees.length ? 'none' : 'block';
+  goTo('sponsor-seeing');
+  window._sponsorSeeingBack = 'sponsor-dash';
+}
+function closeSponsorSeeingModal() { goTo('sponsor-dash'); }
+function confirmPendingSponsor(tree_id) {
+  try {
+    var list = JSON.parse(sessionStorage.getItem('sponsorWaiting') || '[]');
+    sponsorATree({ treeId: tree_id });
+    var idx = list.indexOf(tree_id);
+    if (idx > -1) { list.splice(idx, 1); sessionStorage.setItem('sponsorWaiting', JSON.stringify(list)); }
+  } catch (e) {}
+  closeSponsorSeeingModal(); loadDashboard();
+}
+function removePendingSponsor(tree_id) {
+  var list = [];
+  try { list = JSON.parse(sessionStorage.getItem('sponsorWaiting') || '[]'); } catch (e) {}
+  var idx = list.indexOf(tree_id);
+  if (idx > -1) list.splice(idx, 1);
+  sessionStorage.setItem('sponsorWaiting', JSON.stringify(list));
+  if (list.length) checkNewSponserTrees();
+  else { closeSponsorSeeingModal(); loadDashboard(); }
+}
 function consumePendingSponsorRequest() {
   try {
     var raw = sessionStorage.getItem('pendingSponsor');
@@ -748,64 +807,34 @@ window.render = {
   init: function () {
     var had_pending = false;
     if (hubMode === 'sponsor-dash' || hubMode === 'sponsor-waiting') { had_pending = consumePendingSponsorRequest(); }
-    var data = storage.get('treeCards') || [];
-    window.__TREE_DATA = data;
-    albumData = Array.isArray(data) ? data : (data.albumData || []);
-    renderSponsorCards();
+    var result = loadDashboard();
     var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
     var cards = role.cards || {};
-    payTreeId = (cards.current || [])[0] || '';
+    var first = (cards.current || [])[0] || '';
+    payTreeId = typeof first === 'string' ? first : (first.treeId || '');
     renderPayLogs();
     if (had_pending) { openSponsorWaitingRequests(); return; }
     if (hubMode === 'sponsor-waiting') { openSponsorWaitingRequests(); }
   }
 };
-function treeCardHtml(t, cfg) {
-  var q = String.fromCharCode(39);
-  cfg = cfg || {};
-  var c = t.card || {};
-  var enc = t['encounters-list'] || {};
-  var keys = Object.keys(enc);
-  var last = enc[keys[keys.length - 1]] || {};
-  var st = last['health-status'] || {};
-  var addr_raw = sponsorCardAddr(t) || c.addr || '';
-  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : addr_raw;
-  var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
-  var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
-  var todo = (cfg.showTodo && c.todo) ? '<div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.todo + '</span></div>' : '';
-  var btn2Type = (cfg.btn2 !== undefined) ? cfg.btn2 : (c.btn2 || null);
-  var btn2 = '';
-  if (btn2Type === 'profile') {
-    btn2 = cfg.btn2GoTo ? '<button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'profile' + q + ')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button>'
-                       : '<button class="tcbtn tcbtn-pay" onclick="openProfile(' + q + t.treeId + q + ')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button>';
-  }
-  if (btn2Type === 'payments') { btn2 = '<button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'pay-logs' + q + ')"><i class="ti ti-receipt" style="font-size:0.8667rem"></i> Payments</button>'; }
-  return '<div class="tree-card-sponsor tcard">' +
-    '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (t.emoji || c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
-    '<div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + addr + '</div></div>' +
-    '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (t.bg || c.bg || '') + ';">' + (t.emoji || c.emoji || '') + '</div>' + latest +
-    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (st.height || c.height || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
-    '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
-    '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
-}
-function renderRoleCards(target, role, cfg) {
-  var el = document.getElementById(target);
-  if (!el) { return; }
-  var data = window.__TREE_DATA || [];
-  var list = data.filter(function (t) { return t.roles && t.roles.indexOf(role) > -1; });
-  el.innerHTML = list.map(function (t) { return treeCardHtml(t, cfg); }).join('');
-}
-
 function openTreePool() {
   var login = storage.get('login') || window._login || {};
   var role = (login['tree-login'] && login['tree-login']['sponsor']) || (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['sponsor']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var cards = role.cards || {};
-  var exclude = [].concat(cards.current || [], cards.past || [], cards.waiting || []).join(',');
+  var sponsor_waiting = []; try { sponsor_waiting = JSON.parse(sessionStorage.getItem('sponsorWaiting') || '[]'); } catch (e) {}
+  var exclude = [].concat(
+    (cards.current || []).map(function(c){ return c.treeId; }),
+    (cards.past || []).map(function(c){ return c.treeId; }),
+    (cards.waiting || []).map(function(c){ return c.treeId; }),
+    sponsor_waiting
+  ).join(',');
   var parent = encodeURIComponent('sponsor.html?hub=sponsor-dash');
   var userid = role.userId || '';
-  console.log('[sponsor] openTreePool userid', userid, 'exclude', exclude);
-  window.location.href = 'filter.html?userid=' + encodeURIComponent(userid) + '&parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
+  var url = 'filter.html?userid=' + encodeURIComponent(userid) + '&parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
+  sessionStorage.setItem('gobackFromTreeProfile', url);
+  console.log('[sponsor] openTreePool ->', url);
+  window.location.href = url;
 }
 
 function getSponsorParentUrl() {
@@ -825,5 +854,7 @@ if (hubMode === 'login') { goTo('sponsor-login'); }
 else if (hubMode === 'register') { goTo('sponsor-enroll'); }
 else if (hubMode === 'sponsor-dash') { goTo('sponsor-dash'); }
 else if (hubMode === 'sponsor-waiting') { goTo('sponsor-waiting'); }
+else if (hubMode === 'sponsor-current') { goTo('sponsor-current'); }
+else if (hubMode === 'sponsor-past') { goTo('sponsor-past'); }
 else { console.log('[sponsor] unknown hubMode, redirect to login-hub'); window.location.href = 'login-hub.html'; }
 

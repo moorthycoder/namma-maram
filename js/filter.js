@@ -86,19 +86,6 @@ function openProfile(treeId) {
   window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter&parent=' + parentUrl + '&' + flangParam + userid_param;
 }
 
-// Open the map pinned to a tree by its ID (from a card)
-function openTreeMapById(id) {
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (hasTreeGis(tree)) {
-    showInMap([id]);
-  } else {
-    alert('Location not available for this tree.');
-  }
-}
-
 function closeMapModal() {
   document.getElementById('map-modal').classList.remove('open');
   document.getElementById('map-frame').src = '';
@@ -348,7 +335,7 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     info.innerHTML =
       '<div class="tree-name">' + treeNameFromCard(t, lang).replace(/, /g, ',<br>') + '</div>' +
       '<div class="tree-id">' + t.treeId + '</div>' +
-      '<div class="tree-addr"><button class="addr-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + (cardAddressText(t, lang) || '—') + '</span></div>';
+      '<div class="tree-addr"><button class="addr-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();showInMap([\'' + t.treeId + '\'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + (cardAddressText(t, lang) || '—') + '</span></div>';
 
     card.appendChild(info);
     info.appendChild(photo);

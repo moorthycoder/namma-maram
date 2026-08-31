@@ -9,7 +9,7 @@ var STORE = {
   places:      { url: 'json/places_name.json',      ram: '__PLACES' },
   treeCards:   { url: 'json/tree_cards.json',       ram: '__TREE_DATA' },
   treeNames:   { url: 'json/trees_name.json',       ram: 'TREE_NAMES_DB' },
-  treeColours: { url: 'json/tree-colours-in-map-drops.json', ram: 'TREE_COLOURS' },
+  treeColours: { url: 'json/tree-colours-in-map-pins.json', ram: 'TREE_COLOURS' },
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
   login:       { url: 'json/login-credentials.json', ram: '_login', session: 'loginCredentialsV1' },
   placeholderTexts: { url: 'json/placeholder_text.json', ram: '__PLACEHOLDERS' }

@@ -65,7 +65,7 @@
     var name = record.speciesName[lang] || record.speciesName.en || record.speciesName.ta || '';
     var addr = record.address || {};
     return {
-      type: record.englishName || 'Tree',
+      type: record.speciesName.sn || record.speciesName.en || record.speciesName.ta || 'Tree',
       name: name || record.englishName || 'Tree',
       localName: record.localName || '',
       treeId: record.treeId || '',
