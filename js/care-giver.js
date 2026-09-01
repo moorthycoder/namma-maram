@@ -968,6 +968,24 @@ function openTreePool() {
   console.log('[caregiver] openTreePool ->', url);
   window.location.href = url;
 }
+function openSurveyATreePage() {
+  var login = storage.get('login') || window._login || {};
+  var role = (login['tree-login'] && login['tree-login']['caregiver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
+  var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
+  var userid = role.userId || '';
+  var url = 'survey-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
+  window.location.href = url;
+}
+function openRegisterATreePage() {
+  var login = storage.get('login') || window._login || {};
+  var role = (login['tree-login'] && login['tree-login']['caregiver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
+  var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
+  var userid = role.userId || '';
+  var url = 'register-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
+  window.location.href = url;
+}
 
 function getCaregiverParentUrl() {
   var parent_url = new URLSearchParams(location.search).get('parent');

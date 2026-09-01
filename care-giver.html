@@ -67,9 +67,9 @@
         </div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;gap:12px;">
-        <button class="ghost-btn" onclick="goTo('caregiver-browse')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
-        <button class="ghost-btn" onclick="goTo('selfie')"><i class="ti ti-scan" style="font-size:0.9333rem"></i> Survey a tree</button>
-        <button class="ghost-btn" onclick="goTo('register-tree')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Register and Care for a tree</button>
+        <button class="dashboard-cta" onclick="openTreePool()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
+        <button class="ghost-btn" onclick="openSurveyATreePage()"><i class="ti ti-scan" style="font-size:0.9333rem"></i> Survey a tree</button>
+        <button class="ghost-btn" onclick="openRegisterATreePage()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Register a tree</button>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-waiting">
@@ -124,20 +124,6 @@
       <div class="scrollable"><div style="padding:10px 14px;">
         <div class="section-title" style="margin-bottom:10px;">Available trees</div>
         <div id="caregiver-browse-cards"></div>
-      </div></div>
-    </div>
-    <div class="page" id="page-selfie">
-      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey a tree</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title">Survey flow</div>
-        <div style="font-size:0.8rem;color:var(--color-text-secondary);">Use filter pool to survey. <button class="ghost-btn" style="margin-top:10px;" onclick="openTreePool()">Open tree pool</button></div>
-      </div></div>
-    </div>
-    <div class="page" id="page-register-tree">
-      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Register and Care</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title">Register flow</div>
-        <div style="font-size:0.8rem;color:var(--color-text-secondary);">Use filter pool to register. <button class="ghost-btn" style="margin-top:10px;" onclick="openTreePool()">Open tree pool</button></div>
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">

@@ -7,7 +7,11 @@ function roleDash() {
 }
 
 function surveyGoTo(page) {
-  if (page && /\.html/.test(page)) { window.parent.backToStart(); return; }
+  if (page && /\.html/.test(page)) {
+    try { if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') { window.parent.backToStart(); return; } } catch (e) {}
+    window.location.href = parentUrl;
+    return;
+  }
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   var el = document.getElementById('page-' + page);
   if (el) el.classList.add('active');

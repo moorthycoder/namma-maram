@@ -120,6 +120,7 @@ var surveyFlowPages = "\n\
   <div class=\"steps\"><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot active\">3</div><div class=\"step-line\"></div><div class=\"step-dot pending\">4</div></div>\n\
   <div class=\"step-labels\"><span class=\"step-lbl\">Selfie</span><span class=\"step-lbl\">Snapshots</span><span class=\"step-lbl active\">Notes</span><span class=\"step-lbl\">Review</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
+    <div style=\"display:flex;flex-direction:column;gap:10px;\"><div><div class=\"field-label\"><i class=\"ti ti-ruler\"></i> Height</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"survey-height\" placeholder=\"Type in meter\" style=\"flex:1;\"><span style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">meter</span></div></div><div><div class=\"field-label\"><i class=\"ti ti-circle\"></i> Diameter</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"survey-diameter\" placeholder=\"Type in meter\" style=\"flex:1;\"><span style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">meter</span></div></div></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-notes\"></i> Observation</div><textarea class=\"notes-box\" id=\"survey-observations\" placeholder=\"e.g. New shoots visible, no signs of disease...\"></textarea></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-clipboard-check\"></i> Recommendation</div><textarea class=\"notes-box\" id=\"survey-recommendations\" placeholder=\"e.g. Fertilize before monsoon...\"></textarea></div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"openSurveyReview()\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
@@ -140,7 +141,9 @@ var surveyFlowPages = "\n\
     </div>\n\
     <div class=\"review-section\">\n\
       <div class=\"review-head\"><span class=\"review-title\"><i class=\"ti ti-notes\"></i> Field Notes</span><button class=\"review-edit\" onclick=\"goTo('notes')\"><i class=\"ti ti-pencil\"></i> Edit</button></div>\n\
-      <div class=\"review-text\" id=\"review-observations\"></div>\n\
+      <div class=\"review-text\" id=\"review-height\"></div>\n\
+      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-diameter\"></div>\n\
+      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-observations\"></div>\n\
       <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-recommendations\"></div>\n\
     </div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"saveSurveyTree()\"><i class=\"ti ti-device-floppy\"></i> Save</button></div>\n\
@@ -166,6 +169,8 @@ var surveyCameraOpenFor = '';
 var surveyPendingShot = null;
 var surveyObservations = '';
 var surveyRecommendations = '';
+var surveyHeight = '';
+var surveyDiameter = '';
 var surveyGisLat = '';
 var surveyGisLng = '';
 
@@ -363,8 +368,12 @@ function renderSurveyCapturePage() {
 }
 
 function openSurveyReview() {
+  var heightEl = document.getElementById('survey-height');
+  var diameterEl = document.getElementById('survey-diameter');
   var observationsEl = document.getElementById('survey-observations');
   var recommendationsEl = document.getElementById('survey-recommendations');
+  if (heightEl) surveyHeight = heightEl.value;
+  if (diameterEl) surveyDiameter = diameterEl.value;
   if (observationsEl) surveyObservations = observationsEl.value;
   if (recommendationsEl) surveyRecommendations = recommendationsEl.value;
   renderSurveyReview();
@@ -390,6 +399,14 @@ function renderSurveyReview() {
     gridEl.innerHTML = review_tiles.length
       ? review_tiles.join('')
       : '<span class="review-empty">No snapshots captured</span>';
+  }
+  var heightEl = document.getElementById('review-height');
+  if (heightEl) {
+    heightEl.innerHTML = surveyHeight ? 'Height: ' + surveyHeight + ' meter' : '<span class="review-empty">No height recorded</span>';
+  }
+  var diameterEl = document.getElementById('review-diameter');
+  if (diameterEl) {
+    diameterEl.innerHTML = surveyDiameter ? 'Diameter: ' + surveyDiameter + ' meter' : '<span class="review-empty">No diameter recorded</span>';
   }
   var observationsEl = document.getElementById('review-observations');
   if (observationsEl) {
@@ -419,7 +436,7 @@ function saveSurveyTree() {
       longitude: surveyGisLng || ''
     },
     photos: { selfie: surveySelfie, snapshots: getSurveySavedSnapshotFiles() },
-    fieldObservation: { notes: surveyObservations, recommendations: surveyRecommendations },
+    fieldObservation: { height: surveyHeight, diameter: surveyDiameter, notes: surveyObservations, recommendations: surveyRecommendations },
     address: '',
     userId: window._surveyUserId || '',
     timestamp: new Date().toISOString(),
@@ -436,6 +453,8 @@ function saveSurveyTree() {
   surveyPendingShot = null;
   surveyObservations = '';
   surveyRecommendations = '';
+  surveyHeight = '';
+  surveyDiameter = '';
   goTo(roleDash());
 }
 

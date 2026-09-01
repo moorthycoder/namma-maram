@@ -164,6 +164,7 @@ var registerFlowPages = "\n\
   <div class=\"steps\"><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot active\">3</div><div class=\"step-line\"></div><div class=\"step-dot pending\">4</div></div>\n\
   <div class=\"step-labels\"><span class=\"step-lbl\">Selfie</span><span class=\"step-lbl\">Snapshots</span><span class=\"step-lbl active\">Notes</span><span class=\"step-lbl\">Review</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
+    <div style=\"display:flex;flex-direction:column;gap:10px;\"><div><div class=\"field-label\"><i class=\"ti ti-ruler\"></i> Height</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-height\" placeholder=\"Type in meter\" style=\"flex:1;\"><span style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">meter</span></div></div><div><div class=\"field-label\"><i class=\"ti ti-circle\"></i> Diameter</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-diameter\" placeholder=\"Type in meter\" style=\"flex:1;\"><span style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">meter</span></div></div></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-notes\"></i> Observation</div><textarea class=\"notes-box\" id=\"register-observations\" placeholder=\"e.g. New shoots visible, no signs of disease...\"></textarea></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-clipboard-check\"></i> Recommendation</div><textarea class=\"notes-box\" id=\"register-recommendations\" placeholder=\"e.g. Fertilize before monsoon...\"></textarea></div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"openRegisterReview()\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
@@ -184,7 +185,9 @@ var registerFlowPages = "\n\
     </div>\n\
     <div class=\"review-section\">\n\
       <div class=\"review-head\"><span class=\"review-title\"><i class=\"ti ti-notes\"></i> Field Notes</span><button class=\"review-edit\" onclick=\"goTo('notes')\"><i class=\"ti ti-pencil\"></i> Edit</button></div>\n\
-      <div class=\"review-text\" id=\"review-observations\"></div>\n\
+      <div class=\"review-text\" id=\"review-height\"></div>\n\
+      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-diameter\"></div>\n\
+      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-observations\"></div>\n\
       <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-recommendations\"></div>\n\
     </div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"saveRegisterTree()\"><i class=\"ti ti-device-floppy\"></i> Save</button></div>\n\
@@ -210,6 +213,8 @@ var registerCameraOpenFor = '';
 var registerPendingShot = null;
 var registerObservations = '';
 var registerRecommendations = '';
+var registerHeight = '';
+var registerDiameter = '';
 var registerGisLat = '';
 var registerGisLng = '';
 
@@ -537,8 +542,12 @@ function renderRegisterCapturePage() {
 }
 
 function openRegisterReview() {
+  var heightEl = document.getElementById('register-height');
+  var diameterEl = document.getElementById('register-diameter');
   var observationsEl = document.getElementById('register-observations');
   var recommendationsEl = document.getElementById('register-recommendations');
+  if (heightEl) registerHeight = heightEl.value;
+  if (diameterEl) registerDiameter = diameterEl.value;
   if (observationsEl) registerObservations = observationsEl.value;
   if (recommendationsEl) registerRecommendations = recommendationsEl.value;
   renderRegisterReview();
@@ -564,6 +573,14 @@ function renderRegisterReview() {
     gridEl.innerHTML = review_tiles.length
       ? review_tiles.join('')
       : '<span class="review-empty">No snapshots captured</span>';
+  }
+  var heightEl = document.getElementById('review-height');
+  if (heightEl) {
+    heightEl.innerHTML = registerHeight ? 'Height: ' + registerHeight + ' meter' : '<span class="review-empty">No height recorded</span>';
+  }
+  var diameterEl = document.getElementById('review-diameter');
+  if (diameterEl) {
+    diameterEl.innerHTML = registerDiameter ? 'Diameter: ' + registerDiameter + ' meter' : '<span class="review-empty">No diameter recorded</span>';
   }
   var observationsEl = document.getElementById('review-observations');
   if (observationsEl) {
@@ -605,7 +622,7 @@ function saveRegisterTree() {
       longitude: document.getElementById('register-gis-lng').value
     },
     photos: { selfie: registerSelfie, snapshots: getRegisterSavedSnapshotFiles() },
-    fieldObservation: { notes: registerObservations, recommendations: registerRecommendations },
+    fieldObservation: { height: registerHeight, diameter: registerDiameter, notes: registerObservations, recommendations: registerRecommendations },
     address: document.getElementById('register-address').value,
     userId: window._registerUserId || '',
     timestamp: new Date().toISOString(),
@@ -622,6 +639,8 @@ function saveRegisterTree() {
   registerPendingShot = null;
   registerObservations = '';
   registerRecommendations = '';
+  registerHeight = '';
+  registerDiameter = '';
   goTo(roleDash());
 }
 
