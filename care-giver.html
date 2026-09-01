@@ -17,31 +17,31 @@
     <!-- ① MAIN - ALBUM PAGE -->
     <div class="page" id="page-caregiver-login">
       <div class="slogin-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="goBackFromCaregiverLogin()"><i class="ti ti-arrow-left"></i></button></div>
+        <div class="slogin-back-row"><button class="back-btn slogin-back-btn" onclick="goBackFromCaregiverLogin()"><i class="ti ti-arrow-left"></i></button></div>
         <h2>Care-giver login</h2><p>Sign in to manage the trees you care for</p>
       </div>
-      <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
+      <div class="slogin-body">
         <button class="green-btn" id="continue-as-btn" type="button" onclick="continueAsCaregiver()" style="display:none"><i class="ti ti-login"></i> Continue as <span id="continue-as-name">—</span></button>
-        <button class="google-btn" onclick="googleAuth('caregiver-dash')" style="margin-top:12px"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:12px;">Support urban green cover wherever you want</div>
+        <button class="google-btn google-btn-mt" onclick="googleAuth('caregiver-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
+        <div class="support-text">Support urban green cover wherever you want</div>
       </div>
     </div>
     <div class="page" id="page-caregiver-enroll">
       <div class="topbar"><button class="back-btn" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Care-giver enrollment</span></div>
-      <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
-        <div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);">Become a care-giver</div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);">Adopt and look after registered trees in your neighbourhood. Your application will be reviewed by the admin.</div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-user" style="font-size:0.8667rem"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Madhavi I." /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-mail" style="font-size:0.8667rem"></i> Email</div><input class="field-inp" type="email" placeholder="you@example.com" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-phone" style="font-size:0.8667rem"></i> Phone</div><input class="field-inp" type="tel" placeholder="e.g. 9876543210" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-tree" style="font-size:0.8667rem"></i> Preferred tree species</div><select class="field-inp" style="cursor:pointer;"><option>Neem</option><option>Peepal</option><option>Banyan</option><option>Mango</option><option>Any</option></select></div>
+      <div class="scrollable enroll-scroll">
+        <div class="enroll-title">Become a care-giver</div>
+        <div class="enroll-desc">Adopt and look after registered trees in your neighbourhood. Your application will be reviewed by the admin.</div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-user field-icon-sm"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Madhavi I." /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-mail field-icon-sm"></i> Email</div><input class="field-inp" type="email" placeholder="you@example.com" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-phone field-icon-sm"></i> Phone</div><input class="field-inp" type="tel" placeholder="e.g. 9876543210" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-tree field-icon-sm"></i> Preferred tree species</div><select class="field-inp field-inp-pointer"><option>Neem</option><option>Peepal</option><option>Banyan</option><option>Mango</option><option>Any</option></select></div>
         <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit enrollment</button>
       </div>
     </div>
     <div class="page dashboard" id="page-caregiver-dash">
       <div class="dashboard-header">
-        <div class="dashboard-topbar"><div><div class="dashboard-greeting">Welcome back,</div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="caregiverLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
-        <div class="dashboard-stats" style="margin-top:12px;">
+        <div class="dashboard-topbar"><div><div class="dashboard-greeting">Welcome back,</div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar avatar-wrap" onclick="toggleSLogoutDrop()"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item logout-item" onclick="caregiverLogout()"><i class="ti ti-logout logout-icon"></i> Sign out</div></div></div></div>
+        <div class="dashboard-stats dashboard-stats-mt">
           <div class="dashboard-stat"><div class="dashboard-stat-label">Trees in care</div>
             <div class="dashboard-split">
               <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-current')"><div class="dashboard-split-title">Current</div><div class="dashboard-split-val" id="c-tree-current">0</div></div>
@@ -63,25 +63,25 @@
               <div class="dashboard-split-col dashboard-split-btn" onclick="openCaregiverSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="c-care-seeing">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat" onclick="openNextCheckTree()" style="cursor:pointer;"><div class="dashboard-stat-label">Next check</div><div class="dashboard-stat-val" id="c-next" style="font-size:0.8667rem">18 Jul</div></div>
+          <div class="dashboard-stat dashboard-next" onclick="openNextCheckTree()"><div class="dashboard-stat-label">Next check</div><div class="dashboard-stat-val due-title" id="c-next">18 Jul</div></div>
         </div>
       </div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;gap:12px;">
-        <button class="dashboard-cta" onclick="openTreePool()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
-        <button class="ghost-btn" onclick="openSurveyATreePage()"><i class="ti ti-scan" style="font-size:0.9333rem"></i> Survey a tree</button>
-        <button class="ghost-btn" onclick="openRegisterATreePage()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Register a tree</button>
+      <div class="scrollable"><div class="dashboard-scroll-pad">
+        <button class="dashboard-cta" onclick="openTreePool()"><i class="ti ti-tree dashboard-cta-icon"></i> Care for a tree</button>
+        <button class="dashboard-cta" onclick="goTo('caregiver-current')"><i class="ti ti-scan dashboard-cta-icon"></i> Survey a tree</button>
+        <button class="dashboard-cta" onclick="openRegisterATreePage()"><i class="ti ti-tree dashboard-cta-icon"></i> Register a tree</button>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-waiting">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="waiting-page-title">Waiting</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+      <div class="scrollable"><div class="section-head-pad">
         <div class="waiting-section" id="care-waiting-section">
-          <div class="section-title" style="margin-bottom:12px;">Care requests waiting for approval</div>
+          <div class="section-title section-title-mb">Care requests waiting for approval</div>
           <div id="caregiver-waiting-cards"></div>
           <div class="waiting-empty" id="care-waiting-empty">No pending care requests</div>
         </div>
         <div class="waiting-section" id="register-waiting-section" style="display:none;">
-          <div class="section-title" style="margin-bottom:12px;">Register requests waiting for approval</div>
+          <div class="section-title section-title-mb">Register requests waiting for approval</div>
           <div id="register-waiting-cards"></div>
           <div class="waiting-empty" id="register-waiting-empty">No pending register requests</div>
         </div>
@@ -89,77 +89,77 @@
     </div>
     <div class="page" id="page-caregiver-current">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Current trees</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">My trees in care</div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">My trees in care</div>
         <div id="caregiver-current-cards"></div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-past">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Past trees</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">Trees you used to care for</div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Trees you used to care for</div>
         <div id="caregiver-past-cards"></div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:6px;"><i class="ti ti-history" style="font-size:0.8rem"></i> You can re-adopt these trees anytime</div>
+        <div class="history-hint"><i class="ti ti-history field-icon-sm"></i> You can re-adopt these trees anytime</div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-checks-due">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Checks this month — Due</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">Due this month</div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Due this month</div>
         <div id="caregiver-checks-due-cards"></div>
         <div class="waiting-empty" id="caregiver-checks-due-empty">All trees checked this month</div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-checks-finished">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Checks this month — Finished</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">Finished this month</div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Finished this month</div>
         <div id="caregiver-checks-cards"></div>
         <div class="waiting-empty" id="caregiver-checks-empty">No checks recorded this month</div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-browse">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Care for a tree</span></div>
-      <div style="padding:10px 14px 6px;flex-shrink:0;"><div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;display:flex;align-items:center;gap:8px;"><i class="ti ti-search" style="font-size:0.9333rem;color:var(--color-text-secondary)"></i><span style="font-size:0.8667rem;color:var(--color-text-secondary);">Search by ID or area...</span></div></div>
-      <div class="scrollable"><div style="padding:10px 14px;">
-        <div class="section-title" style="margin-bottom:10px;">Available trees</div>
+      <div class="browse-search-wrap"><div class="browse-search-box"><i class="ti ti-search browse-search-icon"></i><span class="browse-search-text">Search by ID or area...</span></div></div>
+      <div class="scrollable"><div class="browse-pad">
+        <div class="section-title section-title-mb">Available trees</div>
         <div id="caregiver-browse-cards"></div>
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">
       <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="tree-logs-title">Tree — Logs</span></div>
-      <div class="scrollable"><div style="padding:12px 14px;">
-        <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;margin-bottom:10px;">Double-tap a log to view photos</div>
+      <div class="scrollable"><div class="log-header-pad">
+        <div class="log-hint">Double-tap a log to view photos</div>
         <div class="section-title">Growth logs</div>
         <div class="info-card" id="tree-logs-list"></div>
       </div></div>
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
-      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
-      <div class="scrollable" style="padding:12px 14px 20px;">
-        <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
-        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
+      <div class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin map-pin-icon"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin map-pin-btn-icon"></i></button></p></div></div>
+      <div class="scrollable profile-scroll">
+        <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit stat-unit-label"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit stat-unit-label"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
+        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span class="health-score">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
         <div class="section-title">Tree info</div>
-        <div class="info-card" style="margin-bottom:14px;">
-          <div class="info-row"><span class="info-key"><i class="ti ti-leaf" style="font-size:0.8667rem"></i>Species</span><span class="info-val">Azadirachta indica</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-user" style="font-size:0.8667rem"></i>Added by</span><span class="info-val">Ravi K.</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>First logged</span><span class="info-val">Mar 2019</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list" style="font-size:0.8667rem"></i>Total logs</span><span class="info-val">14 entries</span></div>
+        <div class="info-card info-card-mb">
+          <div class="info-row"><span class="info-key"><i class="ti ti-leaf field-icon-sm"></i>Species</span><span class="info-val">Azadirachta indica</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>Added by</span><span class="info-val">Ravi K.</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar field-icon-sm"></i>First logged</span><span class="info-val">Mar 2019</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list field-icon-sm"></i>Total logs</span><span class="info-val">14 entries</span></div>
         </div>
         <div class="section-title">Growth logs</div>
         <div class="info-card">
-          <div class="log-entry" onclick="openAlbum(0)"><div class="log-dot" style="background:#3B6D11"></div><div class="log-body"><div class="log-date">12 Jun 2026</div><div class="log-text">8.4 m · 22 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>3 photos</span></div></div><div class="log-thumb" style="background:#2d4a2d;">🌿</div></div>
-          <div class="log-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB"></div><div class="log-body"><div class="log-date">10 Jan 2026</div><div class="log-text">8.1 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div><div class="log-thumb" style="background:#1e3d1e;">🌳</div></div>
-          <div class="log-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97"></div><div class="log-body"><div class="log-date">15 Jul 2025</div><div class="log-text">7.6 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips"><span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span></div></div><div class="log-thumb" style="background:var(--color-background-secondary);border:0.5px dashed var(--color-border-secondary);"><i class="ti ti-photo-off" style="font-size:1rem;color:var(--color-text-secondary)"></i></div></div>
+          <div class="log-entry" onclick="openAlbum(0)"><div class="log-dot log-dot-green"></div><div class="log-body"><div class="log-date">12 Jun 2026</div><div class="log-text">8.4 m · 22 cm diameter</div><div class="log-notes"><i class="ti ti-notes field-icon-sm"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check field-icon-sm"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo chip-icon"></i>3 photos</span></div></div><div class="log-thumb log-thumb-green">🌿</div></div>
+          <div class="log-entry" onclick="openAlbum(1)"><div class="log-dot log-dot-light"></div><div class="log-body"><div class="log-date">10 Jan 2026</div><div class="log-text">8.1 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes field-icon-sm"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check field-icon-sm"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo chip-icon"></i>2 photos</span></div></div><div class="log-thumb log-thumb-dark">🌳</div></div>
+          <div class="log-entry" onclick="openAlbum(2)"><div class="log-dot log-dot-yellow"></div><div class="log-body"><div class="log-date">15 Jul 2025</div><div class="log-text">7.6 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes field-icon-sm"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check field-icon-sm"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips"><span class="chip chip-empty">No photos</span></div></div><div class="log-thumb log-thumb-empty"><i class="ti ti-photo-off photo-off-icon"></i></div></div>
         </div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
+        <div class="log-hint-center"><i class="ti ti-hand-click log-hint-icon"></i> Tap a log to view photos</div>
       </div>
     </div>
     <div class="page" id="page-album">
       <div class="topbar"><button class="back-btn" id="album-back-btn" onclick="goTo(albumFrom)"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="album-title">Log photos</span></div>
-      <div class="album-meta"><div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;" id="album-date">12 Jun 2026</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);display:flex;gap:10px;"><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-ruler" style="font-size:0.7333rem"></i><span id="album-h">8.4 m</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-circle" style="font-size:0.7333rem"></i><span id="album-d">22 cm</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-camera" style="font-size:0.7333rem"></i><span id="album-c">3 photos</span></span></div></div>
-      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div style="font-size:0.8rem;color:var(--color-text-primary);line-height:1.5;" id="album-note"></div></div></div>
+      <div class="album-meta"><div class="album-meta-title" id="album-date">12 Jun 2026</div><div class="album-meta-row"><span class="album-meta-item"><i class="ti ti-ruler album-meta-icon"></i><span id="album-h">8.4 m</span></span><span class="album-meta-item"><i class="ti ti-circle album-meta-icon"></i><span id="album-d">22 cm</span></span><span class="album-meta-item"><i class="ti ti-camera album-meta-icon"></i><span id="album-c">3 photos</span></span></div></div>
+      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div class="album-note-text" id="album-note"></div></div></div>
     </div>
 
     <div class="map-modal-back" id="map-modal">
@@ -172,10 +172,10 @@
     <div class="modal-back" id="login-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="lsm-icon" id="lsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
-          <div class="lsm-title" id="lsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
-          <div class="lsm-text" id="lsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your login request is waiting for admin approval.</div>
+        <div class="modal-sheet-center">
+          <div class="modal-icon" id="lsm-icon"><i class="ti ti-clock modal-icon-large"></i></div>
+          <div class="modal-title" id="lsm-title">Application under review</div>
+          <div class="modal-text" id="lsm-text">Your login request is waiting for admin approval.</div>
           <button class="green-btn" onclick="handleCaregiverLoginOkay()"><i class="ti ti-check"></i> Okay</button>
         </div>
       </div>
@@ -183,17 +183,17 @@
     <div class="modal-back" id="register-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="lsm-icon" id="rsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
-          <div class="lsm-title" id="rsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
-          <div class="lsm-text" id="rsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your registration is waiting for admin approval.</div>
+        <div class="modal-sheet-center">
+          <div class="modal-icon" id="rsm-icon"><i class="ti ti-clock modal-icon-large"></i></div>
+          <div class="modal-title" id="rsm-title">Application under review</div>
+          <div class="modal-text" id="rsm-text">Your registration is waiting for admin approval.</div>
           <button class="green-btn" id="rsm-ok-btn" onclick="closeRegisterStatus(true)"><i class="ti ti-check"></i> Okay</button>
-          <div class="lsm-test" id="rsm-test" style="margin-top:16px;display:none;">
-            <div style="font-size:0.6667rem;color:var(--color-text-secondary);margin-bottom:6px;">TESTING · simulate result</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('waiting')">Waiting</button>
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('existing_member')">Existing</button>
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('blocked')">Blocked</button>
+          <div class="lsm-test hidden" id="rsm-test">
+            <div class="testing-label">TESTING · simulate result</div>
+            <div class="testing-grid">
+              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('waiting')">Waiting</button>
+              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('existing_member')">Existing</button>
+              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('blocked')">Blocked</button>
             </div>
           </div>
         </div>
@@ -202,33 +202,33 @@
     <div class="modal-back" id="conflict-resolution-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="conflict-icon" id="conflict-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;"><i class="ti ti-alert-triangle" style="font-size:24px;"></i></div>
-          <div class="conflict-title" id="conflict-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Already in your list</div>
-          <div class="conflict-text" id="conflict-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">This tree is already in your care list. You cannot care for it again.</div>
+        <div class="modal-sheet-center">
+          <div class="modal-icon conflict-icon-bg" id="conflict-icon"><i class="ti ti-alert-triangle modal-icon-large"></i></div>
+          <div class="modal-title" id="conflict-title">Already in your list</div>
+          <div class="modal-text" id="conflict-text">This tree is already in your care list. You cannot care for it again.</div>
           <button class="green-btn" onclick="closeCaregiverConflictModal()"><i class="ti ti-check"></i> Okay</button>
-          <button class="ghost-btn" style="margin-top:8px" onclick="closeCaregiverConflictModal(); goTo('caregiver-waiting')"><i class="ti ti-eye"></i> View list</button>
+          <button class="ghost-btn ghost-btn-mt" onclick="closeCaregiverConflictModal(); goTo('caregiver-waiting')"><i class="ti ti-eye"></i> View list</button>
         </div>
       </div>
     </div>
     <div class="modal-back" id="delete-confirm-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;"><i class="ti ti-trash" style="font-size:24px;"></i></div>
-          <div style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Remove tree?</div>
-          <div style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;" id="delete-confirm-text">This will remove the tree from your list.</div>
-          <button class="green-btn" style="background:#dc2626;" onclick="confirmDeleteCard()"><i class="ti ti-trash"></i> Delete</button>
-          <button class="ghost-btn" style="margin-top:8px" onclick="cancelDeleteCard()">Cancel</button>
+        <div class="modal-sheet-center">
+          <div class="modal-icon delete-icon-bg"><i class="ti ti-trash modal-icon-large"></i></div>
+          <div class="modal-title">Remove tree?</div>
+          <div class="modal-text" id="delete-confirm-text">This will remove the tree from your list.</div>
+          <button class="green-btn delete-btn-bg" onclick="confirmDeleteCard()"><i class="ti ti-trash"></i> Delete</button>
+          <button class="ghost-btn ghost-btn-mt" onclick="cancelDeleteCard()">Cancel</button>
         </div>
       </div>
     </div>
     <div class="page" id="page-caregiver-seeing">
       <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Confirm Care Trees</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+      <div class="scrollable"><div class="section-head-pad">
         <div class="caregiver-seeing-grid" id="caregiver-seeing-grid"></div>
         <div class="waiting-empty" id="caregiver-seeing-empty" style="display:none;">No Seeing trees</div>
-        <button class="ghost-btn" style="margin-top:12px;" onclick="goTo('caregiver-dash')">Close</button>
+        <button class="ghost-btn ghost-btn-mt12" onclick="goTo('caregiver-dash')">Close</button>
       </div></div>
     </div>
   </div>
