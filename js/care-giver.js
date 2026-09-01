@@ -42,6 +42,20 @@ function loadCurrentUser() {
   } catch (e) {}
 }
 loadCurrentUser();
+
+function checkNewCaregiverTrees() {
+  var caregiver_waiting_str = sessionStorage.getItem('caregiverWaiting');
+  if (caregiver_waiting_str === null) return [];
+  var new_ids = [];
+  try { var arr = JSON.parse(caregiver_waiting_str); if (Array.isArray(arr)) new_ids = arr.filter(function(e){ return typeof e === 'string' && e; }); } catch (e) { new_ids = []; }
+  if (!new_ids.length) return [];
+  var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
+  var pending_trees = [];
+  for (var i = 0; i < new_ids.length; i++) { var id = new_ids[i]; for (var r = 0; r < ram_data.length; r++) { if (ram_data[r].treeId === id) { pending_trees.push(ram_data[r]); break; } } }
+  if (pending_trees.length) openCaregiverSeeingModal(pending_trees);
+  return new_ids;
+}
+
 function continueAsCaregiver() {
   console.log('[caregiver] continueAsCaregiver click pending', sessionStorage.getItem('pendingCare'));
   updateWaitingListFromPendingCaregiver();
@@ -336,7 +350,7 @@ function goTo(page) {
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['caregiver-login','caregiver-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-caregivers','admin-trackers-prospective','admin-caregivers-prospective','ranger-enroll','caregiver-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['caregiver-login','caregiver-dash','caregiver-waiting','caregiver-current','caregiver-past','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  else if (['caregiver-login','caregiver-dash','caregiver-waiting','caregiver-current','caregiver-past','caregiver-seeing','caregiver-checks-due','caregiver-checks-finished','caregiver-browse','selfie','register-tree','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
   
@@ -358,14 +372,22 @@ function togglePw(id, btn) {
 }
 
 
-// Open profile
+// Open profile — clone sponsor: navigate to tree-profile.html with treeId
 
 function openProfile(treeId) {
-  var from = document.querySelector('.page.active').id.replace('page-','');
-  profileFrom = from;
   var id = treeId || '625501-06-0001';
-  document.getElementById('profile-id-label').textContent = id;
-  goTo('profile');
+  var active_el = document.querySelector('.page.active');
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'caregiver-dash';
+  var parent_url = encodeURIComponent('care-giver.html?hub=' + current_hub);
+  var user_id = '';
+  try {
+    var login_data = storage.get('login') || window._login || {};
+    var caregiver_role = (login_data['tree-login'] && login_data['tree-login']['caregiver']) || {};
+    user_id = caregiver_role.userId || new URLSearchParams(location.search).get('userid') || '';
+  } catch (e) {}
+  var user_param = user_id ? '&userid=' + encodeURIComponent(user_id) : '';
+  var flang_val = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
+  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent_url + '&flang=' + encodeURIComponent(flang_val) + user_param;
 }
 
 
@@ -576,8 +598,80 @@ function openCaregiverWaitingRequests() {
   goTo('caregiver-waiting');
 }
 
+function openWaitingRequests(type) {
+  var is_care = String(type || 'care').toLowerCase().indexOf('care') > -1;
+  var care_el = document.getElementById('care-waiting-section');
+  var reg_el = document.getElementById('register-waiting-section');
+  var title_el = document.getElementById('waiting-page-title') || document.getElementById('swaiting-page-title');
+  if (title_el) title_el.textContent = is_care ? 'Care requests' : 'Register requests';
+  if (care_el) care_el.style.display = is_care ? '' : 'none';
+  if (reg_el) reg_el.style.display = is_care ? 'none' : '';
+  var waiting_cards = document.getElementById('caregiver-waiting-cards');
+  var register_cards = document.getElementById('register-waiting-cards');
+  if (is_care) {
+    openCaregiverWaitingRequests();
+    if (reg_el) reg_el.style.display = 'none';
+    if (care_el) care_el.style.display = '';
+  } else {
+    if (waiting_cards) waiting_cards.innerHTML = '';
+    if (register_cards) register_cards.innerHTML = '<div class="waiting-empty">No register requests</div>';
+    goTo('caregiver-waiting');
+    if (care_el) care_el.style.display = 'none';
+    if (reg_el) reg_el.style.display = '';
+  }
+}
 
+function openCaregiverSeeing() {
+  checkNewCaregiverTrees();
+}
 
+function caregiverSeeingCardHtml(t) {
+  var q = String.fromCharCode(39);
+  var c = t.card || {};
+  var enc = t['encounters-list'] || {};
+  var keys = Object.keys(enc);
+  var last = enc[keys[keys.length - 1]] || {};
+  var st = last['health-status'] || {};
+  var status = c.statusLogged || c.statusChecked || st.health || '';
+  var name_txt = caregiverCardName(t) || t.englishName || t.name || '';
+  var addr_txt = caregiverCardAddr(t) || c.addr || '';
+  return '<div class="sponsor-tree-card">'
+    + '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>'
+    + '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>'
+    + '<div class="caregiver-seeing-actions"><button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();confirmPendingCaregiver(' + q + t.treeId + q + ')"><i class="ti ti-check"></i> Confirm</button><button class="tcbtn tcbtn-danger" onclick="event.stopPropagation();removePendingCaregiver(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i> Decline</button></div>'
+    + '</div>';
+}
+
+function openCaregiverSeeingModal(pending_trees) {
+  var grid = document.getElementById('caregiver-seeing-grid');
+  var empty = document.getElementById('caregiver-seeing-empty');
+  if (grid) grid.innerHTML = pending_trees.map(caregiverSeeingCardHtml).join('');
+  if (empty) empty.style.display = pending_trees.length ? 'none' : 'block';
+  goTo('caregiver-seeing');
+  window._caregiverSeeingBack = 'caregiver-dash';
+}
+
+function closeCaregiverSeeingModal() { goTo('caregiver-dash'); }
+
+function confirmPendingCaregiver(tree_id) {
+  try {
+    var list = JSON.parse(sessionStorage.getItem('caregiverWaiting') || '[]');
+    caregiverATree({ treeId: tree_id });
+    var idx = list.indexOf(tree_id);
+    if (idx > -1) { list.splice(idx, 1); sessionStorage.setItem('caregiverWaiting', JSON.stringify(list)); }
+  } catch (e) {}
+  closeCaregiverSeeingModal(); if (window.render && typeof window.render.init === 'function') window.render.init();
+}
+
+function removePendingCaregiver(tree_id) {
+  var list = [];
+  try { list = JSON.parse(sessionStorage.getItem('caregiverWaiting') || '[]'); } catch (e) {}
+  var idx = list.indexOf(tree_id);
+  if (idx > -1) list.splice(idx, 1);
+  sessionStorage.setItem('caregiverWaiting', JSON.stringify(list));
+  if (list.length) checkNewCaregiverTrees();
+  else { closeCaregiverSeeingModal(); if (window.render && typeof window.render.init === 'function') window.render.init(); }
+}
 
 function caregiverCardHtml(t) {
   var q = String.fromCharCode(39);
@@ -589,9 +683,13 @@ function caregiverCardHtml(t) {
   var status = c.statusLogged || c.statusChecked || st.health || '';
   var name_txt = caregiverCardName(t) || t.englishName || t.name || '';
   var addr_txt = caregiverCardAddr(t) || c.addr || '';
+  var due_raw = t['encounter-due-date'] || '';
+  var due_display = '';
+  if (due_raw) { var due_m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(due_raw); due_display = due_m ? due_m[3] + '-' + due_m[2] + '-' + due_m[1] : due_raw; }
+  var top_label = t.isDueCard ? 'Due: ' + due_display : 'Added: ' + t.addedAt;
   return '<div class="tree-card-caregiver">' +
-    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
-    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + ';cursor:pointer;position:relative;" onclick="openProfile(' + q + t.treeId + q + ')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(' + q + t.treeId + q + ')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> ' + addr_txt + '</p></div></div>' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> ' + top_label + '</span>' + (t.isPast ? '' : '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + t.treeId + '\')"><i class="ti ti-trash"></i></button>') + '</div>' +
+    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tree-card-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div></div>' +
     '<div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="openTreeLogs(\'' + t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>' +
@@ -637,7 +735,7 @@ function renderCaregiverCards() {
   var current_map = {}; sorted_current.forEach(function(e){ if(e && e.treeId) current_map[e.treeId]=e.addedAt; });
   var past_map = {}; sorted_past.forEach(function(e){ if(e && e.treeId) past_map[e.treeId]=e.addedAt; });
   var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return currentIds.indexOf(a.treeId) - currentIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=current_map[t.treeId]; return c; }) : [];
-  var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; return c; }) : [];
+  var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; c.isPast=true; return c; }) : [];
   var currentCards = document.getElementById('caregiver-current-cards');
   if (currentCards) currentCards.innerHTML = currentList.map(caregiverCardHtml).join('');
   var pastCards = document.getElementById('caregiver-past-cards');
@@ -685,6 +783,119 @@ function consumePendingCaregiverRequest() {
     return changed;
   } catch (e) { console.log('[caregiver] consume error', e); try { sessionStorage.removeItem('pendingCare'); } catch (e2) {} return false; }
 }
+function updateChecksThisMonthStats() {
+  var data = window.__TREE_DATA || storage.get('treeCards') || [];
+  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  var cards = role.cards || {};
+  var currentIds = (cards.current || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; });
+  var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }) : data.filter(function (t) { return t.roles && t.roles.indexOf('caregiver') > -1; });
+  var encounterDates = [];
+  currentList.forEach(function (t) {
+    var enc = t['encounters-list'] || {};
+    Object.keys(enc).forEach(function (key) {
+      var entry = enc[key];
+      var dateValue = (entry && (entry.registeredDate || entry.updatedDate)) || '';
+      if (dateValue) encounterDates.push(dateValue);
+    });
+  });
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var nowDate = new Date();
+  var currentYearMonth = nowDate.getFullYear() + '-' + String(nowDate.getMonth() + 1).padStart(2, '0');
+  var todayStr = nowDate.getFullYear() + '-' + String(nowDate.getMonth() + 1).padStart(2, '0') + '-' + String(nowDate.getDate()).padStart(2, '0');
+  var latestEncounterDate = function (t) {
+    var enc = t['encounters-list'] || {};
+    var lastValue = '';
+    Object.keys(enc).forEach(function (key) {
+      var entry = enc[key];
+      var dateValue = (entry && (entry.registeredDate || entry.updatedDate)) || '';
+      if (dateValue > lastValue) { lastValue = dateValue; }
+    });
+    return lastValue;
+  };
+  function isTreeFinishedByLastEncounterInCurrentMonth(tree, current_year_month, today_str) {
+    var last_encounter_date = latestEncounterDate(tree);
+    if (!last_encounter_date) return false;
+    var is_in_current_month = last_encounter_date.slice(0, 7) === current_year_month;
+    var is_prior_or_today = last_encounter_date <= today_str;
+    return is_in_current_month && is_prior_or_today;
+  }
+  var dueStatDecider = function (tree) {
+    var dueDay = tree['encounter-due-date'] || '';
+    if (!dueDay || dueDay.slice(0, 7) !== currentYearMonth) { return ''; }
+    var lastEncounter = latestEncounterDate(tree);
+    if (todayStr > dueDay) {
+      if (lastEncounter && lastEncounter < todayStr && lastEncounter.slice(0, 7) === currentYearMonth) {
+        return 'finished';
+      }
+    }
+    return 'due';
+  };
+  var finishedTrees = currentList.filter(function(t){ return isTreeFinishedByLastEncounterInCurrentMonth(t, currentYearMonth, todayStr); });
+  var dueTrees = currentList.filter(function(t){
+    var due_day = t['encounter-due-date'] || '';
+    if (!due_day || due_day.slice(0, 7) !== currentYearMonth) return false;
+    return !isTreeFinishedByLastEncounterInCurrentMonth(t, currentYearMonth, todayStr);
+  });
+  var currentMapForChecks = {};
+  try {
+    var sorted_current_for_checks = getSortedWaitingList((cards.current || []), 'desc');
+    sorted_current_for_checks.forEach(function(e){ if(e && e.treeId) currentMapForChecks[e.treeId]=e.addedAt; });
+  } catch(e) {}
+  var checksCardsEl = document.getElementById('caregiver-checks-cards');
+  if (checksCardsEl) {
+    checksCardsEl.innerHTML = finishedTrees.map(function (t) { var c={}; for(var k in t) c[k]=t[k]; c.addedAt=currentMapForChecks[t.treeId]||''; c.isPast=false; c.isDueCard=true; return caregiverCardHtml(c); }).join('');
+    var checksEmptyEl = document.getElementById('caregiver-checks-empty');
+    if (checksEmptyEl) checksEmptyEl.style.display = finishedTrees.length ? 'none' : 'block';
+  }
+  var checksDueEl = document.getElementById('caregiver-checks-due-cards');
+  if (checksDueEl) {
+    checksDueEl.innerHTML = dueTrees.map(function (t) { var c={}; for(var k in t) c[k]=t[k]; c.addedAt=currentMapForChecks[t.treeId]||''; c.isPast=false; c.isDueCard=true; return caregiverCardHtml(c); }).join('');
+    var checksDueEmptyEl = document.getElementById('caregiver-checks-due-empty');
+    if (checksDueEmptyEl) checksDueEmptyEl.style.display = dueTrees.length ? 'none' : 'block';
+  }
+  var dueListForNext = currentList.map(function(t){ return {tree: t, due: t['encounter-due-date'] || ''}; }).filter(function(x){ return x.due; }).sort(function(a,b){ return a.due.localeCompare(b.due); });
+  var nextCheckLabel = '—';
+  var nextCheckTreeForLabel = null;
+  if (dueListForNext.length) {
+    var todayStrForNext = nowDate.getFullYear() + '-' + String(nowDate.getMonth() + 1).padStart(2, '0') + '-' + String(nowDate.getDate()).padStart(2, '0');
+    var futureDue = dueListForNext.filter(function(x){ return x.due >= todayStrForNext; });
+    var chosenNext = futureDue.length ? futureDue[0] : dueListForNext[dueListForNext.length - 1];
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(chosenNext.due);
+    nextCheckLabel = m ? parseInt(m[3],10) + ' ' + monthNames[parseInt(m[2],10)-1] : chosenNext.due;
+    nextCheckTreeForLabel = chosenNext.tree;
+  } else if (encounterDates.length) {
+    encounterDates.sort();
+    var latestDate = new Date(encounterDates[encounterDates.length - 1]);
+    latestDate.setDate(latestDate.getDate() + 90);
+    nextCheckLabel = latestDate.getDate() + ' ' + monthNames[latestDate.getMonth()];
+  }
+  window._nextCheckTreeId = nextCheckTreeForLabel ? nextCheckTreeForLabel.treeId : '';
+  setStatById('c-monthly', finishedTrees.length);
+  setStatById('c-checks-due', dueTrees.length);
+  setStatById('c-next', nextCheckLabel);
+  setStatById('c-register-waiting', (cards.waiting || []).length);
+}
+
+function openNextCheckTree() {
+  if (window._nextCheckTreeId && typeof openProfile === 'function') { openProfile(window._nextCheckTreeId); return; }
+  var data = window.__TREE_DATA || storage.get('treeCards') || [];
+  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  var cards = role.cards || {};
+  var currentIds = (cards.current || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; });
+  var currentList = currentIds.length ? data.filter(function(t){ return currentIds.indexOf(t.treeId) > -1; }) : data.filter(function(t){ return t.roles && t.roles.indexOf('caregiver') > -1; });
+  if (!currentList.length) { goTo('caregiver-current'); return; }
+  var dueList = currentList.map(function(t){ return {tree: t, due: t['encounter-due-date'] || ''}; }).filter(function(x){ return x.due; }).sort(function(a,b){ return a.due.localeCompare(b.due); });
+  if (dueList.length) {
+    var nowDate = new Date();
+    var todayStr = nowDate.getFullYear() + '-' + String(nowDate.getMonth() + 1).padStart(2, '0') + '-' + String(nowDate.getDate()).padStart(2, '0');
+    var future = dueList.filter(function(x){ return x.due >= todayStr; });
+    var chosen = future.length ? future[0] : dueList[dueList.length - 1];
+    openProfile(chosen.tree.treeId);
+    return;
+  }
+  goTo('caregiver-current');
+}
+
 window.render = {
   init: function () {
     var had_pending = false;
@@ -693,10 +904,14 @@ window.render = {
     window.__TREE_DATA = data;
     albumData = Array.isArray(data) ? data : (data.albumData || []);
     renderCaregiverCards();
+    updateChecksThisMonthStats();
+    var new_caregiver_ids = checkNewCaregiverTrees();
+    setStatById('c-care-seeing', new_caregiver_ids.length);
     var role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
     var cards = role.cards || {};
     if (had_pending) { openCaregiverWaitingRequests(); return; }
     if (hubMode === 'caregiver-waiting') { openCaregiverWaitingRequests(); }
+    if (hubMode === 'caregiver-seeing') { checkNewCaregiverTrees(); }
   }
 };
 function treeCardHtml(t, cfg) {
@@ -739,11 +954,19 @@ function openTreePool() {
   var role = (login['tree-login'] && login['tree-login']['caregiver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var cards = role.cards || {};
-  var exclude = [].concat(cards.current || [], cards.past || [], cards.waiting || []).join(',');
-  var parent = encodeURIComponent('caregiver.html?hub=caregiver-dash');
+  var caregiver_waiting = []; try { caregiver_waiting = JSON.parse(sessionStorage.getItem('caregiverWaiting') || '[]'); } catch (e) {}
+  var exclude = [].concat(
+    (cards.current || []).map(function(c){ return c.treeId; }),
+    (cards.past || []).map(function(c){ return c.treeId; }),
+    (cards.waiting || []).map(function(c){ return c.treeId; }),
+    caregiver_waiting
+  ).join(',');
+  var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
   var userid = role.userId || '';
-  console.log('[caregiver] openTreePool userid', userid, 'exclude', exclude);
-  window.location.href = 'filter.html?userid=' + encodeURIComponent(userid) + '&parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
+  var url = 'filter.html?userid=' + encodeURIComponent(userid) + '&parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
+  sessionStorage.setItem('gobackFromTreeProfile', url);
+  console.log('[caregiver] openTreePool ->', url);
+  window.location.href = url;
 }
 
 function getCaregiverParentUrl() {
@@ -763,5 +986,11 @@ if (hubMode === 'login') { goTo('caregiver-login'); }
 else if (hubMode === 'register') { goTo('caregiver-enroll'); }
 else if (hubMode === 'caregiver-dash') { goTo('caregiver-dash'); }
 else if (hubMode === 'caregiver-waiting') { goTo('caregiver-waiting'); }
+else if (hubMode === 'caregiver-seeing') { goTo('caregiver-seeing'); }
+else if (hubMode === 'caregiver-current') { goTo('caregiver-current'); }
+else if (hubMode === 'caregiver-past') { goTo('caregiver-past'); }
+else if (hubMode === 'caregiver-checks-due') { goTo('caregiver-checks-due'); }
+else if (hubMode === 'caregiver-checks-finished') { goTo('caregiver-checks-finished'); }
+else if (hubMode === 'caregiver-browse') { goTo('caregiver-browse'); }
 else { console.log('[caregiver] unknown hubMode, redirect to login-hub'); window.location.href = 'login-hub.html'; }
 

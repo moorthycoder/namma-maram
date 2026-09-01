@@ -771,7 +771,7 @@
         "ttr": "Pandian",
         "date-of-planting": "2023-08-20",
         "encounters": 4,
-        "encounter-due-date": "2026-08-20",
+        "encounter-due-date": "2027-02-01",
         "encounters-list": {
             "1": {
                 "acceptance": {
@@ -862,7 +862,7 @@
                 "updatedBy": "Pandian",
                 "updaterId": "RAN2612345686",
                 "updaterContactNo": "9876543218",
-                "updatedDate": "2026-06-16",
+                "updatedDate": "2026-09-01",
                 "health-status": {
                     "health": "healthy",
                     "diameter": "23cm",
@@ -1422,7 +1422,7 @@
         "ttr": "Ramesh",
         "date-of-planting": "2024-03-02",
         "encounters": 5,
-        "encounter-due-date": "2026-11-24",
+        "encounter-due-date": "2026-09-24",
         "encounters-list": {
             "1": {
                 "acceptance": {
@@ -6378,7 +6378,7 @@
         "ttr": "Mahesh",
         "date-of-planting": "2024-08-07",
         "encounters": 5,
-        "encounter-due-date": "2026-08-05",
+        "encounter-due-date": "2026-09-05",
         "encounters-list": {
             "1": {
                 "acceptance": {
@@ -11101,7 +11101,7 @@
         "ttr": "Mahesh",
         "date-of-planting": "2026-05-22",
         "encounters": 1,
-        "encounter-due-date": "2026-08-05",
+        "encounter-due-date": "2026-09-05",
         "encounters-list": {
             "1": {
                 "acceptance": {
