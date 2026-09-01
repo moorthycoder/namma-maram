@@ -91,6 +91,21 @@ function closeMapModal() {
   document.getElementById('map-frame').src = '';
 }
 
+function openPhotoModal(emoji, bg) {
+  var modal_el = document.getElementById('photo-modal');
+  var emoji_el = document.getElementById('photo-modal-emoji');
+  if (emoji_el) emoji_el.textContent = emoji || '🌳';
+  if (modal_el) {
+    modal_el.style.background = bg || 'rgba(0,0,0,0.9)';
+    modal_el.classList.add('open');
+  }
+}
+
+function closePhotoModal() {
+  var modal_el = document.getElementById('photo-modal');
+  if (modal_el) modal_el.classList.remove('open');
+}
+
 function yearsSince(dateStr) {
   var d = new Date(dateStr);
   if (isNaN(d.getTime())) return '—';
@@ -320,10 +335,26 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     card.className = 'tree-snapshot';
     card.onclick = (function (id) { return function () { openProfile(id); }; })(t.treeId);
 
+    var outgoing_btn = document.createElement('button');
+    outgoing_btn.type = 'button';
+    outgoing_btn.className = 'card-outgoing-btn';
+    outgoing_btn.title = 'Open profile';
+    outgoing_btn.innerHTML = '<i class="ti ti-external-link"></i>';
+    outgoing_btn.onclick = (function (id) { return function (e) { e.stopPropagation(); openProfile(id); }; })(t.treeId);
+    card.appendChild(outgoing_btn);
+
     var photo = document.createElement('div');
     photo.className = 'tree-photo';
     photo.style.background = t.bg;
     photo.innerHTML = '<div class="tree-emoji">' + t.emoji + '</div>';
+
+    var zoom_btn = document.createElement('button');
+    zoom_btn.type = 'button';
+    zoom_btn.className = 'card-zoom-btn';
+    zoom_btn.title = 'Zoom photo';
+    zoom_btn.innerHTML = '<i class="ti ti-zoom-in"></i>';
+    zoom_btn.onclick = (function (emoji_val, bg_val) { return function (e) { e.stopPropagation(); openPhotoModal(emoji_val, bg_val); }; })(t.emoji, t.bg);
+    photo.appendChild(zoom_btn);
 
     var lastCard = t.cards && t.cards[t.cards.length - 1] || {};
     var isFirst = String(lastCard.encounter) === '1';
@@ -335,7 +366,7 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     info.innerHTML =
       '<div class="tree-name">' + treeNameFromCard(t, lang).replace(/, /g, ',<br>') + '</div>' +
       '<div class="tree-id">' + t.treeId + '</div>' +
-      '<div class="tree-addr"><button class="addr-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();showInMap([\'' + t.treeId + '\'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + (cardAddressText(t, lang) || '—') + '</span></div>';
+      '<div class="tree-addr"><button class="gis-pin" type="button" title="Show in map" onclick="event.stopPropagation();showInMap([\'' + t.treeId + '\'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + (cardAddressText(t, lang) || '—') + '</span></div>';
 
     card.appendChild(info);
     info.appendChild(photo);

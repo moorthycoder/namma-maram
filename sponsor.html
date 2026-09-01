@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/app.css" />
 <link rel="stylesheet" href="css/sponsor.css" />
 </head>
 <body>
@@ -37,39 +38,39 @@
         <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit enrollment</button>
       </div>
     </div>
-    <div class="page" id="page-sponsor-dash">
-      <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="sponsorLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
-        <div class="sdash-stats">
-          <div class="sdash-stat"><div class="sdash-stat-label">Trees sponsored</div>
-            <div class="sdash-split">
-              <div class="sdash-split-col sdash-split-btn" onclick="goTo('sponsor-current')"><div class="sdash-split-title">Current</div><div class="sdash-split-val" id="s-tree-current">0</div></div>
-              <div class="sdash-split-divider"></div>
-              <div class="sdash-split-col sdash-split-btn" onclick="goTo('sponsor-past')"><div class="sdash-split-title">Past</div><div class="sdash-split-val" id="s-tree-past">0</div></div>
+    <div class="page dashboard" id="page-sponsor-dash">
+      <div class="dashboard-header">
+        <div class="dashboard-topbar"><div><div class="dashboard-greeting">Welcome back,</div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="sponsorLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="dashboard-stats">
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Trees sponsored</div>
+            <div class="dashboard-split">
+              <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('sponsor-current')"><div class="dashboard-split-title">Current</div><div class="dashboard-split-val" id="s-tree-current">0</div></div>
+              <div class="dashboard-split-divider"></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('sponsor-past')"><div class="dashboard-split-title">Past</div><div class="dashboard-split-val" id="s-tree-past">0</div></div>
             </div>
           </div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Monthly total</div><div class="sdash-stat-val" id="s-monthly">—</div></div>
-          <div class="sdash-stat">
-            <div class="sdash-stat-label">Waiting</div>
-            <div class="sdash-split">
-              <div class="sdash-split-col sdash-split-btn" onclick="openSponsorWaitingRequests()"><div class="sdash-split-title">Submitted</div><div class="sdash-split-val" id="s-sponsor-waiting">0</div></div>
-              <div class="sdash-split-divider"></div>
-              <div class="sdash-split-col sdash-split-btn" onclick="openSponsorSeeing()"><div class="sdash-split-title">Seeing</div><div class="sdash-split-val" id="s-sponsor-seeing">0</div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Monthly total</div><div class="dashboard-stat-val" id="s-monthly">—</div></div>
+          <div class="dashboard-stat">
+            <div class="dashboard-stat-label">Waiting</div>
+            <div class="dashboard-split">
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorWaitingSubmittedRequests()"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="s-sponsor-waiting-submitted">0</div></div>
+              <div class="dashboard-split-divider"></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="s-sponsor-seeing">0</div></div>
             </div>
           </div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Next due</div><div class="sdash-stat-val" style="font-size:0.8667rem">1 Jul</div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Next due</div><div class="dashboard-stat-val" style="font-size:0.8667rem">1 Jul</div></div>
         </div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <button class="ghost-btn" onclick="openTreePool()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
+        <button class="dashboard-cta" onclick="openTreePool()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
       </div></div>
     </div>
-    <div class="page" id="page-sponsor-waiting">
-      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="swaiting-page-title">Waiting</span></div>
+    <div class="page" id="page-sponsor-waiting-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="swaiting-submitted-page-title">Waiting</span></div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="waiting-section" id="sponsor-waiting-section">
-          <div id="sponsor-waiting-cards"></div>
-          <div class="waiting-empty" id="sponsor-waiting-empty">No pending sponsor requests</div>
+        <div class="waiting-section" id="sponsor-waiting-submitted-section">
+          <div id="sponsor-waiting-submitted-cards"></div>
+          <div class="waiting-empty" id="sponsor-waiting-submitted-empty">No pending sponsor requests</div>
         </div>
       </div></div>
     </div>
@@ -107,7 +108,7 @@
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span></div>
-      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> <span id="profile-hero-addr"></span> <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
+      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> <span id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
       <div class="scrollable" style="padding:12px 14px 20px;">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value" id="profile-stat-height">—</div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value" id="profile-stat-diameter">—</div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">—</div></div></div>
         <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500" id="profile-health-score">— / 100</span></div><div class="health-bar"><div class="health-fill" id="profile-health-fill"></div></div></div>
@@ -191,7 +192,7 @@
           <div class="conflict-title" id="conflict-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Already in your list</div>
           <div class="conflict-text" id="conflict-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">This tree is already in your sponsored list. You cannot sponsor it again.</div>
           <button class="green-btn" onclick="closeSponsorConflictModal()"><i class="ti ti-check"></i> Okay</button>
-          <button class="ghost-btn" style="margin-top:8px" onclick="closeSponsorConflictModal(); goTo('sponsor-waiting')"><i class="ti ti-eye"></i> View list</button>
+          <button class="ghost-btn" style="margin-top:8px" onclick="closeSponsorConflictModal(); goTo('sponsor-waiting-submitted')"><i class="ti ti-eye"></i> View list</button>
         </div>
       </div>
     </div>

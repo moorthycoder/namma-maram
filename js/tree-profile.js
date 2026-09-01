@@ -22,7 +22,7 @@ function renderProfile() {
   var last_status = last_enc['health-status'] || {};
   var title_text = (tree.speciesName[appLang] || tree.speciesName.en || tree.speciesName.sn || '');
   document.getElementById('profile-hero-title').innerHTML = title_text.replace(/, /g, ',<br>') + '<br><span style="font-size:0.8rem;opacity:0.8">' + tree.treeId + '</span>';
-  document.getElementById('profile-hero-addr').innerHTML = '<button class="addr-pin-btn" type="button" onclick="showInMap([profileTreeId])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + tree.address.en + '</span>';
+  document.getElementById('profile-hero-addr').innerHTML = '<button class="gis-pin" type="button" onclick="showInMap([profileTreeId])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + tree.address.en + '</span>';
   document.getElementById('profile-stat-health').textContent = last_status.health;
   document.getElementById('profile-stat-height').textContent = last_status.height;
   document.getElementById('profile-stat-diam').textContent = last_status.diameter;
