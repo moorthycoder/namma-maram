@@ -50,6 +50,11 @@ function checkNewSponserTrees() {
   return new_ids;
 }
 
+function getSponsorNextDue(ram_data, current_ids) {
+  var due_list = current_ids.map(function(sid){ for(var i=0;i<ram_data.length;i++){ if(ram_data[i].treeId===sid && ram_data[i]['encounter-due-date']) return {treeId: sid, due: ram_data[i]['encounter-due-date']}; } return null; }).filter(Boolean).sort(function(a,b){ return a.due.localeCompare(b.due); });
+  return due_list.length ? due_list[0] : null;
+}
+
 function loadDashboard() {
   var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
   console.log('[sponsor] loadDashboard RAM', ram_data.length, 'login', (storage.get('login')||{}));
@@ -70,7 +75,57 @@ function loadDashboard() {
   var new_sponsor_ids = checkNewSponserTrees();
   setStatById('s-sponsor-seeing', new_sponsor_ids.length);
   if (new_sponsor_ids.length) console.log('[sponsor] checkNewSponserTrees', new_sponsor_ids);
+  var next_due = getSponsorNextDue(ram_data, current_ids);
+  var next_due_label = '—';
+  window._sponsorNextDueId = '';
+  if (next_due) {
+    var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(next_due.due);
+    var month_names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    next_due_label = dm ? parseInt(dm[3],10) + ' ' + month_names[parseInt(dm[2],10)-1] : next_due.due;
+    window._sponsorNextDueId = next_due.treeId;
+  }
+  setStatById('s-next-due', next_due_label);
   return { ram_data: ram_data, waiting_submitted_ids: waiting_submitted_ids, current_ids: current_ids, past_ids: past_ids, new_sponsor_ids: new_sponsor_ids };
+}
+
+function openSponsorNextDue() {
+  var tid = window._sponsorNextDueId || '';
+  var ram = storage.get('treeCards') || window.__TREE_DATA || [];
+  if (!tid) {
+    try {
+      var lg2 = storage.get('login') || window._login || {};
+      var cur2 = ((lg2['tree-login'] && lg2['tree-login']['sponsor']) || {}).cards || {};
+      var curIds2 = (cur2.current || []).map(function(e){ return typeof e==='string'?e:e.treeId; }).filter(Boolean);
+      var next2 = getSponsorNextDue(ram, curIds2);
+      if (next2) tid = next2.treeId;
+    } catch(e) {}
+  }
+  var cardEl = document.getElementById('sponsor-next-due-card');
+  var emptyEl = document.getElementById('sponsor-next-due-empty');
+  if (!tid) {
+    if (cardEl) cardEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+    goTo('sponsor-next-due');
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+  var tree = null;
+  for (var i = 0; i < ram.length; i++) { if (ram[i].treeId === tid) { tree = ram[i]; break; } }
+  if (!tree) {
+    if (cardEl) cardEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+    goTo('sponsor-next-due');
+    return;
+  }
+  var login_data = storage.get('login') || window._login || {};
+  var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
+  var sorted_current = getSortedWaitingList(sponsor_cards.current || [], 'desc');
+  var current_map = {};
+  sorted_current.forEach(function(e){ if(e && e.treeId) current_map[e.treeId] = e.addedAt; });
+  var c = {}; for (var k in tree) c[k] = tree[k];
+  c.addedAt = current_map[tid] || '';
+  if (cardEl) cardEl.innerHTML = sponsorTreeCardHtml(c);
+  goTo('sponsor-next-due');
 }
 
 function loadListForDashBoardBtns(btn_name) {
@@ -393,6 +448,7 @@ function openProfile(treeId) {
   var active = document.querySelector('.page.active');
   var current_hub = active ? active.id.replace('page-','') : 'sponsor-dash';
   var parent = encodeURIComponent('sponsor.html?hub=' + current_hub);
+  try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch(e) {}
   var userid = '';
   try {
     var login = storage.get('login') || window._login || {};
@@ -807,7 +863,7 @@ function consumePendingSponsorRequest() {
 window.render = {
   init: function () {
     var had_pending = false;
-    if (hubMode === 'sponsor-dash' || hubMode === 'sponsor-waiting-submitted') { had_pending = consumePendingSponsorRequest(); }
+    if (hubMode === 'sponsor-dash' || hubMode === 'sponsor-waiting-submitted' || hubMode === 'sponsor-next-due') { had_pending = consumePendingSponsorRequest(); }
     var result = loadDashboard();
     var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
     var cards = role.cards || {};
@@ -816,6 +872,7 @@ window.render = {
     renderPayLogs();
     if (had_pending) { openSponsorWaitingSubmittedRequests(); return; }
     if (hubMode === 'sponsor-waiting-submitted') { openSponsorWaitingSubmittedRequests(); }
+    if (hubMode === 'sponsor-next-due') { openSponsorNextDue(); }
   }
 };
 function openTreePool() {
@@ -857,5 +914,6 @@ else if (hubMode === 'sponsor-dash') { goTo('sponsor-dash'); }
 else if (hubMode === 'sponsor-waiting-submitted') { goTo('sponsor-waiting-submitted'); }
 else if (hubMode === 'sponsor-current') { goTo('sponsor-current'); }
 else if (hubMode === 'sponsor-past') { goTo('sponsor-past'); }
+else if (hubMode === 'sponsor-next-due') { goTo('sponsor-next-due'); }
 else { console.log('[sponsor] unknown hubMode, redirect to login-hub'); window.location.href = 'login-hub.html'; }
 

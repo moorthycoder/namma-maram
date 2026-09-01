@@ -40,7 +40,7 @@
     </div>
     <div class="page dashboard" id="page-sponsor-dash">
       <div class="dashboard-header">
-        <div class="dashboard-topbar"><div><div class="dashboard-greeting">Welcome back,</div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="sponsorLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="dashboard-topbar"><div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="sponsorLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
         <div class="dashboard-stats">
           <div class="dashboard-stat"><div class="dashboard-stat-label">Trees sponsored</div>
             <div class="dashboard-split">
@@ -49,16 +49,16 @@
               <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('sponsor-past')"><div class="dashboard-split-title">Past</div><div class="dashboard-split-val" id="s-tree-past">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat"><div class="dashboard-stat-label">Monthly total</div><div class="dashboard-stat-val" id="s-monthly">—</div></div>
           <div class="dashboard-stat">
-            <div class="dashboard-stat-label">Waiting</div>
+            <div class="dashboard-stat-label">Request Waiting</div>
             <div class="dashboard-split">
               <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorWaitingSubmittedRequests()"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="s-sponsor-waiting-submitted">0</div></div>
               <div class="dashboard-split-divider"></div>
               <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="s-sponsor-seeing">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat"><div class="dashboard-stat-label">Next due</div><div class="dashboard-stat-val" style="font-size:0.8667rem">1 Jul</div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Monthly total</div><div class="dashboard-split" style="justify-content:center;margin-top:4px"><div class="dashboard-split-col"><div class="dashboard-split-val" id="s-monthly">—</div></div></div></div>
+          <div class="dashboard-stat dashboard-next" onclick="openSponsorNextDue()"><div class="dashboard-stat-label">Next due</div><div class="dashboard-split" style="justify-content:center;margin-top:4px"><div class="dashboard-split-col"><div class="dashboard-split-val due-title" id="s-next-due">—</div></div></div></div>
         </div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
@@ -87,6 +87,14 @@
         <div class="section-title" style="margin-bottom:12px;">Trees you sponsored earlier</div>
         <div id="sponsor-past-cards"></div>
         <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:6px;"><i class="ti ti-history" style="font-size:0.8rem"></i> You can sponsor these trees again anytime</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-sponsor-next-due">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Next due tree</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title" style="margin-bottom:12px;">Next due — single tree</div>
+        <div id="sponsor-next-due-card"></div>
+        <div class="waiting-empty" id="sponsor-next-due-empty" style="display:none">No next due tree</div>
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">

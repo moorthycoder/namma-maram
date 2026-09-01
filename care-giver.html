@@ -40,13 +40,20 @@
     </div>
     <div class="page dashboard" id="page-caregiver-dash">
       <div class="dashboard-header">
-        <div class="dashboard-topbar"><div><div class="dashboard-greeting">Welcome back,</div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar avatar-wrap" onclick="toggleSLogoutDrop()"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item logout-item" onclick="caregiverLogout()"><i class="ti ti-logout logout-icon"></i> Sign out</div></div></div></div>
+        <div class="dashboard-topbar"><div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar avatar-wrap" onclick="toggleSLogoutDrop()"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item logout-item" onclick="caregiverLogout()"><i class="ti ti-logout logout-icon"></i> Sign out</div></div></div></div>
         <div class="dashboard-stats dashboard-stats-mt">
           <div class="dashboard-stat"><div class="dashboard-stat-label">Trees in care</div>
             <div class="dashboard-split">
               <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-current')"><div class="dashboard-split-title">Current</div><div class="dashboard-split-val" id="c-tree-current">0</div></div>
               <div class="dashboard-split-divider"></div>
               <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-past')"><div class="dashboard-split-title">Past</div><div class="dashboard-split-val" id="c-tree-past">0</div></div>
+            </div>
+          </div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">New requests</div>
+            <div class="dashboard-split">
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openCaregiverWaitingRequests()"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="c-care-waiting">0</div></div>
+              <div class="dashboard-split-divider"></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openCaregiverSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="c-care-seeing">0</div></div>
             </div>
           </div>
           <div class="dashboard-stat"><div class="dashboard-stat-label">Checks this month</div>
@@ -56,20 +63,22 @@
               <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-checks-finished')"><div class="dashboard-split-title">Finished</div><div class="dashboard-split-val" id="c-monthly">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat"><div class="dashboard-stat-label">Waiting</div>
+          <div class="dashboard-stat dashboard-next" onclick="openNextCheckTree()"><div class="dashboard-stat-label">Next check</div><div class="dashboard-stat-val due-title" id="c-next">18 Jul</div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Logs</div>
             <div class="dashboard-split">
-              <div class="dashboard-split-col dashboard-split-btn" onclick="openCaregiverWaitingRequests()"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="c-care-waiting">0</div></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('approved')"><div class="dashboard-split-title">Approved</div><div class="dashboard-split-val" id="c-logs-approved">0</div></div>
               <div class="dashboard-split-divider"></div>
-              <div class="dashboard-split-col dashboard-split-btn" onclick="openCaregiverSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="c-care-seeing">0</div></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('submitted')"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="c-logs-submitted">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat dashboard-next" onclick="openNextCheckTree()"><div class="dashboard-stat-label">Next check</div><div class="dashboard-stat-val due-title" id="c-next">18 Jul</div></div>
         </div>
       </div>
-      <div class="scrollable"><div class="dashboard-scroll-pad">
-        <button class="dashboard-cta" onclick="openTreePool()"><i class="ti ti-tree dashboard-cta-icon"></i> Care for a tree</button>
-        <button class="dashboard-cta" onclick="goTo('caregiver-current')"><i class="ti ti-scan dashboard-cta-icon"></i> Survey a tree</button>
-        <button class="dashboard-cta" onclick="openRegisterATreePage()"><i class="ti ti-tree dashboard-cta-icon"></i> Register a tree</button>
+      <div class="scrollable"><div style="padding:13px;">
+        <div class="hub-grid">
+          <div class="hub-tile" onclick="openTreePool()"><i class="ti ti-heart-handshake"></i><span>Care for a tree</span></div>
+          <div class="hub-tile" onclick="goTo('caregiver-current')"><i class="ti ti-scan"></i><span>Survey a tree</span></div>
+          <div class="hub-tile" onclick="openRegisterATreePage()"><i class="ti ti-tree"></i><span>Register a tree</span></div>
+        </div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-waiting">

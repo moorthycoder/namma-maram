@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Logs</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/care-giver.css" />
+<style>
+html, body { height:100%; }
+body { display:block; padding:0; justify-content:stretch; align-items:stretch; background: var(--color-background-primary); }
+.screen { width:100%; max-width:100%; height:100%; min-height:100vh; border-radius:0; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="status-bar blue" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Recent Logs</span></div>
+  <div class="scrollable"><div style="padding:13px;">
+    <div class="section-title">Recent Logs</div>
+    <div class="info-card" id="logs-list"></div>
+  <div id="log-review" style="display:none; margin-top:16px;"><div class="section-title">Review</div><div class="info-card" id="log-review-body"></div><button class="ghost-btn" onclick="closeLogReview()" style="margin-top:8px;">Close</button></div>
+  </div></div>
+</div>
+<script src="js/storage.js"></script>
+<script>
+var parentUrl = new URLSearchParams(location.search).get('parent') || 'care-giver.html?hub=caregiver-dash';
+function goBack() { window.location.href = parentUrl; }
+function formatLoggedAt(v) {
+  var m = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/.exec(v);
+  if (m) return m[3] + '-' + m[2] + '-' + m[1] + ' ' + m[4] + ':' + m[5];
+  return v;
+}
+function renderLogs() {
+  var listEl = document.getElementById('logs-list');
+  if (!listEl) return;
+  var userid = new URLSearchParams(location.search).get('userid') || '';
+  var login = null;
+  try { login = storage.get('login'); } catch(e) {}
+  try { if (!login) login = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}'); } catch(e) {}
+  if (!login) try { login = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}'); } catch(e) {}
+  var logtype = new URLSearchParams(location.search).get('logtype') || '';
+  var logs = [];
+  try {
+    var care = login && login['tree-login'] && login['tree-login']['caregiver'];
+    if (care && care.cards && care.cards.logs) {
+      if (Array.isArray(care.cards.logs)) logs = care.cards.logs.slice();
+      else {
+        var approved_tmp = care.cards.logs.approved || [];
+        var submitted_tmp = care.cards.logs.submitted || [];
+        if (logtype === 'approved') logs = approved_tmp.slice();
+        else if (logtype === 'submitted') logs = submitted_tmp.slice();
+        else logs = approved_tmp.concat(submitted_tmp);
+      }
+    }
+  } catch(e) {}
+  if (!logs.length) {
+    listEl.innerHTML = '<div class="waiting-empty">No logs yet</div>';
+    return;
+  }
+  var html = '';
+  for (var i = logs.length - 1; i >= 0; i--) {
+    var e = logs[i];
+    var treeId = e.treeId || e.tree_id || '—';
+    var at = e.loggedAt || e.logged_at || '';
+    html += '<div class="recent-row" style="cursor:pointer" onclick="openLogReviewPage(\'' + treeId + '\',\'' + at + '\')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">' + treeId + '</div><div class="recent-date">' + formatLoggedAt(at) + '</div></div></div>';
+  }
+  listEl.innerHTML = html;
+}
+function openLogReviewPage(treeId, loggedAt) {
+  var at = loggedAt || '';
+  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(at) + '&parent=' + encodeURIComponent(parentUrl);
+}
+function openLogReview(treeId) { return openLogReviewPage(treeId, ''); }
+function closeLogReview() { var w=document.getElementById('log-review'); if(w) w.style.display='none'; }
+renderLogs();
+</script>
+</body>
+</html>

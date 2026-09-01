@@ -901,17 +901,37 @@ function openNextCheckTree() {
   goTo('caregiver-current');
 }
 
+function loadDashboard() {
+  var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
+  console.log('[caregiver] loadDashboard RAM', ram_data.length, 'login', (storage.get('login')||{}));
+  window.__TREE_DATA = ram_data;
+  albumData = Array.isArray(ram_data) ? ram_data : (ram_data.albumData || []);
+  renderCaregiverCards();
+  updateChecksThisMonthStats();
+  var new_caregiver_ids = checkNewCaregiverTrees();
+  setStatById('c-care-seeing', new_caregiver_ids.length);
+  var dash_role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  var dash_logs = dash_role.cards && dash_role.cards.logs;
+  var approved_logs = [];
+  var submitted_logs = [];
+  if (Array.isArray(dash_logs)) {
+    approved_logs = dash_logs.slice(0, Math.ceil(dash_logs.length / 2));
+    submitted_logs = dash_logs.slice(Math.ceil(dash_logs.length / 2));
+  } else if (dash_logs && typeof dash_logs === 'object') {
+    approved_logs = Array.isArray(dash_logs.approved) ? dash_logs.approved : [];
+    submitted_logs = Array.isArray(dash_logs.submitted) ? dash_logs.submitted : [];
+  }
+  setStatById('c-logs-approved', approved_logs.length);
+  setStatById('c-logs-submitted', submitted_logs.length);
+  if (!ram_data.length) console.warn('[caregiver] loadDashboard: RAM empty');
+  return { ram_data: ram_data, new_caregiver_ids: new_caregiver_ids, approved_logs: approved_logs, submitted_logs: submitted_logs };
+}
+
 window.render = {
   init: function () {
     var had_pending = false;
     if (hubMode === 'caregiver-dash' || hubMode === 'caregiver-waiting') { had_pending = consumePendingCaregiverRequest(); }
-    var data = storage.get('treeCards') || [];
-    window.__TREE_DATA = data;
-    albumData = Array.isArray(data) ? data : (data.albumData || []);
-    renderCaregiverCards();
-    updateChecksThisMonthStats();
-    var new_caregiver_ids = checkNewCaregiverTrees();
-    setStatById('c-care-seeing', new_caregiver_ids.length);
+    loadDashboard();
     var role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
     var cards = role.cards || {};
     if (had_pending) { openCaregiverWaitingRequests(); return; }
@@ -1000,6 +1020,24 @@ function openRegisterATreePage() {
   var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
   var userid = role.userId || '';
   var url = 'register-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
+  window.location.href = url;
+}
+function openLogsPage() {
+  var login = storage.get('login') || window._login || {};
+  var role = (login['tree-login'] && login['tree-login']['caregiver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
+  var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
+  var userid = role.userId || '';
+  var url = 'logs.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
+  window.location.href = url;
+}
+function openLogsByType(logtype) {
+  var login = storage.get('login') || window._login || {};
+  var role = (login['tree-login'] && login['tree-login']['caregiver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
+  try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
+  var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
+  var userid = role.userId || '';
+  var url = 'logs.html?parent=' + parent + '&userid=' + encodeURIComponent(userid) + '&logtype=' + encodeURIComponent(logtype);
   window.location.href = url;
 }
 
