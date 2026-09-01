@@ -159,12 +159,14 @@
   .sdash-split-val{font-size:0.9333rem;font-weight:500;color:var(--color-theme-light);}
   .sdash-split-divider{width:1px;height:24px;background:rgba(192,221,151,0.2);}
   .waiting-empty{text-align:center;font-size:0.8rem;color:var(--color-text-secondary);padding:26px 10px;}
-  .tree-card-sponsor{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:12px;}
-  .tree-card-hero{height:72px;display:flex;align-items:flex-end;position:relative;}
+  .tree-card-sponsor{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+  .tree-card-caregiver{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+  .tree-card-hero{height:72px;display:flex;align-items:flex-end;position:relative;cursor:pointer;}
   .tree-card-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.5));}
-  .tree-card-title{position:relative;z-index:1;padding:7px 11px;}
-  .tree-card-title h3{font-size:0.8667rem;font-weight:500;color:#fff;}
-  .tree-card-title p{font-size:0.6667rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:3px;}
+  .tree-card-title{position:relative;z-index:1;padding:7px 11px;display:flex;flex-direction:column;gap:8px;}
+  .tree-card-title h3{font-size:0.8667rem;font-weight:500;color:#fff;margin:0;}
+  .tree-card-title p{font-size:0.6667rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:3px;margin:0;}
+  .tree-card-title p i{font-size:0.6rem;}
   .tree-card-body{padding:10px 11px 0;}
   .tree-card-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
   .tcs{background:var(--color-background-secondary);border-radius:6px;padding:6px 4px;text-align:center;}
@@ -237,6 +239,19 @@
   .lang-tile.sel { border-color: var(--color-theme); background: var(--color-theme-light); }
   .lang-tile b { font-size: 1rem; font-weight: 500; color: var(--color-text-primary); }
   .lang-tile small { font-size: 0.6667rem; color: var(--color-text-secondary); }
+  .caregiver-seeing-grid{display:grid;grid-template-columns:1fr;gap:12px;padding:2px;}
+  #caregiver-seeing-grid .sponsor-tree-card{background:#fff;border:0.5px solid var(--color-border-tertiary);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;}
+  #caregiver-seeing-grid .tree-info{order:1;padding:10px 12px 8px;}
+  #caregiver-seeing-grid .tree-photo{order:2;height:110px;border-top:0.5px solid var(--color-border-tertiary);border-bottom:0.5px solid var(--color-border-tertiary);position:relative;display:flex;align-items:center;justify-content:center;}
+  #caregiver-seeing-grid .health-stats-row{order:3;}
+  .caregiver-seeing-actions{display:flex;gap:6px;padding:8px 11px;border-top:0.5px solid var(--color-border-tertiary);order:4;}
+  .caregiver-seeing-actions .tcbtn{flex:1;}
+  .tcbtn-danger{color:#dc2626;}
+  #caregiver-seeing-grid .tree-name{font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);}
+  #caregiver-seeing-grid .tree-id{font-size:0.7333rem;font-family:monospace;color:var(--color-text-secondary);}
+  #caregiver-seeing-grid .tree-addr{font-size:0.7333rem;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px;margin-top:3px;}
+  #caregiver-seeing-grid .tree-emoji{font-size:2rem;}
+  #caregiver-seeing-grid .tree-stats{font-size:0.7333rem;color:var(--color-text-secondary);display:flex;gap:6px;}
   .switch { width: 44px; height: 24px; border-radius: 14px; background: rgba(192,221,151,0.25); border: none; position: relative; cursor: pointer; padding: 0; transition: background 0.2s; }
   .switch .knob { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left 0.2s; }
   .switch[aria-checked="true"] { background: var(--color-theme); }

@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/app.css" />
 <link rel="stylesheet" href="css/care-giver.css" />
 </head>
 <body>
@@ -37,33 +38,52 @@
         <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit enrollment</button>
       </div>
     </div>
-    <div class="page" id="page-caregiver-dash">
-      <div class="sdash-header">
-        <div class="sdash-topbar"><div><div class="sdash-greeting">Welcome back,</div><div class="sdash-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="caregiverLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
-        <div class="sdash-stats">
-          <div class="sdash-stat"><div class="sdash-stat-label">Trees in care</div>
-            <div class="sdash-split">
-              <div class="sdash-split-col sdash-split-btn" onclick="goTo('caregiver-current')"><div class="sdash-split-title">Current</div><div class="sdash-split-val" id="c-tree-current">0</div></div>
-              <div class="sdash-split-divider"></div>
-              <div class="sdash-split-col sdash-split-btn" onclick="goTo('caregiver-past')"><div class="sdash-split-title">Past</div><div class="sdash-split-val" id="c-tree-past">0</div></div>
+    <div class="page dashboard" id="page-caregiver-dash">
+      <div class="dashboard-header">
+        <div class="dashboard-topbar"><div><div class="dashboard-greeting">Welcome back,</div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="caregiverLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="dashboard-stats" style="margin-top:12px;">
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Trees in care</div>
+            <div class="dashboard-split">
+              <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-current')"><div class="dashboard-split-title">Current</div><div class="dashboard-split-val" id="c-tree-current">0</div></div>
+              <div class="dashboard-split-divider"></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-past')"><div class="dashboard-split-title">Past</div><div class="dashboard-split-val" id="c-tree-past">0</div></div>
             </div>
           </div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Monthly total</div><div class="sdash-stat-val" id="c-monthly">₹600</div></div>
-          <div class="sdash-stat sdash-split-btn" onclick="openCaregiverWaitingRequests()"><div class="sdash-stat-label">Approval waiting</div><div class="sdash-stat-val" id="c-care-waiting">0</div></div>
-          <div class="sdash-stat"><div class="sdash-stat-label">Next due</div><div class="sdash-stat-val" style="font-size:0.8667rem">1 Jul</div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Checks this month</div>
+            <div class="dashboard-split">
+              <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-checks-due')"><div class="dashboard-split-title">Due</div><div class="dashboard-split-val" id="c-checks-due">0</div></div>
+              <div class="dashboard-split-divider"></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-checks-finished')"><div class="dashboard-split-title">Finished</div><div class="dashboard-split-val" id="c-monthly">0</div></div>
+            </div>
+          </div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Waiting</div>
+            <div class="dashboard-split">
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openCaregiverWaitingRequests()"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="c-care-waiting">0</div></div>
+              <div class="dashboard-split-divider"></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openCaregiverSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="c-care-seeing">0</div></div>
+            </div>
+          </div>
+          <div class="dashboard-stat" onclick="openNextCheckTree()" style="cursor:pointer;"><div class="dashboard-stat-label">Next check</div><div class="dashboard-stat-val" id="c-next" style="font-size:0.8667rem">18 Jul</div></div>
         </div>
       </div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <button class="ghost-btn" onclick="openTreePool()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;gap:12px;">
+        <button class="ghost-btn" onclick="goTo('caregiver-browse')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Care for a tree</button>
+        <button class="ghost-btn" onclick="goTo('selfie')"><i class="ti ti-scan" style="font-size:0.9333rem"></i> Survey a tree</button>
+        <button class="ghost-btn" onclick="goTo('register-tree')"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Register and Care for a tree</button>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-waiting">
-      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="swaiting-page-title">Waiting</span></div>
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="waiting-page-title">Waiting</span></div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="waiting-section" id="caregiver-waiting-section">
-          <div class="section-title" style="margin-bottom:12px;">Care requests</div>
+        <div class="waiting-section" id="care-waiting-section">
+          <div class="section-title" style="margin-bottom:12px;">Care requests waiting for approval</div>
           <div id="caregiver-waiting-cards"></div>
-          <div class="waiting-empty" id="caregiver-waiting-empty">No pending care requests</div>
+          <div class="waiting-empty" id="care-waiting-empty">No pending care requests</div>
+        </div>
+        <div class="waiting-section" id="register-waiting-section" style="display:none;">
+          <div class="section-title" style="margin-bottom:12px;">Register requests waiting for approval</div>
+          <div id="register-waiting-cards"></div>
+          <div class="waiting-empty" id="register-waiting-empty">No pending register requests</div>
         </div>
       </div></div>
     </div>
@@ -80,6 +100,44 @@
         <div class="section-title" style="margin-bottom:12px;">Trees you used to care for</div>
         <div id="caregiver-past-cards"></div>
         <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:6px;"><i class="ti ti-history" style="font-size:0.8rem"></i> You can re-adopt these trees anytime</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-checks-due">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Checks this month — Due</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title" style="margin-bottom:12px;">Due this month</div>
+        <div id="caregiver-checks-due-cards"></div>
+        <div class="waiting-empty" id="caregiver-checks-due-empty">All trees checked this month</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-checks-finished">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Checks this month — Finished</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title" style="margin-bottom:12px;">Finished this month</div>
+        <div id="caregiver-checks-cards"></div>
+        <div class="waiting-empty" id="caregiver-checks-empty">No checks recorded this month</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-browse">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Care for a tree</span></div>
+      <div style="padding:10px 14px 6px;flex-shrink:0;"><div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;display:flex;align-items:center;gap:8px;"><i class="ti ti-search" style="font-size:0.9333rem;color:var(--color-text-secondary)"></i><span style="font-size:0.8667rem;color:var(--color-text-secondary);">Search by ID or area...</span></div></div>
+      <div class="scrollable"><div style="padding:10px 14px;">
+        <div class="section-title" style="margin-bottom:10px;">Available trees</div>
+        <div id="caregiver-browse-cards"></div>
+      </div></div>
+    </div>
+    <div class="page" id="page-selfie">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey a tree</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title">Survey flow</div>
+        <div style="font-size:0.8rem;color:var(--color-text-secondary);">Use filter pool to survey. <button class="ghost-btn" style="margin-top:10px;" onclick="openTreePool()">Open tree pool</button></div>
+      </div></div>
+    </div>
+    <div class="page" id="page-register-tree">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Register and Care</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="section-title">Register flow</div>
+        <div style="font-size:0.8rem;color:var(--color-text-secondary);">Use filter pool to register. <button class="ghost-btn" style="margin-top:10px;" onclick="openTreePool()">Open tree pool</button></div>
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">
@@ -178,6 +236,14 @@
           <button class="ghost-btn" style="margin-top:8px" onclick="cancelDeleteCard()">Cancel</button>
         </div>
       </div>
+    </div>
+    <div class="page" id="page-caregiver-seeing">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Confirm Care Trees</span></div>
+      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+        <div class="caregiver-seeing-grid" id="caregiver-seeing-grid"></div>
+        <div class="waiting-empty" id="caregiver-seeing-empty" style="display:none;">No Seeing trees</div>
+        <button class="ghost-btn" style="margin-top:12px;" onclick="goTo('caregiver-dash')">Close</button>
+      </div></div>
     </div>
   </div>
 <script src="js/storage.js"></script>
