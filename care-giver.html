@@ -63,7 +63,7 @@
               <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('caregiver-checks-finished')"><div class="dashboard-split-title">Finished</div><div class="dashboard-split-val" id="c-monthly">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat dashboard-next" onclick="openNextCheckTree()"><div class="dashboard-stat-label">Next check</div><div class="dashboard-stat-val due-title" id="c-next">18 Jul</div></div>
+          <div class="dashboard-stat dashboard-next" onclick="openNextCheckTree()"><div class="dashboard-stat-label">Next check</div><div class="dashboard-split"><div class="dashboard-split-col"><div class="next-due-list" id="c-next-due-list"></div></div></div></div>
           <div class="dashboard-stat"><div class="dashboard-stat-label">Logs</div>
             <div class="dashboard-split">
               <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('approved')"><div class="dashboard-split-title">Approved</div><div class="dashboard-split-val" id="c-logs-approved">0</div></div>
@@ -125,6 +125,22 @@
         <div class="section-title section-title-mb">Finished this month</div>
         <div id="caregiver-checks-cards"></div>
         <div class="waiting-empty" id="caregiver-checks-empty">No checks recorded this month</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-logs-approved">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Logs — Approved</span></div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Approved logs</div>
+        <div class="info-card" id="caregiver-logs-approved-list"></div>
+        <div class="waiting-empty" id="caregiver-logs-approved-empty">No approved logs</div>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-logs-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Logs — Submitted</span></div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Submitted logs</div>
+        <div class="info-card" id="caregiver-logs-submitted-list"></div>
+        <div class="waiting-empty" id="caregiver-logs-submitted-empty">No submitted logs</div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-browse">

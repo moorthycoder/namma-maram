@@ -219,11 +219,11 @@
 
   /* ── LOGIN HUB ── */
   .hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .hub-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; text-align: center; min-height: 96px; }
-  .hub-tile:hover { border-color: var(--color-theme); }
-  .hub-tile i { font-size: 1.3333rem; color: var(--color-theme); }
-  .hub-tile span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-primary); }
-  .hub-tile small { font-size: 0.6rem; color: var(--color-text-secondary); }
+  .hub-tile { background: var(--color-theme); border: 0.5px solid var(--color-theme-dark); border-radius: var(--border-radius-lg); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; text-align: center; min-height: 96px; }
+  .hub-tile:hover { border-color: var(--color-theme-dark); opacity:0.95; transform:translateY(-1px); }
+  .hub-tile i { font-size: 1.3333rem; color: var(--color-theme-light); }
+  .hub-tile span { font-size: 0.8rem; font-weight: 500; color: #ffffff; }
+  .hub-tile small { font-size: 0.6rem; color: rgba(234,243,222,0.85); }
   .hub-tile.empty { border: 1.5px dashed var(--color-border-tertiary); cursor: default; background: var(--color-background-secondary); }
   .hub-tile.empty:hover { border-color: var(--color-border-tertiary); }
 
@@ -247,6 +247,12 @@
   .caregiver-seeing-actions{display:flex;gap:6px;padding:8px 11px;border-top:0.5px solid var(--color-border-tertiary);order:4;}
   .caregiver-seeing-actions .tcbtn{flex:1;}
   .tcbtn-danger{color:#dc2626;}
+  .next-due-wrap{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;text-align:center;}
+  .next-due-list{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;text-align:center;}
+  .next-due-row{display:flex;gap:6px;align-items:center;justify-content:center;}
+  .next-due-id{font-family:monospace;font-size:0.6667rem;font-weight:500;color:var(--color-theme-light);text-decoration:underline;cursor:pointer;line-height:1.2;}
+  .next-due-id:hover{opacity:0.85;}
+  .next-due-date{font-size:0.6667rem;font-weight:500;color:var(--color-theme-light);line-height:1.2;}
   #caregiver-seeing-grid .tree-name{font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);}
   #caregiver-seeing-grid .tree-id{font-size:0.7333rem;font-family:monospace;color:var(--color-text-secondary);}
   #caregiver-seeing-grid .tree-addr{font-size:0.7333rem;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px;margin-top:3px;}

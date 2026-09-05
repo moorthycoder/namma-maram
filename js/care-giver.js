@@ -350,7 +350,7 @@ function goTo(page) {
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['caregiver-login','caregiver-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-caregivers','admin-trackers-prospective','admin-caregivers-prospective','ranger-enroll','caregiver-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['caregiver-login','caregiver-dash','caregiver-waiting','caregiver-current','caregiver-past','caregiver-seeing','caregiver-checks-due','caregiver-checks-finished','caregiver-browse','selfie','register-tree','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  else if (['caregiver-login','caregiver-dash','caregiver-waiting','caregiver-current','caregiver-past','caregiver-seeing','caregiver-checks-due','caregiver-checks-finished','caregiver-logs-approved','caregiver-logs-submitted','caregiver-browse','selfie','register-tree','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
   
@@ -875,6 +875,16 @@ function updateChecksThisMonthStats() {
     nextCheckLabel = latestDate.getDate() + ' ' + monthNames[latestDate.getMonth()];
   }
   window._nextCheckTreeId = nextCheckTreeForLabel ? nextCheckTreeForLabel.treeId : '';
+  var c_next_due_list_el = document.getElementById('c-next-due-list');
+  if(c_next_due_list_el){
+    var next3 = dueListForNext.slice(0,3);
+    if(!next3.length && nextCheckTreeForLabel){ next3 = [{tree: nextCheckTreeForLabel, due: chosenNext ? chosenNext.due : ''}]; }
+    c_next_due_list_el.innerHTML = next3.length ? next3.map(function(x){
+      var dm=/^(\d{4})-(\d{2})-(\d{2})$/.exec(x.due);
+      var lbl=dm? parseInt(dm[3],10)+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(dm[2],10)-1]:x.due;
+      return '<div class="next-due-row"><span class="next-due-id" onclick="event.stopPropagation();openProfile(\''+x.tree.treeId+'\')">'+x.tree.treeId+'</span><span class="next-due-date">'+lbl+'</span></div>';
+    }).join('') : '<span class="next-due-date">—</span>';
+  }
   setStatById('c-monthly', finishedTrees.length);
   setStatById('c-checks-due', dueTrees.length);
   setStatById('c-next', nextCheckLabel);
@@ -1032,14 +1042,11 @@ function openLogsPage() {
   window.location.href = url;
 }
 function openLogsByType(logtype) {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['caregiver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
-  try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
-  var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
-  var userid = role.userId || '';
-  var url = 'logs.html?parent=' + parent + '&userid=' + encodeURIComponent(userid) + '&logtype=' + encodeURIComponent(logtype);
-  window.location.href = url;
+  if(logtype==='approved'){ goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
+  else if(logtype==='submitted'){ goTo('caregiver-logs-submitted'); renderCaregiverLogs('submitted'); }
+  else { goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
 }
+
 
 function getCaregiverParentUrl() {
   var parent_url = new URLSearchParams(location.search).get('parent');
@@ -1063,6 +1070,8 @@ else if (hubMode === 'caregiver-current') { goTo('caregiver-current'); }
 else if (hubMode === 'caregiver-past') { goTo('caregiver-past'); }
 else if (hubMode === 'caregiver-checks-due') { goTo('caregiver-checks-due'); }
 else if (hubMode === 'caregiver-checks-finished') { goTo('caregiver-checks-finished'); }
+else if (hubMode === 'caregiver-logs-approved') { goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
+else if (hubMode === 'caregiver-logs-submitted') { goTo('caregiver-logs-submitted'); renderCaregiverLogs('submitted'); }
 else if (hubMode === 'caregiver-browse') { goTo('caregiver-browse'); }
 else { console.log('[caregiver] unknown hubMode, redirect to login-hub'); window.location.href = 'login-hub.html'; }
 
