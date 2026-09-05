@@ -57,7 +57,7 @@
               <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="s-sponsor-seeing">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat"><div class="dashboard-stat-label">Monthly total</div><div class="dashboard-split" style="justify-content:center;margin-top:4px"><div class="dashboard-split-col"><div class="dashboard-split-val" id="s-monthly">—</div></div></div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Payments</div><div class="dashboard-split"><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsTotal()"><div class="dashboard-split-title">Total</div><div class="dashboard-split-val" id="s-payments-total">—</div></div><div class="dashboard-split-divider"></div><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsThisMonth()"><div class="dashboard-split-title">This month</div><div class="dashboard-split-val" id="s-payments-month">—</div></div></div></div>
           <div class="dashboard-stat dashboard-next" onclick="openSponsorNextDue()"><div class="dashboard-stat-label">Next due</div><div class="dashboard-split" style="justify-content:center;margin-top:4px"><div class="dashboard-split-col"><div class="dashboard-split-val due-title" id="s-next-due">—</div></div></div></div>
         </div>
       </div>
@@ -105,12 +105,21 @@
         <div class="info-card" id="tree-logs-list"></div>
       </div></div>
     </div>
-    <div class="page" id="page-pay-logs">
-      <div class="topbar"><button class="back-btn" onclick="payLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="pay-logs-title">Payments</span></div>
+    <div class="page" id="page-pay-logs-total">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — Total</span></div>
       <div style="background:var(--color-theme-light);padding:10px 14px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;"><div><div style="font-size:0.6667rem;color:var(--color-theme);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;">Monthly plan</div><div style="font-size:1rem;font-weight:500;color:var(--color-theme-dark);">₹300 / month</div></div><div style="font-size:0.7333rem;color:var(--color-theme);background:rgba(59,109,17,0.1);padding:4px 10px;border-radius:20px;">Active</div></div>
       <div class="scrollable"><div style="padding:12px 14px;">
-        <div class="section-title" style="margin-bottom:10px;">Payment history</div>
-        <div class="info-card" style="margin-bottom:14px;" id="pay-history"></div>
+        <div class="section-title" style="margin-bottom:10px;">Payment history — Total</div>
+        <div class="info-card" style="margin-bottom:14px;" id="pay-history-total"></div>
+        <button class="blue-btn" onclick="openPayNow()"><i class="ti ti-credit-card"></i> Pay now — Jul 2026</button>
+      </div></div>
+    </div>
+    <div class="page" id="page-pay-logs-this_month">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — This month</span></div>
+      <div style="background:var(--color-theme-light);padding:10px 14px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;"><div><div style="font-size:0.6667rem;color:var(--color-theme);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;">Monthly plan</div><div style="font-size:1rem;font-weight:500;color:var(--color-theme-dark);">₹300 / month</div></div><div style="font-size:0.7333rem;color:var(--color-theme);background:rgba(59,109,17,0.1);padding:4px 10px;border-radius:20px;">Active</div></div>
+      <div class="scrollable"><div style="padding:12px 14px;">
+        <div class="section-title" style="margin-bottom:10px;">Payment history — This month</div>
+        <div class="info-card" style="margin-bottom:14px;" id="pay-history-this_month"></div>
         <button class="blue-btn" onclick="openPayNow()"><i class="ti ti-credit-card"></i> Pay now — Jul 2026</button>
       </div></div>
     </div>

@@ -5,6 +5,7 @@ var treeLogsFrom = 'sponsor-dash';
 var payLogsFrom = 'sponsor-dash';
 var sponsoredCount = 0;
 var payTreeId = '';
+var payMonthFilter = '';
 
 function sponsorCardName(t) {
   if (!t) return '';
@@ -403,11 +404,11 @@ function goTo(page) {
       }
     }
   }
-  if (page === 'pay-logs') {
+  if (page === 'pay-logs' || page === 'pay-logs-total' || page === 'pay-logs-this_month') {
     var activePayPage = document.querySelector('.page.active');
     if (activePayPage) {
       var payFrom = activePayPage.id.replace('page-', '');
-      if (payFrom !== 'pay-logs') {
+      if (payFrom !== 'pay-logs' && payFrom !== 'pay-logs-total' && payFrom !== 'pay-logs-this_month') {
         payLogsFrom = payFrom;
       }
     }
@@ -430,7 +431,7 @@ function sponsorGoBack() {
   var active = document.querySelector('.page.active');
   var cur = active ? active.id.replace('page-', '') : '';
   if (cur === 'tree-logs') { goTo(treeLogsFrom); return; }
-  if (cur === 'pay-logs') { goTo(payLogsFrom); return; }
+  if (cur === 'pay-logs' || cur === 'pay-logs-total' || cur === 'pay-logs-this_month') { goTo(payLogsFrom); return; }
   if (cur === 'profile') {
     var parent = new URLSearchParams(location.search).get('parent');
     if (parent) { window.location.href = decodeURIComponent(parent); return; }
@@ -447,6 +448,7 @@ function openProfile(treeId) {
   var id = treeId || '625501-06-0001';
   var active = document.querySelector('.page.active');
   var current_hub = active ? active.id.replace('page-','') : 'sponsor-dash';
+  if (current_hub === 'pay-logs') { current_hub = payMonthFilter ? 'pay-logs-this_month' : 'pay-logs-total'; }
   var parent = encodeURIComponent('sponsor.html?hub=' + current_hub);
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch(e) {}
   var userid = '';
@@ -542,23 +544,68 @@ function selectAmt(el) {
   el.classList.add('selected');
   document.getElementById('pay-now-btn').innerHTML = '<i class="ti ti-credit-card"></i> Pay ' + el.textContent + ' now';
 }
-
+function getCurrentMonthPrefixForPayments() {
+  var now_date = new Date();
+  var yyyy = String(now_date.getFullYear());
+  var mm = String(now_date.getMonth() + 1).padStart(2, '0');
+  return yyyy + mm;
+}
+function getPaymentMonthLabelFromPaidAtTimestamp(payment_paid_at_timestamp) {
+  if (!payment_paid_at_timestamp || !/^\d{8}T\d{6}$/.test(payment_paid_at_timestamp)) return '';
+  var month_names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var yyyy = payment_paid_at_timestamp.slice(0,4);
+  var mm = parseInt(payment_paid_at_timestamp.slice(4,6),10);
+  return month_names[mm-1] + ' ' + yyyy;
+}
+function getPaymentPaidDateLabelFromPaidAtTimestamp(payment_paid_at_timestamp, payment_card_month_label) {
+  if (!payment_paid_at_timestamp) return '';
+  if (/^\d{8}T\d{6}$/.test(payment_paid_at_timestamp)) {
+    var dd = parseInt(payment_paid_at_timestamp.slice(6,8),10);
+    return 'Paid · ' + dd + ' ' + payment_card_month_label;
+  }
+  return payment_paid_at_timestamp;
+}
 function renderPayLogs() {
-  var el = document.getElementById('pay-history');
-  if (!el) { return; }
+  var total_el = document.getElementById('pay-history-total');
+  var this_month_el = document.getElementById('pay-history-this_month');
+  var legacy_el = document.getElementById('pay-history');
+  if (!total_el && !this_month_el && !legacy_el) { return; }
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
   var cards = role.cards || {};
-  var list = (cards.payments || []).filter(function (p) { return !payTreeId || p.treeId === payTreeId; });
-  el.innerHTML = list.map(function (p) {
-    var retried = p.status === 'retried';
-    return '<div class="pay-entry">' +
-      '<div class="pay-icon' + (retried ? ' pay-icon-retried' : '') + '"><i class="ti ' + (retried ? 'ti-alert-triangle' : 'ti-check') + '"></i></div>' +
-      '<div><div class="pay-label">' + p.month + '</div><div class="pay-date">' + p.date + '</div></div>' +
-      '<div class="pay-amount"><div class="pay-amount-val">' + p.amount + '</div><div class="pay-badge' + (retried ? ' pay-badge-retried' : '') + '">' + (retried ? 'Retried' : 'Paid') + '</div></div>' +
-      '</div>';
-  }).join('');
+  var all_payments = cards.payments || [];
+  var total_list = all_payments.filter(function (payment_item) { return !payTreeId || payment_item.treeId === payTreeId; });
+  var current_month_prefix = getCurrentMonthPrefixForPayments();
+  var this_month_list = all_payments.filter(function (payment_item) { var is_matching_tree = !payTreeId || payment_item.treeId === payTreeId; var is_this_month = (payment_item.paidAt || '').indexOf(current_month_prefix) === 0; return is_matching_tree && is_this_month; });
+  function renderPaymentList(payment_list) {
+    return payment_list.map(function (payment_item) {
+      var payment_paid_at_timestamp = payment_item.paidAt || '';
+      var payment_card_month_label = getPaymentMonthLabelFromPaidAtTimestamp(payment_paid_at_timestamp);
+      var payment_card_paid_date_label = getPaymentPaidDateLabelFromPaidAtTimestamp(payment_paid_at_timestamp, payment_card_month_label);
+      var payment_card_tree_id_label = payment_item.treeId || '';
+      return '<div class="pay-entry" onclick="openProfile(\'' + payment_card_tree_id_label + '\')" style="cursor:pointer">' +
+        '<div class="pay-icon"><i class="ti ti-check"></i></div>' +
+        '<div><div class="pay-label">' + payment_card_tree_id_label + '</div><div class="pay-date">' + payment_card_paid_date_label + '</div></div>' +
+        '<div class="pay-amount"><div class="pay-amount-val">' + payment_item.amount + '</div><div class="pay-badge">Paid</div></div>' +
+        '</div>';
+    }).join('');
+  }
+  if (total_el) total_el.innerHTML = renderPaymentList(total_list);
+  if (this_month_el) this_month_el.innerHTML = renderPaymentList(this_month_list);
+  if (legacy_el) legacy_el.innerHTML = renderPaymentList(total_list);
 }
 
+function openPaymentsTotal() {
+  payTreeId = '';
+  payMonthFilter = '';
+  renderPayLogs();
+  goTo('pay-logs-total');
+}
+function openPaymentsThisMonth() {
+  payTreeId = '';
+  payMonthFilter = getCurrentMonthPrefixForPayments();
+  renderPayLogs();
+  goTo('pay-logs-this_month');
+}
 function recordPayment() {
   var amtEl = document.querySelector('.amt-chip.selected');
   var amount = amtEl ? amtEl.textContent : '₹300';
@@ -567,7 +614,7 @@ function recordPayment() {
   var role = tl.sponsor || (tl.sponsor = {});
   var cards = role.cards || (role.cards = {});
   var payments = cards.payments || (cards.payments = []);
-  payments.push({ treeId: payTreeId, month: 'Jul 2026', date: 'Paid now · ' + new Date().toDateString(), amount: amount, status: 'paid' });
+  payments.push({ treeId: payTreeId, amount: amount, paidAt: getCurrentAddedAtString() });
   storage.set('login', login);
   renderPayLogs();
   closePayNow();
@@ -633,7 +680,7 @@ function appendSponsorWaitingSubmittedCard(form) {
   var card = document.createElement('div');
   card.className = 'sponsor-tree-card';
   var height_display = height === '—' ? '—' : String(height).replace(/\s*m$/, '') + 'm';
-  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+'" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot status-dot-warn"></div><div class="status-txt">Waiting approval</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs\')"><i class="ti ti-receipt"></i> Payments</button></div>';
+  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+'" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot status-dot-warn"></div><div class="status-txt">Waiting approval</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')"><i class="ti ti-list"></i> View logs</button><button class="tcbtn tcbtn-pay" onclick="goTo(\'pay-logs-total\')"><i class="ti ti-receipt"></i> Payments</button></div>';
   cardsEl.appendChild(card);
   console.log('[sponsor] appendSponsorWaitingSubmittedCard added card', id, 'now count', cardsEl.querySelectorAll('.sponsor-tree-card').length);
   setStatById('s-sponsor-waiting-submitted', cardsEl.querySelectorAll('.sponsor-tree-card').length);
@@ -710,7 +757,7 @@ function sponsorTreeCardHtml(t) {
     '<div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: ' + t.addedAt + '</span>' + (t.isPast ? '' : '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + t.treeId + '\')"><i class="ti ti-trash"></i></button>') + '</div>' +
     '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">' + logs_display + '</span><span>:</span><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">View</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Payments</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="payTreeId=\'' + t.treeId + '\';renderPayLogs();goTo(\'pay-logs\')">' + paid_display + '</span>' + (t.isSubmitted || t.isPast ? '' : '<span>:</span><span class="sponsor-underline" onclick="payTreeId=\'' + t.treeId + '\';openPayNow()">Pay now</span>') + '</div></div></div>' +
+    '<div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">' + logs_display + '</span><span>:</span><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">View</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Payments</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="payTreeId=\'' + t.treeId + '\';payMonthFilter=\'\';renderPayLogs();goTo(\'pay-logs\')">' + paid_display + '</span>' + (t.isSubmitted || t.isPast ? '' : '<span>:</span><span class="sponsor-underline" onclick="payTreeId=\'' + t.treeId + '\';openPayNow()">Pay now</span>') + '</div></div></div>' +
     '</div>';
 }
 function removeSponsorCard(remove_tree_id) {
@@ -773,8 +820,19 @@ function renderSponsorCards() {
   setStatById('s-current-count', currentList.length);
   setStatById('s-past-count', pastList.length);
   setStatById('s-sponsor-waiting-submitted', (cards.waiting || []).length);
-  var monthlyEl = document.getElementById('s-monthly');
-  if (monthlyEl) monthlyEl.textContent = '₹' + (sponsoredCount * 300);
+  var total_paid = 0;
+  var this_month_paid = 0;
+  var current_month_prefix = getCurrentMonthPrefixForPayments();
+  var all_payments = (cards.payments || []);
+  for (var payment_idx = 0; payment_idx < all_payments.length; payment_idx++) {
+    var payment_item = all_payments[payment_idx];
+    var payment_amt = parseInt(String(payment_item.amount || '').replace(/\D/g, '') || 0, 10);
+    total_paid += payment_amt;
+    var is_this_month = (payment_item.paidAt || '').indexOf(current_month_prefix) === 0;
+    if (is_this_month) this_month_paid += payment_amt;
+  }
+  setStatById('s-payments-total', total_paid ? '₹' + total_paid : '₹0');
+  setStatById('s-payments-month', this_month_paid ? '₹' + this_month_paid : '₹0');
 }
 
 function sponsorSeeingCardHtml(t) {
@@ -796,7 +854,7 @@ function sponsorSeeingCardHtml(t) {
   return '<div class="sponsor-tree-card">'
     + '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>'
     + '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>'
-    + '<div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">' + logs_display + '</span><span>:</span><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">View</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Payments</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="payTreeId=\'' + t.treeId + '\';renderPayLogs();goTo(\'pay-logs\')">' + paid_display + '</span></div></div></div>'
+    + '<div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">' + logs_display + '</span><span>:</span><span class="sponsor-underline" onclick="openTreeLogs(\'' + t.treeId + '\')">View</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Payments</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="payTreeId=\'' + t.treeId + '\';payMonthFilter=\'\';renderPayLogs();goTo(\'pay-logs\')">' + paid_display + '</span></div></div></div>'
     + '<div class="sponsor-seeing-actions"><button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();confirmPendingSponsor(' + q + t.treeId + q + ')"><i class="ti ti-check"></i> Confirm</button><button class="tcbtn tcbtn-danger" onclick="event.stopPropagation();removePendingSponsor(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i> Decline</button></div>'
     + '</div>';
 }
@@ -867,12 +925,18 @@ window.render = {
     var result = loadDashboard();
     var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
     var cards = role.cards || {};
-    var first = (cards.current || [])[0] || '';
-    payTreeId = typeof first === 'string' ? first : (first.treeId || '');
+    if (hubMode === 'pay-logs-total' || hubMode === 'pay-logs-this_month') {
+      payTreeId = '';
+    } else {
+      var first = (cards.current || [])[0] || '';
+      payTreeId = typeof first === 'string' ? first : (first.treeId || '');
+    }
     renderPayLogs();
     if (had_pending) { openSponsorWaitingSubmittedRequests(); return; }
     if (hubMode === 'sponsor-waiting-submitted') { openSponsorWaitingSubmittedRequests(); }
     if (hubMode === 'sponsor-next-due') { openSponsorNextDue(); }
+    if (hubMode === 'pay-logs-total') { loadPayLogsTotalSegment(); }
+    if (hubMode === 'pay-logs-this_month') { loadPayLogsThisMonthSegment(); }
   }
 };
 function openTreePool() {
@@ -906,14 +970,28 @@ function goBackFromSponsorLogin() {
   window.location.href = 'login-hub.html';
 }
 
+function loadSponsorLoginSegment() { goTo('sponsor-login'); }
+function loadSponsorEnrollSegment() { goTo('sponsor-enroll'); }
+function loadSponsorDashSegment() { goTo('sponsor-dash'); }
+function loadSponsorWaitingSubmittedSegment() { goTo('sponsor-waiting-submitted'); }
+function loadSponsorCurrentSegment() { goTo('sponsor-current'); }
+function loadSponsorPastSegment() { goTo('sponsor-past'); }
+function loadSponsorNextDueSegment() { goTo('sponsor-next-due'); }
+function loadPayLogsTotalSegment() { payMonthFilter = ''; goTo('pay-logs-total'); }
+function loadPayLogsThisMonthSegment() { payMonthFilter = getCurrentMonthPrefixForPayments(); goTo('pay-logs-this_month'); }
+function loadHubSegment() {
+  if (hubMode === 'login') { loadSponsorLoginSegment(); }
+  else if (hubMode === 'register') { loadSponsorEnrollSegment(); }
+  else if (hubMode === 'sponsor-dash') { loadSponsorDashSegment(); }
+  else if (hubMode === 'sponsor-waiting-submitted') { loadSponsorWaitingSubmittedSegment(); }
+  else if (hubMode === 'sponsor-current') { loadSponsorCurrentSegment(); }
+  else if (hubMode === 'sponsor-past') { loadSponsorPastSegment(); }
+  else if (hubMode === 'sponsor-next-due') { loadSponsorNextDueSegment(); }
+  else if (hubMode === 'pay-logs-total') { loadPayLogsTotalSegment(); }
+  else if (hubMode === 'pay-logs-this_month') { loadPayLogsThisMonthSegment(); }
+  else { console.log('[sponsor] unknown hubMode, redirect to login-hub'); window.location.href = 'login-hub.html'; }
+}
 var hubMode = new URLSearchParams(location.search).get('hub');
 console.log('[sponsor] hubMode', hubMode, 'href', location.href);
-if (hubMode === 'login') { goTo('sponsor-login'); }
-else if (hubMode === 'register') { goTo('sponsor-enroll'); }
-else if (hubMode === 'sponsor-dash') { goTo('sponsor-dash'); }
-else if (hubMode === 'sponsor-waiting-submitted') { goTo('sponsor-waiting-submitted'); }
-else if (hubMode === 'sponsor-current') { goTo('sponsor-current'); }
-else if (hubMode === 'sponsor-past') { goTo('sponsor-past'); }
-else if (hubMode === 'sponsor-next-due') { goTo('sponsor-next-due'); }
-else { console.log('[sponsor] unknown hubMode, redirect to login-hub'); window.location.href = 'login-hub.html'; }
+loadHubSegment();
 

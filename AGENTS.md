@@ -7,10 +7,10 @@ This file serves as a foundational mandate for the Money Manager App project. Al
 Before editing any file, follow this process:
 
 1. Diagnose – Identify the issue and root cause
-2. Result – State what was found
-3. Action – Describe what should be done
+2. Findings – State what was found
+3. Rectification measure – Describe what should be done
 4. Code – Show the proposed code change
-5. Approve – Wait for developer approval before editing
+5. Approve – Wait for developer's explicit approval before editing
 
 ## Permission
 
@@ -19,7 +19,8 @@ Before editing any file, follow this process:
 - Without expilcit permission from developer, not a sigle char can be modified
 - only do code replacement as approved by the developer
 - never ever do write_file. you are explicitly prohibited from write_file
-- After modification, check whether it is done as per chart out plan. If not as per plan, iterate the process
+- for write_file necessary, get explicit approval to create file
+- After modification, check whether it is done as per charted out plan. If not as per plan, iterate the process
 - never process cancelled request
 - never ever do git related (add, restore, reset, checkout, etc) without explicit asking yes/no from developer. only proceed after getting explicit yes.
 - you are just another garbage ai code editor. so, never attempt to write code on your own in this project as it is aversion of garbage code
