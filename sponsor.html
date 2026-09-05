@@ -57,8 +57,8 @@
               <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="s-sponsor-seeing">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat"><div class="dashboard-stat-label">Payments</div><div class="dashboard-split"><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsTotal()"><div class="dashboard-split-title">Total</div><div class="dashboard-split-val" id="s-payments-total">—</div></div><div class="dashboard-split-divider"></div><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsThisMonth()"><div class="dashboard-split-title">This month</div><div class="dashboard-split-val" id="s-payments-month">—</div></div></div></div>
-          <div class="dashboard-stat dashboard-next" onclick="openSponsorNextDue()"><div class="dashboard-stat-label">Next due</div><div class="dashboard-split" style="justify-content:center;margin-top:4px"><div class="dashboard-split-col"><div class="dashboard-split-val due-title" id="s-next-due">—</div></div></div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Payments</div><div class="dashboard-split"><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsTotal()"><div class="dashboard-split-title">Total Paid</div><div class="dashboard-split-val" id="s-payments-total">—</div></div><div class="dashboard-split-divider"></div><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsThisMonth()"><div class="dashboard-split-title">To Pay this month</div><div class="dashboard-split-val" id="s-payments-month">—</div></div></div></div>
+          <div class="dashboard-stat dashboard-next" onclick="openSponsorNextDue()"><div class="dashboard-stat-label">Next due</div><div class="dashboard-split" style="justify-content:center;margin-top:4px"><div class="dashboard-split-col"><div class="next-due-list" id="s-next-due-list"></div></div></div></div>
         </div>
       </div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
@@ -92,7 +92,7 @@
     <div class="page" id="page-sponsor-next-due">
       <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Next due tree</span></div>
       <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">Next due — single tree</div>
+        <div class="section-title" style="margin-bottom:12px;">Next due — next 3 trees</div>
         <div id="sponsor-next-due-card"></div>
         <div class="waiting-empty" id="sponsor-next-due-empty" style="display:none">No next due tree</div>
       </div></div>

@@ -51,9 +51,14 @@ function checkNewSponserTrees() {
   return new_ids;
 }
 
-function getSponsorNextDue(ram_data, current_ids) {
+function getSponsorNextDueList(ram_data, current_ids, sponsor_next_due_limit) {
+  sponsor_next_due_limit = sponsor_next_due_limit || 3;
   var due_list = current_ids.map(function(sid){ for(var i=0;i<ram_data.length;i++){ if(ram_data[i].treeId===sid && ram_data[i]['encounter-due-date']) return {treeId: sid, due: ram_data[i]['encounter-due-date']}; } return null; }).filter(Boolean).sort(function(a,b){ return a.due.localeCompare(b.due); });
-  return due_list.length ? due_list[0] : null;
+  return due_list.slice(0, sponsor_next_due_limit);
+}
+function getSponsorNextDue(ram_data, current_ids) {
+  var sponsor_next_due_list_single = getSponsorNextDueList(ram_data, current_ids, 1);
+  return sponsor_next_due_list_single.length ? sponsor_next_due_list_single[0] : null;
 }
 
 function loadDashboard() {
@@ -76,57 +81,97 @@ function loadDashboard() {
   var new_sponsor_ids = checkNewSponserTrees();
   setStatById('s-sponsor-seeing', new_sponsor_ids.length);
   if (new_sponsor_ids.length) console.log('[sponsor] checkNewSponserTrees', new_sponsor_ids);
-  var next_due = getSponsorNextDue(ram_data, current_ids);
-  var next_due_label = '—';
-  window._sponsorNextDueId = '';
-  if (next_due) {
-    var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(next_due.due);
-    var month_names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    next_due_label = dm ? parseInt(dm[3],10) + ' ' + month_names[parseInt(dm[2],10)-1] : next_due.due;
-    window._sponsorNextDueId = next_due.treeId;
+  var next_due_list = getSponsorNextDueList(ram_data, current_ids, 3);
+  window._sponsorNextDueList = next_due_list;
+  window._sponsorNextDueId = next_due_list.length ? next_due_list[0].treeId : '';
+  var next_due_list_el = document.getElementById('s-next-due-list');
+  if (next_due_list_el) {
+    if (!next_due_list.length) {
+      next_due_list_el.innerHTML = '<span class="next-due-date">—</span>';
+    } else {
+      var month_names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      next_due_list_el.innerHTML = next_due_list.map(function(sponsor_next_due_item, sponsor_next_due_idx){
+        var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(sponsor_next_due_item.due);
+        var sponsor_next_due_label = dm ? parseInt(dm[3],10) + ' ' + month_names[parseInt(dm[2],10)-1] : sponsor_next_due_item.due;
+        return '<div class="next-due-row"><span class="next-due-id" onclick="openNextDueTreeProfile(event,' + sponsor_next_due_idx + ')">' + sponsor_next_due_item.treeId + '</span><span class="next-due-date">' + sponsor_next_due_label + '</span></div>';
+      }).join('');
+    }
   }
-  setStatById('s-next-due', next_due_label);
+  var legacy_next_due_el = document.getElementById('s-next-due');
+  if (legacy_next_due_el) {
+    var legacy_dm = next_due_list.length ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(next_due_list[0].due) : null;
+    var legacy_label = '—';
+    if (next_due_list.length) {
+      var legacy_month_names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      legacy_label = legacy_dm ? parseInt(legacy_dm[3],10) + ' ' + legacy_month_names[parseInt(legacy_dm[2],10)-1] : next_due_list[0].due;
+    }
+    legacy_next_due_el.textContent = legacy_label;
+  }
+  var legacy_next_due_id_el = document.getElementById('s-next-due-id');
+  if (legacy_next_due_id_el) {
+    legacy_next_due_id_el.textContent = window._sponsorNextDueId || '';
+    legacy_next_due_id_el.style.display = window._sponsorNextDueId ? '' : 'none';
+  }
   return { ram_data: ram_data, waiting_submitted_ids: waiting_submitted_ids, current_ids: current_ids, past_ids: past_ids, new_sponsor_ids: new_sponsor_ids };
 }
 
 function openSponsorNextDue() {
-  var tid = window._sponsorNextDueId || '';
+  var sponsor_next_due_list_local = window._sponsorNextDueList || [];
   var ram = storage.get('treeCards') || window.__TREE_DATA || [];
-  if (!tid) {
+  if (!sponsor_next_due_list_local.length) {
     try {
       var lg2 = storage.get('login') || window._login || {};
       var cur2 = ((lg2['tree-login'] && lg2['tree-login']['sponsor']) || {}).cards || {};
       var curIds2 = (cur2.current || []).map(function(e){ return typeof e==='string'?e:e.treeId; }).filter(Boolean);
-      var next2 = getSponsorNextDue(ram, curIds2);
-      if (next2) tid = next2.treeId;
+      sponsor_next_due_list_local = getSponsorNextDueList(ram, curIds2, 3);
+      window._sponsorNextDueList = sponsor_next_due_list_local;
+      if (sponsor_next_due_list_local.length) window._sponsorNextDueId = sponsor_next_due_list_local[0].treeId;
     } catch(e) {}
   }
   var cardEl = document.getElementById('sponsor-next-due-card');
   var emptyEl = document.getElementById('sponsor-next-due-empty');
-  if (!tid) {
+  if (!sponsor_next_due_list_local.length) {
     if (cardEl) cardEl.innerHTML = '';
     if (emptyEl) emptyEl.style.display = 'block';
     goTo('sponsor-next-due');
     return;
   }
   if (emptyEl) emptyEl.style.display = 'none';
-  var tree = null;
-  for (var i = 0; i < ram.length; i++) { if (ram[i].treeId === tid) { tree = ram[i]; break; } }
-  if (!tree) {
-    if (cardEl) cardEl.innerHTML = '';
-    if (emptyEl) emptyEl.style.display = 'block';
-    goTo('sponsor-next-due');
-    return;
-  }
   var login_data = storage.get('login') || window._login || {};
   var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   var sorted_current = getSortedWaitingList(sponsor_cards.current || [], 'desc');
   var current_map = {};
   sorted_current.forEach(function(e){ if(e && e.treeId) current_map[e.treeId] = e.addedAt; });
-  var c = {}; for (var k in tree) c[k] = tree[k];
-  c.addedAt = current_map[tid] || '';
-  if (cardEl) cardEl.innerHTML = sponsorTreeCardHtml(c);
+  var sponsor_next_due_html = '';
+  for (var sponsor_next_due_idx = 0; sponsor_next_due_idx < sponsor_next_due_list_local.length; sponsor_next_due_idx++) {
+    var sponsor_next_due_tid = sponsor_next_due_list_local[sponsor_next_due_idx].treeId;
+    var sponsor_next_due_tree = null;
+    for (var ram_idx = 0; ram_idx < ram.length; ram_idx++) { if (ram[ram_idx].treeId === sponsor_next_due_tid) { sponsor_next_due_tree = ram[ram_idx]; break; } }
+    if (!sponsor_next_due_tree) continue;
+    var c = {}; for (var k in sponsor_next_due_tree) c[k] = sponsor_next_due_tree[k];
+    c.addedAt = current_map[sponsor_next_due_tid] || '';
+    sponsor_next_due_html += sponsorTreeCardHtml(c);
+  }
+  if (!sponsor_next_due_html) {
+    if (cardEl) cardEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+    goTo('sponsor-next-due');
+    return;
+  }
+  if (cardEl) cardEl.innerHTML = sponsor_next_due_html;
   goTo('sponsor-next-due');
+}
+function openNextDueTreeProfile(sponsor_next_due_click_event, sponsor_next_due_idx) {
+  if (sponsor_next_due_click_event) sponsor_next_due_click_event.stopPropagation();
+  var sponsor_next_due_list_local = window._sponsorNextDueList || [];
+  var sponsor_next_due_tree_id = '';
+  if (typeof sponsor_next_due_idx === 'number' && sponsor_next_due_list_local[sponsor_next_due_idx]) {
+    sponsor_next_due_tree_id = sponsor_next_due_list_local[sponsor_next_due_idx].treeId;
+  } else {
+    sponsor_next_due_tree_id = window._sponsorNextDueId || '';
+  }
+  if (!sponsor_next_due_tree_id) return;
+  openProfile(sponsor_next_due_tree_id);
 }
 
 function loadListForDashBoardBtns(btn_name) {

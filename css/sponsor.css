@@ -278,3 +278,9 @@
   .tree-card-title .addr-text{display:inline; margin-left:4px;}
   #sponsor-seeing-grid .tree-emoji{font-size:2rem;}
   #sponsor-seeing-grid .tree-stats{font-size:0.7333rem;color:var(--color-text-secondary);display:flex;gap:6px;}
+  .next-due-wrap{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;text-align:center;}
+  .next-due-list{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;text-align:center;}
+  .next-due-row{display:flex;gap:6px;align-items:center;justify-content:center;}
+  .next-due-id{font-family:monospace;font-size:0.6667rem;font-weight:500;color:var(--color-theme-light);text-decoration:underline;cursor:pointer;line-height:1.2;}
+  .next-due-id:hover{opacity:0.85;}
+  .next-due-date{font-size:0.6667rem;font-weight:500;color:var(--color-theme-light);line-height:1.2;}
