@@ -17,31 +17,31 @@
     <!-- ① MAIN - ALBUM PAGE -->
     <div class="page" id="page-sponsor-login">
       <div class="slogin-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn" style="background:rgba(255,255,255,0.12);color:var(--color-theme-light)" onclick="goBackFromSponsorLogin()"><i class="ti ti-arrow-left"></i></button></div>
+        <div class="slogin-back-row"><button class="back-btn slogin-back-btn" onclick="goBackFromSponsorLogin()"><i class="ti ti-arrow-left"></i></button></div>
         <h2>Sponsor login</h2><p>Sign in to manage your sponsored trees</p>
       </div>
-      <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
+      <div class="slogin-body">
         <button class="green-btn" id="continue-as-btn" type="button" onclick="continueAsSponsor()" style="display:none"><i class="ti ti-login"></i> Continue as <span id="continue-as-name">—</span></button>
-        <button class="google-btn" onclick="googleAuth('sponsor-dash')" style="margin-top:12px"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:12px;">Support urban green cover wherever you want</div>
+        <button class="google-btn google-btn-mt" onclick="googleAuth('sponsor-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
+        <div class="support-text">Support urban green cover wherever you want</div>
       </div>
     </div>
     <div class="page" id="page-sponsor-enroll">
       <div class="topbar"><button class="back-btn" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Sponsor enrollment</span></div>
-      <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
-        <div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);">Become a sponsor</div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);">Support tree maintenance through monthly contributions. Choose a tree to sponsor.</div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-user" style="font-size:0.8667rem"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Madhavi I." /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-mail" style="font-size:0.8667rem"></i> Email</div><input class="field-inp" type="email" placeholder="you@example.com" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-phone" style="font-size:0.8667rem"></i> Phone</div><input class="field-inp" type="tel" placeholder="e.g. 9876543210" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-tree" style="font-size:0.8667rem"></i> Preferred tree species</div><select class="field-inp" style="cursor:pointer;"><option>Neem</option><option>Peepal</option><option>Banyan</option><option>Mango</option><option>Any</option></select></div>
+      <div class="scrollable enroll-scroll">
+        <div class="enroll-title">Become a sponsor</div>
+        <div class="enroll-desc">Support tree maintenance through monthly contributions. Choose a tree to sponsor.</div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-user field-icon-sm"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Madhavi I." /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-mail field-icon-sm"></i> Email</div><input class="field-inp" type="email" placeholder="you@example.com" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-phone field-icon-sm"></i> Phone</div><input class="field-inp" type="tel" placeholder="e.g. 9876543210" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-tree field-icon-sm"></i> Preferred tree species</div><select class="field-inp field-inp-pointer"><option>Neem</option><option>Peepal</option><option>Banyan</option><option>Mango</option><option>Any</option></select></div>
         <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit enrollment</button>
       </div>
     </div>
     <div class="page dashboard" id="page-sponsor-dash">
       <div class="dashboard-header">
-        <div class="dashboard-topbar"><div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar" onclick="toggleSLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item" onclick="sponsorLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
-        <div class="dashboard-stats">
+        <div class="dashboard-topbar"><div><div class="dashboard-name" id="user-name">Madhavi</div></div><div class="savatar avatar-wrap" onclick="toggleSLogoutDrop()"><span id="user-avatar">MI</span><div class="logout-drop" id="slogout-drop"><div class="dd-item logout-item" onclick="sponsorLogout()"><i class="ti ti-logout logout-icon"></i> Sign out</div></div></div></div>
+        <div class="dashboard-stats dashboard-stats-mt">
           <div class="dashboard-stat"><div class="dashboard-stat-label">Trees sponsored</div>
             <div class="dashboard-split">
               <div class="dashboard-split-col dashboard-split-btn" onclick="goTo('sponsor-current')"><div class="dashboard-split-title">Current</div><div class="dashboard-split-val" id="s-tree-current">0</div></div>
@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="dashboard-stat">
-            <div class="dashboard-stat-label">Request Waiting</div>
+            <div class="dashboard-stat-label">New requests</div>
             <div class="dashboard-split">
               <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorWaitingSubmittedRequests()"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="s-sponsor-waiting-submitted">0</div></div>
               <div class="dashboard-split-divider"></div>
@@ -58,93 +58,93 @@
             </div>
           </div>
           <div class="dashboard-stat"><div class="dashboard-stat-label">Payments</div><div class="dashboard-split"><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsTotal()"><div class="dashboard-split-title">Total Paid</div><div class="dashboard-split-val" id="s-payments-total">—</div></div><div class="dashboard-split-divider"></div><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsThisMonth()"><div class="dashboard-split-title">To Pay this month</div><div class="dashboard-split-val" id="s-payments-month">—</div></div></div></div>
-          <div class="dashboard-stat dashboard-next" onclick="openSponsorNextDue()"><div class="dashboard-stat-label">Next due</div><div class="dashboard-split" style="justify-content:center;margin-top:4px"><div class="dashboard-split-col"><div class="next-due-list" id="s-next-due-list"></div></div></div></div>
+          <div class="dashboard-stat dashboard-next" onclick="openSponsorNextDue()"><div class="dashboard-stat-label">Next due</div><div class="dashboard-split"><div class="dashboard-split-col"><div class="next-due-list" id="s-next-due-list"></div></div></div></div>
         </div>
       </div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <button class="dashboard-cta" onclick="openTreePool()"><i class="ti ti-tree" style="font-size:0.9333rem"></i> Sponsor a tree</button>
+      <div class="scrollable"><div class="dashboard-scroll-pad">
+        <button class="dashboard-cta" onclick="openTreePool()"><i class="ti ti-tree dashboard-cta-icon"></i> Sponsor a tree</button>
       </div></div>
     </div>
     <div class="page" id="page-sponsor-waiting-submitted">
-      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="swaiting-submitted-page-title">Waiting</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="swaiting-submitted-page-title">New requests</span></div>
+      <div class="scrollable"><div class="section-head-pad">
         <div class="waiting-section" id="sponsor-waiting-submitted-section">
           <div id="sponsor-waiting-submitted-cards"></div>
-          <div class="waiting-empty" id="sponsor-waiting-submitted-empty">No pending sponsor requests</div>
+          <div class="waiting-empty" id="sponsor-waiting-submitted-empty">No new requests</div>
         </div>
       </div></div>
     </div>
     <div class="page" id="page-sponsor-current">
       <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Current trees</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">Trees you sponsor now</div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Trees you sponsor now</div>
         <div id="sponsor-current-cards"></div>
       </div></div>
     </div>
     <div class="page" id="page-sponsor-past">
       <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Past trees</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">Trees you sponsored earlier</div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Trees you sponsored earlier</div>
         <div id="sponsor-past-cards"></div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:6px;"><i class="ti ti-history" style="font-size:0.8rem"></i> You can sponsor these trees again anytime</div>
+        <div class="history-hint"><i class="ti ti-history field-icon-sm"></i> You can sponsor these trees again anytime</div>
       </div></div>
     </div>
     <div class="page" id="page-sponsor-next-due">
       <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Next due tree</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
-        <div class="section-title" style="margin-bottom:12px;">Next due — next 3 trees</div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Next due — next 3 trees</div>
         <div id="sponsor-next-due-card"></div>
-        <div class="waiting-empty" id="sponsor-next-due-empty" style="display:none">No next due tree</div>
+        <div class="waiting-empty hidden" id="sponsor-next-due-empty">No next due tree</div>
       </div></div>
     </div>
     <div class="page" id="page-tree-logs">
       <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="tree-logs-title">Tree — Logs</span></div>
-      <div class="scrollable"><div style="padding:12px 14px;">
-        <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;margin-bottom:10px;">Double-tap a log to view photos</div>
+      <div class="scrollable"><div class="log-header-pad">
+        <div class="log-hint">Double-tap a log to view photos</div>
         <div class="section-title">Growth logs</div>
         <div class="info-card" id="tree-logs-list"></div>
       </div></div>
     </div>
     <div class="page" id="page-pay-logs-total">
       <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — Total</span></div>
-      <div style="background:var(--color-theme-light);padding:10px 14px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;"><div><div style="font-size:0.6667rem;color:var(--color-theme);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;">Monthly plan</div><div style="font-size:1rem;font-weight:500;color:var(--color-theme-dark);">₹300 / month</div></div><div style="font-size:0.7333rem;color:var(--color-theme);background:rgba(59,109,17,0.1);padding:4px 10px;border-radius:20px;">Active</div></div>
-      <div class="scrollable"><div style="padding:12px 14px;">
-        <div class="section-title" style="margin-bottom:10px;">Payment history — Total</div>
-        <div class="info-card" style="margin-bottom:14px;" id="pay-history-total"></div>
+      <div class="pay-plan-header"><div><div class="pay-plan-label">Monthly plan</div><div class="pay-plan-value">₹300 / month</div></div><div class="pay-plan-badge">Active</div></div>
+      <div class="scrollable"><div class="log-header-pad">
+        <div class="section-title section-title-mb">Payment history — Total</div>
+        <div class="info-card info-card-mb" id="pay-history-total"></div>
         <button class="blue-btn" onclick="openPayNow()"><i class="ti ti-credit-card"></i> Pay now — Jul 2026</button>
       </div></div>
     </div>
     <div class="page" id="page-pay-logs-this_month">
       <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — This month</span></div>
-      <div style="background:var(--color-theme-light);padding:10px 14px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;"><div><div style="font-size:0.6667rem;color:var(--color-theme);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;">Monthly plan</div><div style="font-size:1rem;font-weight:500;color:var(--color-theme-dark);">₹300 / month</div></div><div style="font-size:0.7333rem;color:var(--color-theme);background:rgba(59,109,17,0.1);padding:4px 10px;border-radius:20px;">Active</div></div>
-      <div class="scrollable"><div style="padding:12px 14px;">
-        <div class="section-title" style="margin-bottom:10px;">Payment history — This month</div>
-        <div class="info-card" style="margin-bottom:14px;" id="pay-history-this_month"></div>
+      <div class="pay-plan-header"><div><div class="pay-plan-label">Monthly plan</div><div class="pay-plan-value">₹300 / month</div></div><div class="pay-plan-badge">Active</div></div>
+      <div class="scrollable"><div class="log-header-pad">
+        <div class="section-title section-title-mb">Payment history — This month</div>
+        <div class="info-card info-card-mb" id="pay-history-this_month"></div>
         <button class="blue-btn" onclick="openPayNow()"><i class="ti ti-credit-card"></i> Pay now — Jul 2026</button>
       </div></div>
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span></div>
-      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> <span id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
-      <div class="scrollable" style="padding:12px 14px 20px;">
+      <div class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin map-pin-icon"></i> <span id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin map-pin-btn-icon"></i></button></p></div></div>
+      <div class="scrollable profile-scroll">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value" id="profile-stat-height">—</div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value" id="profile-stat-diameter">—</div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">—</div></div></div>
-        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500" id="profile-health-score">— / 100</span></div><div class="health-bar"><div class="health-fill" id="profile-health-fill"></div></div></div>
+        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span class="health-score" id="profile-health-score">— / 100</span></div><div class="health-bar"><div class="health-fill" id="profile-health-fill"></div></div></div>
         <div class="section-title">Tree info</div>
-        <div class="info-card" style="margin-bottom:14px;">
-          <div class="info-row"><span class="info-key"><i class="ti ti-leaf" style="font-size:0.8667rem"></i>Species</span><span class="info-val" id="profile-species">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-user" style="font-size:0.8667rem"></i>Added by</span><span class="info-val" id="profile-registered-by">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>First logged</span><span class="info-val" id="profile-first-logged">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list" style="font-size:0.8667rem"></i>Total logs</span><span class="info-val" id="profile-total-logs">—</span></div>
+        <div class="info-card info-card-mb">
+          <div class="info-row"><span class="info-key"><i class="ti ti-leaf field-icon-sm"></i>Species</span><span class="info-val" id="profile-species">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>Added by</span><span class="info-val" id="profile-registered-by">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar field-icon-sm"></i>First logged</span><span class="info-val" id="profile-first-logged">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list field-icon-sm"></i>Total logs</span><span class="info-val" id="profile-total-logs">—</span></div>
         </div>
         <div class="section-title">Growth logs</div>
         <div class="info-card" id="profile-logs"></div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
+        <div class="log-hint-center"><i class="ti ti-hand-click log-hint-icon"></i> Tap a log to view photos</div>
       </div>
     </div>
     <div class="page" id="page-album">
       <div class="topbar"><button class="back-btn" id="album-back-btn" onclick="goTo(albumFrom)"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="album-title">Log photos</span></div>
-      <div class="album-meta"><div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;" id="album-date"></div><div style="font-size:0.7333rem;color:var(--color-text-secondary);display:flex;gap:10px;"><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-ruler" style="font-size:0.7333rem"></i><span id="album-h">—</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-circle" style="font-size:0.7333rem"></i><span id="album-d">—</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-camera" style="font-size:0.7333rem"></i><span id="album-c">—</span></span></div></div>
-      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div style="font-size:0.8rem;color:var(--color-text-primary);line-height:1.5;" id="album-note"></div></div></div>
+      <div class="album-meta"><div class="album-meta-title" id="album-date"></div><div class="album-meta-row"><span class="album-meta-item"><i class="ti ti-ruler album-meta-icon"></i><span id="album-h">—</span></span><span class="album-meta-item"><i class="ti ti-circle album-meta-icon"></i><span id="album-d">—</span></span><span class="album-meta-item"><i class="ti ti-camera album-meta-icon"></i><span id="album-c">—</span></span></div></div>
+      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div class="album-note-text" id="album-note"></div></div></div>
     </div>
 
     <div class="map-modal-back" id="map-modal">
@@ -157,8 +157,8 @@
     <div class="modal-back" id="pay-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="font-size:1rem;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;">Pay for Jul 2026</div>
-        <div style="font-size:0.8rem;color:var(--color-text-secondary);margin-bottom:18px;" id="pay-modal-tree-name"></div>
+        <div class="modal-title">Pay for Jul 2026</div>
+        <div class="modal-text" id="pay-modal-tree-name"></div>
         <div class="amount-row">
           <div class="amt-chip" onclick="selectAmt(this)">₹100</div>
           <div class="amt-chip" onclick="selectAmt(this)">₹200</div>
@@ -168,16 +168,16 @@
           <div class="amt-chip" onclick="selectAmt(this)">₹2000</div>
         </div>
         <button class="blue-btn" id="pay-now-btn" onclick="recordPayment()"><i class="ti ti-credit-card"></i> Pay ₹300 now</button>
-        <button class="ghost-btn" style="margin-top:8px" onclick="closePayNow()">Cancel</button>
+        <button class="ghost-btn ghost-btn-mt" onclick="closePayNow()">Cancel</button>
       </div>
     </div>
     <div class="modal-back" id="login-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="lsm-icon" id="lsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
-          <div class="lsm-title" id="lsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
-          <div class="lsm-text" id="lsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your login request is waiting for admin approval.</div>
+        <div class="modal-sheet-center">
+          <div class="modal-icon" id="lsm-icon"><i class="ti ti-clock"></i></div>
+          <div class="modal-title" id="lsm-title">Application under review</div>
+          <div class="modal-text" id="lsm-text">Your login request is waiting for admin approval.</div>
           <button class="green-btn" onclick="handleSponsorLoginOkay()"><i class="ti ti-check"></i> Okay</button>
         </div>
       </div>
@@ -185,17 +185,17 @@
     <div class="modal-back" id="register-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="lsm-icon" id="rsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
-          <div class="lsm-title" id="rsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
-          <div class="lsm-text" id="rsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your registration is waiting for admin approval.</div>
+        <div class="modal-sheet-center">
+          <div class="modal-icon" id="rsm-icon"><i class="ti ti-clock"></i></div>
+          <div class="modal-title" id="rsm-title">Application under review</div>
+          <div class="modal-text" id="rsm-text">Your registration is waiting for admin approval.</div>
           <button class="green-btn" id="rsm-ok-btn" onclick="closeRegisterStatus(true)"><i class="ti ti-check"></i> Okay</button>
-          <div class="lsm-test" id="rsm-test" style="margin-top:16px;display:none;">
-            <div style="font-size:0.6667rem;color:var(--color-text-secondary);margin-bottom:6px;">TESTING · simulate result</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('waiting')">Waiting</button>
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('existing_member')">Existing</button>
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('blocked')">Blocked</button>
+          <div class="lsm-test hidden" id="rsm-test">
+            <div class="testing-label">TESTING · simulate result</div>
+            <div class="testing-grid">
+              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('waiting')">Waiting</button>
+              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('existing_member')">Existing</button>
+              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('blocked')">Blocked</button>
             </div>
           </div>
         </div>
@@ -204,33 +204,33 @@
     <div class="modal-back" id="conflict-resolution-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="conflict-icon" id="conflict-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;"><i class="ti ti-alert-triangle" style="font-size:24px;"></i></div>
-          <div class="conflict-title" id="conflict-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Already in your list</div>
-          <div class="conflict-text" id="conflict-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">This tree is already in your sponsored list. You cannot sponsor it again.</div>
+        <div class="modal-sheet-center">
+          <div class="modal-icon conflict-icon-bg" id="conflict-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="modal-title" id="conflict-title">Already in your list</div>
+          <div class="modal-text" id="conflict-text">This tree is already in your sponsored list. You cannot sponsor it again.</div>
           <button class="green-btn" onclick="closeSponsorConflictModal()"><i class="ti ti-check"></i> Okay</button>
-          <button class="ghost-btn" style="margin-top:8px" onclick="closeSponsorConflictModal(); goTo('sponsor-waiting-submitted')"><i class="ti ti-eye"></i> View list</button>
+          <button class="ghost-btn ghost-btn-mt" onclick="closeSponsorConflictModal(); goTo('sponsor-waiting-submitted')"><i class="ti ti-eye"></i> View list</button>
         </div>
       </div>
     </div>
     <div class="modal-back" id="delete-confirm-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;"><i class="ti ti-trash" style="font-size:24px;"></i></div>
-          <div style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Remove tree?</div>
-          <div style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;" id="delete-confirm-text">This will remove the tree from your list.</div>
-          <button class="green-btn" style="background:#dc2626;" onclick="confirmDeleteCard()"><i class="ti ti-trash"></i> Delete</button>
-          <button class="ghost-btn" style="margin-top:8px" onclick="cancelDeleteCard()">Cancel</button>
+        <div class="modal-sheet-center">
+          <div class="modal-icon delete-icon-bg"><i class="ti ti-trash"></i></div>
+          <div class="modal-title">Remove tree?</div>
+          <div class="modal-text" id="delete-confirm-text">This will remove the tree from your list.</div>
+          <button class="green-btn delete-btn-bg" onclick="confirmDeleteCard()"><i class="ti ti-trash"></i> Delete</button>
+          <button class="ghost-btn ghost-btn-mt" onclick="cancelDeleteCard()">Cancel</button>
         </div>
       </div>
     </div>
     <div class="page" id="page-sponsor-seeing">
       <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Confirm Sponsor Trees</span></div>
-      <div class="scrollable"><div style="padding:13px 13px 16px;display:flex;flex-direction:column;">
+      <div class="scrollable"><div class="section-head-pad">
         <div class="sponsor-seeing-grid" id="sponsor-seeing-grid"></div>
-        <div class="waiting-empty" id="sponsor-seeing-empty" style="display:none;">No Seeing trees</div>
-        <button class="ghost-btn" style="margin-top:12px;" onclick="goTo('sponsor-dash')">Close</button>
+        <div class="waiting-empty hidden" id="sponsor-seeing-empty">No Seeing trees</div>
+        <button class="ghost-btn ghost-btn-mt12" onclick="goTo('sponsor-dash')">Close</button>
       </div></div>
     </div>
   </div>

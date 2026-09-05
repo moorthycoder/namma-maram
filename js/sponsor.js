@@ -691,7 +691,7 @@ function setStatById(id, value) {
 
 function appendSponsorWaitingSubmittedCard(form) {
   var titleEl = document.getElementById('swaiting-submitted-page-title');
-  if (titleEl) titleEl.textContent = 'Sponsor request';
+  if (titleEl) titleEl.textContent = 'New requests';
   var btn = form.btn;
   if (btn) {
     btn.classList.add('added');
@@ -758,7 +758,7 @@ function getSortedWaitingList(waiting_list, sort_order) {
 }
 function openSponsorWaitingSubmittedRequests() {
   var titleEl = document.getElementById('swaiting-submitted-page-title');
-  if (titleEl) titleEl.textContent = 'Sponsor request';
+  if (titleEl) titleEl.textContent = 'New requests';
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
   var waiting_raw = (role.cards || {}).waiting || [];
   var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
