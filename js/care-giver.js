@@ -875,14 +875,16 @@ function updateChecksThisMonthStats() {
     nextCheckLabel = latestDate.getDate() + ' ' + monthNames[latestDate.getMonth()];
   }
   window._nextCheckTreeId = nextCheckTreeForLabel ? nextCheckTreeForLabel.treeId : '';
+  window._caregiverNextDueList = dueListForNext.slice(0,3).map(function(x){ return x.tree.treeId; });
+  window._caregiverNextDueId = window._nextCheckTreeId;
   var c_next_due_list_el = document.getElementById('c-next-due-list');
   if(c_next_due_list_el){
     var next3 = dueListForNext.slice(0,3);
-    if(!next3.length && nextCheckTreeForLabel){ next3 = [{tree: nextCheckTreeForLabel, due: chosenNext ? chosenNext.due : ''}]; }
-    c_next_due_list_el.innerHTML = next3.length ? next3.map(function(x){
+    if(!next3.length && nextCheckTreeForLabel){ next3 = [{tree: nextCheckTreeForLabel, due: chosenNext ? chosenNext.due : ''}]; window._caregiverNextDueList = next3.map(function(x){ return x.tree.treeId; }); }
+    c_next_due_list_el.innerHTML = next3.length ? next3.map(function(x, idx){
       var dm=/^(\d{4})-(\d{2})-(\d{2})$/.exec(x.due);
       var lbl=dm? parseInt(dm[3],10)+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(dm[2],10)-1]:x.due;
-      return '<div class="next-due-row"><span class="next-due-id" onclick="event.stopPropagation();openProfile(\''+x.tree.treeId+'\')">'+x.tree.treeId+'</span><span class="next-due-date">'+lbl+'</span></div>';
+      return '<div class="next-due-row"><span class="next-due-id" onclick="openNextCheckTreeCard(event,' + idx + ')">'+x.tree.treeId+'</span><span class="next-due-date">'+lbl+'</span></div>';
     }).join('') : '<span class="next-due-date">—</span>';
   }
   setStatById('c-monthly', finishedTrees.length);
@@ -892,6 +894,7 @@ function updateChecksThisMonthStats() {
 }
 
 function openNextCheckTree() {
+  try { sessionStorage.removeItem('caregiverNextDueSingle'); } catch (e) {}
   if (window._nextCheckTreeId && typeof openProfile === 'function') { openProfile(window._nextCheckTreeId); return; }
   var data = window.__TREE_DATA || storage.get('treeCards') || [];
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
@@ -909,6 +912,37 @@ function openNextCheckTree() {
     return;
   }
   goTo('caregiver-current');
+}
+function renderCaregiverNextDueSingleCard(single_tid) {
+  if (!single_tid) return false;
+  var ram = storage.get('treeCards') || window.__TREE_DATA || [];
+  var t = null; for (var i = 0; i < ram.length; i++) if (ram[i].treeId === single_tid) { t = ram[i]; break; }
+  if (!t) return false;
+  var login_data = storage.get('login') || window._login || {};
+  var cards = ((login_data['tree-login'] && login_data['tree-login']['caregiver']) || {}).cards || {};
+  var sorted = getSortedWaitingList(cards.current || [], 'desc'); var m = {}; sorted.forEach(function(e){ if(e && e.treeId) m[e.treeId] = e.addedAt; });
+  var c = {}; for (var k in t) c[k] = t[k]; c.addedAt = m[single_tid] || ''; c.isDueCard = true;
+  var cardEl = document.getElementById('caregiver-checks-due-cards'); var emptyEl = document.getElementById('caregiver-checks-due-empty');
+  if (emptyEl) emptyEl.style.display = 'none'; if (cardEl) cardEl.innerHTML = caregiverCardHtml(c);
+  return true;
+}
+function openNextCheckTreeCard(caregiver_next_due_event, caregiver_next_due_idx) {
+  if (caregiver_next_due_event) caregiver_next_due_event.stopPropagation();
+  var caregiver_next_due_list_local = window._caregiverNextDueList || [];
+  var caregiver_next_due_tree_id = '';
+  if (typeof caregiver_next_due_idx === 'number' && caregiver_next_due_list_local[caregiver_next_due_idx]) {
+    caregiver_next_due_tree_id = caregiver_next_due_list_local[caregiver_next_due_idx];
+  } else {
+    caregiver_next_due_tree_id = window._caregiverNextDueId || window._nextCheckTreeId || '';
+  }
+  if (!caregiver_next_due_tree_id) return;
+  if (!renderCaregiverNextDueSingleCard(caregiver_next_due_tree_id)) return;
+  try { sessionStorage.setItem('caregiverNextDueSingle', caregiver_next_due_tree_id); } catch (e) {}
+  goTo('caregiver-checks-due');
+}
+function openCaregiverDueList() {
+  try { sessionStorage.removeItem('caregiverNextDueSingle'); } catch (e) {}
+  goTo('caregiver-checks-due');
 }
 
 function loadDashboard() {
@@ -947,6 +981,10 @@ window.render = {
     if (had_pending) { openCaregiverWaitingRequests(); return; }
     if (hubMode === 'caregiver-waiting') { openCaregiverWaitingRequests(); }
     if (hubMode === 'caregiver-seeing') { checkNewCaregiverTrees(); }
+    if (hubMode === 'caregiver-checks-due') {
+      var single = null; try { single = sessionStorage.getItem('caregiverNextDueSingle'); } catch (e) {}
+      if (single && renderCaregiverNextDueSingleCard(single)) { goTo('caregiver-checks-due'); }
+    }
   }
 };
 function treeCardHtml(t, cfg) {
@@ -1045,6 +1083,30 @@ function openLogsByType(logtype) {
   if(logtype==='approved'){ goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
   else if(logtype==='submitted'){ goTo('caregiver-logs-submitted'); renderCaregiverLogs('submitted'); }
   else { goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
+}
+function renderCaregiverLogs(log_type) {
+  var type = (log_type === 'submitted') ? 'submitted' : 'approved';
+  var list_el = document.getElementById(type === 'submitted' ? 'caregiver-logs-submitted-list' : 'caregiver-logs-approved-list');
+  var empty_el = document.getElementById(type === 'submitted' ? 'caregiver-logs-submitted-empty' : 'caregiver-logs-approved-empty');
+  var login = storage.get('login') || window._login || {};
+  var caregiver_cards = ((login['tree-login'] && login['tree-login']['caregiver'] && login['tree-login']['caregiver'].cards) || {});
+  var logs = (caregiver_cards.logs && caregiver_cards.logs[type]) || [];
+  if (!list_el) return 0;
+  if (!logs.length) { list_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; return 0; }
+  if (empty_el) empty_el.style.display = 'none';
+  var html = '';
+  for (var i = logs.length - 1; i >= 0; i--) {
+    var entry = logs[i]; var tid = entry.treeId || ''; var t = null;
+    try { t = storage.pullTreeDetail ? storage.pullTreeDetail(tid) : null; } catch (e) {}
+    if (!t) { var d = window.__TREE_DATA || storage.get('treeCards') || []; for (var r = 0; r < d.length; r++) if (d[r].treeId === tid) { t = d[r]; break; } }
+    var name = t ? (caregiverCardName(t) || tid) : tid;
+    var addr = t ? caregiverCardAddr(t) : '';
+    var enc = t ? (t['encounters-list'] || {}) : {}; var keys = t ? Object.keys(enc) : []; var last = t ? enc[keys[keys.length - 1]] || {} : {}; var st = last['health-status'] || {};
+    var date = entry.loggedAt || ''; var dm = /^(\d{4})(\d{2})(\d{2})T/.exec(date); var label = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : date;
+    html += '<div class="log-entry" onclick="openProfile(\'' + tid + '\')" style="cursor:pointer"><div class="log-dot" style="background:#16a34a"></div><div class="log-body"><div class="log-date">' + label + '</div><div class="log-text">' + name + ' · ' + tid + '</div><div class="log-addr" style="font-size:0.7333rem;color:var(--color-text-secondary)">' + addr + '</div><div class="log-chips"><span class="chip">' + (st.health || '—') + '</span><span class="chip">' + (st.height || '—') + '</span></div></div></div>';
+  }
+  list_el.innerHTML = html;
+  return logs.length;
 }
 
 
