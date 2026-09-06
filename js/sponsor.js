@@ -69,7 +69,7 @@ function loadDashboard() {
   var login_data = storage.get('login') || window._login || {};
   var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   function normalizeIds(list) { return (list || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; }).filter(Boolean); }
-  var waiting_submitted_ids = normalizeIds(sponsor_cards.waitingSubmitted);
+  var waiting_submitted_ids = normalizeIds(sponsor_cards.waiting);
   var current_ids = normalizeIds(sponsor_cards.current);
   var past_ids = normalizeIds(sponsor_cards.past);
   renderSponsorCards();
@@ -93,7 +93,7 @@ function loadDashboard() {
       next_due_list_el.innerHTML = next_due_list.map(function(sponsor_next_due_item, sponsor_next_due_idx){
         var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(sponsor_next_due_item.due);
         var sponsor_next_due_label = dm ? parseInt(dm[3],10) + ' ' + month_names[parseInt(dm[2],10)-1] : sponsor_next_due_item.due;
-        return '<div class="next-due-row"><span class="next-due-id" onclick="openNextDueTreeProfile(event,' + sponsor_next_due_idx + ')">' + sponsor_next_due_item.treeId + '</span><span class="next-due-date">' + sponsor_next_due_label + '</span></div>';
+        return '<div class="next-due-row"><span class="next-due-id" onclick="openNextDueTreeCard(event,' + sponsor_next_due_idx + ')">' + sponsor_next_due_item.treeId + '</span><span class="next-due-date">' + sponsor_next_due_label + '</span></div>';
       }).join('');
     }
   }
@@ -116,6 +116,7 @@ function loadDashboard() {
 }
 
 function openSponsorNextDue() {
+  try { sessionStorage.removeItem('sponsorNextDueSingle'); } catch (e) {}
   var sponsor_next_due_list_local = window._sponsorNextDueList || [];
   var ram = storage.get('treeCards') || window.__TREE_DATA || [];
   if (!sponsor_next_due_list_local.length) {
@@ -173,12 +174,39 @@ function openNextDueTreeProfile(sponsor_next_due_click_event, sponsor_next_due_i
   if (!sponsor_next_due_tree_id) return;
   openProfile(sponsor_next_due_tree_id);
 }
+function openNextDueTreeCard(sponsor_next_due_click_event, sponsor_next_due_idx) {
+  if (sponsor_next_due_click_event) sponsor_next_due_click_event.stopPropagation();
+  var sponsor_next_due_list_local = window._sponsorNextDueList || [];
+  var sponsor_next_due_tree_id = '';
+  if (typeof sponsor_next_due_idx === 'number' && sponsor_next_due_list_local[sponsor_next_due_idx]) {
+    sponsor_next_due_tree_id = sponsor_next_due_list_local[sponsor_next_due_idx].treeId;
+  } else {
+    sponsor_next_due_tree_id = window._sponsorNextDueId || '';
+  }
+  if (!sponsor_next_due_tree_id) return;
+  if (!renderSponsorNextDueSingleCard(sponsor_next_due_tree_id)) return;
+  try { sessionStorage.setItem('sponsorNextDueSingle', sponsor_next_due_tree_id); } catch (e) {}
+  goTo('sponsor-next-due');
+}
+function renderSponsorNextDueSingleCard(single_tid) {
+  if (!single_tid) return false;
+  var ram = storage.get('treeCards') || window.__TREE_DATA || [];
+  var t = null; for (var i = 0; i < ram.length; i++) if (ram[i].treeId === single_tid) { t = ram[i]; break; }
+  if (!t) return false;
+  var login_data = storage.get('login') || window._login || {};
+  var cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
+  var sorted = getSortedWaitingList(cards.current || [], 'desc'); var m = {}; sorted.forEach(function(e){ if(e && e.treeId) m[e.treeId] = e.addedAt; });
+  var c = {}; for (var k in t) c[k] = t[k]; c.addedAt = m[single_tid] || '';
+  var cardEl = document.getElementById('sponsor-next-due-card'); var emptyEl = document.getElementById('sponsor-next-due-empty');
+  if (emptyEl) emptyEl.style.display = 'none'; if (cardEl) cardEl.innerHTML = sponsorTreeCardHtml(c);
+  return true;
+}
 
 function loadListForDashBoardBtns(btn_name) {
   var login_data = storage.get('login') || window._login || {};
   var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   var snake_case = String(btn_name || '').toLowerCase();
-  var key = snake_case.indexOf('waiting') > -1 ? 'waitingSubmitted' : snake_case.indexOf('current') > -1 ? 'current' : snake_case.indexOf('past') > -1 ? 'past' : '';
+  var key = snake_case.indexOf('waiting') > -1 ? 'waiting' : snake_case.indexOf('current') > -1 ? 'current' : snake_case.indexOf('past') > -1 ? 'past' : '';
   if (!key) return [];
   var raw_list = sponsor_cards[key] || [];
   var sorted_list = getSortedWaitingList(raw_list, 'desc');
@@ -186,17 +214,17 @@ function loadListForDashBoardBtns(btn_name) {
   var added_map = {}; sorted_list.forEach(function(e){ if (e && e.treeId) added_map[e.treeId] = e.addedAt; });
   var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
   var tree_list = ids.map(function(id){
-    for (var i = 0; i < ram_data.length; i++) { if (ram_data[i].treeId === id) { var c = {}; for (var k in ram_data[i]) c[k] = ram_data[i][k]; c.addedAt = added_map[id]; c.isPast = (key === 'past'); c.isSubmitted = (key === 'waitingSubmitted'); return c; }
+    for (var i = 0; i < ram_data.length; i++) { if (ram_data[i].treeId === id) { var c = {}; for (var k in ram_data[i]) c[k] = ram_data[i][k]; c.addedAt = added_map[id]; c.isPast = (key === 'past'); c.isSubmitted = (key === 'waiting'); return c; }
     } return null;
   }).filter(Boolean);
   var html = tree_list.map(sponsorTreeCardHtml).join('');
-  var target_map = { waitingSubmitted: 'sponsor-waiting-submitted-cards', current: 'sponsor-current-cards', past: 'sponsor-past-cards' };
-  var empty_map = { waitingSubmitted: 'sponsor-waiting-submitted-empty' };
+  var target_map = { waiting: 'sponsor-waiting-submitted-cards', current: 'sponsor-current-cards', past: 'sponsor-past-cards' };
+  var empty_map = { waiting: 'sponsor-waiting-submitted-empty' };
   var el = document.getElementById(target_map[key]);
   if (el) el.innerHTML = html;
   var empty_el = document.getElementById(empty_map[key]);
   if (empty_el) empty_el.style.display = tree_list.length ? 'none' : 'block';
-  if (key === 'waitingSubmitted') goTo('sponsor-waiting-submitted');
+  if (key === 'waiting') goTo('sponsor-waiting-submitted');
   else if (key === 'current' || key === 'past') goTo('sponsor-' + key);
   return tree_list;
 }
@@ -230,7 +258,7 @@ function isTreeIdAlreadyInSponsorLists(check_tree_id) {
   var tree_login = login_data['tree-login'] || {};
   var sponsor_role = tree_login.sponsor || {};
   var sponsor_cards = sponsor_role.cards || {};
-  var waiting_list = sponsor_cards.waitingSubmitted || [];
+  var waiting_list = sponsor_cards.waiting || [];
   var current_list = sponsor_cards.current || [];
   var past_list = sponsor_cards.past || [];
   var waiting_ids = waiting_list.map(function(e){ return typeof e === 'string' ? e : e.treeId; });
@@ -239,7 +267,7 @@ function isTreeIdAlreadyInSponsorLists(check_tree_id) {
   var is_in_waiting = waiting_ids.indexOf(check_tree_id) > -1;
   var is_in_current = current_ids.indexOf(check_tree_id) > -1;
   var is_in_past = past_ids.indexOf(check_tree_id) > -1;
-  return is_in_waiting ? 'waitingSubmitted' : is_in_current ? 'current' : is_in_past ? 'past' : null;
+  return is_in_waiting ? 'waiting' : is_in_current ? 'current' : is_in_past ? 'past' : null;
 }
 function openSponsorConflictModal(conflict_tree_id, conflict_list) {
   var title_el = document.getElementById('conflict-title');
@@ -504,8 +532,7 @@ function openProfile(treeId) {
   } catch (e) {}
   var userid_param = userid ? '&userid=' + encodeURIComponent(userid) : '';
   var flang = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
-  var forceSelected = (['sponsor-current','sponsor-waiting-submitted','sponsor-seeing','sponsor-next-due'].indexOf(current_hub) > -1) ? '&forceSelected=1' : '';
-  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent + '&flang=' + encodeURIComponent(flang) + userid_param + forceSelected;
+  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent + '&flang=' + encodeURIComponent(flang) + userid_param;
 }
 function profileBack() { try { if (window.history.length > 1) window.history.back(); else goTo(profileFrom); } catch (e) { goTo(profileFrom); } }
 
@@ -675,7 +702,7 @@ function sponsorATree(f) {
   var tl = login['tree-login'] || (login['tree-login'] = {});
   var role = tl.sponsor || (tl.sponsor = {});
   var cards = role.cards || (role.cards = {});
-  var waiting = cards.waitingSubmitted || (cards.waitingSubmitted = []);
+  var waiting = cards.waiting || (cards.waiting = []);
   var waiting_submitted_ids = waiting.map(function(e){ return e.treeId; });
   if (f.treeId && waiting_submitted_ids.indexOf(f.treeId) === -1) { waiting.push({ treeId: f.treeId, addedAt: getCurrentAddedAtString() }); console.log('[sponsor] sponsorATree added to waiting', f.treeId); } else { console.log('[sponsor] sponsorATree already in waiting or no treeId', f.treeId); }
   appendSponsorWaitingSubmittedCard(f);
@@ -761,7 +788,7 @@ function openSponsorWaitingSubmittedRequests() {
   var titleEl = document.getElementById('swaiting-submitted-page-title');
   if (titleEl) titleEl.textContent = 'New requests';
   var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
-  var waiting_raw = (role.cards || {}).waitingSubmitted || [];
+  var waiting_raw = (role.cards || {}).waiting || [];
   var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
   var ids = sorted_waiting.map(function(e){ return e.treeId; });
   var added_map = {};
@@ -811,11 +838,10 @@ function removeSponsorCard(remove_tree_id) {
   var tree_login = login_data['tree-login'] || {};
   var sponsor_role = tree_login.sponsor || {};
   var sponsor_cards = sponsor_role.cards || {};
-  ['waitingSubmitted','current'].forEach(function(list_name){
+  ['waiting','current','past'].forEach(function(list_name){
     var list_data = sponsor_cards[list_name] || [];
     sponsor_cards[list_name] = list_data.filter(function(e){ var id = typeof e === 'string' ? e : e.treeId; return id !== remove_tree_id; });
   });
-  try { var sStr = sessionStorage.getItem('sponsorWaiting'); if(sStr){ var sArr = JSON.parse(sStr); sArr = sArr.filter(function(id){ return id !== remove_tree_id; }); sessionStorage.setItem('sponsorWaiting', JSON.stringify(sArr)); } } catch(e){}
   storage.set('login', login_data);
   if (window.render && typeof window.render.init === 'function') window.render.init();
 }
@@ -848,7 +874,7 @@ function renderSponsorCards() {
   var past_map = {}; sorted_past.forEach(function(e){ if(e && e.treeId) past_map[e.treeId]=e.addedAt; });
   var currentList = currentIds.length ? data.filter(function sponsorCardName(t) { return currentIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return currentIds.indexOf(a.treeId) - currentIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=current_map[t.treeId]; return c; }) : [];
   var pastList = pastIds.length ? data.filter(function sponsorCardName(t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; c.isPast=true; return c; }) : [];
-  var waiting_raw = cards.waitingSubmitted || [];
+  var waiting_raw = cards.waiting || [];
   var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
   var waiting_submitted_map = {}; sorted_waiting.forEach(function(e){ if(e && e.treeId) waiting_submitted_map[e.treeId]=e.addedAt; });
   var waiting_submitted_ids = sorted_waiting.map(function(e){ return e.treeId || e; });
@@ -866,7 +892,7 @@ function renderSponsorCards() {
   setStatById('s-tree-past', pastList.length);
   setStatById('s-current-count', currentList.length);
   setStatById('s-past-count', pastList.length);
-  setStatById('s-sponsor-waiting-submitted', (cards.waitingSubmitted || []).length);
+  setStatById('s-sponsor-waiting-submitted', (cards.waiting || []).length);
   var total_paid = 0;
   var this_month_paid = 0;
   var current_month_prefix = getCurrentMonthPrefixForPayments();
@@ -953,10 +979,10 @@ function consumePendingSponsorRequest() {
       console.log('[sponsor] target found', target_key, !!target);
       if (target) {
         var cards = target.cards || (target.cards = {});
-        var waiting = cards.waitingSubmitted || (cards.waitingSubmitted = []);
+        var waiting = cards.waiting || (cards.waiting = []);
         var waiting_submitted_ids = waiting.map(function(e){ return e.treeId; });
         if (waiting_submitted_ids.indexOf(treeId) === -1) { waiting.push({treeId: treeId, addedAt: getCurrentAddedAtString()}); changed = true; console.log('[sponsor] added to waiting', treeId); } else { console.log('[sponsor] already in waiting', treeId); }
-        cards.waitingSubmitted = waiting; target.cards = cards; tl[target_key] = target;
+        cards.waiting = waiting; target.cards = cards; tl[target_key] = target;
       } else { console.log('[sponsor] no target for userid', userid); }
     }
     if (changed) { login['tree-login'] = tl; storage.set('login', login); window._login = login; console.log('[sponsor] saved login', login); }
@@ -981,7 +1007,10 @@ window.render = {
     renderPayLogs();
     if (had_pending) { openSponsorWaitingSubmittedRequests(); return; }
     if (hubMode === 'sponsor-waiting-submitted') { openSponsorWaitingSubmittedRequests(); }
-    if (hubMode === 'sponsor-next-due') { openSponsorNextDue(); }
+    if (hubMode === 'sponsor-next-due') {
+      var single = null; try { single = sessionStorage.getItem('sponsorNextDueSingle'); } catch (e) {}
+      if (single && renderSponsorNextDueSingleCard(single)) { goTo('sponsor-next-due'); } else { openSponsorNextDue(); }
+    }
     if (hubMode === 'pay-logs-total') { loadPayLogsTotalSegment(); }
     if (hubMode === 'pay-logs-this_month') { loadPayLogsThisMonthSegment(); }
   }
@@ -995,7 +1024,7 @@ function openTreePool() {
   var exclude = [].concat(
     (cards.current || []).map(function(c){ return c.treeId; }),
     (cards.past || []).map(function(c){ return c.treeId; }),
-    (cards.waitingSubmitted || []).map(function(c){ return c.treeId; }),
+    (cards.waiting || []).map(function(c){ return c.treeId; }),
     sponsor_waiting
   ).join(',');
   var parent = encodeURIComponent('sponsor.html?hub=sponsor-dash');
