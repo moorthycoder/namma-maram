@@ -13,7 +13,8 @@ var appendTreeNameCSS = "\n\
   .success-top{background:var(--color-theme-light);padding:24px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;}\n\
   .check-ring{width:58px;height:58px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;animation:popIn 0.5s ease forwards;}\n\
   @keyframes popIn{0%{transform:scale(0.4);opacity:0;}70%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}\n\
-  .flow-scroll{padding:12px 13px;display:flex;flex-direction:column;gap:10px;min-height:100%;}\n\
+  .flow-scroll{padding:12px 13px;display:flex;flex-direction:column;gap:10px;min-height:auto;}\n\
+  .flow-footer{padding:12px 13px;background:var(--color-background-primary);border-top:0.5px solid var(--color-border-tertiary);flex-shrink:0;}\n\
 ";
 
 function injectAppendTreeCSS() {
@@ -46,8 +47,8 @@ var appendTreePages = "\n\
     <div style=\"font-size:0.7333rem;color:var(--color-text-secondary);\">Add a new tree name with its scientific name and names in each language. It will be available across the app.</div>\n\
     <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-abc\" style=\"font-size:0.8667rem\"></i> Scientific name</div><input id=\"app-scientific-name\" class=\"field-input\" type=\"text\" placeholder=\"e.g. Borassus flabellifer\" /></div>\n\
     <div id=\"app-name-fields\"></div>\n\
-    <button class=\"green-btn\" onclick=\"appendTreeNameToDatabase()\"><i class=\"ti ti-database-plus\" style=\"font-size:0.9333rem\"></i> Append to database</button>\n\
   </div>\n\
+  <div class=\"flow-footer\"><button class=\"green-btn\" onclick=\"appendTreeNameToDatabase()\"><i class=\"ti ti-database-plus\" style=\"font-size:0.9333rem\"></i> Append to database</button></div>\n\
 </div>\n\
 <div class=\"page\" id=\"page-append-tree-success\">\n\
   <div class=\"success-top\">\n\

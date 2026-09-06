@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
 <link rel="stylesheet" href="css/surveyor.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <div class="screen">
@@ -15,12 +16,13 @@
 
     <div class="page active" id="page-surveyor-login">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn inv" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn inv" onclick="goBackFromSurveyorLogin()"><i class="ti ti-arrow-left"></i></button></div>
         <h2 style="font-size:1.2rem;font-weight:500;color:var(--color-theme-light);">Surveyor login</h2>
         <p style="font-size:0.8rem;color:rgba(192,221,151,0.6);margin-top:3px;">Sign in to survey and record tree measurements</p>
       </div>
       <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
-        <button class="google-btn" onclick="currentRole='surveyor';googleAuth('surveyor-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google</button>
+        <button class="green-btn" id="continue-as-btn" type="button" onclick="continueAsSurveyor()" style="display:none"><i class="ti ti-login"></i> Continue as <span id="continue-as-name">—</span></button>
+        <button class="google-btn" onclick="currentRole='surveyor';googleAuth('surveyor-dash')" style="margin-top:12px"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
         <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:12px;">Only authorised field surveyors can log entries</div>
       </div>
     </div>
@@ -39,8 +41,18 @@
     <div class="page" id="page-surveyor-dash">
       <div class="dash-header">
         <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Kavitha</div></div><div class="avatar" onclick="toggleSurveyorLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">KR</span><div class="logout-drop" id="logout-drop-surveyor"><div class="dd-item" onclick="window.top.location.href='login-hub.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
-        <div class="dash-stats">
-          <div class="dash-stat" onclick="goTo('trees')"><div class="dash-stat-label">Total logs</div><div class="dash-stat-val" id="svy-total-logs">—</div></div>
+        <div class="dash-toggle" id="dash-toggle-surveyor">
+          <button class="dash-toggle-btn active" id="dash-btn-action" onclick="switchSurveyorPanel('action')">Action</button>
+          <button class="dash-toggle-btn" id="dash-btn-stat" onclick="switchSurveyorPanel('stat')">Stats</button>
+        </div>
+        <div class="dash-stats" id="panel-surveyor-stat" style="display:none;">
+          <div class="dash-stat"><div class="dash-stat-label">Logs hub</div>
+            <div class="dash-split">
+              <div class="dash-split-col dash-split-btn" onclick="goTo('trees')"><div class="dash-split-title">Total</div><div class="dash-split-val" id="svy-total-logs">—</div></div>
+              <div class="dash-split-divider"></div>
+              <div class="dash-split-col dash-split-btn" onclick="goTo('trees')"><div class="dash-split-title">Last 3</div><div class="dash-split-val" id="svy-last-three">—</div></div>
+            </div>
+          </div>
           <div class="dash-stat"><div class="dash-stat-label">Covered this month</div>
             <div class="dash-split">
               <div class="dash-split-col dash-split-btn" onclick="goTo('trees')"><div class="dash-split-title">Trees</div><div class="dash-split-val" id="svy-month-trees">—</div></div>
@@ -62,35 +74,30 @@
               <div class="dash-split-col"><div class="dash-split-title">Future trees</div><div class="dash-split-val" id="svy-zone-future">—</div></div>
             </div>
           </div>
-          <div class="action-tile" onclick="goTo('append-tree-name')">
+        </div>
+        <div class="action-tiles" id="panel-surveyor-action">
+          <div class="action-tile" onclick="openAppendTreeName()">
             <div class="action-tile-icon green">🌿</div>
             <div class="action-tile-title">Append Tree Name</div>
             <div class="action-tile-sub">Add to database</div>
           </div>
-          <div class="action-tile" onclick="goTo('append-place-name')">
+          <div class="action-tile" onclick="openAppendPlaceName()">
             <div class="action-tile-icon green">📍</div>
             <div class="action-tile-title">Append Place Name</div>
             <div class="action-tile-sub">Add to database</div>
           </div>
-          <div class="action-tile" onclick="goTo('register-tree')">
+          <div class="action-tile" onclick="openRegisterATreePage()">
             <div class="action-tile-icon beige">🏷️</div>
             <div class="action-tile-title">Register a Tree</div>
             <div class="action-tile-sub">Add to registry</div>
           </div>
-          <div class="action-tile" onclick="goTo('selfie')">
+          <div class="action-tile" onclick="openSurveyATreePage()">
             <div class="action-tile-icon green">📐</div>
             <div class="action-tile-title">Survey A Tree</div>
             <div class="action-tile-sub">Log measurements</div>
           </div>
         </div>
-        <div class="dbl-hint">Double-tap a card to view your trees</div>
       </div>
-      <div class="scrollable"><div style="padding:13px 14px;display:flex;flex-direction:column;gap:11px;">
-        <div class="section-title">Recent entries</div>
-        <div class="info-card" id="recent-entries">
-        </div>
-        <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
-      </div></div>
     </div>
     <div class="page" id="page-trees">
       <div class="dash-header">
@@ -178,7 +185,9 @@
       </div>
     </div>
   </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/storage.js"></script>
+<script src="js/gis.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/show-tree-details.js"></script>
 <script src="js/surveyor.js"></script>

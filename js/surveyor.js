@@ -23,6 +23,36 @@ function loadCurrentUser() {
 }
 loadCurrentUser();
 
+function continueAsSurveyor() {
+  goTo('surveyor-dash');
+}
+
+function getSurveyorParentUrl() {
+  var parent_url = new URLSearchParams(location.search).get('parent');
+  return parent_url ? parent_url : null;
+}
+
+function goBackFromSurveyorLogin() {
+  var parent_url = getSurveyorParentUrl();
+  if (parent_url) { window.location.href = parent_url; return; }
+  window.location.href = 'login-hub.html';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    var cred = null;
+    try { cred = storage.get('login'); } catch (e) {}
+    if (!cred) { var s = sessionStorage.getItem('loginCredentialsV1'); if (s) cred = JSON.parse(s); }
+    var role = cred && cred['tree-login'] && cred['tree-login']['surveyor'];
+    if (role) {
+      var btn = document.getElementById('continue-as-btn');
+      var name_el = document.getElementById('continue-as-name');
+      if (btn) btn.style.display = 'flex';
+      if (name_el) name_el.textContent = role.name || 'Surveyor';
+    }
+  } catch (e) {}
+});
+
 var loginStatusData = {
   waiting:   { icon:'ti ti-clock',        color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your login request is waiting for admin approval. We will notify you once it is reviewed.' },
   rejected:  { icon:'ti ti-x',            color:'#dc2626', bg:'#fee2e2', title:'Application rejected',      text:'Your login request was rejected. Please contact support if you think this is a mistake.' },
@@ -202,6 +232,99 @@ function toggleSurveyorLogoutDrop() {
   document.getElementById('logout-drop-surveyor').classList.toggle('open');
 }
 
+function switchSurveyorPanel(snake_case) {
+  var is_action = snake_case === 'action';
+  var action_panel = document.getElementById('panel-surveyor-action');
+  var stat_panel = document.getElementById('panel-surveyor-stat');
+  var action_btn = document.getElementById('dash-btn-action');
+  var stat_btn = document.getElementById('dash-btn-stat');
+  if (action_panel) action_panel.style.display = is_action ? 'grid' : 'none';
+  if (stat_panel) stat_panel.style.display = is_action ? 'none' : 'grid';
+  if (action_btn) action_btn.classList.toggle('active', is_action);
+  if (stat_btn) stat_btn.classList.toggle('active', !is_action);
+}
+
+function openRegisterATreePage() {
+  var login_data = storage.get('login') || window._login || {};
+  var surveyor_role = (login_data['tree-login'] && login_data['tree-login']['surveyor']) || {};
+  try {
+    if (!surveyor_role.userId) {
+      var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}');
+      var sp = sess['tree-login'] && sess['tree-login']['surveyor'];
+      if (sp && sp.userId) { surveyor_role = sp; }
+    }
+  } catch (e) {}
+  var parent = encodeURIComponent('surveyor.html?hub=surveyor-dash');
+  var user_id = surveyor_role.userId || '';
+  window.location.href = 'register-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(user_id);
+}
+
+function openSurveyATreePage() {
+  var login_data = storage.get('login') || window._login || {};
+  var surveyor_role = (login_data['tree-login'] && login_data['tree-login']['surveyor']) || {};
+  try {
+    if (!surveyor_role.userId) {
+      var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}');
+      var sp = sess['tree-login'] && sess['tree-login']['surveyor'];
+      if (sp && sp.userId) { surveyor_role = sp; }
+    }
+  } catch (e) {}
+  var parent = encodeURIComponent('surveyor.html?hub=surveyor-dash');
+  var user_id = surveyor_role.userId || '';
+  window.location.href = 'survey-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(user_id);
+}
+
+function openAppendTreeName() {
+  var login_data = storage.get('login') || window._login || {};
+  var surveyor_role = (login_data['tree-login'] && login_data['tree-login']['surveyor']) || {};
+  try {
+    if (!surveyor_role.userId) {
+      var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}');
+      var sp = sess['tree-login'] && sess['tree-login']['surveyor'];
+      if (sp && sp.userId) { surveyor_role = sp; }
+    }
+  } catch (e) {}
+  var user_id = surveyor_role.userId || 'SVY-TEST-003';
+  var frame = document.createElement('iframe');
+  frame.className = 'app-frame';
+  frame.id = 'app-frame';
+  frame.title = 'Append Tree Name';
+  frame.src = 'append-a-tree-name.html?parent=surveyor.html&userid=' + encodeURIComponent(user_id);
+  var dash_page = document.getElementById('page-surveyor-dash');
+  if (dash_page) dash_page.style.display = 'none';
+  var screen = document.querySelector('.screen');
+  if (screen) screen.insertBefore(frame, dash_page ? dash_page.nextSibling : null);
+}
+
+function openAppendPlaceName() {
+  var login_data = storage.get('login') || window._login || {};
+  var surveyor_role = (login_data['tree-login'] && login_data['tree-login']['surveyor']) || {};
+  try {
+    if (!surveyor_role.userId) {
+      var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}');
+      var sp = sess['tree-login'] && sess['tree-login']['surveyor'];
+      if (sp && sp.userId) { surveyor_role = sp; }
+    }
+  } catch (e) {}
+  var user_id = surveyor_role.userId || 'SVY-TEST-003';
+  var frame = document.createElement('iframe');
+  frame.className = 'app-frame';
+  frame.id = 'app-frame';
+  frame.title = 'Append Place Name';
+  frame.src = 'append-a-place-name.html?parent=surveyor.html&userid=' + encodeURIComponent(user_id);
+  var dash_page = document.getElementById('page-surveyor-dash');
+  if (dash_page) dash_page.style.display = 'none';
+  var screen = document.querySelector('.screen');
+  if (screen) screen.insertBefore(frame, dash_page ? dash_page.nextSibling : null);
+}
+
+function backToStart() {
+  var frame = document.getElementById('app-frame');
+  if (frame && frame.parentNode) { frame.parentNode.removeChild(frame); }
+  var dash_page = document.getElementById('page-surveyor-dash');
+  if (dash_page) { dash_page.style.display = 'flex'; dash_page.classList.add('active'); }
+}
+
 
 
 
@@ -233,7 +356,12 @@ function goTo(page) {
   }
   
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-  document.getElementById('page-'+page).classList.add('active');
+  var target_page = document.getElementById('page-'+page);
+  if (target_page) { target_page.classList.add('active'); }
+  else { console.warn('goTo: page not found', page); return; }
+  if (page === 'selfie' && typeof renderSurveySelfie === 'function') { try { renderSurveySelfie(); } catch (e) {} }
+  if (page === 'snapshots' && typeof renderSurveySnapGrid === 'function') { try { renderSurveySnapGrid(); } catch (e) {} }
+  if (page === 'capture' && typeof renderSurveyCapturePage === 'function') { try { renderSurveyCapturePage(); } catch (e) {} }
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['surveyor-login','surveyor-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','append-tree-name','append-place-name','register-tree','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
@@ -556,7 +684,18 @@ function renderSurveyorStats() {
   var month = stats.month || {};
   var myTrees = stats['my-trees'] || {};
   var zone = stats.zone || {};
-  setStatById('svy-total-logs', stats['total-logs'] != null ? stats['total-logs'] : '—');
+  var total_logs = stats['total-logs'];
+  setStatById('svy-total-logs', total_logs != null ? total_logs : '—');
+  var recent_entries = getRoleConfig('surveyor')['recent-entries'] || [];
+  var last_three_el = document.getElementById('svy-last-three');
+  if (last_three_el) {
+    if (!recent_entries.length) { last_three_el.textContent = '—'; }
+    else {
+      last_three_el.innerHTML = recent_entries.slice(0, 3).map(function (e) {
+        return '<div class="svy-last-id" onclick="openProfile(\'' + e.treeId + '\')" title="' + e.treeId + '">' + e.treeId + '</div>';
+      }).join('');
+    }
+  }
   setStatById('svy-month-trees', month.trees != null ? month.trees : '—');
   setStatById('svy-month-logs', month.logs != null ? month.logs : '—');
   setStatById('svy-my-current', myTrees.current != null ? myTrees.current : '—');
@@ -588,5 +727,6 @@ window.render = {
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { goTo('surveyor-login'); }
 else if (hubMode === 'register') { goTo('surveyor-enroll'); }
+else if (hubMode === 'surveyor-dash') { goTo('surveyor-dash'); }
 else { window.location.href = 'login-hub.html'; }
 
