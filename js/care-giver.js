@@ -1046,6 +1046,38 @@ function openLogsByType(logtype) {
   else if(logtype==='submitted'){ goTo('caregiver-logs-submitted'); renderCaregiverLogs('submitted'); }
   else { goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
 }
+function renderCaregiverLogs(logtype){
+  var login = storage.get('login') || window._login || {};
+  try { if(!login || !login['tree-login'] || !login['tree-login']['caregiver']){ login = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); } } catch(e){}
+  var care = login && login['tree-login'] && login['tree-login']['caregiver'];
+  var logs = [];
+  try {
+    if(care && care.cards && care.cards.logs){
+      if(Array.isArray(care.cards.logs)) logs = care.cards.logs.slice();
+      else {
+        var a = care.cards.logs.approved || [], s = care.cards.logs.submitted || [];
+        if(logtype==='approved') logs = a.slice();
+        else if(logtype==='submitted') logs = s.slice();
+        else logs = a.concat(s);
+      }
+    }
+  } catch(e){}
+  var listId = logtype==='approved' ? 'caregiver-logs-approved-list' : 'caregiver-logs-submitted-list';
+  var emptyId = logtype==='approved' ? 'caregiver-logs-approved-empty' : 'caregiver-logs-submitted-empty';
+  var listEl = document.getElementById(listId);
+  var emptyEl = document.getElementById(emptyId);
+  if(!listEl) return;
+  if(!logs.length){ listEl.innerHTML=''; if(emptyEl) emptyEl.style.display='block'; return; }
+  if(emptyEl) emptyEl.style.display='none';
+  var html='';
+  for(var i=logs.length-1;i>=0;i--){ var e=logs[i]; var tid=e.treeId||e.tree_id||'—'; var at=e.loggedAt||e.logged_at||''; var m=/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/.exec(at); var label=m?m[3]+'-'+m[2]+'-'+m[1]+' '+m[4]+':'+m[5]:at; html+='<div class="recent-row" style="cursor:pointer" onclick="openCaregiverLogReviewPage(\''+tid+'\',\''+at+'\',\''+logtype+'\')"><div class="recent-dot" style="background:#3B6D11"></div><div><div class="recent-id">'+tid+'</div><div class="recent-date">'+label+'</div></div></div>'; }
+  listEl.innerHTML=html;
+}
+function openCaregiverLogReviewPage(treeId, loggedAt, logtype){
+  var at=loggedAt||'';
+  var curParent='care-giver.html?hub=caregiver-logs-'+logtype;
+  window.location.href='review-page.html?treeId='+encodeURIComponent(treeId)+'&loggedAt='+encodeURIComponent(at)+'&parent='+encodeURIComponent(curParent);
+}
 
 
 function getCaregiverParentUrl() {

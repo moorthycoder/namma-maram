@@ -139,6 +139,8 @@
   .report-textarea:focus{border-color:var(--color-theme);}
   .report-submit-btn{width:100%;padding:12px;border-radius:var(--border-radius-lg);background:var(--color-theme);color:var(--color-theme-light);font-size:0.9333rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
   .report-submit-btn:hover{opacity:0.9;}
+  .report-cancel-btn{width:100%;padding:12px;border-radius:var(--border-radius-lg);background:#dc2626;color:#fff;font-size:0.9333rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
+  .report-cancel-btn:hover{opacity:0.9;}
   .report-hint{font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;margin-top:4px;}
   .report-success-sheet{background:var(--color-background-primary);margin:auto;width:88%;max-width:360px;border-radius:20px;padding:22px 18px 18px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.15);}
   .report-success-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#dcfce7;color:#16a34a;font-size:24px;}

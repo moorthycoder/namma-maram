@@ -101,7 +101,8 @@ function closeActionModal() {
   if (modal_el) modal_el.classList.remove('open');
 }
 function updateSponsorButtonState() {
-  var is_added = isTreeInSponsorWaiting();
+  var forceSelected = new URLSearchParams(location.search).get('forceSelected') === '1';
+  var is_added = isTreeInSponsorWaiting() || forceSelected;
   var topbar_btns = document.querySelectorAll('.add-sponsor-btn');
   var cta_btns = document.querySelectorAll('.sponsor-cta');
   topbar_btns.forEach(function(btn_el) {
@@ -158,24 +159,39 @@ function syncAddButtonStates() {
   updateSponsorButtonState();
   updateCareButtonState();
 }
+var pendingSponsorAction = '';
 function addToSponsor() {
+  var is_present = isTreeInSponsorWaiting();
+  pendingSponsorAction = is_present ? 'remove' : 'add';
+  var titleEl = document.getElementById('sponsor-confirm-title');
+  var textEl = document.getElementById('sponsor-confirm-text');
+  if(titleEl) titleEl.textContent = is_present ? 'Remove from Sponsor?' : 'Add to Sponsor?';
+  if(textEl) textEl.textContent = is_present ? 'Remove Tree ' + (profileTreeId||'') + ' from Sponsor waiting list?' : 'Add Tree ' + (profileTreeId||'') + ' to Sponsor waiting list?';
+  var modal = document.getElementById('sponsor-confirm-modal');
+  if(modal) modal.classList.add('open');
+}
+function executeSponsorConfirm(){
+  var modal = document.getElementById('sponsor-confirm-modal');
+  if(modal) modal.classList.remove('open');
   try {
     var sponsor_list_str = sessionStorage.getItem('sponsorWaiting') || '[]';
     var sponsor_arr = JSON.parse(sponsor_list_str);
     var item_index = sponsor_arr.indexOf(profileTreeId);
     var is_present = (item_index !== -1) ? true : false;
-    if (is_present) {
+    if(pendingSponsorAction==='remove' && is_present){
       sponsor_arr.splice(item_index, 1);
       showActionModal('Removed from Sponsor waiting list', 'Tree ' + (profileTreeId || '') + ' has been removed from your Sponsor waiting list.', false);
-    } else {
+    } else if(pendingSponsorAction==='add' && !is_present){
       sponsor_arr.push(profileTreeId);
       showActionModal('Added to Sponsor waiting list', 'Tree ' + (profileTreeId || '') + ' has been added to your Sponsor waiting list.', true);
       appendToGobackExclude(profileTreeId);
     }
     sessionStorage.setItem('sponsorWaiting', JSON.stringify(sponsor_arr));
   } catch (e) {}
+  pendingSponsorAction='';
   updateSponsorButtonState();
 }
+function closeSponsorConfirm(){ var m=document.getElementById('sponsor-confirm-modal'); if(m) m.classList.remove('open'); pendingSponsorAction=''; }
 function addToCare() {
   try {
     var caregiver_list_str = sessionStorage.getItem('caregiverWaiting') || '[]';
