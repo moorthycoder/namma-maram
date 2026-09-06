@@ -153,6 +153,9 @@
   .slogin-header h2{font-size:1.2rem;font-weight:500;color:var(--color-theme-light);margin-top:10px;}
   .slogin-header p{font-size:0.8rem;color:rgba(192,221,151,0.65);margin-top:3px;}
   /* dashboard canonical in app.css as .dashboard-* — .sdash-* compat aliases removed (sponsor.html now uses .dashboard-*) */
+  #page-sponsor-dash .dashboard-header{padding:7px 10px 9px;}
+  #page-sponsor-dash .dashboard-stat{min-height:78px;padding:6px 6px;}
+  #page-sponsor-dash .dashboard-stats{gap:5px;}
   .savatar{width:34px;height:34px;border-radius:50%;background:var(--color-theme);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:500;color:var(--color-theme-accent);border:1.5px solid rgba(192,221,151,0.3);}
   .pay-plan-header{background:var(--color-theme-light);padding:10px 14px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;}
   .pay-plan-label{font-size:0.6667rem;color:var(--color-theme);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px;}
@@ -251,6 +254,14 @@
   .hub-tile small { font-size: 0.6rem; color: var(--color-text-secondary); }
   .hub-tile.empty { border: 1.5px dashed var(--color-border-tertiary); cursor: default; background: var(--color-background-secondary); }
   .hub-tile.empty:hover { border-color: var(--color-border-tertiary); }
+  .action-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .action-tile{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;cursor:pointer;}
+  .action-tile:hover{opacity:0.85;}
+  .action-tile-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+  .action-tile-icon.green{background:#e6eddc;}
+  .action-tile-icon.beige{background:#fdf0dc;}
+  .action-tile-title{font-size:0.7333rem;font-weight:600;color:var(--color-text-primary);}
+  .action-tile-sub{font-size:0.6rem;color:var(--color-text-secondary);}
 
   /* ── SETTINGS ── */
   .font-size-row { display: flex; align-items: center; justify-content: space-between; }
