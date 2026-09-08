@@ -64,20 +64,27 @@
             </div>
           </div>
           <div class="dashboard-stat dashboard-next" onclick="openNextCheckTree()"><div class="dashboard-stat-label">Next check</div><div class="dashboard-split"><div class="dashboard-split-col"><div class="next-due-list" id="c-next-due-list"></div></div></div></div>
-          <div class="dashboard-stat"><div class="dashboard-stat-label">Logs</div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Register requests</div>
             <div class="dashboard-split">
-              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('approved')"><div class="dashboard-split-title">Approved</div><div class="dashboard-split-val" id="c-logs-approved">0</div></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('register-log','approved')"><div class="dashboard-split-title">Approved</div><div class="dashboard-split-val" id="c-register-log-approved">0</div></div>
               <div class="dashboard-split-divider"></div>
-              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('submitted')"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="c-logs-submitted">0</div></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('register-log','submitted')"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="c-register-log-submitted">0</div></div>
+            </div>
+          </div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Survey logs</div>
+            <div class="dashboard-split">
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('survey-log','approved')"><div class="dashboard-split-title">Approved</div><div class="dashboard-split-val" id="c-survey-log-approved">0</div></div>
+              <div class="dashboard-split-divider"></div>
+              <div class="dashboard-split-col dashboard-split-btn" onclick="openLogsByType('survey-log','submitted')"><div class="dashboard-split-title">Submitted</div><div class="dashboard-split-val" id="c-survey-log-submitted">0</div></div>
             </div>
           </div>
         </div>
       </div>
       <div class="scrollable"><div style="padding:13px;">
         <div class="action-tiles">
-          <div class="action-tile" onclick="openTreePool()"><div class="action-tile-icon green">❤️</div><div class="action-tile-title">Care for a tree</div><div class="action-tile-sub">Adopt and care</div></div>
-          <div class="action-tile" onclick="goTo('caregiver-current')"><div class="action-tile-icon green">📐</div><div class="action-tile-title">Survey a tree</div><div class="action-tile-sub">Log measurements</div></div>
-          <div class="action-tile" onclick="openRegisterATreePage()"><div class="action-tile-icon beige">🏷️</div><div class="action-tile-title">Register a Tree</div><div class="action-tile-sub">Add to registry</div></div>
+          <div class="action-tile tile-bg" onclick="openTreePool()"><div class="action-tile-icon green">❤️</div><div class="action-tile-title">Care for a tree</div><div class="action-tile-sub">Adopt and care</div></div>
+          <div class="action-tile tile-bg" onclick="goTo('caregiver-current')"><div class="action-tile-icon green">📐</div><div class="action-tile-title">Survey a tree</div><div class="action-tile-sub">Log measurements</div></div>
+          <div class="action-tile tile-bg" onclick="openRegisterATreePage()"><div class="action-tile-icon beige">🏷️</div><div class="action-tile-title">Register a Tree</div><div class="action-tile-sub">Add to registry</div></div>
         </div>
       </div></div>
     </div>

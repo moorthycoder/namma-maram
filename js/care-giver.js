@@ -955,20 +955,18 @@ function loadDashboard() {
   var new_caregiver_ids = checkNewCaregiverTrees();
   setStatById('c-care-seeing', new_caregiver_ids.length);
   var dash_role = (window._login && window._login['tree-login'] && window._login['tree-login']['caregiver']) || {};
-  var dash_logs = dash_role.cards && dash_role.cards.logs;
-  var approved_logs = [];
-  var submitted_logs = [];
-  if (Array.isArray(dash_logs)) {
-    approved_logs = dash_logs.slice(0, Math.ceil(dash_logs.length / 2));
-    submitted_logs = dash_logs.slice(Math.ceil(dash_logs.length / 2));
-  } else if (dash_logs && typeof dash_logs === 'object') {
-    approved_logs = Array.isArray(dash_logs.approved) ? dash_logs.approved : [];
-    submitted_logs = Array.isArray(dash_logs.submitted) ? dash_logs.submitted : [];
-  }
-  setStatById('c-logs-approved', approved_logs.length);
-  setStatById('c-logs-submitted', submitted_logs.length);
+  var dash_register = dash_role.cards && dash_role.cards["register-log"];
+  var dash_survey = dash_role.cards && dash_role.cards["survey-log"];
+  var register_approved = (dash_register && Array.isArray(dash_register.approved)) ? dash_register.approved : [];
+  var register_submitted = (dash_register && Array.isArray(dash_register.submitted)) ? dash_register.submitted : [];
+  var survey_approved = (dash_survey && Array.isArray(dash_survey.approved)) ? dash_survey.approved : [];
+  var survey_submitted = (dash_survey && Array.isArray(dash_survey.submitted)) ? dash_survey.submitted : [];
+  setStatById('c-register-log-approved', register_approved.length);
+  setStatById('c-register-log-submitted', register_submitted.length);
+  setStatById('c-survey-log-approved', survey_approved.length);
+  setStatById('c-survey-log-submitted', survey_submitted.length);
   if (!ram_data.length) console.warn('[caregiver] loadDashboard: RAM empty');
-  return { ram_data: ram_data, new_caregiver_ids: new_caregiver_ids, approved_logs: approved_logs, submitted_logs: submitted_logs };
+  return { ram_data: ram_data, new_caregiver_ids: new_caregiver_ids, register_approved: register_approved, register_submitted: register_submitted, survey_approved: survey_approved, survey_submitted: survey_submitted };
 }
 
 window.render = {
@@ -1079,18 +1077,21 @@ function openLogsPage() {
   var url = 'logs.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
   window.location.href = url;
 }
-function openLogsByType(logtype) {
-  if(logtype==='approved'){ goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
-  else if(logtype==='submitted'){ goTo('caregiver-logs-submitted'); renderCaregiverLogs('submitted'); }
-  else { goTo('caregiver-logs-approved'); renderCaregiverLogs('approved'); }
+function openLogsByType(logType, status) {
+  var typeKey = (logType === 'survey-log') ? 'survey-log' : 'register-log';
+  var st = (status === 'submitted') ? 'submitted' : 'approved';
+  if (st === 'approved') { goTo('caregiver-logs-approved'); renderCaregiverLogs(typeKey, 'approved'); }
+  else { goTo('caregiver-logs-submitted'); renderCaregiverLogs(typeKey, 'submitted'); }
 }
-function renderCaregiverLogs(log_type) {
-  var type = (log_type === 'submitted') ? 'submitted' : 'approved';
+function renderCaregiverLogs(logType, status) {
+  if (typeof status === 'undefined') { status = logType; logType = 'register-log'; }
+  var typeKey = (logType === 'survey-log') ? 'survey-log' : 'register-log';
+  var type = (status === 'submitted') ? 'submitted' : 'approved';
   var list_el = document.getElementById(type === 'submitted' ? 'caregiver-logs-submitted-list' : 'caregiver-logs-approved-list');
   var empty_el = document.getElementById(type === 'submitted' ? 'caregiver-logs-submitted-empty' : 'caregiver-logs-approved-empty');
   var login = storage.get('login') || window._login || {};
   var caregiver_cards = ((login['tree-login'] && login['tree-login']['caregiver'] && login['tree-login']['caregiver'].cards) || {});
-  var logs = (caregiver_cards.logs && caregiver_cards.logs[type]) || [];
+  var logs = (caregiver_cards[typeKey] && caregiver_cards[typeKey][type]) || [];
   if (!list_el) return 0;
   if (!logs.length) { list_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; return 0; }
   if (empty_el) empty_el.style.display = 'none';
@@ -1103,10 +1104,17 @@ function renderCaregiverLogs(log_type) {
     var addr = t ? caregiverCardAddr(t) : '';
     var enc = t ? (t['encounters-list'] || {}) : {}; var keys = t ? Object.keys(enc) : []; var last = t ? enc[keys[keys.length - 1]] || {} : {}; var st = last['health-status'] || {};
     var date = entry.loggedAt || ''; var dm = /^(\d{4})(\d{2})(\d{2})T/.exec(date); var label = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : date;
-    html += '<div class="log-entry" onclick="openProfile(\'' + tid + '\')" style="cursor:pointer"><div class="log-dot" style="background:#16a34a"></div><div class="log-body"><div class="log-date">' + label + '</div><div class="log-text">' + name + ' · ' + tid + '</div><div class="log-addr" style="font-size:0.7333rem;color:var(--color-text-secondary)">' + addr + '</div><div class="log-chips"><span class="chip">' + (st.health || '—') + '</span><span class="chip">' + (st.height || '—') + '</span></div></div></div>';
+    var date_param = date || '';
+    html += '<div class="log-entry" onclick="openCaregiverReviewPage(\'' + tid + '\',\'' + date_param + '\')" style="cursor:pointer"><div class="log-dot" style="background:#16a34a"></div><div class="log-body"><div class="log-date">' + label + '</div><div class="log-text">' + name + ' · ' + tid + '</div><div class="log-addr" style="font-size:0.7333rem;color:var(--color-text-secondary)">' + addr + '</div><div class="log-chips"><span class="chip">' + (st.health || '—') + '</span><span class="chip">' + (st.height || '—') + '</span></div></div></div>';
   }
   list_el.innerHTML = html;
   return logs.length;
+}
+
+function openCaregiverReviewPage(treeId, loggedAt) {
+  var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
+  try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('care-giver.html?hub=' + active.id.replace('page-','')); } catch (e) {}
+  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
 }
 
 

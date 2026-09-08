@@ -1,7 +1,12 @@
 var parentUrl = new URLSearchParams(location.search).get('parent') || 'test-bed-3.html';
 function roleDash() { return parentUrl; }
 function appendTreeGoTo(page) {
-  if (page && /\.html/.test(page)) { window.parent.backToStart(); return; }
+  if (page && /\.html/.test(page)) {
+    try { if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') { window.parent.backToStart(); return; } } catch(e){}
+    var p=new URLSearchParams(location.search).get('parent');
+    if(p){ window.location.href=decodeURIComponent(p); return; }
+    window.location.href=page; return;
+  }
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   var el = document.getElementById('page-' + page);
   if (el) el.classList.add('active');
