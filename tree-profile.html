@@ -17,7 +17,7 @@
   <!-- TREE PROFILE -->
   <div class="page active" id="page-profile">
     <div id="header">
-      <div class="topbar"><button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span><span style="margin-left:auto;display:flex;gap:6px"><button class="add-care-btn" type="button" onclick="addToCare()" title="Care for this tree"><i class="ti ti-heart-handshake"></i></button><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-currency-rupee"></i></button><button class="add-report-btn" type="button" onclick="addToComplaint()" title="Report issue"><i class="ti ti-phone"></i></button></span></div>
+      <div class="topbar"><button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span><span style="margin-left:auto;display:flex;gap:6px"><button class="add-care-btn" type="button" onclick="addToCare()" title="Care for this tree"><i class="ti ti-heart-handshake"></i></button><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-currency-rupee"></i></button><button class="add-survey-btn" type="button" onclick="addToSurveyRequest()" title="Request survey for this tree"><i class="ti ti-ruler-measure"></i></button><button class="add-report-btn" type="button" onclick="addToComplaint()" title="Report issue"><i class="ti ti-phone"></i></button></span></div>
       <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-title"><h1 id="profile-hero-title"></h1><p id="profile-hero-addr"></p></div></div>
     </div>
     <div class="scrollable" style="padding:12px 14px 20px;">
@@ -42,6 +42,7 @@
       <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
       <button class="care-cta" type="button" onclick="addToCare()"><i class="ti ti-heart-handshake"></i> Care for this tree</button>
       <button class="sponsor-cta" type="button" onclick="addToSponsor()"><i class="ti ti-currency-rupee"></i> Sponsor this tree</button>
+      <button class="survey-cta" type="button" onclick="addToSurveyRequest()"><i class="ti ti-ruler-measure"></i> Request survey for this tree</button>
       <button class="report-cta" type="button" onclick="openComplaintPage()"><i class="ti ti-phone"></i> Report issue</button>
     </div>
   </div>

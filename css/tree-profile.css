@@ -39,8 +39,12 @@
   .care-cta:hover { opacity: 0.9; }
   .add-report-btn { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #059669; color: #ffffff; border: none; cursor: pointer; font-size: 0.9rem; flex-shrink: 0; }
   .add-report-btn:hover { opacity: 0.9; }
+  .add-survey-btn { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #3B6D11; color: #ffffff; border: none; cursor: pointer; font-size: 0.9rem; flex-shrink: 0; }
+  .add-survey-btn:hover { opacity: 0.9; }
   .report-cta { width: 100%; margin-top: 10px; padding: 10px; border-radius: var(--border-radius-md); background: #059669; color: #ffffff; border: none; cursor: pointer; font-size: 0.8667rem; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-sans); }
   .report-cta:hover { opacity: 0.9; }
+  .survey-cta { width: 100%; margin-top: 10px; padding: 10px; border-radius: var(--border-radius-md); background: #3B6D11; color: #ffffff; border: none; cursor: pointer; font-size: 0.8667rem; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-sans); }
+  .survey-cta:hover { opacity: 0.9; }
   .section-title { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
   .info-card { background: #fefce8; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 2px 12px; }
   .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }

@@ -15,7 +15,7 @@
     --font-sans: 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
-  html { font-size: 15px; }
+  html { font-size: 16px; }
   html, body { height: 100%; }
   body { background: var(--color-background-primary); overflow: hidden; }
   .screen { background: var(--color-background-primary); height: 100%; display: flex; flex-direction: column; position: relative; }
@@ -287,6 +287,10 @@
   .switch .knob { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left 0.2s; }
   .switch[aria-checked="true"] { background: var(--color-theme); }
   .switch[aria-checked="true"] .knob { left: 22px; }
+  .tcard-delete-btn{ background:transparent; border:none; color:#dc2626; cursor:pointer; font-size:0.8rem; padding:2px 4px; display:flex; align-items:center; justify-content:center; }
+  .tcard-delete-btn:hover{ color:#991b1b; }
+  .surveyor-card-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 0 8px; border-bottom:0.5px solid var(--color-border-tertiary); }
+  .surveyor-card-header-title{ font-size:0.7333rem; font-weight:500; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:0.5px; }
   .surveyor-list-pad{padding:13px 14px;}
   .surveyor-sort-bar{display:flex;gap:8px;padding:8px 14px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);}
   .surveyor-sort-btn{flex:1;padding:7px;font-size:0.7333rem;}

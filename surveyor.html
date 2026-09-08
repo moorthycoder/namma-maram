@@ -41,7 +41,7 @@
     </div>
     <div class="page" id="page-surveyor-dash">
       <div class="dash-header">
-        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Kavitha</div></div><div class="avatar" onclick="toggleSurveyorLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">KR</span><div class="logout-drop" id="logout-drop-surveyor"><div class="dd-item" onclick="window.top.location.href='login-hub.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
+        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Kavitha</div></div><div class="avatar" onclick="toggleSurveyorLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">KR</span><div class="logout-drop" id="logout-drop-surveyor"><div class="dd-item" onclick="surveyorLogout()" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
         <div class="dash-toggle" id="dash-toggle-surveyor">
           <button class="dash-toggle-btn active" id="dash-btn-action" onclick="switchSurveyorPanel('action')">Action</button>
           <button class="dash-toggle-btn" id="dash-btn-stat" onclick="switchSurveyorPanel('stat')">Stats</button>
@@ -50,8 +50,11 @@
           <div class="dash-stat"><div class="dash-stat-label">Tree name requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openSurveyorTreeName('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-tree-name-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openSurveyorTreeName('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-tree-name-submitted">—</div></div></div></div>
           <div class="dash-stat"><div class="dash-stat-label">Place name requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openSurveyorPlaceName('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-place-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openSurveyorPlaceName('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-place-submitted">—</div></div></div></div>
           <div class="dash-stat"><div class="dash-stat-label">Register requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openSurveyorRegisterLog('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-register-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openSurveyorRegisterLog('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-register-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Survey requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openSurveyorSurveyRequests('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-survey-requests-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openSurveyorSurveyRequests('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-survey-requests-submitted">—</div></div></div></div>
           <div class="dash-stat"><div class="dash-stat-label">My Trees</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openSurveyorMyCurrent()"><div class="dash-split-title">Current</div><div class="dash-split-val" id="svy-my-trees-current">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openSurveyorMyPast()"><div class="dash-split-title">Past</div><div class="dash-split-val" id="svy-my-trees-past">—</div></div></div></div>
-          <div class="dash-stat"><div class="dash-stat-label">Survey logs</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openSurveyorLogsApproved()"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-logs-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openSurveyorLogsSubmitted()"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-logs-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">This month trees</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openThisMonthTree('covered')"><div class="dash-split-title">Covered</div><div class="dash-split-val" id="svy-covered">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openThisMonthTree('waiting')"><div class="dash-split-title">Waiting</div><div class="dash-split-val" id="svy-waiting">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Total Survey logs</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openSurveyorLogsApproved()"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-logs-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openSurveyorLogsSubmitted()"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-logs-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">This month Survey Log</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openThisMonthSurveyLog('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-this-month-log-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openThisMonthSurveyLog('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-this-month-log-submitted">—</div></div></div></div>
         </div>
         <div class="action-tiles" id="panel-surveyor-action">
           <div class="action-tile tile-bg" onclick="openAppendTreeName()">
@@ -68,6 +71,11 @@
             <div class="action-tile-icon beige">🏷️</div>
             <div class="action-tile-title">Register a Tree</div>
             <div class="action-tile-sub">Add to registry</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="requestTreeForSurvey()">
+            <div class="action-tile-icon beige">🔍</div>
+            <div class="action-tile-title">Request a Tree for Survey</div>
+            <div class="action-tile-sub">Request for survey</div>
           </div>
           <div class="action-tile tile-bg" onclick="openSurveyorMyCurrent()">
             <div class="action-tile-icon green">📐</div>
@@ -126,6 +134,30 @@
     <div class="page" id="page-surveyor-register-log-submitted">
       <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Register — Submitted</span></div>
       <div class="scrollable"><div class="surveyor-list-pad"><div id="surveyor-register-log-submitted-cards"></div><div class="waiting-empty is-hidden" id="surveyor-register-log-submitted-empty">No submitted register requests</div></div></div>
+    </div>
+    <div class="page" id="page-surveyor-survey-requests-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey requests — Approved</span></div>
+      <div class="scrollable"><div class="surveyor-list-pad"><div id="surveyor-survey-requests-approved-cards"></div><div class="waiting-empty is-hidden" id="surveyor-survey-requests-approved-empty">No approved survey requests</div></div></div>
+    </div>
+    <div class="page" id="page-surveyor-survey-requests-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey requests — Submitted</span></div>
+      <div class="scrollable"><div class="surveyor-list-pad"><div id="surveyor-survey-requests-submitted-cards"></div><div class="waiting-empty is-hidden" id="surveyor-survey-requests-submitted-empty">No submitted survey requests</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-covered">
+      <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month — Covered</span></div>
+      <div class="scrollable"><div class="surveyor-list-pad"><div id="this-month-covered-cards"></div><div class="waiting-empty is-hidden" id="this-month-covered-empty">No covered trees this month</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-waiting">
+      <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month — Waiting</span></div>
+      <div class="scrollable"><div class="surveyor-list-pad"><div id="this-month-waiting-cards"></div><div class="waiting-empty is-hidden" id="this-month-waiting-empty">No waiting trees this month</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-log-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month Survey Log — Approved</span></div>
+      <div class="scrollable"><div class="surveyor-list-pad"><div id="this-month-log-approved-cards"></div><div class="waiting-empty is-hidden" id="this-month-log-approved-empty">No approved logs this month</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-log-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month Survey Log — Submitted</span></div>
+      <div class="scrollable"><div class="surveyor-list-pad"><div id="this-month-log-submitted-cards"></div><div class="waiting-empty is-hidden" id="this-month-log-submitted-empty">No submitted logs this month</div></div></div>
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span></div>
@@ -197,6 +229,18 @@
               <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('blocked')">Blocked</button>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-back" id="delete-confirm-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div style="text-align:center;padding:6px 0;">
+          <div class="delete-confirm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:#fee2e2;color:#dc2626;"><i class="ti ti-trash" style="font-size:24px;"></i></div>
+          <div class="delete-confirm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Remove request?</div>
+          <div class="delete-confirm-text" id="delete-confirm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">This will remove the request from your submitted list.</div>
+          <button class="green-btn delete-confirm-btn" style="background:#dc2626;" onclick="confirmDeleteSurveyorCard()"><i class="ti ti-trash"></i> Delete</button>
+          <button class="ghost-btn" style="margin-top:8px;" onclick="cancelDeleteSurveyorCard()"><i class="ti ti-x"></i> Cancel</button>
         </div>
       </div>
     </div>

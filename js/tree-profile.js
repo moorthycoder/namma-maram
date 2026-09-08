@@ -83,6 +83,15 @@ function isTreeInCaregiverWaiting() {
     return false;
   }
 }
+function isTreeInSurveyorWaiting() {
+  try {
+    var surveyor_list_str = sessionStorage.getItem('surveyorSurveyWaiting') || '[]';
+    var surveyor_arr = JSON.parse(surveyor_list_str);
+    return (surveyor_arr.indexOf(profileTreeId) !== -1) ? true : false;
+  } catch (e) {
+    return false;
+  }
+}
 function showActionModal(title_text, message_text, is_add) {
   var title_el = document.getElementById('action-modal-title');
   var text_el = document.getElementById('action-modal-text');
@@ -154,9 +163,37 @@ function updateCareButtonState() {
     }
   });
 }
+function updateSurveyorButtonState() {
+  var is_added = isTreeInSurveyorWaiting();
+  var topbar_btns = document.querySelectorAll('.add-survey-btn');
+  var cta_btns = document.querySelectorAll('.survey-cta');
+  topbar_btns.forEach(function(btn_el) {
+    btn_el.disabled = false;
+    if (is_added) {
+      btn_el.innerHTML = '<i class="ti ti-check"></i>';
+      btn_el.title = 'Added to Survey request list';
+      btn_el.classList.add('btn-added');
+    } else {
+      btn_el.innerHTML = '<i class="ti ti-ruler-measure"></i>';
+      btn_el.title = 'Request survey for this tree';
+      btn_el.classList.remove('btn-added');
+    }
+  });
+  cta_btns.forEach(function(btn_el) {
+    btn_el.disabled = false;
+    if (is_added) {
+      btn_el.innerHTML = '<i class="ti ti-check"></i> Added to Survey request list';
+      btn_el.classList.add('btn-added');
+    } else {
+      btn_el.innerHTML = '<i class="ti ti-ruler-measure"></i> Request survey for this tree';
+      btn_el.classList.remove('btn-added');
+    }
+  });
+}
 function syncAddButtonStates() {
   updateSponsorButtonState();
   updateCareButtonState();
+  updateSurveyorButtonState();
 }
 function addToSponsor() {
   try {
@@ -188,10 +225,29 @@ function addToCare() {
     } else {
       caregiver_arr.push(profileTreeId);
       showActionModal('Added to Care waiting list', 'Tree ' + (profileTreeId || '') + ' has been added to your Care waiting list.', true);
+      appendToGobackExclude(profileTreeId);
     }
     sessionStorage.setItem('caregiverWaiting', JSON.stringify(caregiver_arr));
   } catch (e) {}
   updateCareButtonState();
+}
+function addToSurveyRequest() {
+  try {
+    var surveyor_list_str = sessionStorage.getItem('surveyorSurveyWaiting') || '[]';
+    var surveyor_arr = JSON.parse(surveyor_list_str);
+    var item_index = surveyor_arr.indexOf(profileTreeId);
+    var is_present = (item_index !== -1) ? true : false;
+    if (is_present) {
+      surveyor_arr.splice(item_index, 1);
+      showActionModal('Removed from Survey request list', 'Tree ' + (profileTreeId || '') + ' has been removed from your Survey request list.', false);
+    } else {
+      surveyor_arr.push(profileTreeId);
+      showActionModal('Added to Survey request list', 'Tree ' + (profileTreeId || '') + ' has been added to your Survey request list.', true);
+      appendToGobackExclude(profileTreeId);
+    }
+    sessionStorage.setItem('surveyorSurveyWaiting', JSON.stringify(surveyor_arr));
+  } catch (e) {}
+  updateSurveyorButtonState();
 }
 
 function addToComplaint() { 
@@ -229,6 +285,7 @@ function closePhotoModal() { var m=document.getElementById('photo-modal'); if(m)
 function openAlbum(key) { var tree=(window.__TREE_DATA||[]).find(function(t){return t.treeId===profileTreeId})||findTree(profileTreeId); var enc=tree&&tree['encounters-list']&&tree['encounters-list'][key]; if(!enc||!enc.photos||!enc.photos.snapshots||!enc.photos.snapshots.length) return; var hs=enc['health-status']||{}; var log={date:enc.registeredDate||enc.updatedDate, height:hs.height, diam:hs.diameter, photos:enc.photos.snapshots.length, note:(enc.fieldObservation&&enc.fieldObservation.notes), emoji:enc.thumb||tree.emoji}; document.getElementById('album-title').textContent='Log · '+formatDate(log.date); document.getElementById('album-date').textContent=formatDate(log.date); document.getElementById('album-h').textContent=log.height; document.getElementById('album-d').textContent=log.diam; document.getElementById('album-c').textContent=log.photos+' photo'+(log.photos===1?'':'s'); document.getElementById('album-note').textContent=log.note; var grid=document.getElementById('album-grid-page'); grid.innerHTML=''; var bgs=['linear-gradient(135deg,#2d5a1b,#4a7c2f)','linear-gradient(135deg,#1a3a0a,#2d5a1b)','linear-gradient(135deg,#3B6D11,#639922)','linear-gradient(135deg,#1e3d0f,#2d5a1b)','linear-gradient(135deg,#27500A,#3B6D11)']; for(var p=0;p<log.photos;p++){ var div=document.createElement('div'); div.className='album-photo'+(p===0?' album-photo-main':''); div.style.background=bgs[(parseInt(key)+p)%bgs.length]; div.innerHTML='<div style="font-size:'+(p===0?'38px':'26px')+'">'+(log.emoji||tree.emoji||'🌳')+'</div><div class="photo-label">Photo '+(p+1)+'</div>'; grid.appendChild(div); } goTo('album'); }
 function normalizeAlbum(t) { var out={}; for(var k in t) if(Object.prototype.hasOwnProperty.call(t,k)) out[k]=t[k]; var enc=t['encounters-list']||{}; var keys=Object.keys(enc); var last=enc[keys[keys.length-1]]||{}; var st=last['health-status']||{}; var c=t.card||{}; out.id=t.treeId; out.name=cardNameText(t,'en')||c.addr||''; out.emoji=t.emoji||c.emoji||'🌳'; out.bg=t.bg||c.bg||''; out.pincode=t.pincode||''; out.height=st.height||c.height||'—'; out.diameter=st.diameter||c.diameter||'—'; out.health=st.health||''; out.logs=t.encounters||keys.length||c.logs||0; out.cards=keys.map(function(key){ var e=enc[key]; var hs=e['health-status']||{}; return {encounter:key, date:e.registeredDate||e.updatedDate||'—', registeredBy:e.registeredBy||e.updatedBy||'—', height:hs.height||'—', diam:hs.diameter||'—', health:hs.health||'', score:hs['health-score'], emoji:e.thumb||t.emoji||'🌳', note:(e.fieldObservation&&e.fieldObservation.notes)||'', recommendations:(e.fieldObservation&&e.fieldObservation.recommendations)||'', photos:((e.photos&&e.photos.snapshots)||[]).length}; }); return out; }
 function getCurrentRoleType() { var urlRole=new URLSearchParams(location.search).get('role'); var userid_q=new URLSearchParams(location.search).get('userid'); var parent_q=new URLSearchParams(location.search).get('parent')||''; if(urlRole){ var r=String(urlRole).toLowerCase(); if(r.indexOf('sponsor')===0||r.indexOf('spn')===0) return 'sponsor'; if(r.indexOf('care')===0||r.indexOf('car')===0) return 'caregiver'; if(r.indexOf('surveyor')===0||r.indexOf('svy')===0) return 'surveyor'; if(r.indexOf('ranger')===0||r.indexOf('ran')===0) return 'ranger'; return r; } if(parent_q && parent_q.toLowerCase().indexOf('surveyor')!==-1) return 'surveyor'; if(parent_q && parent_q.toLowerCase().indexOf('care-giver')!==-1) return 'caregiver'; if(parent_q && parent_q.toLowerCase().indexOf('sponsor')!==-1) return 'sponsor'; if(userid_q){ try{ var l=storage.get('login')||window._login||{}; var tl=l['tree-login']||{}; for(var k in tl) if(tl[k]&&tl[k].userId===userid_q){ var t=tl[k].type||k; if(t==='surveyor'||k==='surveyor'||String(userid_q).indexOf('SVY')===0) return 'surveyor'; return t==='sponsor'||k==='sponsor'?'sponsor':t==='surveyor'||k==='surveyor'?'surveyor':'caregiver'; } var s=sessionStorage.getItem('loginCredentialsV1'); if(s){ var c=JSON.parse(s); var tl2=c['tree-login']||{}; for(var k2 in tl2) if(tl2[k2]&&tl2[k2].userId===userid_q){ var t2=tl2[k2].type||k2; if(t2==='surveyor'||k2==='surveyor'||String(userid_q).indexOf('SVY')===0) return 'surveyor'; return t2==='sponsor'||k2==='sponsor'?'sponsor':'caregiver'; } } }catch(e){} if(String(userid_q).indexOf('SVY')===0) return 'surveyor'; if(String(userid_q).indexOf('CAR')===0) return 'caregiver'; if(String(userid_q).indexOf('SPN')===0) return 'sponsor'; } return null; }
-function isOpenedFromDashboardList(role){ var sponsorArr=['sponsor-waiting-submitted','sponsor-current','sponsor-past','sponsor-next-due','sponsor-seeing','pay-logs-total','pay-logs-this_month','pay-logs','tree-logs']; var caregiverArr=['caregiver-waiting','caregiver-current','caregiver-past','caregiver-seeing','caregiver-checks-due','caregiver-checks-finished','caregiver-logs-approved','caregiver-logs-submitted','tree-logs']; var surveyorArr=['surveyor-my-current','surveyor-my-past','surveyor-tree-name-approved','surveyor-tree-name-submitted','surveyor-place-name-approved','surveyor-place-name-submitted','surveyor-register-log-approved','surveyor-register-log-submitted','surveyor-logs-approved','surveyor-logs-submitted','surveyor-dash','trees']; var dashboardArr=['sponsor-dash','caregiver-dash']; var excludeArr=role==='caregiver' ? [caregiverArr] : role==='sponsor' ? [sponsorArr] : role==='surveyor' ? [surveyorArr] : [sponsorArr,caregiverArr,surveyorArr]; var parent=new URLSearchParams(location.search).get('parent')||''; try{ var goback=sessionStorage.getItem('gobackFromTreeProfile')||''; if(goback) parent+='|'+goback; }catch(e){} for(var i=0;i<excludeArr.length;i++) for(var j=0;j<excludeArr[i].length;j++) if(parent.indexOf(excludeArr[i][j])!==-1) return true; return false; }
-function applyRoleVisibility() { var role=getCurrentRoleType(); var showCare=true; var showSponsor=true; if(role==='sponsor'){ showCare=false; showSponsor=true; } else if(role==='caregiver'){ showCare=true; showSponsor=false; } else if(role==='surveyor'||role==='ranger'){ showCare=false; showSponsor=false; } var careBtns=document.querySelectorAll('.add-care-btn, .care-cta'); var sponsorBtns=document.querySelectorAll('.add-sponsor-btn, .sponsor-cta'); console.log('[tree-profile] role ->', role); careBtns.forEach(function(el){ el.style.display=showCare?'':'none'; }); sponsorBtns.forEach(function(el){ el.style.display=showSponsor?'':'none'; }); if(isOpenedFromDashboardList(role)){ if(role==='caregiver'){ careBtns.forEach(function(el){ el.style.display='none'; }); } else if(role==='sponsor'){ sponsorBtns.forEach(function(el){ el.style.display='none'; }); } else if(role==='surveyor'||role==='ranger'){ careBtns.forEach(function(el){ el.style.display='none'; }); sponsorBtns.forEach(function(el){ el.style.display='none'; }); } else { sponsorBtns.forEach(function(el){ el.style.display='none'; }); careBtns.forEach(function(el){ el.style.display='none'; }); } } }
+function isOpenedFromDashboardList(role){ var sponsorArr=['sponsor-waiting-submitted','sponsor-current','sponsor-past','sponsor-next-due','sponsor-seeing','pay-logs-total','pay-logs-this_month','pay-logs','tree-logs']; var caregiverArr=['caregiver-waiting','caregiver-current','caregiver-past','caregiver-seeing','caregiver-checks-due','caregiver-checks-finished','caregiver-logs-approved','caregiver-logs-submitted','tree-logs']; var surveyorArr=['surveyor-my-current','surveyor-my-past','surveyor-tree-name-approved','surveyor-tree-name-submitted','surveyor-place-name-approved','surveyor-place-name-submitted','surveyor-register-log-approved','surveyor-register-log-submitted','surveyor-logs-approved','surveyor-logs-submitted','this-month-covered','this-month-waiting','this-month-log-approved','this-month-log-submitted','surveyor-survey-requests-approved','surveyor-survey-requests-submitted','trees']; var surveyorDashArr=['surveyor-dash']; var dashboardArr=['sponsor-dash','caregiver-dash']; var excludeArr=role==='caregiver' ? [caregiverArr] : role==='sponsor' ? [sponsorArr] : role==='surveyor' ? [surveyorArr] : [sponsorArr,caregiverArr,surveyorArr]; var parent=new URLSearchParams(location.search).get('parent')||''; try{ var goback=sessionStorage.getItem('gobackFromTreeProfile')||''; if(goback) parent+='|'+goback; }catch(e){} for(var i=0;i<excludeArr.length;i++) for(var j=0;j<excludeArr[i].length;j++) if(parent.indexOf(excludeArr[i][j])!==-1) return true; return false; }
+function isOpenedFromSurveyorDashOnly(role){ if(role!=='surveyor') return false; var parent=new URLSearchParams(location.search).get('parent')||''; try{ var goback=sessionStorage.getItem('gobackFromTreeProfile')||''; if(goback) parent+='|'+goback; }catch(e){} var has_dash = parent.indexOf('surveyor-dash')!==-1; var has_list = parent.indexOf('surveyor-my-')!==-1 || parent.indexOf('surveyor-tree-')!==-1 || parent.indexOf('surveyor-place-')!==-1 || parent.indexOf('surveyor-register-')!==-1 || parent.indexOf('surveyor-logs-')!==-1; return has_dash && !has_list; }
+function applyRoleVisibility() { var role=getCurrentRoleType(); var showCare=true; var showSponsor=true; var showSurvey=true; if(role==='sponsor'){ showCare=false; showSponsor=true; showSurvey=false; } else if(role==='caregiver'){ showCare=true; showSponsor=false; showSurvey=false; } else if(role==='surveyor'){ showCare=false; showSponsor=false; showSurvey=true; } else if(role==='ranger'){ showCare=false; showSponsor=false; showSurvey=false; } var careBtns=document.querySelectorAll('.add-care-btn, .care-cta'); var sponsorBtns=document.querySelectorAll('.add-sponsor-btn, .sponsor-cta'); var surveyBtns=document.querySelectorAll('.add-survey-btn, .survey-cta'); console.log('[tree-profile] role ->', role); careBtns.forEach(function(el){ el.style.display=showCare?'':'none'; }); sponsorBtns.forEach(function(el){ el.style.display=showSponsor?'':'none'; }); surveyBtns.forEach(function(el){ el.style.display=showSurvey?'':'none'; }); if(isOpenedFromDashboardList(role)){ if(role==='caregiver'){ careBtns.forEach(function(el){ el.style.display='none'; }); } else if(role==='sponsor'){ sponsorBtns.forEach(function(el){ el.style.display='none'; }); } else if(role==='surveyor'){ var is_dash_only = typeof isOpenedFromSurveyorDashOnly==='function' ? isOpenedFromSurveyorDashOnly(role) : false; var is_via_filter = (function(){ var p=new URLSearchParams(location.search).get('parent')||''; try{ var g=sessionStorage.getItem('gobackFromTreeProfile')||''; if(g) p+='|'+g; }catch(e){} return p.indexOf('filter.html')!==-1; })(); if(!is_dash_only && !is_via_filter) { surveyBtns.forEach(function(el){ el.style.display='none'; }); } } else if(role==='ranger'){ careBtns.forEach(function(el){ el.style.display='none'; }); sponsorBtns.forEach(function(el){ el.style.display='none'; }); surveyBtns.forEach(function(el){ el.style.display='none'; }); } else { sponsorBtns.forEach(function(el){ el.style.display='none'; }); careBtns.forEach(function(el){ el.style.display='none'; }); surveyBtns.forEach(function(el){ el.style.display='none'; }); } } }
 window.render={ init:function(){ storage.syncTreeCards(); console.log('RAM __TREE_DATA', (window.__TREE_DATA||[]).length, (window.__TREE_DATA||[])[0]); albumData=(window.__TREE_DATA||[]).map(normalizeAlbum); console.log('RAM albumData', albumData.length, albumData[0]); renderProfile(); try{ applyRoleVisibility(); }catch(e){} } };

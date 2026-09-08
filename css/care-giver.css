@@ -19,6 +19,8 @@
   .tcard-added-at { font-size: 0.6667rem; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 6px 11px; display: flex; align-items: center; justify-content: space-between; gap: 4px; border-bottom: 0.5px solid var(--color-border-tertiary); }
   .tcard-delete-btn { background: transparent; border: none; color: #dc2626; cursor: pointer; font-size: 0.8rem; padding: 2px 4px; display: flex; align-items: center; justify-content: center; }
   .tcard-delete-btn:hover { color: #991b1b; }
+  .caregiver-log-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0 8px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .caregiver-log-header-title { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
   .tcard-id { font-size: 0.6rem; color: rgba(255,255,255,0.85); font-family: monospace; font-weight: 400; margin-left: 6px; }
   html, body { height: 100%; }
   body { background: var(--color-background-primary); overflow: hidden; }

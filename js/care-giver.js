@@ -713,18 +713,50 @@ function removeCaregiverCard(remove_tree_id) {
   if (window.render && typeof window.render.init === 'function') window.render.init();
 }
 var pending_delete_id = '';
+var pending_caregiver_log_type = '';
+var pending_caregiver_log_key = '';
 function openDeleteConfirm(delete_tree_id) {
   pending_delete_id = delete_tree_id;
   var text_el = document.getElementById('delete-confirm-text');
   if (text_el) text_el.textContent = 'Remove tree ' + delete_tree_id + ' from your list?';
   document.getElementById('delete-confirm-modal').classList.add('open');
 }
+function deleteCaregiverLog(tree_id, log_type) {
+  var tid = tree_id || '';
+  var type_key = log_type || 'register-log';
+  pending_caregiver_log_type = type_key;
+  pending_caregiver_log_key = tid;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove ' + (type_key === 'survey-log' ? 'survey' : 'register') + ' log "' + tid + '"? This will remove it from your submitted logs.';
+  document.getElementById('delete-confirm-modal').classList.add('open');
+}
 function confirmDeleteCard() {
   document.getElementById('delete-confirm-modal').classList.remove('open');
+  if (pending_caregiver_log_type && pending_caregiver_log_key) {
+    var log_type = pending_caregiver_log_type;
+    var log_key = pending_caregiver_log_key;
+    pending_caregiver_log_type = '';
+    pending_caregiver_log_key = '';
+    var login_data = window._login || storage.get('login') || {};
+    var caregiver_role = (login_data['tree-login'] && login_data['tree-login']['caregiver']) || {};
+    var cards = caregiver_role.cards || {};
+    var log_list = (cards[log_type] && cards[log_type].submitted) || [];
+    var filtered = log_list.filter(function (e) { return String(e.treeId || e) !== String(log_key); });
+    if (cards[log_type]) cards[log_type].submitted = filtered;
+    caregiver_role.cards = cards;
+    login_data['tree-login'] = login_data['tree-login'] || {};
+    login_data['tree-login']['caregiver'] = caregiver_role;
+    try { storage.set('login', login_data); window._login = login_data; } catch (e) {}
+    try { var is_survey = log_type === 'survey-log'; setStatById(is_survey ? 'c-survey-log-submitted' : 'c-register-log-submitted', filtered.length); } catch (e) {}
+    renderCaregiverLogs(log_type, 'submitted');
+    return;
+  }
   if (pending_delete_id) { removeCaregiverCard(pending_delete_id); pending_delete_id = ''; }
 }
 function cancelDeleteCard() {
   pending_delete_id = '';
+  pending_caregiver_log_type = '';
+  pending_caregiver_log_key = '';
   document.getElementById('delete-confirm-modal').classList.remove('open');
 }
 function renderCaregiverCards() {
@@ -1096,6 +1128,7 @@ function renderCaregiverLogs(logType, status) {
   if (!logs.length) { list_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; return 0; }
   if (empty_el) empty_el.style.display = 'none';
   var html = '';
+  var is_submitted = type === 'submitted' ? true : false;
   for (var i = logs.length - 1; i >= 0; i--) {
     var entry = logs[i]; var tid = entry.treeId || ''; var t = null;
     try { t = storage.pullTreeDetail ? storage.pullTreeDetail(tid) : null; } catch (e) {}
@@ -1105,7 +1138,9 @@ function renderCaregiverLogs(logType, status) {
     var enc = t ? (t['encounters-list'] || {}) : {}; var keys = t ? Object.keys(enc) : []; var last = t ? enc[keys[keys.length - 1]] || {} : {}; var st = last['health-status'] || {};
     var date = entry.loggedAt || ''; var dm = /^(\d{4})(\d{2})(\d{2})T/.exec(date); var label = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : date;
     var date_param = date || '';
-    html += '<div class="log-entry" onclick="openCaregiverReviewPage(\'' + tid + '\',\'' + date_param + '\')" style="cursor:pointer"><div class="log-dot" style="background:#16a34a"></div><div class="log-body"><div class="log-date">' + label + '</div><div class="log-text">' + name + ' · ' + tid + '</div><div class="log-addr" style="font-size:0.7333rem;color:var(--color-text-secondary)">' + addr + '</div><div class="log-chips"><span class="chip">' + (st.health || '—') + '</span><span class="chip">' + (st.height || '—') + '</span></div></div></div>';
+    var delete_btn = is_submitted ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteCaregiverLog(\'' + tid + '\',\'' + typeKey + '\')"><i class="ti ti-trash"></i></button>' : '';
+    var header_html = is_submitted ? '<div class="caregiver-log-header"><span class="caregiver-log-header-title">' + (typeKey === 'survey-log' ? 'Survey log' : 'Register request') + '</span>' + delete_btn + '</div>' : '';
+    html += '<div class="log-entry" style="cursor:pointer;flex-direction:column;align-items:stretch;">' + header_html + '<div style="display:flex;gap:9px;align-items:center;cursor:pointer;" onclick="openCaregiverReviewPage(\'' + tid + '\',\'' + date_param + '\')"><div class="log-dot" style="background:#16a34a"></div><div class="log-body"><div class="log-date">' + label + '</div><div class="log-text">' + name + ' · ' + tid + '</div><div class="log-addr" style="font-size:0.7333rem;color:var(--color-text-secondary)">' + addr + '</div><div class="log-chips"><span class="chip">' + (st.health || '—') + '</span><span class="chip">' + (st.height || '—') + '</span></div></div></div></div>';
   }
   list_el.innerHTML = html;
   return logs.length;

@@ -231,6 +231,13 @@ document.addEventListener('click', function(e) {
 function toggleSurveyorLogoutDrop() {
   document.getElementById('logout-drop-surveyor').classList.toggle('open');
 }
+function surveyorLogout() {
+  try {
+    if (window.parent && window.parent.goNav) { window.parent.goNav('login-hub.html'); return; }
+    if (window.top && window.top.goNav) { window.top.goNav('login-hub.html'); return; }
+  } catch (e) {}
+  window.top.location.href = 'login-hub.html';
+}
 
 function switchSurveyorPanel(snake_case) {
   var is_action = snake_case === 'action';
@@ -321,6 +328,104 @@ function openAppendPlaceName() {
   if (dash_page) dash_page.style.display = 'none';
   var screen = document.querySelector('.screen');
   if (screen) screen.insertBefore(frame, dash_page ? dash_page.nextSibling : null);
+}
+
+function requestTreeForSurvey() {
+  var login_data = storage.get('login') || window._login || {};
+  var surveyor_role = (login_data['tree-login'] && login_data['tree-login']['surveyor']) || {};
+  try {
+    if (!surveyor_role.userId) {
+      var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}');
+      var sp = sess['tree-login'] && sess['tree-login']['surveyor'];
+      if (sp && sp.userId) surveyor_role = sp;
+    }
+  } catch (e) {}
+  var surveyor_cards = surveyor_role.cards || {};
+  var role_cfg = getRoleConfig('surveyor');
+  var tiles_my = (role_cfg.tiles && role_cfg.tiles['my-trees']) || {};
+  var stats_req = (role_cfg.stats && role_cfg.stats['survey-requests']) || {};
+  var surveyor_waiting = [];
+  try { surveyor_waiting = JSON.parse(sessionStorage.getItem('surveyorSurveyWaiting') || '[]'); } catch (e) {}
+  var exclude_list = [].concat(
+    (tiles_my.current || []).map(function (c) { return c.treeId || c; }),
+    (tiles_my.past || []).map(function (c) { return c.treeId || c; }),
+    (surveyor_cards.current || []).map(function (c) { return c.treeId || c; }),
+    (surveyor_cards.past || []).map(function (c) { return c.treeId || c; }),
+    (stats_req.approved || []).map(function (c) { return c.treeId || c; }),
+    (stats_req.submitted || []).map(function (c) { return c.treeId || c; }),
+    surveyor_waiting
+  ).filter(Boolean);
+  var exclude_param = exclude_list.join(',');
+  var parent_param = encodeURIComponent('surveyor.html?hub=surveyor-dash');
+  var user_id = surveyor_role.userId || '';
+  var target_url = 'filter.html?userid=' + encodeURIComponent(user_id) + '&parent=' + parent_param + '&exclude=' + encodeURIComponent(exclude_param);
+  try { sessionStorage.setItem('gobackFromTreeProfile', target_url); } catch (e) {}
+  window.location.href = target_url;
+}
+
+function getCurrentAddedAtStringSurveyor() {
+  var now_date = new Date();
+  var yyyy = String(now_date.getFullYear());
+  var mm = String(now_date.getMonth() + 1).padStart(2, '0');
+  var dd = String(now_date.getDate()).padStart(2, '0');
+  var hh = String(now_date.getHours()).padStart(2, '0');
+  var mi = String(now_date.getMinutes()).padStart(2, '0');
+  var ss = String(now_date.getSeconds()).padStart(2, '0');
+  return yyyy + mm + dd + 'T' + hh + mi + ss;
+}
+
+function surveyorRequestATree(form_data) {
+  var login_data = window._login || {};
+  var tree_login = login_data['tree-login'] || {};
+  var surveyor_role = tree_login.surveyor || {};
+  var stats = (function () { try { return getRoleConfig('surveyor').stats || {}; } catch (e) { return {}; } })();
+  stats['survey-requests'] = stats['survey-requests'] || { approved: [], submitted: [] };
+  var submitted_list = stats['survey-requests'].submitted || [];
+  var submitted_ids = submitted_list.map(function (e) { return e.treeId || e; });
+  var tree_id = form_data.treeId || '';
+  var is_already = submitted_ids.indexOf(tree_id) > -1 ? true : false;
+  var can_push = !is_already && !!tree_id;
+  if (can_push) submitted_list.push({ treeId: tree_id, loggedAt: getCurrentAddedAtStringSurveyor() });
+  stats['survey-requests'].submitted = submitted_list;
+  try { storage.set('login', login_data); } catch (e) {}
+  if (typeof renderSurveyorStats === 'function') renderSurveyorStats();
+  if (typeof openSurveyorSurveyRequests === 'function') setTimeout(function () { openSurveyorSurveyRequests('submitted'); }, 500);
+}
+
+function checkNewSurveyorTrees() {
+  var waiting_str = sessionStorage.getItem('surveyorSurveyWaiting');
+  if (waiting_str === null) return [];
+  var new_ids = [];
+  try { var arr = JSON.parse(waiting_str); if (Array.isArray(arr)) new_ids = arr.filter(function (e) { return typeof e === 'string' && e; }); } catch (e) { new_ids = []; }
+  if (!new_ids.length) return [];
+  var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
+  var pending_trees = [];
+  for (var i = 0; i < new_ids.length; i++) {
+    var tree_id = new_ids[i];
+    for (var r = 0; r < ram_data.length; r++) { if (ram_data[r].treeId === tree_id) { pending_trees.push(ram_data[r]); break; } }
+  }
+  if (pending_trees.length) {
+    var login_data = window._login || {};
+    var tree_login = login_data['tree-login'] || {};
+    var surveyor_role = tree_login.surveyor || {};
+    var role_cfg = getRoleConfig('surveyor');
+    role_cfg.stats = role_cfg.stats || {};
+    role_cfg.stats['survey-requests'] = role_cfg.stats['survey-requests'] || { approved: [], submitted: [] };
+    var submitted_list = role_cfg.stats['survey-requests'].submitted || [];
+    var submitted_ids = submitted_list.map(function (e) { return e.treeId || e; });
+    var added_count = 0;
+    for (var p = 0; p < new_ids.length; p++) {
+      var pid = new_ids[p];
+      var already = submitted_ids.indexOf(pid) > -1;
+      if (!already) { submitted_list.push({ treeId: pid, loggedAt: getCurrentAddedAtStringSurveyor() }); added_count++; }
+    }
+    role_cfg.stats['survey-requests'].submitted = submitted_list;
+    try { storage.set('login', login_data); window._login = login_data; } catch (e) {}
+    sessionStorage.removeItem('surveyorSurveyWaiting');
+    try { renderSurveyorStats(); } catch (e) {}
+    if (added_count) setTimeout(function () { if (typeof openSurveyorSurveyRequests === 'function') openSurveyorSurveyRequests('submitted'); }, 300);
+  }
+  return new_ids;
 }
 
 function backToStart() {
@@ -722,6 +827,11 @@ function renderSurveyorStats() {
   var register_submitted = Array.isArray(register.submitted) ? register.submitted.length : register.submitted;
   setStatById('svy-register-approved', register_approved != null ? register_approved : 0);
   setStatById('svy-register-submitted', register_submitted != null ? register_submitted : 0);
+  var survey_req = stats["survey-requests"] || {};
+  var survey_req_approved = Array.isArray(survey_req.approved) ? survey_req.approved.length : survey_req.approved;
+  var survey_req_submitted = Array.isArray(survey_req.submitted) ? survey_req.submitted.length : survey_req.submitted;
+  setStatById('svy-survey-requests-approved', survey_req_approved != null ? survey_req_approved : 0);
+  setStatById('svy-survey-requests-submitted', survey_req_submitted != null ? survey_req_submitted : 0);
   var month = stats.month || {};
   var c = (typeof countRoleLogs === 'function') ? countRoleLogs('surveyor') : { total: null, month: null, covered: null };
   var month_logs = (c.month != null ? c.month : month.logs);
@@ -751,6 +861,20 @@ function renderSurveyorStats() {
   }
   setStatById('svy-month-trees', month_trees != null ? month_trees : '—');
   setStatById('svy-month-logs', month_logs != null ? month_logs : '—');
+  var now_ym = (function(){ var d=new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'); })();
+  function getYmFromTimestamp(ts){ var s=String(ts||''); return s.indexOf('-')>-1 ? s.slice(0,7) : s.slice(0,4)+'-'+s.slice(4,6); }
+  var this_month_log_approved = Array.isArray(logs.approved) ? logs.approved.filter(function(e){ return getYmFromTimestamp(e.loggedAt)===now_ym; }).length : 0;
+  var this_month_log_submitted = Array.isArray(logs.submitted) ? logs.submitted.filter(function(e){ return getYmFromTimestamp(e.loggedAt)===now_ym; }).length : 0;
+  setStatById('svy-this-month-log-approved', this_month_log_approved);
+  setStatById('svy-this-month-log-submitted', this_month_log_submitted);
+  var waiting_list_raw = Array.isArray(tiles_my.waiting) ? tiles_my.waiting : Array.isArray(stats.waiting) ? stats.waiting : [];
+  var waiting_this_month = waiting_list_raw.filter(function(e){ return getYmFromTimestamp(e.addedAt||'')===now_ym; });
+  var waiting_len = waiting_this_month.length;
+  if (!waiting_len && waiting_list_raw.length) waiting_len = waiting_list_raw.length;
+  var covered_val = (c.covered != null ? c.covered : (my_current_len + my_past_len));
+  if (typeof month_trees === 'number' && month_trees) covered_val = month_trees;
+  setStatById('svy-covered', covered_val != null ? covered_val : 0);
+  setStatById('svy-waiting', waiting_len != null ? waiting_len : 0);
   setStatById('svy-my-current', my_current_len);
   setStatById('svy-my-past', my_past_len);
   setStatById('svy-my-trees-current', my_current_len);
@@ -786,7 +910,7 @@ function openTreeNameEditForm(sci) {
   try { var active=document.querySelector('.page.active'); if(active) parent=encodeURIComponent('surveyor.html?hub='+active.id.replace('page-','')); } catch(e){}
   window.location.href='append-a-tree-name.html?parent='+parent+'&editSci='+encodeURIComponent(sci);
 }
-function surveyorTreeNameCardHtml(entry) {
+function surveyorTreeNameCardHtml(entry, is_submitted) {
   var sci = entry.scientificName || entry.sn || '—';
   var names = entry.names || {};
   var en = (names.en && names.en.join(', ')) || '—';
@@ -797,19 +921,150 @@ function surveyorTreeNameCardHtml(entry) {
   var dm = /^(\d{4})(\d{2})(\d{2})T/.exec(revised);
   var label = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : revised;
   var q=String.fromCharCode(39);
-  return '<div class="info-card surveyor-card surveyor-clickable" onclick="openTreeNameEditForm('+q+sci.replace(/\'/g,"\\'")+q+')">' +'<div class="info-row"><span class="info-key"><i class="ti ti-leaf field-icon-sm"></i>Scientific</span><span class="info-val surveyor-val-strong">' + sci + '</span></div>' +
+  var delete_btn = is_submitted ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteSurveyorTreeName('+q+sci.replace(/\'/g,"\\'")+q+')"><i class="ti ti-trash"></i></button>' : '';
+  var header_html = is_submitted ? '<div class="surveyor-card-header"><span class="surveyor-card-header-title">Tree name request</span>' + delete_btn + '</div>' : '';
+  return '<div class="info-card surveyor-card surveyor-clickable" onclick="openTreeNameEditForm('+q+sci.replace(/\'/g,"\\'")+q+')">' + header_html + '<div class="info-row"><span class="info-key"><i class="ti ti-leaf field-icon-sm"></i>Scientific</span><span class="info-val surveyor-val-strong">' + sci + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-language field-icon-sm"></i>EN</span><span class="info-val">' + en + '</span></div>' +
     (ta ? '<div class="info-row"><span class="info-key"><i class="ti ti-language field-icon-sm"></i>TA</span><span class="info-val">' + ta + '</span></div>' : '') +
     '<div class="info-row"><span class="info-key"><i class="ti ti-calendar field-icon-sm"></i>Revised</span><span class="info-val">' + label + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-check field-icon-sm"></i>Status</span><span class="info-val">' + status + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>By</span><span class="info-val">' + updatedBy + '</span></div></div>';
 }
+var pending_surveyor_delete_type = '';
+var pending_surveyor_delete_key = '';
+function deleteSurveyorTreeName(sci_name) {
+  var sci = sci_name || '';
+  pending_surveyor_delete_type = 'tree';
+  pending_surveyor_delete_key = sci;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove tree name request "' + sci + '"? This will remove it from your submitted list.';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.add('open');
+}
+function confirmDeleteSurveyorCard() {
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.remove('open');
+  var type = pending_surveyor_delete_type;
+  var key = pending_surveyor_delete_key;
+  pending_surveyor_delete_type = '';
+  pending_surveyor_delete_key = '';
+  if (type === 'tree') {
+    var sci = key;
+    var role_cfg = getRoleConfig('surveyor');
+    var stats = role_cfg.stats || {};
+    var tree_name = stats['tree-name'] || {};
+    var submitted_list = tree_name.submitted || [];
+    var filtered_list = submitted_list.filter(function (e) { return (e.scientificName || e.sn) !== sci; });
+    tree_name.submitted = filtered_list;
+    stats['tree-name'] = tree_name;
+    role_cfg.stats = stats;
+    try { var login_data = window._login || storage.get('login') || {}; login_data['tree-login'] = login_data['tree-login'] || {}; login_data['tree-login']['surveyor'] = role_cfg; storage.set('login', login_data); window._login = login_data; } catch (e) {}
+    try { renderSurveyorStats(); } catch (e) {}
+    var target_el = document.getElementById('surveyor-tree-name-submitted-cards');
+    if (target_el) target_el.innerHTML = filtered_list.length ? filtered_list.map(function (e) { return surveyorTreeNameCardHtml(e, true); }).join('') : '';
+    var empty_el = document.getElementById('surveyor-tree-name-submitted-empty');
+    if (empty_el) empty_el.style.display = filtered_list.length ? 'none' : 'block';
+  } else if (type === 'place') {
+    var pin = key;
+    var role_cfg2 = getRoleConfig('surveyor');
+    var stats2 = role_cfg2.stats || {};
+    var place_name = stats2['place-name'] || {};
+    var submitted_list2 = place_name.submitted || [];
+    var filtered_list2 = submitted_list2.filter(function (e) { return String(e.pinCode || e.pincode) !== String(pin); });
+    place_name.submitted = filtered_list2;
+    stats2['place-name'] = place_name;
+    role_cfg2.stats = stats2;
+    try { var login_data2 = window._login || storage.get('login') || {}; login_data2['tree-login'] = login_data2['tree-login'] || {}; login_data2['tree-login']['surveyor'] = role_cfg2; storage.set('login', login_data2); window._login = login_data2; } catch (e) {}
+    try { renderSurveyorStats(); } catch (e) {}
+    var target_el2 = document.getElementById('surveyor-place-name-submitted-cards');
+    if (target_el2) target_el2.innerHTML = filtered_list2.length ? filtered_list2.map(function (e) { return surveyorPlaceNameCardHtml(e, true); }).join('') : '';
+    var empty_el2 = document.getElementById('surveyor-place-name-submitted-empty');
+    if (empty_el2) empty_el2.style.display = filtered_list2.length ? 'none' : 'block';
+  } else if (type === 'survey') {
+    var tid = key;
+    var role_cfg3 = getRoleConfig('surveyor');
+    var stats3 = role_cfg3.stats || {};
+    var survey_req = stats3['survey-requests'] || {};
+    var submitted_list3 = survey_req.submitted || [];
+    var approved_list3 = survey_req.approved || [];
+    var filtered_submitted3 = submitted_list3.filter(function (e) { return String(e.treeId || e) !== String(tid); });
+    var filtered_approved3 = approved_list3.filter(function (e) { return String(e.treeId || e) !== String(tid); });
+    survey_req.submitted = filtered_submitted3;
+    survey_req.approved = filtered_approved3;
+    stats3['survey-requests'] = survey_req;
+    role_cfg3.stats = stats3;
+    try { var login_data3 = window._login || storage.get('login') || {}; login_data3['tree-login'] = login_data3['tree-login'] || {}; login_data3['tree-login']['surveyor'] = role_cfg3; storage.set('login', login_data3); window._login = login_data3; } catch (e) {}
+    try { renderSurveyorStats(); } catch (e) {}
+    var active_el = document.querySelector('.page.active');
+    var active_id = active_el ? active_el.id : '';
+    var is_approved_page = active_id.indexOf('survey-requests-approved') > -1 ? true : false;
+    if (is_approved_page) {
+      var mapA = {}; filtered_approved3.forEach(function (e) { if (e.treeId) mapA[e.treeId] = e.loggedAt || ''; });
+      var idsA = filtered_approved3.map(function (e) { return e.treeId || e; }).filter(Boolean);
+      renderSurveyorLogCards('surveyor-survey-requests-approved-cards', 'surveyor-survey-requests-approved-empty', idsA, mapA);
+    } else {
+      var map3 = {}; filtered_submitted3.forEach(function (e) { if (e.treeId) map3[e.treeId] = e.loggedAt || ''; });
+      var ids3 = filtered_submitted3.map(function (e) { return e.treeId || e; }).filter(Boolean);
+      renderSurveyorLogCards('surveyor-survey-requests-submitted-cards', 'surveyor-survey-requests-submitted-empty', ids3, map3);
+    }
+  } else if (type === 'register') {
+    var tid_reg = key;
+    var role_cfg4 = getRoleConfig('surveyor');
+    var stats4 = role_cfg4.stats || {};
+    var reg_log = stats4['register-log'] || {};
+    var submitted_list4 = reg_log.submitted || [];
+    var filtered_list4 = submitted_list4.filter(function (e) { return String(e.treeId || e) !== String(tid_reg); });
+    reg_log.submitted = filtered_list4;
+    stats4['register-log'] = reg_log;
+    role_cfg4.stats = stats4;
+    try { var login_data4 = window._login || storage.get('login') || {}; login_data4['tree-login'] = login_data4['tree-login'] || {}; login_data4['tree-login']['surveyor'] = role_cfg4; storage.set('login', login_data4); window._login = login_data4; } catch (e) {}
+    try { renderSurveyorStats(); } catch (e) {}
+    var map4 = {}; filtered_list4.forEach(function (e) { if (e.treeId) map4[e.treeId] = e.loggedAt || ''; });
+    var ids4 = filtered_list4.map(function (e) { return e.treeId || e; }).filter(Boolean);
+    renderSurveyorLogCards('surveyor-register-log-submitted-cards', 'surveyor-register-log-submitted-empty', ids4, map4, true);
+  } else if (type === 'mycurrent') {
+    var tid_my = key;
+    var role_cfg5 = getRoleConfig('surveyor');
+    var tiles_my = role_cfg5.tiles && role_cfg5.tiles['my-trees'] || {};
+    var current_list = tiles_my.current || [];
+    var filtered_current = current_list.filter(function (e) { return String(e.treeId || e) !== String(tid_my); });
+    tiles_my.current = filtered_current;
+    role_cfg5.tiles = role_cfg5.tiles || {};
+    role_cfg5.tiles['my-trees'] = tiles_my;
+    try { var login_data5 = window._login || storage.get('login') || {}; login_data5['tree-login'] = login_data5['tree-login'] || {}; login_data5['tree-login']['surveyor'] = role_cfg5; storage.set('login', login_data5); window._login = login_data5; } catch (e) {}
+    try { renderSurveyorStats(); } catch (e) {}
+    var map5 = {}; filtered_current.forEach(function (e) { if (e.treeId) map5[e.treeId] = e.addedAt || ''; });
+    var ids5 = filtered_current.map(function (e) { return e.treeId || e; }).filter(Boolean);
+    renderSurveyorMyTreeCards('surveyor-my-current-cards', 'surveyor-my-current-empty', ids5, map5);
+  } else if (type === 'log') {
+    var tid_log = key;
+    var role_cfg6 = getRoleConfig('surveyor');
+    var stats6 = role_cfg6.stats || {};
+    var log_data = stats6['survey-log'] || {};
+    var submitted_list6 = log_data.submitted || [];
+    var filtered_list6 = submitted_list6.filter(function (e) { return String(e.treeId || e) !== String(tid_log); });
+    log_data.submitted = filtered_list6;
+    stats6['survey-log'] = log_data;
+    role_cfg6.stats = stats6;
+    try { var login_data6 = window._login || storage.get('login') || {}; login_data6['tree-login'] = login_data6['tree-login'] || {}; login_data6['tree-login']['surveyor'] = role_cfg6; storage.set('login', login_data6); window._login = login_data6; } catch (e) {}
+    try { renderSurveyorStats(); } catch (e) {}
+    var map6 = {}; filtered_list6.forEach(function (e) { if (e.treeId) map6[e.treeId] = e.loggedAt || ''; });
+    var ids6 = filtered_list6.map(function (e) { return e.treeId || e; }).filter(Boolean);
+    renderSurveyorLogCards('surveyor-logs-submitted-cards', 'surveyor-logs-submitted-empty', ids6, map6);
+  }
+}
+function cancelDeleteSurveyorCard() {
+  pending_surveyor_delete_type = '';
+  pending_surveyor_delete_key = '';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.remove('open');
+}
 function openPlaceNameEditForm(pin) {
   var parent=encodeURIComponent('surveyor.html?hub=surveyor-dash');
   try{ var active=document.querySelector('.page.active'); if(active) parent=encodeURIComponent('surveyor.html?hub='+active.id.replace('page-','')); }catch(e){}
   window.location.href='append-a-place-name.html?parent='+parent+'&editPin='+encodeURIComponent(pin);
 }
-function surveyorPlaceNameCardHtml(entry) {
+function surveyorPlaceNameCardHtml(entry, is_submitted) {
   var pin = entry.pinCode || entry.pincode || '—';
   var names = entry.names || entry.placeName || {};
   var en = (Array.isArray(names.en) ? names.en.join(', ') : names.en) || (names.en || '—');
@@ -821,12 +1076,23 @@ function surveyorPlaceNameCardHtml(entry) {
   var dm = /^(\d{4})(\d{2})(\d{2})T/.exec(revised);
   var label = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : revised;
   var q=String.fromCharCode(39);
-  return '<div class="info-card surveyor-card surveyor-clickable" onclick="openPlaceNameEditForm('+q+pin.replace(/\'/g,"\\'")+q+')"><div class="info-row"><span class="info-key"><i class="ti ti-map-pin field-icon-sm"></i>Pin</span><span class="info-val">' + pin + '</span></div>' +
+  var delete_btn = is_submitted ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteSurveyorPlaceName('+q+pin.replace(/\'/g,"\\'")+q+')"><i class="ti ti-trash"></i></button>' : '';
+  var header_html = is_submitted ? '<div class="surveyor-card-header"><span class="surveyor-card-header-title">Place name request</span>' + delete_btn + '</div>' : '';
+  return '<div class="info-card surveyor-card surveyor-clickable" onclick="openPlaceNameEditForm('+q+pin.replace(/\'/g,"\\'")+q+')">' + header_html + '<div class="info-row"><span class="info-key"><i class="ti ti-map-pin field-icon-sm"></i>Pin</span><span class="info-val">' + pin + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-language field-icon-sm"></i>EN</span><span class="info-val">' + en + '</span></div>' +
     (ta ? '<div class="info-row"><span class="info-key"><i class="ti ti-language field-icon-sm"></i>TA</span><span class="info-val">' + ta + '</span></div>' : '') +
     '<div class="info-row"><span class="info-key"><i class="ti ti-calendar field-icon-sm"></i>Revised</span><span class="info-val">' + label + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-check field-icon-sm"></i>Status</span><span class="info-val">' + status + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>By</span><span class="info-val">' + updatedBy + '</span></div></div>';
+}
+function deleteSurveyorPlaceName(pin_code) {
+  var pin = pin_code || '';
+  pending_surveyor_delete_type = 'place';
+  pending_surveyor_delete_key = pin;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove place name request "' + pin + '"? This will remove it from your submitted list.';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.add('open');
 }
 function renderSurveyorSimpleCards(target_id, empty_id, list) {
   var target_el = document.getElementById(target_id);
@@ -835,8 +1101,9 @@ function renderSurveyorSimpleCards(target_id, empty_id, list) {
   if (!list || !list.length) { target_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; return; }
   if (empty_el) empty_el.style.display = 'none';
   var is_tree = list[0] && (list[0].scientificName || list[0].sn);
+  var is_submitted = String(target_id).indexOf('submitted') > -1 ? true : false;
   var html = '';
-  for (var i = 0; i < list.length; i++) { html += is_tree ? surveyorTreeNameCardHtml(list[i]) : surveyorPlaceNameCardHtml(list[i]); }
+  for (var i = 0; i < list.length; i++) { html += is_tree ? surveyorTreeNameCardHtml(list[i], is_submitted) : surveyorPlaceNameCardHtml(list[i], is_submitted); }
   target_el.innerHTML = html;
 }
 function openSurveyorTreeName(status) {
@@ -871,11 +1138,107 @@ function openSurveyorRegisterLog(status) {
   renderSurveyorLogCards(target, empty, ids, map, hide);
   goTo((status === 'submitted') ? 'surveyor-register-log-submitted' : 'surveyor-register-log-approved');
 }
+function openSurveyorSurveyRequests(status) {
+  var stats = getRoleConfig('surveyor').stats || {};
+  var req = stats["survey-requests"] || {};
+  var list = (status === 'submitted') ? (req.submitted || []) : (req.approved || []);
+  var ids = list.map(function (e) { return e.treeId || e; }).filter(Boolean);
+  var map = {}; list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
+  var target = (status === 'submitted') ? 'surveyor-survey-requests-submitted-cards' : 'surveyor-survey-requests-approved-cards';
+  var empty = (status === 'submitted') ? 'surveyor-survey-requests-submitted-empty' : 'surveyor-survey-requests-approved-empty';
+  renderSurveyorLogCards(target, empty, ids, map);
+  goTo((status === 'submitted') ? 'surveyor-survey-requests-submitted' : 'surveyor-survey-requests-approved');
+}
+function openThisMonthTree(status) {
+  var is_covered = status === 'covered' ? true : false;
+  var target = is_covered ? 'this-month-covered-cards' : 'this-month-waiting-cards';
+  var empty = is_covered ? 'this-month-covered-empty' : 'this-month-waiting-empty';
+  var page = is_covered ? 'this-month-covered' : 'this-month-waiting';
+  if (is_covered) {
+    var role_cfg = getRoleConfig('surveyor');
+    var stats = role_cfg.stats || {};
+    var c = (typeof countRoleLogs === 'function') ? countRoleLogs('surveyor') : { total: null, month: null, covered: null };
+    var month = stats.month || {};
+    var month_trees = month.trees;
+    var ids = [];
+    var map = {};
+    try {
+      var now = new Date();
+      var ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+      var role_ids = (typeof roleTreeIds === 'function') ? roleTreeIds('surveyor') : [];
+      var month_set = {};
+      for (var i = 0; i < role_ids.length; i++) {
+        var t = storage.pullTreeDetail(role_ids[i]);
+        if (!t || !t['encounters-list']) continue;
+        var keys = Object.keys(t['encounters-list']);
+        for (var k = 0; k < keys.length; k++) {
+          var e = t['encounters-list'][keys[k]];
+          var d = e.updatedDate || e.registeredDate || '';
+          if (String(d).slice(0, 7) === ym) { month_set[role_ids[i]] = true; break; }
+        }
+      }
+      ids = Object.keys(month_set);
+      if (!ids.length && month_trees != null && Array.isArray(month_trees)) ids = month_trees;
+      else if (!ids.length && c.covered) ids = [];
+    } catch (e) {}
+    if (!ids.length) {
+      var data = window.__TREE_DATA || storage.get('treeCards') || [];
+      var tiles_my = role_cfg.tiles && role_cfg.tiles['my-trees'] || {};
+      var cur_ids = (tiles_my.current || []).map(function (e) { return e.treeId || e; });
+      ids = cur_ids.slice(0, 5);
+    }
+    renderSurveyorMyTreeCards(target, empty, ids, map);
+  } else {
+    var role_cfg2 = getRoleConfig('surveyor');
+    var tiles_my2 = role_cfg2.tiles && role_cfg2.tiles['my-trees'] || {};
+    var waiting_list_raw = tiles_my2.waiting || role_cfg2.stats && role_cfg2.stats.waiting || [];
+    var now2 = new Date();
+    var ym2 = now2.getFullYear() + '-' + String(now2.getMonth() + 1).padStart(2, '0');
+    function getYm2(ts){ var s=String(ts||''); return s.indexOf('-')>-1 ? s.slice(0,7) : s.slice(0,4)+'-'+s.slice(4,6); }
+    var waiting_list = waiting_list_raw.filter(function (e) { return getYm2(e.addedAt||'') === ym2; });
+    if (!waiting_list.length) waiting_list = waiting_list_raw.slice(0,5);
+    var ids2 = waiting_list.map(function (e) { return e.treeId || e; }).filter(Boolean);
+    var map2 = {};
+    waiting_list.forEach(function (e) { if (e.treeId) map2[e.treeId] = e.addedAt || ''; });
+    if (!ids2.length) {
+      var s_waiting = sessionStorage.getItem('surveyorSurveyWaiting');
+      try { var arr = JSON.parse(s_waiting || '[]'); if (Array.isArray(arr)) ids2 = arr.slice(); } catch (e) {}
+    }
+    renderSurveyorMyTreeCards(target, empty, ids2, map2);
+  }
+  goTo(page);
+}
+function openThisMonthSurveyLog(status) {
+  var is_approved = status === 'approved' ? true : false;
+  var stats = getRoleConfig('surveyor').stats || {};
+  var logs = stats["survey-log"] || {};
+  var now = new Date();
+  var ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  function getYm(ts){ var s=String(ts||''); return s.indexOf('-')>-1 ? s.slice(0,7) : s.slice(0,4)+'-'+s.slice(4,6); }
+  var list = is_approved ? (logs.approved || []) : (logs.submitted || []);
+  var filtered = list.filter(function (e) { return getYm(e.loggedAt) === ym; });
+  if (!filtered.length && list.length) filtered = list.slice(0, 5);
+  var ids = filtered.map(function (e) { return e.treeId || e; }).filter(Boolean);
+  var map = {}; filtered.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
+  var target = is_approved ? 'this-month-log-approved-cards' : 'this-month-log-submitted-cards';
+  var empty = is_approved ? 'this-month-log-approved-empty' : 'this-month-log-submitted-empty';
+  var page = is_approved ? 'this-month-log-approved' : 'this-month-log-submitted';
+  renderSurveyorLogCards(target, empty, ids, map);
+  goTo(page);
+}
 
+function getSurveyorLang() {
+  if (typeof appLang !== 'undefined' && appLang) return appLang;
+  if (typeof filterLang !== 'undefined' && filterLang) return filterLang;
+  try { return sessionStorage.getItem('nm-app-lang') || 'en'; } catch (e) { return 'en'; }
+}
 function surveyorCardName(t) {
   if (!t) return '';
+  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { var lang_tmp = getSurveyorLang(); var res_tmp = storage.treeNameIn(t, lang_tmp); if (res_tmp) return res_tmp; } catch (e) {} }
   if (t.speciesName) {
     if (typeof t.speciesName === 'string') return t.speciesName;
+    var lang = getSurveyorLang();
+    if (t.speciesName[lang]) return t.speciesName[lang];
     return t.speciesName.en || t.speciesName.ta || Object.values(t.speciesName)[0] || '';
   }
   return t.englishName || t.name || '';
@@ -883,11 +1246,13 @@ function surveyorCardName(t) {
 
 function surveyorCardAddr(t) {
   if (!t || !t.address) return '';
-  if (typeof t.address === 'string') return t.address;
-  return t.address.en || t.address.ta || Object.values(t.address)[0] || '';
+  var lang = getSurveyorLang();
+  var addr = t.address;
+  if (typeof addr === 'string') return addr;
+  return addr[lang] || addr.en || addr.ta || Object.values(addr)[0] || '';
 }
 
-function surveyorLogCardHtml(t, loggedAt, hideLogBox) {
+function surveyorLogCardHtml(t, loggedAt, hideLogBox, target_id) {
   var q = String.fromCharCode(39);
   var c = t.card || {};
   var enc = t['encounters-list'] || {};
@@ -899,11 +1264,57 @@ function surveyorLogCardHtml(t, loggedAt, hideLogBox) {
   var logs_display = keys.length || c.logs || 0;
   var at = loggedAt || '';
   var log_box = hideLogBox ? '' : '<div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span>' + logs_display + '</span></div></div></div>';
-  return '<div class="sponsor-tree-card" onclick="openSurveyorReviewPage(' + q + t.treeId + q + ',' + q + at + q + ')">' +
+  var target_str = String(target_id || '');
+  var is_survey_requests = target_str.indexOf('survey-requests') > -1 ? true : false;
+  var is_register_log = target_str.indexOf('register-log') > -1 ? true : false;
+  var is_survey_log = target_str.indexOf('surveyor-logs') > -1 ? true : false;
+  var is_submitted = is_survey_requests ? true : target_str.indexOf('submitted') > -1 ? true : false;
+  var delete_fn = is_survey_requests ? 'deleteSurveyorSurveyRequest' : is_register_log ? 'deleteSurveyorRegisterRequest' : is_survey_log ? 'deleteSurveyorLogRequest' : '';
+  var header_title = is_survey_requests ? 'Survey request' : is_register_log ? 'Register request' : is_survey_log ? 'Survey log' : 'Survey log';
+  var delete_btn = (is_submitted && delete_fn) ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); ' + delete_fn + '(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i></button>' : '';
+  var header_html = (is_submitted && delete_fn) ? '<div class="surveyor-card-header"><span class="surveyor-card-header-title">' + header_title + '</span>' + delete_btn + '</div>' : '';
+  return '<div class="sponsor-tree-card" onclick="openSurveyorReviewPage(' + q + t.treeId + q + ',' + q + at + q + ')">' + header_html +
     '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '#234712') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '🌴') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>' +
     log_box +
     '</div>';
+}
+var pending_surveyor_survey_key = '';
+function deleteSurveyorSurveyRequest(tree_id) {
+  var tid = tree_id || '';
+  pending_surveyor_delete_type = 'survey';
+  pending_surveyor_delete_key = tid;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove survey request "' + tid + '"? This will remove it from your submitted list.';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.add('open');
+}
+function deleteSurveyorRegisterRequest(tree_id) {
+  var tid = tree_id || '';
+  pending_surveyor_delete_type = 'register';
+  pending_surveyor_delete_key = tid;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove register request "' + tid + '"? This will remove it from your submitted list.';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.add('open');
+}
+function deleteSurveyorMyCurrent(tree_id) {
+  var tid = tree_id || '';
+  pending_surveyor_delete_type = 'mycurrent';
+  pending_surveyor_delete_key = tid;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove tree "' + tid + '" from My Trees Current?';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.add('open');
+}
+function deleteSurveyorLogRequest(tree_id) {
+  var tid = tree_id || '';
+  pending_surveyor_delete_type = 'log';
+  pending_surveyor_delete_key = tid;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove survey log "' + tid + '"? This will remove it from your submitted logs.';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.add('open');
 }
 
 function openSurveyorReviewPage(treeId, loggedAt) {
@@ -925,11 +1336,11 @@ function renderSurveyorLogCards(target_id, empty_id, id_list, loggedAtMap, hideL
   var data = window.__TREE_DATA || storage.get('treeCards') || [];
   var filtered = data.filter(function (t) { return id_list.indexOf(t.treeId) > -1; });
   filtered.sort(function (a, b) { return id_list.indexOf(a.treeId) - id_list.indexOf(b.treeId); });
-  target_el.innerHTML = filtered.map(function (t) { var at = (loggedAtMap && loggedAtMap[t.treeId]) || ''; return surveyorLogCardHtml(t, at, hideLogBox); }).join('');
+  target_el.innerHTML = filtered.map(function (t) { var at = (loggedAtMap && loggedAtMap[t.treeId]) || ''; return surveyorLogCardHtml(t, at, hideLogBox, target_id); }).join('');
   if (!filtered.length) { target_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; }
 }
 
-function surveyorMyTreeCardHtml(t) {
+function surveyorMyTreeCardHtml(t, is_current, hide_actions) {
   var q = String.fromCharCode(39);
   var c = t.card || {};
   var enc = t['encounters-list'] || {};
@@ -940,12 +1351,14 @@ function surveyorMyTreeCardHtml(t) {
   var addr_txt = surveyorCardAddr(t) || c.addr || '';
   var logs_display = keys.length || c.logs || 0;
   var added_label = t.addedAt ? (function(){ var m=/^(\d{4})(\d{2})(\d{2})T/.exec(t.addedAt); return m ? m[3]+'-'+m[2]+'-'+m[1] : t.addedAt; })() : '';
-  var top_row = added_label ? '<div class="tcard-added-at" style="padding:8px 11px 0;font-size:0.6667rem;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px;"><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + added_label + '</div>' : '';
+  var delete_btn = is_current ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteSurveyorMyCurrent(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i></button>' : '';
+  var top_row = added_label ? '<div class="tcard-added-at" style="padding:8px 11px;font-size:0.6667rem;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:space-between;gap:4px;"><span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + added_label + '</span>' + delete_btn + '</div>' : (is_current ? '<div class="tcard-added-at" style="padding:8px 11px;font-size:0.6667rem;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:space-between;gap:4px;"><span></span>' + delete_btn + '</div>' : '');
+  var btns_html = hide_actions ? '' : '<div class="tree-card-btns" style="display:flex;gap:8px;border-top:0.5px solid var(--color-border-tertiary);padding:8px;"><button class="tcbtn tcbtn-logs" onclick="openProfile(' + q + t.treeId + q + ')" style="flex:1"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button><button class="tcbtn tcbtn-survey" onclick="surveyorSurveyTree(' + q + t.treeId + q + ')" style="flex:1;background:var(--color-theme);color:#fff;border-radius:8px;"><i class="ti ti-scan" style="font-size:0.8667rem"></i> Survey Now</button></div>';
   return '<div class="sponsor-tree-card">' +
     top_row +
     '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '#234712') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '🌴') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-btns" style="display:flex;gap:8px;border-top:0.5px solid var(--color-border-tertiary);padding:8px;"><button class="tcbtn tcbtn-logs" onclick="openProfile(' + q + t.treeId + q + ')" style="flex:1"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button><button class="tcbtn tcbtn-survey" onclick="surveyorSurveyTree(' + q + t.treeId + q + ')" style="flex:1;background:var(--color-theme);color:#fff;border-radius:8px;"><i class="ti ti-scan" style="font-size:0.8667rem"></i> Survey Now</button></div>' +
+    btns_html +
     '</div>';
 }
 function surveyorSurveyTree(treeId) {
@@ -968,7 +1381,9 @@ function renderSurveyorMyTreeCards(target_id, empty_id, id_list, addedAtMap) {
   var filtered = data.filter(function (t) { return id_list.indexOf(t.treeId) > -1; });
   filtered.sort(function (a, b) { return id_list.indexOf(a.treeId) - id_list.indexOf(b.treeId); });
   filtered.forEach(function(t){ if (addedAtMap && addedAtMap[t.treeId]) t.addedAt = addedAtMap[t.treeId]; });
-  target_el.innerHTML = filtered.map(function (t) { return surveyorMyTreeCardHtml(t); }).join('');
+  var is_current = String(target_id).indexOf('current') > -1 ? true : false;
+  var hide_actions = String(target_id).indexOf('this-month') > -1 ? true : false;
+  target_el.innerHTML = filtered.map(function (t) { return surveyorMyTreeCardHtml(t, is_current, hide_actions); }).join('');
   if (!filtered.length) { target_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; }
 }
 function openSurveyorMyCurrent() {
@@ -1037,6 +1452,7 @@ function loadDashboard() {
   } catch (e) {}
   applyFilters();
   renderRoleCards('page-trees-cards', 'surveyor', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', addrMode: 'short' });
+  try { checkNewSurveyorTrees(); } catch (e) {}
   renderSurveyorStats();
   renderRecentEntries('recent-entries', 'surveyor', 'openProfile');
   try {
@@ -1131,6 +1547,42 @@ else if (hubMode === 'surveyor-place-name-submitted') {
   setTimeout(function() {
     if (typeof openSurveyorPlaceName === 'function') { openSurveyorPlaceName('submitted'); }
     else { goTo('surveyor-place-name-submitted'); }
+  }, 50);
+}
+else if (hubMode === 'surveyor-survey-requests-approved') {
+  setTimeout(function() {
+    if (typeof openSurveyorSurveyRequests === 'function') { openSurveyorSurveyRequests('approved'); }
+    else { goTo('surveyor-survey-requests-approved'); }
+  }, 50);
+}
+else if (hubMode === 'surveyor-survey-requests-submitted') {
+  setTimeout(function() {
+    if (typeof openSurveyorSurveyRequests === 'function') { openSurveyorSurveyRequests('submitted'); }
+    else { goTo('surveyor-survey-requests-submitted'); }
+  }, 50);
+}
+else if (hubMode === 'this-month-covered') {
+  setTimeout(function() {
+    if (typeof openThisMonthTree === 'function') { openThisMonthTree('covered'); }
+    else { goTo('this-month-covered'); }
+  }, 50);
+}
+else if (hubMode === 'this-month-waiting') {
+  setTimeout(function() {
+    if (typeof openThisMonthTree === 'function') { openThisMonthTree('waiting'); }
+    else { goTo('this-month-waiting'); }
+  }, 50);
+}
+else if (hubMode === 'this-month-log-approved') {
+  setTimeout(function() {
+    if (typeof openThisMonthSurveyLog === 'function') { openThisMonthSurveyLog('approved'); }
+    else { goTo('this-month-log-approved'); }
+  }, 50);
+}
+else if (hubMode === 'this-month-log-submitted') {
+  setTimeout(function() {
+    if (typeof openThisMonthSurveyLog === 'function') { openThisMonthSurveyLog('submitted'); }
+    else { goTo('this-month-log-submitted'); }
   }, 50);
 }
 else if (hubMode === 'trees') { goTo('trees'); }
