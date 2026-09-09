@@ -15,10 +15,9 @@
     --font-sans: 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
-  html { font-size: 16px; }
+  html { font-size: 15px; }
   html, body { height: 100%; }
   body { background: var(--color-background-primary); overflow: hidden; }
-  .screen { background: var(--color-background-primary); height: 100%; display: flex; flex-direction: column; position: relative; }
   .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
   .status-bar.dark span { color: var(--color-theme-light); }
@@ -27,8 +26,11 @@
   .back-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--color-text-primary); border: none; flex-shrink: 0; }
   .back-btn.inv { background: rgba(255,255,255,0.12); color: var(--color-theme-light); }
   .dash-header{background:var(--color-theme-dark);padding:12px 14px 16px;flex-shrink:0;}
+  .dash-title { font-size: 1.2rem; font-weight: 500; color: var(--color-theme-light); }
+  .dash-sub { font-size: 0.8rem; color: rgba(192,221,151,0.6); margin-top: 3px; }
+  .enroll-scroll { padding: 14px; }
   .hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .hub-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; text-align: center; min-height: 96px; }
+  .hub-tile { background: #FFF59D; border: 0.5px solid #FDE68A; border-radius: var(--border-radius-lg); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; text-align: center; min-height: 96px; }
   .hub-tile:hover { border-color: var(--color-theme); }
   .hub-tile.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
   .hub-tile i { font-size: 1.3333rem; color: var(--color-theme); }

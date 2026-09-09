@@ -17,32 +17,32 @@
   <!-- TREE PROFILE -->
   <div class="page active" id="page-profile">
     <div id="header">
-      <div class="topbar"><button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span><span style="margin-left:auto;display:flex;gap:6px"><button class="add-care-btn" type="button" onclick="addToCare()" title="Care for this tree"><i class="ti ti-heart-handshake"></i></button><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-currency-rupee"></i></button><button class="add-survey-btn" type="button" onclick="addToSurveyRequest()" title="Request survey for this tree"><i class="ti ti-ruler-measure"></i></button><button class="add-report-btn" type="button" onclick="addToComplaint()" title="Report issue"><i class="ti ti-phone"></i></button></span></div>
-      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-title"><h1 id="profile-hero-title"></h1><p id="profile-hero-addr"></p></div></div>
+      <div class="topbar"><button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span><span class="s-7a060d"><button class="add-sponsor-btn" type="button" onclick="addToSponsor()" title="Sponsor this tree"><i class="ti ti-currency-rupee"></i></button><button class="add-care-btn" type="button" onclick="addToCare()" title="Care for this tree"><i class="ti ti-heart-handshake"></i></button><button class="add-survey-btn" type="button" onclick="addToSurveyRequest()" title="Request survey for this tree"><i class="ti ti-clipboard-list"></i></button><button class="add-report-btn" type="button" onclick="addToComplaint()" title="Report issue"><i class="ti ti-phone"></i></button></span></div>
+      <div class="hero"><div class="s-807f89"></div><div class="hero-overlay"></div><div class="hero-title"><h1 id="profile-hero-title"></h1><p id="profile-hero-addr"></p></div></div>
     </div>
-    <div class="scrollable" style="padding:12px 14px 20px;">
+    <div class="scrollable s-35ac28">
       <div class="stats-row"><div class="stat-card"><div class="stat-label">Health</div><div class="stat-value" id="profile-stat-health">healthy</div></div><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value"><span id="profile-stat-height">8.4</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value"><span id="profile-stat-diam">22</span></div></div></div>
-      <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span id="profile-health-score" style="color:#3B6D11;font-weight:500">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
+      <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span id="profile-health-score" class="s-e9ddd4">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
       <div id="display-data">
         <div class="section-title">Tree info</div>
-        <div class="info-card" style="margin-bottom:14px;">
-          <div class="info-row"><span class="info-key"><i class="ti ti-leaf" style="font-size:0.8667rem"></i>Species name</span><span class="info-val" id="profile-species">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-user" style="font-size:0.8667rem"></i>Registered by</span><span class="info-val" id="profile-registered-by">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-id" style="font-size:0.8667rem"></i>User id</span><span class="info-val" id="profile-user-id">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>Registered Date</span><span class="info-val" id="profile-registered-date">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-plant-2" style="font-size:0.8667rem"></i>Planted date</span><span class="info-val" id="profile-planted-date">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-hourglass" style="font-size:0.8667rem"></i>Age</span><span class="info-val" id="profile-age">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list" style="font-size:0.8667rem"></i>Total logs</span><span class="info-val" id="profile-total-logs">—</span></div>
+        <div class="info-card s-157a9c">
+          <div class="info-row"><span class="info-key"><i class="ti ti-leaf s-9bdb4a"></i>Species name</span><span class="info-val" id="profile-species">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-user s-9bdb4a"></i>Registered by</span><span class="info-val" id="profile-registered-by">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-id s-9bdb4a"></i>User id</span><span class="info-val" id="profile-user-id">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar s-9bdb4a"></i>Registered Date</span><span class="info-val" id="profile-registered-date">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-plant-2 s-9bdb4a"></i>Planted date</span><span class="info-val" id="profile-planted-date">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-hourglass s-9bdb4a"></i>Age</span><span class="info-val" id="profile-age">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list s-9bdb4a"></i>Total logs</span><span class="info-val" id="profile-total-logs">—</span></div>
         </div>
         <div class="section-title">Growth logs</div>
         <div class="info-card">
           <div id="profile-logs"></div>
         </div>
       </div>
-      <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
-      <button class="care-cta" type="button" onclick="addToCare()"><i class="ti ti-heart-handshake"></i> Care for this tree</button>
+      <div class="s-b23b11"><i class="ti ti-hand-click s-8b8072"></i> Tap a log to view photos</div>
       <button class="sponsor-cta" type="button" onclick="addToSponsor()"><i class="ti ti-currency-rupee"></i> Sponsor this tree</button>
-      <button class="survey-cta" type="button" onclick="addToSurveyRequest()"><i class="ti ti-ruler-measure"></i> Request survey for this tree</button>
+      <button class="care-cta" type="button" onclick="addToCare()"><i class="ti ti-heart-handshake"></i> Care for this tree</button>
+      <button class="survey-cta" type="button" onclick="addToSurveyRequest()"><i class="ti ti-clipboard-list"></i> Request survey for this tree</button>
       <button class="report-cta" type="button" onclick="openComplaintPage()"><i class="ti ti-phone"></i> Report issue</button>
     </div>
   </div>

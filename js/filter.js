@@ -139,6 +139,12 @@ function applyFilterPlaceholders(){
   var tree_el = document.getElementById('album-tree');
   if(place_el && ph['album-place']) place_el.placeholder = ph['album-place'];
   if(tree_el && ph['album-tree']) tree_el.placeholder = ph['album-tree'];
+  ['album-place','album-tree'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.className = el.className.replace(/\bplaceholder-text-\S+/g, '').trim();
+    el.classList.add('placeholder-text-' + lang);
+  });
 }
 
 // Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")

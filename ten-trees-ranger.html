@@ -15,98 +15,98 @@
 
     <div class="page active" id="page-role-login">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn inv" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
-        <h2 style="font-size:1.2rem;font-weight:500;color:var(--color-theme-light);" id="role-login-title">Role login</h2>
-        <p style="font-size:0.8rem;color:rgba(192,221,151,0.6);margin-top:3px;">Sign in with your Google account</p>
+        <div class="s-75e36a"><button class="back-btn inv" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
+        <h2 class="s-ddcbbf"> id="role-login-title">Role login</h2>
+        <p class="s-adfe10">Sign in with your Google account</p>
       </div>
-      <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
+      <div class="s-e480cb">
         <button class="google-btn" onclick="googleAuth('ranger-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google</button>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:12px;" id="role-login-sub">Sign in with your Google account</div>
+        <div class="s-33b889"> id="role-login-sub">Sign in with your Google account</div>
       </div>
     </div>
     <div class="page" id="page-ranger-dash">
       <div class="dash-header">
-        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Selvam</div></div><div class="avatar" onclick="toggleLogoutDrop()" style="cursor:pointer;position:relative;"><span id="user-avatar">RK</span><div class="logout-drop" id="logout-drop"><div class="dd-item" onclick="window.top.location.href='login-hub.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:#3B6D11"></i> Sign out</div></div></div></div>
+        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Selvam</div></div><div class="avatar s-0bda1d" onclick="toggleLogoutDrop()"><span id="user-avatar">RK</span><div class="logout-drop" id="logout-drop"><div class="dd-item s-567789" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-logout s-64dd69"></i> Sign out</div></div></div></div>
         <div class="dash-stats">
           <div class="dash-stat dash-stat-btn" onclick="goTo('ranger-logs')"><div class="dash-stat-label">Your logs</div><div class="dash-stat-val" id="r-logs">47</div></div>
           <div class="dash-stat dash-stat-btn" onclick="goTo('ranger-month')"><div class="dash-stat-label">This month</div><div class="dash-stat-val" id="r-month">6</div></div>
           <div class="dash-stat dash-stat-btn" onclick="goTo('ranger-covered')"><div class="dash-stat-label">Trees covered</div><div class="dash-stat-val" id="r-covered">23</div></div>
-          <div class="dash-stat"><div class="dash-stat-label">Zone</div><div class="dash-stat-val" style="font-size:0.8667rem">Anna Nagar</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Zone</div><div class="dash-stat-val s-9bdb4a">Anna Nagar</div></div>
         </div>
         <div class="dbl-hint">Double-tap a card to view your trees</div>
       </div>
-      <div class="scrollable"><div style="padding:13px 14px;display:flex;flex-direction:column;gap:11px;">
+      <div class="scrollable"><div class="s-096233">
         <button class="green-btn" onclick="rangerRegister()"><i class="ti ti-camera"></i> Insert new log</button>
         <div class="section-title">Recent entries</div>
         <div class="info-card" id="recent-entries">
         </div>
-        <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;">Double-tap a log to open its entries</div>
+        <div class="s-0dda27">Double-tap a log to open its entries</div>
       </div></div>
     </div>
     <div class="page" id="page-trees">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo(roleDash())"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">My trees</span></div>
-        <div style="font-size:0.8rem;color:rgba(192,221,151,0.55);">Double-tap a tree to view its logs</div>
+        <div class="s-15ffd6"><button class="back-btn inv" onclick="goTo(roleDash())"><i class="ti ti-arrow-left"></i></button><span class="s-04a127">My trees</span></div>
+        <div class="s-62c9fe">Double-tap a tree to view its logs</div>
       </div>
-      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="page-trees-cards" style="padding:13px 14px;">
+      <div class="scrollable s-a07490"><div id="page-trees-cards" class="s-abb3e3">
         <div id="ranger-tree-cards">
         </div>
       </div></div>
     </div>
     <div class="page" id="page-ranger-logs">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Your logs</span></div>
+        <div class="s-15ffd6"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span class="s-04a127">Your logs</span></div>
       </div>
-      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="ranger-logs-list" style="padding:13px 14px;"></div></div>
+      <div class="scrollable s-a07490"><div id="ranger-logs-list" class="s-abb3e3"></div></div>
     </div>
     <div class="page" id="page-ranger-month">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">This month</span></div>
+        <div class="s-15ffd6"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span class="s-04a127">This month</span></div>
       </div>
-      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="ranger-month-list" style="padding:13px 14px;"></div></div>
+      <div class="scrollable s-a07490"><div id="ranger-month-list" class="s-abb3e3"></div></div>
     </div>
     <div class="page" id="page-ranger-covered">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Trees covered</span></div>
+        <div class="s-15ffd6"><button class="back-btn inv" onclick="goTo('ranger-dash')"><i class="ti ti-arrow-left"></i></button><span class="s-04a127">Trees covered</span></div>
       </div>
-      <div class="scrollable" style="background:var(--color-theme-dark);flex:1;"><div id="ranger-covered-list" style="padding:13px 14px;"></div></div>
+      <div class="scrollable s-a07490"><div id="ranger-covered-list" class="s-abb3e3"></div></div>
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
-      <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
-      <div class="scrollable" style="padding:12px 14px 20px;">
+      <div class="hero"><div class="s-807f89"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn s-630d4d" onclick="event.stopPropagation();goTo('admin-edit-tree')"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin s-d2831c"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin s-9bdb4a"></i></button></p></div></div>
+      <div class="scrollable s-35ac28">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
-        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
+        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span class="s-e9ddd4">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
         <div class="section-title">Tree info</div>
-        <div class="info-card" style="margin-bottom:14px;">
-          <div class="info-row"><span class="info-key"><i class="ti ti-leaf" style="font-size:0.8667rem"></i>Species</span><span class="info-val">Azadirachta indica</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-user" style="font-size:0.8667rem"></i>Added by</span><span class="info-val">Ravi K.</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-calendar" style="font-size:0.8667rem"></i>First logged</span><span class="info-val">Mar 2019</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list" style="font-size:0.8667rem"></i>Total logs</span><span class="info-val">14 entries</span></div>
+        <div class="info-card s-157a9c">
+          <div class="info-row"><span class="info-key"><i class="ti ti-leaf s-9bdb4a"></i>Species</span><span class="info-val">Azadirachta indica</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-user s-9bdb4a"></i>Added by</span><span class="info-val">Ravi K.</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar s-9bdb4a"></i>First logged</span><span class="info-val">Mar 2019</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list s-9bdb4a"></i>Total logs</span><span class="info-val">14 entries</span></div>
         </div>
         <div class="section-title">Growth logs</div>
         <div class="info-card">
-          <div class="log-entry" onclick="openAlbum(0)"><div class="log-dot" style="background:#3B6D11"></div><div class="log-body"><div class="log-date">12 Jun 2026</div><div class="log-text">8.4 m · 22 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>3 photos</span></div></div><div class="log-thumb" style="background:#2d4a2d;">🌿</div></div>
-          <div class="log-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB"></div><div class="log-body"><div class="log-date">10 Jan 2026</div><div class="log-text">8.1 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div><div class="log-thumb" style="background:#1e3d1e;">🌳</div></div>
-          <div class="log-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97"></div><div class="log-body"><div class="log-date">15 Jul 2025</div><div class="log-text">7.6 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips"><span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span></div></div><div class="log-thumb" style="background:var(--color-background-secondary);border:0.5px dashed var(--color-border-secondary);"><i class="ti ti-photo-off" style="font-size:1rem;color:var(--color-text-secondary)"></i></div></div>
+          <div class="log-entry" onclick="openAlbum(0)"><div class="log-dot s-619188"></div><div class="log-body"><div class="log-date">12 Jun 2026</div><div class="log-text">8.4 m · 22 cm diameter</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>3 photos</span></div></div><div class="log-thumb s-fb007b">🌿</div></div>
+          <div class="log-entry" onclick="openAlbum(1)"><div class="log-dot s-90f3d3"></div><div class="log-body"><div class="log-date">10 Jan 2026</div><div class="log-text">8.1 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>2 photos</span></div></div><div class="log-thumb s-d5c937">🌳</div></div>
+          <div class="log-entry" onclick="openAlbum(2)"><div class="log-dot s-f19d2b"></div><div class="log-body"><div class="log-date">15 Jul 2025</div><div class="log-text">7.6 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips"><span class="s-1ffb9a">No photos</span></div></div><div class="log-thumb s-a30d7c"><i class="ti ti-photo-off s-e4f33f"></i></div></div>
         </div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
+        <div class="s-b23b11"><i class="ti ti-hand-click s-8b8072"></i> Tap a log to view photos</div>
       </div>
     </div>
     <div class="page" id="page-album">
       <div class="topbar"><button class="back-btn" id="album-back-btn" onclick="goTo(albumFrom)"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="album-title">Log photos</span></div>
-      <div class="album-meta"><div style="font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;" id="album-date">12 Jun 2026</div><div style="font-size:0.7333rem;color:var(--color-text-secondary);display:flex;gap:10px;"><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-ruler" style="font-size:0.7333rem"></i><span id="album-h">8.4 m</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-circle" style="font-size:0.7333rem"></i><span id="album-d">22 cm</span></span><span style="display:flex;align-items:center;gap:3px;"><i class="ti ti-camera" style="font-size:0.7333rem"></i><span id="album-c">3 photos</span></span></div></div>
-      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div style="font-size:0.8rem;color:var(--color-text-primary);line-height:1.5;" id="album-note"></div></div></div>
+      <div class="album-meta"><div class="s-4b65e9"> id="album-date">12 Jun 2026</div><div class="s-2c9e0e"><span class="s-d6d09e"><i class="ti ti-ruler s-e92560"></i><span id="album-h">8.4 m</span></span><span class="s-d6d09e"><i class="ti ti-circle s-e92560"></i><span id="album-d">22 cm</span></span><span class="s-d6d09e"><i class="ti ti-camera s-e92560"></i><span id="album-c">3 photos</span></span></div></div>
+      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div class="s-e20456"> id="album-note"></div></div></div>
     </div>
     <div class="page" id="page-tree-logs">
       <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Neem Tree #0042 — Logs</span></div>
-      <div class="scrollable"><div style="padding:12px 14px;">
-        <div style="font-size:0.6667rem;color:var(--color-text-secondary);text-align:center;margin-bottom:10px;">Double-tap a log to view photos</div>
+      <div class="scrollable"><div class="s-4f7a6b">
+        <div class="s-621e2e">Double-tap a log to view photos</div>
         <div class="section-title">Growth logs</div>
         <div class="info-card">
-          <div class="log-tracker-entry" onclick="openAlbum(0)"><div class="log-dot" style="background:#3B6D11;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">12 Jun 2026</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 8.4 m · Diameter 22 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>3 photos</span></div></div></div>
-          <div class="log-tracker-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">10 Jan 2026</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 8.1 m · Diameter 21 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div></div>
-          <div class="log-tracker-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97;margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">15 Jul 2025</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height 7.6 m · Diameter 21 cm</div><div class="log-by">By Priya S. · GRR-2023-042</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips" style="margin-top:4px;"><span class="chip">+0.4 m</span></div></div></div>
+          <div class="log-tracker-entry" onclick="openAlbum(0)"><div class="log-dot s-c59061"></div><div><div class="log-date">12 Jun 2026</div><div class="log-text s-ec1a31">Height 8.4 m · Diameter 22 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>3 photos</span></div></div></div>
+          <div class="log-tracker-entry" onclick="openAlbum(1)"><div class="log-dot s-650134"></div><div><div class="log-date">10 Jan 2026</div><div class="log-text s-ec1a31">Height 8.1 m · Diameter 21 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>2 photos</span></div></div></div>
+          <div class="log-tracker-entry" onclick="openAlbum(2)"><div class="log-dot s-93f575"></div><div><div class="log-date">15 Jul 2025</div><div class="log-text s-ec1a31">Height 7.6 m · Diameter 21 cm</div><div class="log-by">By Priya S. · GRR-2023-042</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.4 m</span></div></div></div>
         </div>
       </div></div>
     </div>
@@ -121,10 +121,10 @@
     <div class="modal-back" id="login-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="lsm-icon" id="lsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
-          <div class="lsm-title" id="lsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
-          <div class="lsm-text" id="lsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your login request is waiting for admin approval.</div>
+        <div class="s-d44a8f">
+          <div class="lsm-icon s-5b20f9" id="lsm-icon"><i class="ti ti-clock s-74af75"></i></div>
+          <div class="lsm-title s-c5c660" id="lsm-title">Application under review</div>
+          <div class="lsm-text s-9d97f8" id="lsm-text">Your login request is waiting for admin approval.</div>
           <button class="green-btn" onclick="closeLoginStatus(true)"><i class="ti ti-check"></i> Okay</button>
           </div>
         </div>
@@ -132,17 +132,17 @@
     <div class="modal-back" id="register-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="lsm-icon" id="rsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
-          <div class="lsm-title" id="rsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
-          <div class="lsm-text" id="rsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your registration is waiting for admin approval.</div>
+        <div class="s-d44a8f">
+          <div class="lsm-icon s-5b20f9" id="rsm-icon"><i class="ti ti-clock s-74af75"></i></div>
+          <div class="lsm-title s-c5c660" id="rsm-title">Application under review</div>
+          <div class="lsm-text s-9d97f8" id="rsm-text">Your registration is waiting for admin approval.</div>
           <button class="green-btn" id="rsm-ok-btn" onclick="closeRegisterStatus(true)"><i class="ti ti-check"></i> Okay</button>
-          <div class="lsm-test" id="rsm-test" style="margin-top:16px;display:none;">
-            <div style="font-size:0.6667rem;color:var(--color-text-secondary);margin-bottom:6px;">TESTING · simulate result</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('waiting')">Waiting</button>
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('existing_member')">Existing</button>
-              <button class="ghost-btn" style="padding:7px;font-size:0.7333rem;" onclick="showRegisterStatus('blocked')">Blocked</button>
+          <div class="lsm-test s-dba459" id="rsm-test">
+            <div class="s-e5a31d">TESTING · simulate result</div>
+            <div class="s-9bfd70">
+              <button class="ghost-btn s-84311d"> onclick="showRegisterStatus('waiting')">Waiting</button>
+              <button class="ghost-btn s-84311d"> onclick="showRegisterStatus('existing_member')">Existing</button>
+              <button class="ghost-btn s-84311d"> onclick="showRegisterStatus('blocked')">Blocked</button>
             </div>
           </div>
         </div>

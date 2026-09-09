@@ -1320,7 +1320,7 @@ function deleteSurveyorLogRequest(tree_id) {
 function openSurveyorReviewPage(treeId, loggedAt) {
   var parent = encodeURIComponent('surveyor.html?hub=surveyor-dash');
   try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('surveyor.html?hub=' + active.id.replace('page-','')); } catch (e) {}
-  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
+  window.location.href = 'review-logs.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
 }
 
 function renderSurveyorLogCards(target_id, empty_id, id_list, loggedAtMap, hideLogBox) {

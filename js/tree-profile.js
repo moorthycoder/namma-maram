@@ -174,7 +174,7 @@ function updateSurveyorButtonState() {
       btn_el.title = 'Added to Survey request list';
       btn_el.classList.add('btn-added');
     } else {
-      btn_el.innerHTML = '<i class="ti ti-ruler-measure"></i>';
+      btn_el.innerHTML = '<i class="ti ti-clipboard-list"></i>';
       btn_el.title = 'Request survey for this tree';
       btn_el.classList.remove('btn-added');
     }
@@ -185,7 +185,7 @@ function updateSurveyorButtonState() {
       btn_el.innerHTML = '<i class="ti ti-check"></i> Added to Survey request list';
       btn_el.classList.add('btn-added');
     } else {
-      btn_el.innerHTML = '<i class="ti ti-ruler-measure"></i> Request survey for this tree';
+      btn_el.innerHTML = '<i class="ti ti-clipboard-list"></i> Request survey for this tree';
       btn_el.classList.remove('btn-added');
     }
   });

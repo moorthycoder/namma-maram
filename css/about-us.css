@@ -17,7 +17,6 @@
   html { font-size: 15px; }
   html, body { height: 100%; }
   body { background: var(--color-background-primary); overflow: hidden; }
-  .screen { background: var(--color-background-primary); height: 100%; display: flex; flex-direction: column; position: relative; }
   .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
   .status-bar.dark span { color: var(--color-theme-light); }

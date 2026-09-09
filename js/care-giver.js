@@ -1106,7 +1106,7 @@ function openLogsPage() {
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
   var userid = role.userId || '';
-  var url = 'logs.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
+  var url = 'caregiver-logs.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
   window.location.href = url;
 }
 function openLogsByType(logType, status) {
@@ -1149,7 +1149,7 @@ function renderCaregiverLogs(logType, status) {
 function openCaregiverReviewPage(treeId, loggedAt) {
   var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
   try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('care-giver.html?hub=' + active.id.replace('page-','')); } catch (e) {}
-  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
+  window.location.href = 'review-logs.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
 }
 
 

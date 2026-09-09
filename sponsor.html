@@ -21,7 +21,7 @@
         <h2>Sponsor login</h2><p>Sign in to manage your sponsored trees</p>
       </div>
       <div class="slogin-body">
-        <button class="green-btn" id="continue-as-btn" type="button" onclick="continueAsSponsor()" style="display:none"><i class="ti ti-login"></i> Continue as <span id="continue-as-name">—</span></button>
+        <button class="green-btn continue-visible" id="continue-as-btn" type="button" onclick="continueAsSponsor()"><i class="ti ti-login"></i> Continue as <span id="continue-as-name">—</span></button>
         <button class="google-btn google-btn-mt" onclick="googleAuth('sponsor-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
         <div class="support-text">Support urban green cover wherever you want</div>
       </div>
@@ -57,13 +57,14 @@
               <div class="dashboard-split-col dashboard-split-btn" onclick="openSponsorSeeing()"><div class="dashboard-split-title">Seeing</div><div class="dashboard-split-val" id="s-sponsor-seeing">0</div></div>
             </div>
           </div>
-          <div class="dashboard-stat"><div class="dashboard-stat-label">Payments</div><div class="dashboard-split"><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsTotal()"><div class="dashboard-split-title">Total Paid</div><div class="dashboard-split-val" id="s-payments-total">—</div></div><div class="dashboard-split-divider"></div><div class="dashboard-split-col dashboard-split-btn" onclick="openPaymentsThisMonth()"><div class="dashboard-split-title">To Pay this month</div><div class="dashboard-split-val" id="s-payments-month">—</div></div></div></div>
+          <div class="dashboard-stat"><div class="dashboard-stat-label">Payments</div><div class="dashboard-split"><div class="dashboard-split-col dashboard-split-btn" onclick="paylogTotal()"><div class="dashboard-split-title">Total Paid</div><div class="dashboard-split-val" id="s-payments-total">—</div></div><div class="dashboard-split-divider"></div><div class="dashboard-split-col dashboard-split-btn" onclick="paylogThisMonth()"><div class="dashboard-split-title">This month paid</div><div class="dashboard-split-val" id="s-payments-month">—</div></div></div></div>
           <div class="dashboard-stat dashboard-next" onclick="openSponsorNextDue()"><div class="dashboard-stat-label">Next due</div><div class="dashboard-split"><div class="dashboard-split-col"><div class="next-due-list" id="s-next-due-list"></div></div></div></div>
         </div>
       </div>
       <div class="scrollable"><div class="dashboard-scroll-pad">
         <div class="action-tiles">
           <div class="action-tile tile-bg" onclick="openTreePool()"><div class="action-tile-icon beige">🌱</div><div class="action-tile-title">Sponsor a tree</div><div class="action-tile-sub">Support and donate</div></div>
+          <div class="action-tile tile-bg" onclick="paylogTrees()"><div class="action-tile-icon green">💳</div><div class="action-tile-title">Pay for a tree</div><div class="action-tile-sub">Pay & view logs</div></div>
         </div>
       </div></div>
     </div>
@@ -107,24 +108,6 @@
         <div class="info-card" id="tree-logs-list"></div>
       </div></div>
     </div>
-    <div class="page" id="page-pay-logs-total">
-      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — Total</span></div>
-      <div class="pay-plan-header"><div><div class="pay-plan-label">Monthly plan</div><div class="pay-plan-value">₹300 / month</div></div><div class="pay-plan-badge">Active</div></div>
-      <div class="scrollable"><div class="log-header-pad">
-        <div class="section-title section-title-mb">Payment history — Total</div>
-        <div class="info-card info-card-mb" id="pay-history-total"></div>
-        <button class="blue-btn" onclick="openPayNow()"><i class="ti ti-credit-card"></i> Pay now — Jul 2026</button>
-      </div></div>
-    </div>
-    <div class="page" id="page-pay-logs-this_month">
-      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — This month</span></div>
-      <div class="pay-plan-header"><div><div class="pay-plan-label">Monthly plan</div><div class="pay-plan-value">₹300 / month</div></div><div class="pay-plan-badge">Active</div></div>
-      <div class="scrollable"><div class="log-header-pad">
-        <div class="section-title section-title-mb">Payment history — This month</div>
-        <div class="info-card info-card-mb" id="pay-history-this_month"></div>
-        <button class="blue-btn" onclick="openPayNow()"><i class="ti ti-credit-card"></i> Pay now — Jul 2026</button>
-      </div></div>
-    </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span></div>
       <div class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin map-pin-icon"></i> <span id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin map-pin-btn-icon"></i></button></p></div></div>
@@ -155,23 +138,6 @@
         <span class="topbar-title">Tree map</span>
       </div>
       <iframe class="map-frame" id="map-frame" title="Tree map"></iframe>
-    </div>
-    <div class="modal-back" id="pay-modal">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="modal-title">Pay for Jul 2026</div>
-        <div class="modal-text" id="pay-modal-tree-name"></div>
-        <div class="amount-row">
-          <div class="amt-chip" onclick="selectAmt(this)">₹100</div>
-          <div class="amt-chip" onclick="selectAmt(this)">₹200</div>
-          <div class="amt-chip selected" onclick="selectAmt(this)">₹300</div>
-          <div class="amt-chip" onclick="selectAmt(this)">₹500</div>
-          <div class="amt-chip" onclick="selectAmt(this)">₹1000</div>
-          <div class="amt-chip" onclick="selectAmt(this)">₹2000</div>
-        </div>
-        <button class="blue-btn" id="pay-now-btn" onclick="recordPayment()"><i class="ti ti-credit-card"></i> Pay ₹300 now</button>
-        <button class="ghost-btn ghost-btn-mt" onclick="closePayNow()">Cancel</button>
-      </div>
     </div>
     <div class="modal-back" id="login-status-modal">
       <div class="modal-sheet">
