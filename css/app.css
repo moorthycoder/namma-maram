@@ -329,6 +329,11 @@ body {
 .dashboard-cta:hover { transform: translateY(-1px); opacity: .95; }
 .dashboard-cta:active { transform: none; }
 
+.action-tile.tile-bg{background:#FFF59D;border-color:#FDE68A;}
+.action-tile.tile-bg:hover{background:#FFCDD2;border-color:#EF9A9A;}
+.action-tile.tile-bg .action-tile-title{color:var(--color-text-primary);}
+.action-tile.tile-bg .action-tile-sub{color:var(--color-text-secondary);}
+
 .card-outgoing-btn {
   position: absolute;
   top: 8px;
