@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --color-theme: #3B6D11;
   --color-theme-dark: #1e3d0f;
   --color-theme-light: #EAF3DE;
@@ -14,7 +14,7 @@
   --font-sans: 'Inter', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
-html { font-size: 15px; }
+html { font-size: 16px; }
 html, body { height: 100%; }
 body { background: var(--color-background-primary); overflow: hidden; }
 .page { display: none; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }

@@ -525,8 +525,8 @@ window.render = {
       }
       if (back_btn) {
         filterParentUrl = qp_hero.get('parent') || filterParentUrl;
-        if (filterParentUrl) back_btn.style.display = 'flex';
-        else back_btn.style.display = 'none';
+        if (filterParentUrl) back_btn.classList.remove('hidden');
+        else back_btn.classList.add('hidden');
       }
     })();
     albumData = (window.__TREE_DATA || []).filter(function (t) {

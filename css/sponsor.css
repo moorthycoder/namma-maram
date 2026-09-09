@@ -1,4 +1,4 @@
-
+﻿
   :root {
     --color-theme: #3B6D11;
     --color-theme-dark: #1e3d0f;
@@ -15,7 +15,7 @@
     --font-sans: 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
-  html { font-size: 15px; }
+  html { font-size: 16px; }
   .tcard-added-at { font-size: 0.6667rem; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 6px 11px; display: flex; align-items: center; justify-content: space-between; gap: 4px; border-bottom: 0.5px solid var(--color-border-tertiary); }
   .tcard-added-at i { font-size: 0.6667rem; }
   .tcard-delete-btn { background: transparent; border: none; color: #dc2626; cursor: pointer; font-size: 0.8rem; padding: 2px 4px; display: flex; align-items: center; justify-content: center; }

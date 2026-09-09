@@ -1,4 +1,4 @@
-
+﻿
   :root {
     --color-theme: #3B6D11;
     --color-theme-dark: #1e3d0f;
@@ -15,7 +15,7 @@
     --font-sans: 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
-  html { font-size: 15px; }
+  html { font-size: 16px; }
   html, body { height: 100%; }
   body { background: var(--color-background-primary); overflow: hidden; }
   .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }

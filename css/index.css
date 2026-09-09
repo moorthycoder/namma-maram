@@ -1,4 +1,4 @@
-
+﻿
   :root {
     --color-theme: #3B6D11;
     --color-theme-dark: #1e3d0f;
@@ -15,7 +15,7 @@
     --font-sans: 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); }
-  html { font-size: 15px; }
+  html { font-size: 16px; }
   body { background: #e8e8e8; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 24px 0; }
   .status-bar { padding: 10px 20px 4px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   .status-bar span { font-size: 0.7333rem; font-weight: 500; color: var(--color-text-primary); }
