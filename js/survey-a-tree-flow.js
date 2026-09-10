@@ -66,7 +66,8 @@ var surveyFlowCSS = "\n\
   .review-text { font-size: 0.8rem; color: var(--color-text-primary); line-height: 1.5; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }\n\
   .review-empty { font-size: 0.8rem; color: var(--color-text-secondary); font-style: italic; }\n\
   .flow-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 0 0 auto; margin-top: auto; }\n\
-  .survey-split { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 12px 13px; gap: 10px; overflow-y: auto; -webkit-overflow-scrolling: touch; }\n\
+  .flow-nav.is-hidden { display: none; }\n\
+  .survey-split { flex: 1 1 0; min-height: 0; height: 0; display: flex; flex-direction: column; padding: 12px 13px; gap: 10px; overflow-y: auto; -webkit-overflow-scrolling: touch; }\n\
   .gis-overlay { position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.78)); padding: 22px 10px 8px; color: #fff; }\n\
   .gis-overlay-body { display: flex; gap: 8px; align-items: stretch; }\n\
   .gis-overlay-map { flex: 1; height: 48px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.35); background: linear-gradient(135deg, #d9e8c9, #a9c48f); position: relative; overflow: hidden; }\n\
@@ -92,7 +93,7 @@ var surveyFlowPages = "\n\
       <div class=\"selfie-full\" id=\"selfie-panel\"></div>\n\
       <button class=\"cam-btn\" onclick=\"captureSurveySelfie()\"><i class=\"ti ti-camera\"></i></button>\n\
     </div>\n\
-    <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
+    <div class=\"flow-nav is-hidden\" id=\"survey-flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
   </div>\n\
 </div>\n\
 <div class=\"page\" id=\"page-snapshots\">\n\
@@ -190,6 +191,8 @@ function captureSurveySelfie() {
   surveySelfie = 'selfie.jpg';
   captureSurveyGis();
   renderSurveySelfie();
+  var navEl = document.getElementById('survey-flow-nav');
+  if (navEl) navEl.classList.remove('is-hidden');
 }
 
 function captureSurveyGis() {
@@ -459,3 +462,27 @@ function saveSurveyTree() {
 }
 
 injectSurveyFlow();
+
+// --- standalone survey-a-tree.html support (merged from survey-a-tree-page.js) ---
+(function(){
+  if (location.pathname.indexOf('survey-a-tree.html') === -1) return;
+  var parentUrl = new URLSearchParams(location.search).get('parent') || 'filter.html';
+  window._surveyUserId = new URLSearchParams(location.search).get('userid') || '';
+  window._surveyTreeId = new URLSearchParams(location.search).get('treeid') || '';
+  window.roleDash = function(){ return parentUrl; };
+  window.surveyGoTo = function(page){
+    if (page && /\.html/.test(page)) {
+      try { if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') { window.parent.backToStart(); return; } } catch (e) {}
+      window.location.href = parentUrl;
+      return;
+    }
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    var el = document.getElementById('page-' + page);
+    if (el) el.classList.add('active');
+    if (page === 'selfie') { try{ refreshGisMap(); }catch(e){} }
+    if (page === 'snapshots') { try{ renderSurveySnapGrid(); }catch(e){} }
+    if (page === 'capture') { try{ renderSurveyCapturePage(); }catch(e){} }
+  };
+  window.goTo = window.surveyGoTo;
+  window.goTo('selfie');
+})();

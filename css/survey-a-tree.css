@@ -28,3 +28,4 @@ body { background: var(--color-background-primary); overflow: hidden; }
 .ghost-btn { width: 100%; padding: 11px; border-radius: var(--border-radius-lg); background: transparent; color: var(--color-text-secondary); font-size: 0.8667rem; border: 0.5px solid var(--color-border-tertiary); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .scrollable.flow-scroll { min-height: 0; }
 .page .selfie-cam { min-height: 390px; }
+.scrollable.flow-scroll { min-height: 0; }
