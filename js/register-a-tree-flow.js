@@ -77,7 +77,7 @@ var registerFlowCSS = "\n\
   .addr-box { width: 100%; padding: 9px 11px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); font-size: 0.8rem; color: var(--color-text-primary); background: var(--color-background-primary); resize: none; font-family: var(--font-sans); line-height: 1.5; height: 58px; outline: none; }\n\
   .gis-coord-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }\n\
   .gis-fields { display: flex; flex-direction: column; gap: 8px; }\n\
-  .register-split { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 12px 13px; gap: 10px; overflow-y: auto; -webkit-overflow-scrolling: touch; }\n\
+  .register-split { flex: 1 1 0; min-height: 0; height: 0; display: flex; flex-direction: column; padding: 12px 13px; gap: 10px; overflow-y: auto; -webkit-overflow-scrolling: touch; }\n\
   .details-scroll { flex: 0 0 auto; }\n\
   .sci-suggest-list:empty { display: none; }\n\
   .sci-clear-btn { display: none; }\n\
@@ -102,7 +102,7 @@ var registerFlowPages = "\n\
   <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Selfie with Tree</span><span class=\"topbar-step\">Step 1 of 4</span></div>\n\
   <div class=\"steps\"><div class=\"step-dot active\">1</div><div class=\"step-line\"></div><div class=\"step-dot pending\">2</div><div class=\"step-line\"></div><div class=\"step-dot pending\">3</div><div class=\"step-line\"></div><div class=\"step-dot pending\">4</div></div>\n\
   <div class=\"step-labels\"><span class=\"step-lbl active\">Selfie</span><span class=\"step-lbl\">Snapshots</span><span class=\"step-lbl\">Notes</span><span class=\"step-lbl\">Review</span></div>\n\
-  <div class=\"register-split\">\n\
+  <div class=\"scrollable flow-scroll\">\n\
     <div class=\"selfie-cam\">\n\
       <div class=\"selfie-full\" id=\"selfie-panel\"></div>\n\
       <button class=\"cam-btn\" onclick=\"captureRegisterSelfie()\"><i class=\"ti ti-camera\"></i></button>\n\
@@ -645,3 +645,27 @@ function saveRegisterTree() {
 }
 
 injectRegisterFlow();
+
+// --- standalone register-a-tree.html support (merged from register-a-tree-page.js) ---
+(function(){
+  if (location.pathname.indexOf('register-a-tree.html') === -1) return;
+  var parentUrl = new URLSearchParams(location.search).get('parent') || 'filter.html';
+  window._registerUserId = new URLSearchParams(location.search).get('userid') || '';
+  window._registerTreeId = new URLSearchParams(location.search).get('treeid') || '';
+  window.roleDash = function(){ return parentUrl; };
+  window.registerGoTo = function(page){
+    if (page && /\.html/.test(page)) {
+      try { if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') { window.parent.backToStart(); return; } } catch (e) {}
+      window.location.href = parentUrl;
+      return;
+    }
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    var el = document.getElementById('page-' + page);
+    if (el) el.classList.add('active');
+    if (page === 'selfie') { try{ refreshGisMap(); }catch(e){} }
+    if (page === 'snapshots') { try{ renderRegisterSnapGrid(); }catch(e){} }
+    if (page === 'capture') { try{ renderRegisterCapturePage(); }catch(e){} }
+  };
+  window.goTo = window.registerGoTo;
+  window.goTo('selfie');
+})();

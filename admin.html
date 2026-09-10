@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/app.css" />
 <link rel="stylesheet" href="css/admin.css" />
 </head>
 <body>
@@ -15,124 +16,124 @@
 
     <div class="page active" id="page-admin-login">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button class="back-btn inv" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
-        <h2 style="font-size:1.2rem;font-weight:500;color:var(--color-theme-light);">Administrator login</h2>
-        <p style="font-size:0.8rem;color:rgba(192,221,151,0.6);margin-top:3px;">Manage rangers, surveyors, sponsors, and system settings</p>
+        <div class="login-back-row"><button class="back-btn inv" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
+        <h2 class="dash-title">Administrator login</h2>
+        <p class="dash-sub">Manage rangers, surveyors, sponsors, and system settings</p>
       </div>
-      <div style="flex:1;padding:20px 16px;display:flex;flex-direction:column;">
+      <div class="login-body">
         <button class="google-btn" onclick="googleAuth('admin-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google</button>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:12px;">Only authorised system administrators</div>
+        <div class="login-hint">Only authorised system administrators</div>
       </div>
     </div>
     <div class="page" id="page-admin-dash">
       <div class="dash-header">
-        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Admin</div></div><div class="avatar" onclick="toggleALogoutDrop()"><span id="user-avatar">AD</span><div class="logout-drop" id="alogout-drop"><div class="dd-item" onclick="location.href='settings.html'"><i class="ti ti-settings" style="font-size:0.9333rem;color:var(--color-theme)"></i> Settings</div><div class="dd-item" onclick="window.top.location.href='login-hub.html'" style="border-bottom:none;"><i class="ti ti-logout" style="font-size:0.9333rem;color:var(--color-theme)"></i> Sign out</div></div></div></div>
+        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Admin</div></div><div class="avatar" onclick="toggleALogoutDrop()"><span id="user-avatar">AD</span><div class="logout-drop" id="alogout-drop"><div class="dd-item" onclick="location.href='settings.html'"><i class="ti ti-settings icon-theme"></i> Settings</div><div class="dd-item logout-item" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-logout icon-theme"></i> Sign out</div></div></div></div>
         <div class="dash-stats">
-          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-trackers')"><div class="dash-stat-label">Rangers</div><div class="dash-stat-val" id="admin-rangers">0</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;"><span id="admin-rangers-waiting">0</span> waiting for approval</div></div>
-          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-sponsors')"><div class="dash-stat-label">Sponsors</div><div class="dash-stat-val" id="admin-sponsors">0</div><div style="font-size:0.6rem;color:#f59e0b;margin-top:3px;"><span id="admin-sponsors-waiting">0</span> waiting for approval</div></div>
-          <div class="dash-stat" style="cursor:pointer;" onclick="goTo('admin-trees')"><div class="dash-stat-label">Trees</div><div class="dash-stat-val" id="admin-trees">0</div></div>
+          <div class="dash-stat dash-stat-click" onclick="goTo('admin-trackers')"><div class="dash-stat-label">Rangers</div><div class="dash-stat-val" id="admin-rangers">0</div><div class="stat-waiting"><span id="admin-rangers-waiting">0</span> waiting for approval</div></div>
+          <div class="dash-stat dash-stat-click" onclick="goTo('admin-sponsors')"><div class="dash-stat-label">Sponsors</div><div class="dash-stat-val" id="admin-sponsors">0</div><div class="stat-waiting"><span id="admin-sponsors-waiting">0</span> waiting for approval</div></div>
+          <div class="dash-stat dash-stat-click" onclick="goTo('admin-trees')"><div class="dash-stat-label">Trees</div><div class="dash-stat-val" id="admin-trees">0</div></div>
         </div>
       </div>
-      <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:12px;">
-        <div class="section-title" style="font-size:0.8rem;color:var(--color-text-secondary);margin-top:4px;">Recent activity</div>
-        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">New ranger registered</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">GRR-2026-042 · 10 min ago</div></div></div>
-        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Sponsor payment verified</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">Madhavi I · ₹300 · 2 hrs ago</div></div></div>
-        <div class="recent-row"><div class="recent-dot" style="background:var(--color-theme)"></div><div><div class="recent-id" style="font-size:0.8rem;font-weight:500;">Tree log flagged</div><div class="recent-date" style="font-size:0.7333rem;color:var(--color-text-secondary);">625501-02-0001 · Needs review · 1 day ago</div></div></div>
+      <div class="scrollable admin-scroll">
+        <div class="section-label">Recent activity</div>
+        <div class="recent-row"><div class="recent-dot theme"></div><div><div class="recent-id">New ranger registered</div><div class="recent-date">GRR-2026-042 · 10 min ago</div></div></div>
+        <div class="recent-row"><div class="recent-dot theme"></div><div><div class="recent-id">Sponsor payment verified</div><div class="recent-date">Madhavi I · ₹300 · 2 hrs ago</div></div></div>
+        <div class="recent-row"><div class="recent-dot theme"></div><div><div class="recent-id">Tree log flagged</div><div class="recent-date">625501-02-0001 · Needs review · 1 day ago</div></div></div>
       </div>
     </div>
     <div class="page" id="page-admin-trackers">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
+        <div class="admin-header-row">
+          <div class="admin-header-left">
             <button class="back-btn inv" onclick="goTo('admin-dash')"><i class="ti ti-arrow-left"></i></button>
-            <span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Rangers</span>
+            <span class="admin-header-title">Rangers</span>
           </div>
-          <span style="font-size:0.8rem;color:rgba(192,221,151,0.5);">12</span>
+          <span class="admin-count">12</span>
         </div>
-        <div style="display:flex;gap:6px;">
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.1);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-trackers')">Current</button>
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.05);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-trackers-prospective')">Prospective</button>
+        <div class="admin-tabs">
+          <button class="green-btn admin-tab on" onclick="goTo('admin-trackers')">Current</button>
+          <button class="green-btn admin-tab off" onclick="goTo('admin-trackers-prospective')">Prospective</button>
         </div>
       </div>
-      <div class="scrollable" style="flex:1;padding:13px 14px;display:flex;flex-direction:column;gap:8px;background:var(--color-theme-dark);">
-        <div class="tracker-tree-card" style="cursor:default;position:relative;padding-right:36px;"><button class="edit-btn" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')" style="position:absolute;top:6px;right:6px;background:none;border:none;color:#ef4444;cursor:pointer;font-size:0.9333rem;padding:4px;"><i class="ti ti-trash"></i></button><div class="ttc-id">GRR-2024-081</div><div class="ttc-name">Ravi K.</div><div class="ttc-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar</div><div class="ttc-stats"><div class="ttc-stat">Trees <span>23</span></div><div class="ttc-stat">Logs <span>47</span></div><div class="ttc-stat">Active <span style="color:#4ade80;">Yes</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">3</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">12</span></div></div></div>
-        <div class="tracker-tree-card" style="cursor:default;position:relative;padding-right:36px;"><button class="edit-btn" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')" style="position:absolute;top:6px;right:6px;background:none;border:none;color:#ef4444;cursor:pointer;font-size:0.9333rem;padding:4px;"><i class="ti ti-trash"></i></button><div class="ttc-id">GRR-2023-042</div><div class="ttc-name">Priya S.</div><div class="ttc-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> T. Nagar</div><div class="ttc-stats"><div class="ttc-stat">Trees <span>15</span></div><div class="ttc-stat">Logs <span>32</span></div><div class="ttc-stat">Active <span style="color:#4ade80;">Yes</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">1</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">8</span></div></div></div>
+      <div class="scrollable admin-list-scroll">
+        <div class="tracker-tree-card admin-card"><button class="button admin-card-del" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i></button><div class="ttc-id">GRR-2024-081</div><div class="ttc-name">Ravi K.</div><div class="ttc-loc"><i class="ti ti-map-pin admin-card-icon"></i> Anna Nagar</div><div class="ttc-stats"><div class="ttc-stat">Trees <span>23</span></div><div class="ttc-stat">Logs <span>47</span></div><div class="ttc-stat">Active <span style="color:#4ade80;">Yes</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">3</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">12</span></div></div></div>
+        <div class="tracker-tree-card admin-card"><button class="button admin-card-del" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i></button><div class="ttc-id">GRR-2023-042</div><div class="ttc-name">Priya S.</div><div class="ttc-loc"><i class="ti ti-map-pin admin-card-icon"></i> T. Nagar</div><div class="ttc-stats"><div class="ttc-stat">Trees <span>15</span></div><div class="ttc-stat">Logs <span>32</span></div><div class="ttc-stat">Active <span style="color:#4ade80;">Yes</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">1</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">8</span></div></div></div>
       </div>
     </div>
     <div class="page" id="page-admin-trackers-prospective">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
+        <div class="admin-header-row">
+          <div class="admin-header-left">
             <button class="back-btn inv" onclick="goTo('admin-dash')"><i class="ti ti-arrow-left"></i></button>
-            <span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Prospective rangers</span>
+            <span class="admin-header-title">Prospective rangers</span>
           </div>
-          <span style="font-size:0.8rem;color:rgba(192,221,151,0.5);">5</span>
+          <span class="admin-count">5</span>
         </div>
-        <div style="display:flex;gap:6px;">
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.05);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-trackers')">Current</button>
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.1);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-trackers-prospective')">Prospective</button>
+        <div class="admin-tabs">
+          <button class="green-btn admin-tab off" onclick="goTo('admin-trackers')">Current</button>
+          <button class="green-btn admin-tab on" onclick="goTo('admin-trackers-prospective')">Prospective</button>
         </div>
       </div>
-      <div class="scrollable" style="flex:1;padding:13px 14px;display:flex;flex-direction:column;gap:8px;background:var(--color-theme-dark);">
-        <div class="tracker-tree-card" style="cursor:default;"><div class="ttc-id">GRR-2026-091</div><div class="ttc-name">Karthik R.</div><div class="ttc-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Madurai</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>12 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div style="display:flex;gap:6px;margin-top:8px;"><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#16a34a;" onclick="alert('Ranger application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#dc2626;" onclick="alert('Ranger application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
-        <div class="tracker-tree-card" style="cursor:default;"><div class="ttc-id">GRR-2026-092</div><div class="ttc-name">Meena L.</div><div class="ttc-loc"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Trichy</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>8 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div style="display:flex;gap:6px;margin-top:8px;"><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#16a34a;" onclick="alert('Ranger application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#dc2626;" onclick="alert('Ranger application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
+      <div class="scrollable admin-list-scroll">
+        <div class="tracker-tree-card"><div class="ttc-id">GRR-2026-091</div><div class="ttc-name">Karthik R.</div><div class="ttc-loc"><i class="ti ti-map-pin admin-card-icon"></i> Madurai</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>12 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div class="admin-action-row"><button class="green-btn admin-action-accept" onclick="alert('Ranger application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn admin-action-reject" onclick="alert('Ranger application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
+        <div class="tracker-tree-card"><div class="ttc-id">GRR-2026-092</div><div class="ttc-name">Meena L.</div><div class="ttc-loc"><i class="ti ti-map-pin admin-card-icon"></i> Trichy</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>8 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div class="admin-action-row"><button class="green-btn admin-action-accept" onclick="alert('Ranger application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn admin-action-reject" onclick="alert('Ranger application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
       </div>
     </div>
     <div class="page" id="page-admin-sponsors">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
+        <div class="admin-header-row">
+          <div class="admin-header-left">
             <button class="back-btn inv" onclick="goTo('admin-dash')"><i class="ti ti-arrow-left"></i></button>
-            <span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Sponsors</span>
+            <span class="admin-header-title">Sponsors</span>
           </div>
-          <span style="font-size:0.8rem;color:rgba(192,221,151,0.5);">48</span>
+          <span class="admin-count">48</span>
         </div>
-        <div style="display:flex;gap:6px;">
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.1);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-sponsors')">Current</button>
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.05);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-sponsors-prospective')">Prospective</button>
+        <div class="admin-tabs">
+          <button class="green-btn admin-tab on" onclick="goTo('admin-sponsors')">Current</button>
+          <button class="green-btn admin-tab off" onclick="goTo('admin-sponsors-prospective')">Prospective</button>
         </div>
       </div>
-      <div class="scrollable" style="flex:1;padding:13px 14px;display:flex;flex-direction:column;gap:8px;background:var(--color-theme-dark);">
-        <div class="tracker-tree-card" style="cursor:default;position:relative;padding-right:36px;"><button class="edit-btn" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')" style="position:absolute;top:6px;right:6px;background:none;border:none;color:#ef4444;cursor:pointer;font-size:0.9333rem;padding:4px;"><i class="ti ti-trash"></i></button><div class="ttc-id">SPN-2024-001</div><div class="ttc-name">Madhavi I.</div><div class="ttc-loc"><i class="ti ti-heart" style="font-size:0.6667rem;color:var(--color-theme)"></i> 2 trees · ₹600/mo</div><div class="ttc-stats"><div class="ttc-stat">Since <span>Jan 2024</span></div><div class="ttc-stat">Paid <span>₹8,400</span></div><div class="ttc-stat">Status <span style="color:#4ade80;">Active</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">0</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">2</span></div></div></div>
-        <div class="tracker-tree-card" style="cursor:default;position:relative;padding-right:36px;"><button class="edit-btn" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')" style="position:absolute;top:6px;right:6px;background:none;border:none;color:#ef4444;cursor:pointer;font-size:0.9333rem;padding:4px;"><i class="ti ti-trash"></i></button><div class="ttc-id">SPN-2025-003</div><div class="ttc-name">Arun P.</div><div class="ttc-loc"><i class="ti ti-heart" style="font-size:0.6667rem;color:var(--color-theme)"></i> 1 tree · ₹300/mo</div><div class="ttc-stats"><div class="ttc-stat">Since <span>Mar 2025</span></div><div class="ttc-stat">Paid <span>₹4,500</span></div><div class="ttc-stat">Status <span style="color:#4ade80;">Active</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">1</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">1</span></div></div></div>
+      <div class="scrollable admin-list-scroll">
+        <div class="tracker-tree-card admin-card"><button class="button admin-card-del" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i></button><div class="ttc-id">SPN-2024-001</div><div class="ttc-name">Madhavi I.</div><div class="ttc-loc"><i class="ti ti-heart admin-card-icon" style="color:var(--color-theme)"></i> 2 trees · ₹600/mo</div><div class="ttc-stats"><div class="ttc-stat">Since <span>Jan 2024</span></div><div class="ttc-stat">Paid <span>₹8,400</span></div><div class="ttc-stat">Status <span style="color:#4ade80;">Active</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">0</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">2</span></div></div></div>
+        <div class="tracker-tree-card admin-card"><button class="button admin-card-del" onclick="event.stopPropagation();document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i></button><div class="ttc-id">SPN-2025-003</div><div class="ttc-name">Arun P.</div><div class="ttc-loc"><i class="ti ti-heart admin-card-icon" style="color:var(--color-theme)"></i> 1 tree · ₹300/mo</div><div class="ttc-stats"><div class="ttc-stat">Since <span>Mar 2025</span></div><div class="ttc-stat">Paid <span>₹4,500</span></div><div class="ttc-stat">Status <span style="color:#4ade80;">Active</span></div></div><div class="ttc-stats" style="margin-top:6px;padding-top:6px;border-top:0.5px solid rgba(255,255,255,0.06);"><div class="ttc-stat">Waiting for approval <span style="color:#f59e0b;">1</span></div><div class="ttc-stat">Accepted <span style="color:#4ade80;">1</span></div></div></div>
       </div>
     </div>
     <div class="page" id="page-admin-sponsors-prospective">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
+        <div class="admin-header-row">
+          <div class="admin-header-left">
             <button class="back-btn inv" onclick="goTo('admin-dash')"><i class="ti ti-arrow-left"></i></button>
-            <span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">Prospective sponsors</span>
+            <span class="admin-header-title">Prospective sponsors</span>
           </div>
-          <span style="font-size:0.8rem;color:rgba(192,221,151,0.5);">3</span>
+          <span class="admin-count">3</span>
         </div>
-        <div style="display:flex;gap:6px;">
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.05);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-sponsors')">Current</button>
-          <button class="green-btn" style="flex:1;background:rgba(255,255,255,0.1);font-size:0.7333rem;padding:6px;" onclick="goTo('admin-sponsors-prospective')">Prospective</button>
+        <div class="admin-tabs">
+          <button class="green-btn admin-tab off" onclick="goTo('admin-sponsors')">Current</button>
+          <button class="green-btn admin-tab on" onclick="goTo('admin-sponsors-prospective')">Prospective</button>
         </div>
       </div>
-      <div class="scrollable" style="flex:1;padding:13px 14px;display:flex;flex-direction:column;gap:8px;background:var(--color-theme-dark);">
-        <div class="tracker-tree-card" style="cursor:default;"><div class="ttc-id">SPN-2026-007</div><div class="ttc-name">Sita R.</div><div class="ttc-loc"><i class="ti ti-heart" style="font-size:0.6667rem;color:var(--color-theme)"></i> Interested · 1 tree</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>15 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div style="display:flex;gap:6px;margin-top:8px;"><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#16a34a;" onclick="alert('Sponsor application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#dc2626;" onclick="alert('Sponsor application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
-        <div class="tracker-tree-card" style="cursor:default;"><div class="ttc-id">SPN-2026-008</div><div class="ttc-name">Vikram K.</div><div class="ttc-loc"><i class="ti ti-heart" style="font-size:0.6667rem;color:var(--color-theme)"></i> Interested · 2 trees</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>10 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div style="display:flex;gap:6px;margin-top:8px;"><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#16a34a;" onclick="alert('Sponsor application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn" style="flex:1;padding:6px;font-size:0.7333rem;background:#dc2626;" onclick="alert('Sponsor application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
+      <div class="scrollable admin-list-scroll">
+        <div class="tracker-tree-card"><div class="ttc-id">SPN-2026-007</div><div class="ttc-name">Sita R.</div><div class="ttc-loc"><i class="ti ti-heart admin-card-icon" style="color:var(--color-theme)"></i> Interested · 1 tree</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>15 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div class="admin-action-row"><button class="green-btn admin-action-accept" onclick="alert('Sponsor application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn admin-action-reject" onclick="alert('Sponsor application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
+        <div class="tracker-tree-card"><div class="ttc-id">SPN-2026-008</div><div class="ttc-name">Vikram K.</div><div class="ttc-loc"><i class="ti ti-heart admin-card-icon" style="color:var(--color-theme)"></i> Interested · 2 trees</div><div class="ttc-stats"><div class="ttc-stat">Applied <span>10 Jun 2026</span></div><div class="ttc-stat">Status <span style="color:#f59e0b;">Pending</span></div></div><div class="admin-action-row"><button class="green-btn admin-action-accept" onclick="alert('Sponsor application accepted!')"><i class="ti ti-check"></i> Accept</button><button class="green-btn admin-action-reject" onclick="alert('Sponsor application rejected')"><i class="ti ti-x"></i> Reject</button></div></div>
       </div>
     </div>
     <div class="page" id="page-admin-trees">
       <div class="dash-header">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0;">
-          <div style="display:flex;align-items:center;gap:10px;">
+        <div class="admin-header-row flat">
+          <div class="admin-header-left">
             <button class="back-btn inv" onclick="goTo('admin-dash')"><i class="ti ti-arrow-left"></i></button>
-            <span style="font-size:1rem;font-weight:500;color:var(--color-theme-light);">All trees</span>
+            <span class="admin-header-title">All trees</span>
           </div>
-          <span style="font-size:0.8rem;color:rgba(192,221,151,0.5);" id="admin-count-header">247</span>
+          <span class="admin-count" id="admin-count-header">247</span>
         </div>
       </div>
-      <div style="padding:8px 14px;background:var(--color-theme-dark);">
+      <div class="admin-btn-strip">
         <button class="green-btn" onclick="goTo('admin-add-tree')"><i class="ti ti-plus"></i> Add new tree</button>
       </div>
       <div class="main-hero">
         <div class="search-row">
           <input class="id-input" id="admin-id" type="text" placeholder="Enter tree ID" oninput="adminSearchById()" />
-          <button class="green-btn" style="padding:7px 12px;border-radius:10px;width:auto;flex-shrink:0;" onclick="adminSearchById()"><i class="ti ti-search"></i></button>
+          <button class="green-btn admin-search-btn" onclick="adminSearchById()"><i class="ti ti-search"></i></button>
         </div>
       </div>
       <div class="album-filters">
@@ -155,28 +156,28 @@
     </div>
     <div class="page" id="page-admin-edit-tree">
       <div class="topbar"><button class="back-btn" onclick="goTo('admin-trees')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Edit tree</span></div>
-      <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" id="edit-tree-id" value="625008-01-0001" readonly style="background:var(--color-background-secondary);color:var(--color-text-secondary);" /></div>
+      <div class="scrollable admin-page-scroll">
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp admin-input-readonly" type="text" id="edit-tree-id" value="625008-01-0001" readonly /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Name</div><input class="field-inp" type="text" id="edit-tree-name" value="Neem Tree" /></div>
-        <button class="ghost-btn" style="color:#dc2626;border-color:#dc2626;" onclick="document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i> Delete this tree</button>
-        <div style="border-top:0.5px solid var(--color-border-tertiary);margin:4px 0;"></div>
+        <button class="ghost-btn admin-ghost-danger" onclick="document.getElementById('delete-confirm-modal').classList.add('open')"><i class="ti ti-trash"></i> Delete this tree</button>
+        <div class="admin-divider"></div>
         <button class="green-btn" onclick="alert('Tree details saved!')"><i class="ti ti-device-floppy"></i> Save changes</button>
       </div>
     </div>
     <div class="page" id="page-admin-add-tree">
       <div class="topbar"><button class="back-btn" onclick="goTo('admin-trees')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Add new tree</span></div>
-      <div class="scrollable" style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:14px;">
+      <div class="scrollable admin-page-scroll">
         <div class="field-group"><div class="field-lbl"><i class="ti ti-id-badge" style="font-size:0.8667rem"></i> Tree ID</div><input class="field-inp" type="text" placeholder="e.g. 625008-01-0006" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-tag" style="font-size:0.8667rem"></i> Name</div><input class="field-inp" type="text" placeholder="e.g. Neem Tree" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i> Pincode</div><input class="field-inp" type="text" placeholder="e.g. 625008" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-building" style="font-size:0.8667rem"></i> Location</div><input class="field-inp" type="text" placeholder="e.g. Anna Nagar" /></div>
-        <button class="green-btn" style="background:#7c3aed;" onclick="alert('Tree added successfully!');goTo('admin-trees')"><i class="ti ti-plus"></i> Add tree</button>
+        <button class="green-btn admin-add-btn" onclick="alert('Tree added successfully!');goTo('admin-trees')"><i class="ti ti-plus"></i> Add tree</button>
       </div>
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">625008-01-0001</span></div>
       <div class="hero"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#2d5a1b,#3B6D11,#1e3d0f);"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div>Healthy</div><div class="hero-title"><h1>Neem Tree #0042 <button class="edit-btn" onclick="event.stopPropagation();goTo('admin-edit-tree')" style="background:rgba(255,255,255,0.15);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:0.7333rem;padding:3px 8px;vertical-align:middle;margin-left:6px;"><i class="ti ti-edit"></i> Edit</button></h1><p><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> Anna Nagar, Chennai <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin" style="font-size:0.8667rem"></i></button></p></div></div>
-      <div class="scrollable" style="padding:12px 14px 20px;">
+      <div class="scrollable admin-profile-scroll">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value">8.4<span class="stat-unit"> m</span></div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value">22<span class="stat-unit"> cm</span></div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value">14</div></div></div>
         <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span style="color:#3B6D11;font-weight:500">82 / 100</span></div><div class="health-bar"><div class="health-fill"></div></div></div>
         <div class="section-title">Tree info</div>
@@ -192,19 +193,19 @@
           <div class="log-entry" onclick="openAlbum(1)"><div class="log-dot" style="background:#9FE1CB"></div><div class="log-body"><div class="log-date">10 Jan 2026</div><div class="log-text">8.1 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>2 photos</span></div></div><div class="log-thumb" style="background:#1e3d1e;">🌳</div></div>
           <div class="log-entry" onclick="openAlbum(2)"><div class="log-dot" style="background:#C0DD97"></div><div class="log-body"><div class="log-date">15 Jul 2025</div><div class="log-text">7.6 m · 21 cm diameter</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips"><span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span></div></div><div class="log-thumb" style="background:var(--color-background-secondary);border:0.5px dashed var(--color-border-secondary);"><i class="ti ti-photo-off" style="font-size:1rem;color:var(--color-text-secondary)"></i></div></div>
         </div>
-        <div style="font-size:0.7333rem;color:var(--color-text-secondary);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
+        <div class="admin-hint-center"><i class="ti ti-hand-click" style="font-size:0.8rem"></i> Tap a log to view photos</div>
       </div>
     </div>
 
     <div class="modal-back" id="delete-confirm-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:10px 0;">
-          <div style="width:48px;height:48px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-alert-triangle" style="font-size:1.4667rem;color:#dc2626;"></i></div>
-          <div style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;">Delete this tree?</div>
-          <div style="font-size:0.8rem;color:var(--color-text-secondary);margin-bottom:18px;">This action cannot be undone. All logs and data associated with this tree will be permanently removed.</div>
-          <button class="green-btn" style="background:#dc2626;" onclick="alert('Tree deleted');document.getElementById('delete-confirm-modal').classList.remove('open');goTo('admin-trees')"><i class="ti ti-trash"></i> Delete permanently</button>
-          <button class="ghost-btn" style="margin-top:8px" onclick="document.getElementById('delete-confirm-modal').classList.remove('open')">Cancel</button>
+        <div class="modal-sheet-center pad-lg">
+          <div class="modal-icon-sm bg-red"><i class="ti ti-alert-triangle" style="font-size:1.4667rem;color:#dc2626;"></i></div>
+          <div class="modal-title">Delete this tree?</div>
+          <div class="modal-text">This action cannot be undone. All logs and data associated with this tree will be permanently removed.</div>
+          <button class="green-btn btn-danger" onclick="alert('Tree deleted');document.getElementById('delete-confirm-modal').classList.remove('open');goTo('admin-trees')"><i class="ti ti-trash"></i> Delete permanently</button>
+          <button class="ghost-btn ghost-btn-mt" onclick="document.getElementById('delete-confirm-modal').classList.remove('open')">Cancel</button>
         </div>
       </div>
     </div>
@@ -218,10 +219,10 @@
     <div class="modal-back" id="login-status-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
-        <div style="text-align:center;padding:6px 0;">
-          <div class="lsm-icon" id="lsm-icon" style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ti ti-clock" style="font-size:24px;"></i></div>
-          <div class="lsm-title" id="lsm-title" style="font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">Application under review</div>
-          <div class="lsm-text" id="lsm-text" style="font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;">Your login request is waiting for admin approval.</div>
+        <div class="modal-sheet-center">
+          <div class="lsm-icon modal-icon-lg" id="lsm-icon"><i class="ti ti-clock" style="font-size:24px;"></i></div>
+          <div class="lsm-title" id="lsm-title">Application under review</div>
+          <div class="lsm-text" id="lsm-text">Your login request is waiting for admin approval.</div>
           <button class="green-btn" onclick="closeLoginStatus(true)"><i class="ti ti-check"></i> Okay</button>
           </div>
         </div>

@@ -239,11 +239,10 @@ function goTo(page) {
   else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
-  
-}
+
   if (page === 'admin-trees') {
-  if (document.getElementById('admin-pincode')) { adminUpdatePincodeOptions(); adminUpdatePlaceOptions(); }
-  if (document.getElementById('admin-grid')) adminApplyFilters();
+    if (document.getElementById('admin-pincode')) { adminUpdatePincodeOptions(); adminUpdatePlaceOptions(); }
+    if (document.getElementById('admin-grid')) adminApplyFilters();
   }
 }
 

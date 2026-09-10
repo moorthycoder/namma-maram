@@ -455,6 +455,7 @@ function toggleTreeCard(btn) {
 }
 
 function goTo(page) {
+  console.log('[goTo]', page, !!document.getElementById('page-'+page));
   if (page === 'tree-logs') {
     var activePage = document.querySelector('.page.active');
     if (activePage) {
