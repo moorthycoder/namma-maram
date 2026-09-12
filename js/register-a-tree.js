@@ -1,4 +1,4 @@
-// register-a-tree-flow.js — shared Register A Tree flow, injected into any role page on load.
+// register-a-tree.js — shared Register A Tree flow, injected into any role page on load.
 
 var registerFlowCSS = "\n\
   .steps { display: flex; align-items: center; justify-content: center; padding: 10px 20px 0; flex-shrink: 0; }\n\

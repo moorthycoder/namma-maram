@@ -1,4 +1,4 @@
-// show-tree-details.js — shared helpers to open map.html with full tree card details.
+// show-tree-details-in-map.js — shared helpers to open map.html with full tree card details.
 
 function treeMapCoords(t) {
   return t.GIS.latitude + ',' + t.GIS.longitude + ',' + encodeURIComponent(t.treeId);

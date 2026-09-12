@@ -7,7 +7,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/app.css" />
 <link rel="stylesheet" href="css/ranger.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <div class="screen">
@@ -15,12 +17,13 @@
 
     <div class="page active" id="page-ranger-login">
       <div class="dash-header">
-        <div class="s-75e36a"><button class="back-btn inv" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button></div>
+        <div class="s-75e36a"><button class="back-btn inv" onclick="goBackFromRangerLogin()"><i class="ti ti-arrow-left"></i></button></div>
         <h2 class="s-ddcbbf">Ranger login</h2>
-        <p class="s-adfe10">Sign in to log and manage tree entries</p>
+        <p class="s-adfe10">Sign in to survey and record tree measurements</p>
       </div>
       <div class="s-e480cb">
-        <button class="google-btn" onclick="currentRole='ranger';googleAuth('ranger-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google</button>
+        <button class="green-btn continue-visible" id="continue-as-btn" type="button" onclick="continueAsRanger()"><i class="ti ti-login"></i> Continue as <span id="continue-as-name">—</span></button>
+        <button class="google-btn s-002535" onclick="currentRole='ranger';googleAuth('ranger-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
         <div class="s-33b889">Only authorised field rangers can log entries</div>
       </div>
     </div>
@@ -29,57 +32,58 @@
       <div class="scrollable s-b9761d">
         <div class="s-879ae8">Become a field ranger</div>
         <div class="s-59d216">Fill in your details to apply as a field ranger. Your application will be reviewed by the admin.</div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-user s-9bdb4a"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Ravi K." /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-user s-9bdb4a"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Sarita M." /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-phone s-9bdb4a"></i> Phone</div><input class="field-inp" type="tel" placeholder="e.g. 9876543210" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-map-pin s-9bdb4a"></i> Area / Location</div><input class="field-inp" type="text" placeholder="e.g. Anna Nagar" /></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-map-pin s-9bdb4a"></i> Area / Location</div><input class="field-inp" type="text" placeholder="e.g. Kallanai" /></div>
         <div class="field-group"><div class="field-lbl"><i class="ti ti-mail s-9bdb4a"></i> Email (optional)</div><input class="field-inp" type="email" placeholder="you@example.com" /></div>
         <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit application</button>
       </div>
     </div>
     <div class="page" id="page-ranger-dash">
       <div class="dash-header">
-        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Selvam</div></div><div class="avatar s-0bda1d" onclick="toggleLogoutDrop()"><span id="user-avatar">RK</span><div class="logout-drop" id="logout-drop"><div class="dd-item s-567789" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-logout s-64dd69"></i> Sign out</div></div></div></div>
-        <div class="dash-stats">
-          <div class="dash-stat s-b202c6" onclick="goTo('trees')"><div class="dash-stat-label">Your logs</div><div class="dash-stat-val" id="dash-log-count">—</div></div>
-          <div class="dash-stat s-b202c6" onclick="goTo('trees')"><div class="dash-stat-label">This month</div><div class="dash-stat-val" id="dash-month-count">—</div></div>
-          <div class="dash-stat s-b202c6" onclick="goTo('trees')"><div class="dash-stat-label">Trees covered</div><div class="dash-stat-val" id="dash-tree-count">—</div></div>
-          <div class="dash-stat"><div class="dash-stat-label">Zone</div><div class="dash-stat-val s-9bdb4a">—</div></div>
+        <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name">Sarita</div></div><div class="avatar s-0bda1d" onclick="toggleRangerLogoutDrop()"><span id="user-avatar">SA</span><div class="logout-drop" id="logout-drop-ranger"><div class="dd-item s-567789" onclick="rangerLogout()"><i class="ti ti-logout s-64dd69"></i> Sign out</div></div></div></div>
+        <div class="dash-toggle" id="dash-toggle-ranger">
+          <button class="dash-toggle-btn active" id="dash-btn-action" onclick="switchRangerPanel('action')">Action</button>
+          <button class="dash-toggle-btn" id="dash-btn-stat" onclick="switchRangerPanel('stat')">Stats</button>
         </div>
-        <div class="dbl-hint">Double-tap a card to view your trees</div>
+        <div class="dash-stats is-hidden" id="panel-ranger-stat">
+          <div class="dash-stat"><div class="dash-stat-label">Tree name requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openRangerTreeName('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-tree-name-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openRangerTreeName('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-tree-name-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Place name requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openRangerPlaceName('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-place-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openRangerPlaceName('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-place-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Register requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openRangerRegisterLog('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-register-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openRangerRegisterLog('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-register-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Survey requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openRangerSurveyRequests('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-survey-requests-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openRangerSurveyRequests('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-survey-requests-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">My Trees</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openRangerMyCurrent()"><div class="dash-split-title">Current</div><div class="dash-split-val" id="svy-my-trees-current">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openRangerMyPast()"><div class="dash-split-title">Past</div><div class="dash-split-val" id="svy-my-trees-past">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">This month trees</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openThisMonthTree('covered')"><div class="dash-split-title">Covered</div><div class="dash-split-val" id="svy-covered">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openThisMonthTree('waiting')"><div class="dash-split-title">Waiting</div><div class="dash-split-val" id="svy-waiting">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Total Survey logs</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openRangerLogsApproved()"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-logs-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openRangerLogsSubmitted()"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-logs-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">This month Survey Log</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openThisMonthSurveyLog('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="svy-this-month-log-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openThisMonthSurveyLog('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="svy-this-month-log-submitted">—</div></div></div></div>
+        </div>
+        <div class="action-tiles" id="panel-ranger-action">
+          <div class="action-tile tile-bg" onclick="openAppendTreeName()">
+            <div class="action-tile-icon green">🌿</div>
+            <div class="action-tile-title">Append Tree Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAppendPlaceName()">
+            <div class="action-tile-icon green">📍</div>
+            <div class="action-tile-title">Append Place Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openRegisterATreePage()">
+            <div class="action-tile-icon beige">🏷️</div>
+            <div class="action-tile-title">Register a Tree</div>
+            <div class="action-tile-sub">Add to registry</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="requestTreeForSurvey()">
+            <div class="action-tile-icon beige">🔍</div>
+            <div class="action-tile-title">Request a Tree for Survey</div>
+            <div class="action-tile-sub">Request for survey</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openRangerMyCurrent()">
+            <div class="action-tile-icon green">📐</div>
+            <div class="action-tile-title">Survey A Tree</div>
+            <div class="action-tile-sub">Log measurements</div>
+          </div>
+        </div>
       </div>
-      <div class="scrollable"><div class="s-096233">
-        <div class="s-8c3d1f">
-          <div class="s-af1b28" onclick="goTo('append-tree-name')">
-            <div class="s-485d6b">🌿</div>
-            <div class="s-c896c4"><div class="s-db59f5">Append Tree Name to Database</div><div class="s-59d216">Add a new tree name to the database</div></div>
-            <i class="ti ti-chevron-right s-cd5803"></i>
-          </div>
-          <div class="s-af1b28" onclick="goTo('append-place-name')">
-            <div class="s-485d6b">📍</div>
-            <div class="s-c896c4"><div class="s-db59f5">Append Place Name to Database</div><div class="s-59d216">Add a new place to the database</div></div>
-            <i class="ti ti-chevron-right s-cd5803"></i>
-          </div>
-          <div class="s-af1b28" onclick="goTo('register-tree')">
-            <div class="s-6d38f0">🌱</div>
-            <div class="s-c896c4"><div class="s-db59f5">Register a Tree</div><div class="s-59d216">Add a new tree to the registry</div></div>
-            <i class="ti ti-chevron-right s-cd5803"></i>
-          </div>
-          <div class="s-af1b28" onclick="goTo('selfie')">
-            <div class="s-485d6b">📐</div>
-            <div class="s-c896c4"><div class="s-db59f5">Survey A Tree</div><div class="s-59d216">Scan and log a tree's measurements</div></div>
-            <i class="ti ti-chevron-right s-cd5803"></i>
-          </div>
-          <div class="s-af1b28" onclick="goTo('trees')">
-            <div class="s-6d38f0">🌳</div>
-            <div class="s-c896c4"><div class="s-db59f5">My Trees</div><div class="s-59d216">Your trees and their logs</div></div>
-            <i class="ti ti-chevron-right s-cd5803"></i>
-          </div>
-        </div>
-        <div class="section-title">Recent entries</div>
-        <div class="info-card" id="recent-entries">
-        </div>
-        <div class="s-0dda27">Double-tap a log to open its entries</div>
-      </div></div>
     </div>
     <div class="page" id="page-trees">
       <div class="dash-header">
@@ -89,23 +93,88 @@
       <div class="scrollable s-a07490"><div id="page-trees-cards" class="s-abb3e3">
       </div></div>
     </div>
+    <div class="page" id="page-ranger-my-current">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">My trees — Current</span></div>
+      <div class="ranger-sort-bar"><button class="ghost-btn ranger-sort-btn" onclick="sortRangerMyCurrent('time')"><i class="ti ti-clock ranger-sort-icon"></i> Time A-Z</button><button class="ghost-btn ranger-sort-btn" onclick="sortRangerMyCurrent('treeId')"><i class="ti ti-hash ranger-sort-icon"></i> Tree ID A-Z</button></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-my-current-cards"></div><div class="waiting-empty is-hidden" id="ranger-my-current-empty">No current trees</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-my-past">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">My trees — Past</span></div>
+      <div class="ranger-sort-bar"><button class="ghost-btn ranger-sort-btn" onclick="sortRangerMyPast('time')"><i class="ti ti-clock ranger-sort-icon"></i> Time A-Z</button><button class="ghost-btn ranger-sort-btn" onclick="sortRangerMyPast('treeId')"><i class="ti ti-hash ranger-sort-icon"></i> Tree ID A-Z</button></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-my-past-cards"></div><div class="waiting-empty is-hidden" id="ranger-my-past-empty">No past trees</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-logs-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Logs — Approved</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-logs-approved-cards"></div><div class="waiting-empty is-hidden" id="ranger-logs-approved-empty">No approved logs</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-logs-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Logs — Submitted</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-logs-submitted-cards"></div><div class="waiting-empty is-hidden" id="ranger-logs-submitted-empty">No submitted logs</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-tree-name-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Tree name — Approved</span></div>
+      <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb">Approved tree names</div><div id="ranger-tree-name-approved-cards"></div><div class="waiting-empty is-hidden" id="ranger-tree-name-approved-empty">No approved tree names</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-tree-name-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Tree name — Submitted</span></div>
+      <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb">Submitted tree names</div><div id="ranger-tree-name-submitted-cards"></div><div class="waiting-empty is-hidden" id="ranger-tree-name-submitted-empty">No submitted tree names</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-place-name-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Place name — Approved</span></div>
+      <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb">Approved place names</div><div id="ranger-place-name-approved-cards"></div><div class="waiting-empty is-hidden" id="ranger-place-name-approved-empty">No approved place names</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-place-name-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Place name — Submitted</span></div>
+      <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb">Submitted place names</div><div id="ranger-place-name-submitted-cards"></div><div class="waiting-empty is-hidden" id="ranger-place-name-submitted-empty">No submitted place names</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-register-log-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Register — Approved</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-register-log-approved-cards"></div><div class="waiting-empty is-hidden" id="ranger-register-log-approved-empty">No approved register requests</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-register-log-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Register — Submitted</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-register-log-submitted-cards"></div><div class="waiting-empty is-hidden" id="ranger-register-log-submitted-empty">No submitted register requests</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-survey-requests-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey requests — Approved</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-survey-requests-approved-cards"></div><div class="waiting-empty is-hidden" id="ranger-survey-requests-approved-empty">No approved survey requests</div></div></div>
+    </div>
+    <div class="page" id="page-ranger-survey-requests-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey requests — Submitted</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="ranger-survey-requests-submitted-cards"></div><div class="waiting-empty is-hidden" id="ranger-survey-requests-submitted-empty">No submitted survey requests</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-covered">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month — Covered</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="this-month-covered-cards"></div><div class="waiting-empty is-hidden" id="this-month-covered-empty">No covered trees this month</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-waiting">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month — Waiting</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="this-month-waiting-cards"></div><div class="waiting-empty is-hidden" id="this-month-waiting-empty">No waiting trees this month</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-log-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month Survey Log — Approved</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="this-month-log-approved-cards"></div><div class="waiting-empty is-hidden" id="this-month-log-approved-empty">No approved logs this month</div></div></div>
+    </div>
+    <div class="page" id="page-this-month-log-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToRangerStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month Survey Log — Submitted</span></div>
+      <div class="scrollable"><div class="ranger-list-pad"><div id="this-month-log-submitted-cards"></div><div class="waiting-empty is-hidden" id="this-month-log-submitted-empty">No submitted logs this month</div></div></div>
+    </div>
     <div class="page" id="page-profile">
-      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label">—</span></div>
-      <div class="hero"><div class="s-807f89"></div><div class="hero-overlay"></div><div class="hero-badge" id="profile-health-badge"><div class="hero-dot"></div>—</div><div class="hero-title"><h1 id="profile-hero-title">—</h1><p id="profile-hero-addr"><i class="ti ti-map-pin s-d2831c"></i> — <button class="map-pin-btn" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin s-9bdb4a"></i></button></p></div></div>
-      <div class="scrollable s-35ac28">
-        <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value" id="profile-stat-height">—</div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value" id="profile-stat-diam">—</div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">—</div></div></div>
-        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span class="s-e9ddd4" id="profile-health-score">— / 100</span></div><div class="health-bar"><div class="health-fill" id="profile-health-fill"></div></div></div>
+      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span></div>
+      <div class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin map-pin-icon"></i> <span id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin map-pin-btn-icon"></i></button></p></div></div>
+      <div class="scrollable profile-scroll">
+        <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value" id="profile-stat-height">—</div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value" id="profile-stat-diameter">—</div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">—</div></div></div>
+        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span class="health-score" id="profile-health-score">— / 100</span></div><div class="health-bar"><div class="health-fill" id="profile-health-fill"></div></div></div>
         <div class="section-title">Tree info</div>
-        <div class="info-card s-157a9c">
-          <div class="info-row"><span class="info-key"><i class="ti ti-leaf s-9bdb4a"></i>Species</span><span class="info-val" id="profile-info-species">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-user s-9bdb4a"></i>Added by</span><span class="info-val" id="profile-info-caregiver">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-calendar s-9bdb4a"></i>First logged</span><span class="info-val" id="profile-info-first">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list s-9bdb4a"></i>Total logs</span><span class="info-val" id="profile-info-total">— entries</span></div>
+        <div class="info-card info-card-mb">
+          <div class="info-row"><span class="info-key"><i class="ti ti-leaf field-icon-sm"></i>Species</span><span class="info-val" id="profile-species">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>Added by</span><span class="info-val" id="profile-registered-by">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-calendar field-icon-sm"></i>First logged</span><span class="info-val" id="profile-first-logged">—</span></div>
+          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list field-icon-sm"></i>Total logs</span><span class="info-val" id="profile-total-logs">—</span></div>
         </div>
         <div class="section-title">Growth logs</div>
-        <div class="info-card" id="profile-log-list">
-        </div>
-        <div class="s-b23b11"><i class="ti ti-hand-click s-8b8072"></i> Tap a log to view photos</div>
+        <div class="info-card" id="profile-logs"></div>
+        <div class="log-hint-center"><i class="ti ti-hand-click log-hint-icon"></i> Tap a log to view photos</div>
       </div>
     </div>
     <div class="page" id="page-album">
@@ -114,11 +183,14 @@
       <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div class="s-e20456" id="album-note"></div></div></div>
     </div>
     <div class="page" id="page-tree-logs">
-      <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="tree-logs-title">— Logs</span></div>
+      <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Neem Tree #0042 — Logs</span></div>
       <div class="scrollable"><div class="s-4f7a6b">
         <div class="s-621e2e">Double-tap a log to view photos</div>
         <div class="section-title">Growth logs</div>
-        <div class="info-card" id="tree-log-list">
+        <div class="info-card">
+          <div class="log-tracker-entry" onclick="openAlbum(0)"><div class="log-dot s-c59061"></div><div><div class="log-date">12 Jun 2026</div><div class="log-text s-ec1a31">Height 8.4 m · Diameter 22 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>3 photos</span></div></div></div>
+          <div class="log-tracker-entry" onclick="openAlbum(1)"><div class="log-dot s-650134"></div><div><div class="log-date">10 Jan 2026</div><div class="log-text s-ec1a31">Height 8.1 m · Diameter 21 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>2 photos</span></div></div></div>
+          <div class="log-tracker-entry" onclick="openAlbum(2)"><div class="log-dot s-93f575"></div><div><div class="log-date">15 Jul 2025</div><div class="log-text s-ec1a31">Height 7.6 m · Diameter 21 cm</div><div class="log-by">By Priya S. · GRR-2023-042</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.4 m</span></div></div></div>
         </div>
       </div></div>
     </div>
@@ -160,13 +232,27 @@
         </div>
       </div>
     </div>
+    <div class="modal-back" id="delete-confirm-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="s-d44a8f">
+          <div class="delete-confirm-icon s-200f22"><i class="ti ti-trash s-74af75"></i></div>
+          <div class="delete-confirm-title s-c5c660">Remove request?</div>
+          <div class="delete-confirm-text s-9d97f8" id="delete-confirm-text">This will remove the request from your submitted list.</div>
+          <button class="green-btn delete-confirm-btn s-e7884f" onclick="confirmDeleteRangerCard()"><i class="ti ti-trash"></i> Delete</button>
+          <button class="ghost-btn s-d79ce2" onclick="cancelDeleteRangerCard()"><i class="ti ti-x"></i> Cancel</button>
+        </div>
+      </div>
+    </div>
   </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/storage.js"></script>
+<script src="js/gis.js"></script>
 <script src="js/dashboard.js"></script>
-<script src="js/show-tree-details.js"></script>
+<script src="js/show-tree-details-in-map.js"></script>
 <script src="js/ranger.js"></script>
 <script src="js/append-a-tree-name.js"></script>
 <script src="js/append-a-place-name.js"></script>
-<script src="js/survey-a-tree-flow.js"></script>
+<script src="js/survey-a-tree.js"></script>
 </body>
 </html>

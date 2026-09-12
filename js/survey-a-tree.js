@@ -1,4 +1,4 @@
-// survey-a-tree-flow.js — shared Survey A Tree flow, injected into any role page on load.
+// survey-a-tree.js — shared Survey A Tree flow, injected into any role page on load.
 
 var surveyFlowCSS = "\n\
   .steps { display: flex; align-items: center; justify-content: center; padding: 10px 20px 0; flex-shrink: 0; }\n\
