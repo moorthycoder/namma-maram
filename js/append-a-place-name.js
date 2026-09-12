@@ -88,7 +88,7 @@ var appendPlacePages = "\n\
     <div style=\"font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;\">The place name has been appended to the database.</div>\n\
   </div>\n\
   <div class=\"scrollable flow-scroll\">\n\
-    <button class=\"green-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-layout-dashboard\"></i> Back to dashboard</button>\n\
+    <button class=\"green-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-list\"></i> Back to list</button>\n\
   </div>\n\
 </div>\n";
 
@@ -127,16 +127,44 @@ function appendPlaceNameToDatabase() {
           try{ sessionStorage.setItem('loginCredentialsV1', JSON.stringify(login)); }catch(e){}
           try{ if(window.parent&&window.parent!==window&&window.parent._login) window.parent._login=login; window._login=login; if(typeof storage!=='undefined'&&storage.set) storage.set('login', login); }catch(e){}
         } else {
-          appendPlaceName(payload);
+          appendAndRecordPlaceName(payload);
         }
       } else {
-        appendPlaceName(payload);
+        appendAndRecordPlaceName(payload);
       }
-    }catch(e){ appendPlaceName(payload); }
+    }catch(e){ appendAndRecordPlaceName(payload); }
   } else {
-    appendPlaceName(payload);
+    appendAndRecordPlaceName(payload);
   }
   goTo('append-place-success');
+}
+
+function appendAndRecordPlaceName(payload) {
+  appendPlaceName(payload);
+  try {
+    var login = null;
+    try { login = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}'); } catch (e) {}
+    login = login || {};
+    login['tree-login'] = login['tree-login'] || {};
+    login['tree-login'].surveyor = login['tree-login'].surveyor || {};
+    login['tree-login'].surveyor.stats = login['tree-login'].surveyor.stats || {};
+    var place_name_stats = login['tree-login'].surveyor.stats['place-name'] || {};
+    var current_time = new Date();
+    var pad_number = function(n) { return String(n).padStart(2, '0'); };
+    var recorded_entry = {
+      pinCode: payload.pinCode || '',
+      names: payload.names || {},
+      revisedAt: '' + current_time.getFullYear() + pad_number(current_time.getMonth() + 1) + pad_number(current_time.getDate()) + 'T' + pad_number(current_time.getHours()) + pad_number(current_time.getMinutes()) + pad_number(current_time.getSeconds()),
+      status: 'submitted',
+      updatedBy: login['tree-login'].surveyor.userId || 'SVY2612345678'
+    };
+    place_name_stats.submitted = place_name_stats.submitted || [];
+    place_name_stats.submitted.push(recorded_entry);
+    login['tree-login'].surveyor.stats['place-name'] = place_name_stats;
+    try { sessionStorage.setItem('loginCredentialsV1', JSON.stringify(login)); } catch (e) {}
+    try { if (window.parent && window.parent !== window && window.parent._login) window.parent._login = login; window._login = login; if (typeof storage !== 'undefined' && storage.set) storage.set('login', login); } catch (e) {}
+  } catch (e) {}
+  return true;
 }
 
 function injectAppendPlaceFlow() {
@@ -181,4 +209,25 @@ injectAppendPlaceFlow();
       document.addEventListener('input', checkDirtyPlace);
     }catch(e){}
   },400);
+})();
+
+// --- standalone append-a-place-name.html support (merged from append-a-place-name-page.js) ---
+(function(){
+  if (location.pathname.indexOf('append-a-place-name.html') === -1) return;
+  var parentUrl = new URLSearchParams(location.search).get('parent') || 'test-bed-3.html';
+  window.roleDash = function(){ return parentUrl; };
+  window.appendPlaceGoTo = function(page){
+    if (page && /\.html/.test(page)) {
+      try { if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') { window.parent.backToStart(); return; } } catch(e){}
+      var p=new URLSearchParams(location.search).get('parent');
+      if(p){ window.location.href=decodeURIComponent(p); return; }
+      window.location.href=page; return;
+    }
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    var el = document.getElementById('page-' + page);
+    if (el) el.classList.add('active');
+  };
+  window.goTo = window.appendPlaceGoTo;
+  window.render = { init: function () { buildAppendPlaceFields(); } };
+  window.goTo('append-place-name');
 })();

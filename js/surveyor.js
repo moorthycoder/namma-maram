@@ -301,7 +301,7 @@ function openAppendTreeName() {
   frame.className = 'app-frame';
   frame.id = 'app-frame';
   frame.title = 'Append Tree Name';
-  frame.src = 'append-a-tree-name.html?parent=surveyor.html&userid=' + encodeURIComponent(user_id);
+  frame.src = 'append-a-tree-name.html?parent=' + encodeURIComponent('surveyor.html?hub=surveyor-tree-name-submitted') + '&userid=' + encodeURIComponent(user_id);
   var dash_page = document.getElementById('page-surveyor-dash');
   if (dash_page) dash_page.style.display = 'none';
   var screen = document.querySelector('.screen');
@@ -323,7 +323,7 @@ function openAppendPlaceName() {
   frame.className = 'app-frame';
   frame.id = 'app-frame';
   frame.title = 'Append Place Name';
-  frame.src = 'append-a-place-name.html?parent=surveyor.html&userid=' + encodeURIComponent(user_id);
+  frame.src = 'append-a-place-name.html?parent=' + encodeURIComponent('surveyor.html?hub=surveyor-place-name-submitted') + '&userid=' + encodeURIComponent(user_id);
   var dash_page = document.getElementById('page-surveyor-dash');
   if (dash_page) dash_page.style.display = 'none';
   var screen = document.querySelector('.screen');
@@ -430,8 +430,28 @@ function checkNewSurveyorTrees() {
 
 function backToStart() {
   var frame = document.getElementById('app-frame');
+  var return_to = '';
+  if (frame) {
+    try {
+      var query_string = (frame.getAttribute('src') || '').split('?')[1] || '';
+      var parent_param = new URLSearchParams(query_string).get('parent') || '';
+      if (parent_param && parent_param.indexOf('surveyor.html') > -1) { return_to = parent_param; }
+    } catch (e) {}
+  }
   if (frame && frame.parentNode) { frame.parentNode.removeChild(frame); }
   var dash_page = document.getElementById('page-surveyor-dash');
+  if (dash_page) dash_page.style.display = '';
+  if (return_to && return_to.indexOf('hub=surveyor-tree-name') > -1) {
+    try { renderSurveyorStats(); } catch (e) {}
+    if (return_to.indexOf('submitted') > -1) openSurveyorTreeName('submitted'); else openSurveyorTreeName('approved');
+    return;
+  }
+  if (return_to && return_to.indexOf('hub=surveyor-place-name') > -1) {
+    try { renderSurveyorStats(); } catch (e) {}
+    if (return_to.indexOf('submitted') > -1) openSurveyorPlaceName('submitted'); else openSurveyorPlaceName('approved');
+    return;
+  }
+  if (return_to) { window.top.location.href = return_to; return; }
   if (dash_page) { dash_page.style.display = 'flex'; dash_page.classList.add('active'); }
 }
 
