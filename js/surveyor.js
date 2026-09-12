@@ -1361,26 +1361,32 @@ function renderSurveyorLogCards(target_id, empty_id, id_list, loggedAtMap, hideL
   if (!filtered.length) { target_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; }
 }
 
-function surveyorMyTreeCardHtml(t, is_current, hide_actions) {
+function surveyorBaseData(t) {
   var q = String.fromCharCode(39);
   var c = t.card || {};
   var enc = t['encounters-list'] || {};
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
   var st = last['health-status'] || {};
-  var name_txt = surveyorCardName(t) || '';
-  var addr_txt = surveyorCardAddr(t) || c.addr || '';
-  var logs_display = keys.length || c.logs || 0;
+  return { q:q, c:c, enc:enc, keys:keys, last:last, st:st, name_txt:surveyorCardName(t)||'', addr_txt:surveyorCardAddr(t)||c.addr||'', logs_display:keys.length||c.logs||0 };
+}
+function surveyorMyTreeCardHtml(t, is_current, hide_actions) {
+  var d = surveyorBaseData(t);
   var added_label = t.addedAt ? (function(){ var m=/^(\d{4})(\d{2})(\d{2})T/.exec(t.addedAt); return m ? m[3]+'-'+m[2]+'-'+m[1] : t.addedAt; })() : '';
-  var delete_btn = is_current ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteSurveyorMyCurrent(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i></button>' : '';
+  var delete_btn = is_current ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteSurveyorMyCurrent(' + d.q + t.treeId + d.q + ')"><i class="ti ti-trash"></i></button>' : '';
   var top_row = added_label ? '<div class="tcard-added-at" style="padding:8px 11px;font-size:0.6667rem;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:space-between;gap:4px;"><span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + added_label + '</span>' + delete_btn + '</div>' : (is_current ? '<div class="tcard-added-at" style="padding:8px 11px;font-size:0.6667rem;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:space-between;gap:4px;"><span></span>' + delete_btn + '</div>' : '');
-  return '<div class="sponsor-tree-card" onclick="surveyorSurveyTree(' + q + t.treeId + q + ')">' +
+  return '<div class="sponsor-tree-card surveyor-my-card" onclick="openProfile(' + d.q + t.treeId + d.q + ')">' +
     top_row +
-    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '#234712') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '🌴') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openSurveyorReviewPage(' + q + t.treeId + q + ',' + q + q + ')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>' +
+    '<div class="tree-card-hero" style="background:' + (t.bg || d.c.bg || '#234712') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || d.c.emoji || '🌴') + ' ' + d.name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openSurveyorReviewPage(' + d.q + t.treeId + d.q + ',' + d.q + d.q + ')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>' +
     '</div>';
 }
+function surveyorCurrentCardHtml(t){ var h=surveyorMyTreeCardHtml(t,true,false); return h.replace('surveyor-my-card','surveyor-current-card'); }
+function surveyorPastCardHtml(t){ var h=surveyorMyTreeCardHtml(t,false,false); return h.replace('surveyor-my-card','surveyor-past-card'); }
+function surveyorLogCardWrapper(t,at,hide,cls){ var h=surveyorLogCardHtml(t,at,hide,cls); var map={ 'surveyor-logs-approved':'surveyor-log-approved-card', 'surveyor-logs-submitted':'surveyor-log-submitted-card', 'surveyor-register-log-approved':'surveyor-register-approved-card', 'surveyor-register-log-submitted':'surveyor-register-submitted-card', 'surveyor-survey-requests-approved':'surveyor-survey-approved-card', 'surveyor-survey-requests-submitted':'surveyor-survey-submitted-card' }; var c='surveyor-log-card'; for(var k in map) if(String(cls).indexOf(k)>-1) c=map[k]; return h.replace('sponsor-tree-card','sponsor-tree-card '+c); }
+function surveyorTreeNameCardWrapper(e,sub){ var h=surveyorTreeNameCardHtml(e,sub); return h.replace('surveyor-card','surveyor-card '+(sub?'surveyor-tree-submitted-card':'surveyor-tree-approved-card')); }
+function surveyorPlaceNameCardWrapper(e,sub){ var h=surveyorPlaceNameCardHtml(e,sub); return h.replace('surveyor-card','surveyor-card '+(sub?'surveyor-place-submitted-card':'surveyor-place-approved-card')); }
 function surveyorSurveyTree(treeId) {
   var login_data = storage.get('login') || window._login || {};
   var role = (login_data['tree-login'] && login_data['tree-login']['surveyor']) || {};
@@ -1403,7 +1409,9 @@ function renderSurveyorMyTreeCards(target_id, empty_id, id_list, addedAtMap) {
   filtered.forEach(function(t){ if (addedAtMap && addedAtMap[t.treeId]) t.addedAt = addedAtMap[t.treeId]; });
   var is_current = String(target_id).indexOf('current') > -1 ? true : false;
   var hide_actions = String(target_id).indexOf('this-month') > -1 ? true : false;
-  target_el.innerHTML = filtered.map(function (t) { return surveyorMyTreeCardHtml(t, is_current, hide_actions); }).join('');
+  var fn = String(target_id).indexOf('current')>-1 ? surveyorCurrentCardHtml : surveyorPastCardHtml;
+  if(String(target_id).indexOf('this-month')>-1) fn = function(t){ return surveyorMyTreeCardHtml(t,false,true).replace('surveyor-my-card','surveyor-month-card'); };
+  target_el.innerHTML = filtered.map(function (t) { return fn(t); }).join('');
   if (!filtered.length) { target_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; }
 }
 function openSurveyorMyCurrent() {

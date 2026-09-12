@@ -452,7 +452,7 @@ function openTreeLogs(treeId) {
       var note_val = e.notes || (e.fieldObservation && e.fieldObservation.notes) || '';
       var rec_val = e.recommendations || (e.fieldObservation && e.fieldObservation.recommendations) || '';
       var c = tree.card || {};
-      html += '<div class="log-tracker-entry" onclick="openAlbumForTree(\'' + treeId + '\', ' + idx + ')"><div class="log-dot" style="background:' + dots[idx % 3] + ';margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">' + (e.registeredDate || e.updatedDate || k) + '</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height ' + (hs.height || c.height || '—') + ' · Diameter ' + (hs.diameter || c.diameter || '—') + '</div><div class="log-by">By ' + (e.registeredBy || e.updatedBy || '—') + '</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b style="color:red">Note</b> ' + (note_val || '—') + '</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b style="color:red">Recommendation</b> ' + (rec_val || '—') + '</span></div><div class="log-chips" style="margin-top:4px;">' + (hs.height ? '<span class="chip">' + hs.height + '</span>' : '') + (e.photos && e.photos.snapshots && e.photos.snapshots.length ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + e.photos.snapshots.length + ' photos</span>' : '') + '</div></div></div>';
+      html += '<div class="log-tracker-entry" onclick="openAlbumForTree(\'' + treeId + '\', ' + idx + ')"><div class="log-dot" style="background:' + dots[idx % 3] + ';margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">' + (e.registeredDate || e.updatedDate || k) + '</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height ' + (hs.height || c.height || '—') + ' · Diameter ' + (hs.diameter || c.diameter || '—') + '</div><div class="log-by">By ' + (e.registeredBy || e.updatedBy || '—') + '</div><div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b class="log-label-red">Note</b> ' + (note_val || '—') + '</span></div><div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b class="log-label-red">Recommendation</b> ' + (rec_val || '—') + '</span></div><div class="log-chips" style="margin-top:4px;">' + (hs.height ? '<span class="chip">' + hs.height + '</span>' : '') + (e.photos && e.photos.snapshots && e.photos.snapshots.length ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + e.photos.snapshots.length + ' photos</span>' : '') + '</div></div></div>';
     }
     list_el.innerHTML = html || '<div style="font-size:0.8rem;color:var(--color-text-secondary);text-align:center;padding:20px;">No logs yet</div>';
   }
@@ -594,7 +594,7 @@ function openCaregiverWaitingRequests() {
   var requestList = ids.map(function(id){ for(var i=0;i<data.length;i++){ if(data[i].treeId===id) { var copy_t = {}; for(var k in data[i]) copy_t[k]=data[i][k]; copy_t.addedAt = added_map[id]; return copy_t; } } return null; }).filter(function(t){ return !!t; });
   var cardsEl = document.getElementById('caregiver-waiting-cards');
   var emptyEl = document.getElementById('caregiver-waiting-empty');
-  if (cardsEl) cardsEl.innerHTML = requestList.map(caregiverCardHtml).join('');
+  if (cardsEl) cardsEl.innerHTML = requestList.map(caregiverSubmittedCardHtml).join('');
   if (emptyEl) emptyEl.style.display = requestList.length ? 'none' : 'block';
   goTo('caregiver-waiting');
 }
@@ -674,7 +674,7 @@ function removePendingCaregiver(tree_id) {
   else { closeCaregiverSeeingModal(); if (window.render && typeof window.render.init === 'function') window.render.init(); }
 }
 
-function caregiverCardHtml(t) {
+function caregiverBaseData(t) {
   var q = String.fromCharCode(39);
   var c = t.card || {};
   var enc = t['encounters-list'] || {};
@@ -686,18 +686,56 @@ function caregiverCardHtml(t) {
   var addr_txt = caregiverCardAddr(t) || c.addr || '';
   var due_raw = t['encounter-due-date'] || '';
   var due_display = '';
-  if (due_raw) { var due_m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(due_raw); due_display = due_m ? due_m[3] + '-' + due_m[2] + '-' + due_m[1] : due_raw; }
-  var is_due_label = !!t.isDueCard || !!t.isFinishedCard;
-  var top_label = is_due_label ? 'Due: ' + due_display : 'Added: ' + t.addedAt;
-  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
-  var btns_html = '<div class="tree-card-btns">' + view_logs_btn + '</div>';
-  return '<div class="tree-card-caregiver" onclick="surveyDueTree(\'' + t.treeId + '\')">' +
-    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> ' + top_label + '</span>' + (t.isPast ? '' : '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + t.treeId + '\')"><i class="ti ti-trash"></i></button>') + '</div>' +
-    '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (status || st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>' +
-    btns_html +
-    '</div>';
+  if (due_raw) { var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(due_raw); due_display = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : due_raw; }
+  var logs_display = keys.length || c.logs || 0;
+  return { t:t, q:q, c:c, enc:enc, keys:keys, last:last, st:st, status:status, name_txt:name_txt, addr_txt:addr_txt, due_raw:due_raw, due_display:due_display, logs_display:logs_display };
 }
+function caregiverCurrentCardHtml(t) {
+  var d = caregiverBaseData(t);
+  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
+  return '<div class="tree-card-caregiver caregiver-current-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + d.t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
+    '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+}
+function caregiverPastCardHtml(t) {
+  var d = caregiverBaseData(t);
+  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
+  return '<div class="tree-card-caregiver caregiver-past-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span></div>' +
+    '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+}
+function caregiverSubmittedCardHtml(t) {
+  var d = caregiverBaseData(t);
+  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
+  return '<div class="tree-card-caregiver caregiver-submitted-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + d.t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
+    '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-status"><div class="status-dot status-dot-warn"></div><div class="status-txt">Waiting approval</div></div><div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+}
+function caregiverDueCardHtml(t) {
+  var d = caregiverBaseData(t);
+  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
+  return '<div class="tree-card-caregiver caregiver-due-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Due: ' + d.due_display + '</span></div>' +
+    '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+}
+function caregiverFinishedCardHtml(t) {
+  var d = caregiverBaseData(t);
+  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
+  return '<div class="tree-card-caregiver caregiver-finished-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span></div>' +
+    '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+}
+function caregiverCardHtml(t) { return caregiverSubmittedCardHtml(t); }
 function removeCaregiverCard(remove_tree_id) {
   var login_data = window._login || {};
   var tree_login = login_data['tree-login'] || {};
@@ -772,9 +810,9 @@ function renderCaregiverCards() {
   var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return currentIds.indexOf(a.treeId) - currentIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=current_map[t.treeId]; c.isCurrentSurvey=true; return c; }) : [];
   var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; c.isPast=true; return c; }) : [];
   var currentCards = document.getElementById('caregiver-current-cards');
-  if (currentCards) currentCards.innerHTML = currentList.map(caregiverCardHtml).join('');
+  if (currentCards) currentCards.innerHTML = currentList.map(caregiverCurrentCardHtml).join('');
   var pastCards = document.getElementById('caregiver-past-cards');
-  if (pastCards) pastCards.innerHTML = pastList.map(caregiverCardHtml).join('');
+  if (pastCards) pastCards.innerHTML = pastList.map(caregiverPastCardHtml).join('');
   caregiveredCount = currentList.length + pastList.length;
   setStatById('c-tree-current', currentList.length);
   setStatById('c-tree-past', pastList.length);
@@ -878,13 +916,13 @@ function updateChecksThisMonthStats() {
   } catch(e) {}
   var checksCardsEl = document.getElementById('caregiver-checks-cards');
   if (checksCardsEl) {
-    checksCardsEl.innerHTML = finishedTrees.map(function (t) { var c={}; for(var k in t) c[k]=t[k]; c.addedAt=currentMapForChecks[t.treeId]||''; c.isPast=false; c.isDueCard=true; c.isFinishedCard=true; return caregiverCardHtml(c); }).join('');
+    checksCardsEl.innerHTML = finishedTrees.map(function (t) { var c={}; for(var k in t) c[k]=t[k]; c.addedAt=currentMapForChecks[t.treeId]||''; return caregiverFinishedCardHtml(c); }).join('');
     var checksEmptyEl = document.getElementById('caregiver-checks-empty');
     if (checksEmptyEl) checksEmptyEl.style.display = finishedTrees.length ? 'none' : 'block';
   }
   var checksDueEl = document.getElementById('caregiver-checks-due-cards');
   if (checksDueEl) {
-    checksDueEl.innerHTML = dueTrees.map(function (t) { var c={}; for(var k in t) c[k]=t[k]; c.addedAt=currentMapForChecks[t.treeId]||''; c.isPast=false; c.isDueCard=true; return caregiverCardHtml(c); }).join('');
+    checksDueEl.innerHTML = dueTrees.map(function (t) { var c={}; for(var k in t) c[k]=t[k]; c.addedAt=currentMapForChecks[t.treeId]||''; return caregiverDueCardHtml(c); }).join('');
     var checksDueEmptyEl = document.getElementById('caregiver-checks-due-empty');
     if (checksDueEmptyEl) checksDueEmptyEl.style.display = dueTrees.length ? 'none' : 'block';
   }

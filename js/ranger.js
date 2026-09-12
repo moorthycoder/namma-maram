@@ -332,8 +332,8 @@ function renderTreeLogs() {
   var list = document.getElementById('tree-log-list');
   if (!list) { return; }
   list.innerHTML = logs.map(function (log, i) {
-    var notes = log.note ? '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> ' + log.note + '</span></div>' : '';
-    var todo = log.todo ? '<div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> ' + log.todo + '</span></div>' : '';
+    var notes = log.note ? '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b class="log-label-red">Field notes</b> ' + log.note + '</span></div>' : '';
+    var todo = log.todo ? '<div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b class="log-label-red">To do</b> ' + log.todo + '</span></div>' : '';
     var chips = log.photos.length ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + log.photos.length + ' photos</span>' : '';
     return '<div class="log-tracker-entry" onclick="openAlbum(' + i + ')"><div class="log-dot" style="background:' + logColor(log) + ';margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-date">' + log.date + '</div><div class="log-text" style="font-size:0.8rem;color:var(--color-text-primary);">Height ' + log.height + ' · Diameter ' + log.diam + '</div><div class="log-by">By ' + log.by + '</div>' + notes + todo + (chips ? '<div class="log-chips" style="margin-top:4px;">' + chips + '</div>' : '') + '</div></div>';
   }).join('');
@@ -372,8 +372,8 @@ function renderProfileLogs() {
   if (!list) { return; }
   list.innerHTML = logs.map(function (log, i) {
     var dot = logColor(log);
-    var notes = log.note ? '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b>Field notes</b> ' + log.note + '</span></div>' : '';
-    var todo = log.todo ? '<div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b>To do</b> ' + log.todo + '</span></div>' : '';
+    var notes = log.note ? '<div class="log-notes"><i class="ti ti-notes" style="font-size:0.7rem;flex-shrink:0"></i><span><b class="log-label-red">Field notes</b> ' + log.note + '</span></div>' : '';
+    var todo = log.todo ? '<div class="log-todo"><i class="ti ti-clipboard-check" style="font-size:0.7rem;flex-shrink:0"></i><span><b class="log-label-red">To do</b> ' + log.todo + '</span></div>' : '';
     var chips = log.photos.length ? '<span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + log.photos.length + ' photos</span>'
                                  : '<span style="font-size:0.6667rem;color:var(--color-text-secondary);font-style:italic;">No photos</span>';
     var thumb = log.photos.length

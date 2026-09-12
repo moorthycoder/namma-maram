@@ -108,7 +108,7 @@ body { background: var(--color-background-primary); overflow: hidden; }
   .log-dot-1 { background: #9FE1CB; }
   .log-dot-2 { background: #C0DD97; }
   .log-notes i, .log-todo i { font-size: 0.7rem; flex-shrink: 0; }
-  .log-label-red { color: red; }
+  .log-label-red { color: #fca5a5 !important; }
   .logs-empty { font-size: 0.8rem; color: var(--color-text-secondary); text-align: center; padding: 20px; }
   .album-photo-emoji { font-size: 26px; }
   .album-photo-emoji-main { font-size: 38px; }

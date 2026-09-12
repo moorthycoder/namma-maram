@@ -490,3 +490,4 @@ body {
 .s-292433 { padding:14px; }
 .s-ed22fc { outline:2px solid var(--color-theme);border-radius:12px;padding:4px; }
 .s-3733d4 { font-size:0.8rem;color:var(--color-text-primary);line-height:1.5;background:var(--color-background-secondary);padding:10px;border-radius:10px; }
+.log-label-red { color: #fca5a5 !important; }
