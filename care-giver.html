@@ -83,7 +83,7 @@
       <div class="scrollable"><div class="dashboard-scroll-pad">
         <div class="action-tiles">
           <div class="action-tile tile-bg" onclick="openTreePool()"><div class="action-tile-icon green">❤️</div><div class="action-tile-title">Pick a tree to care</div><div class="action-tile-sub">Adopt and care</div></div>
-          <div class="action-tile tile-bg" onclick="goTo('caregiver-current')"><div class="action-tile-icon green">📐</div><div class="action-tile-title">Survey a tree</div><div class="action-tile-sub">Log measurements</div></div>
+          <div class="action-tile tile-bg" onclick="goTo('caregiver-survey-current')"><div class="action-tile-icon green">📐</div><div class="action-tile-title">Survey a tree</div><div class="action-tile-sub">Log measurements</div></div>
           <div class="action-tile tile-bg" onclick="openRegisterATreePage()"><div class="action-tile-icon beige">🏷️</div><div class="action-tile-title">Register a Tree</div><div class="action-tile-sub">Add to registry</div></div>
         </div>
       </div></div>
@@ -108,6 +108,13 @@
       <div class="scrollable"><div class="section-head-pad">
         <div class="section-title section-title-mb">My trees in care</div>
         <div id="caregiver-current-cards"></div>
+      </div></div>
+    </div>
+    <div class="page" id="page-caregiver-survey-current">
+      <div class="topbar"><button class="back-btn" onclick="goTo('caregiver-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Survey trees</span></div>
+      <div class="scrollable"><div class="section-head-pad">
+        <div class="section-title section-title-mb">Pick a tree to survey</div>
+        <div id="caregiver-survey-current-cards"></div>
       </div></div>
     </div>
     <div class="page" id="page-caregiver-past">
@@ -161,7 +168,6 @@
     <div class="page" id="page-tree-logs">
       <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="tree-logs-title">Tree — Logs</span></div>
       <div class="scrollable"><div class="log-header-pad">
-        <div class="log-hint">Double-tap a log to view photos</div>
         <div class="section-title">Growth logs</div>
         <div class="info-card" id="tree-logs-list"></div>
       </div></div>

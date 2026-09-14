@@ -95,7 +95,13 @@ var registerFlowCSS = "\n\
   .success-top { background: var(--color-theme-light); padding: 24px 20px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }\n\
   .check-ring { width: 58px; height: 58px; border-radius: 50%; background: var(--color-theme); display: flex; align-items: center; justify-content: center; }\n\
   @keyframes popIn { 0% { transform: scale(0.4); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }\n\
-  .check-ring { animation: popIn 0.5s ease forwards; }\n";
+  .check-ring { animation: popIn 0.5s ease forwards; }\n\
+  .project-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }\n\
+  .project-row .field-input.normal { flex: 1; width: auto; }\n\
+  .project-add-btn, .project-rm-btn { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9333rem; flex-shrink: 0; }\n\
+  .project-add-btn:hover, .project-rm-btn:hover { border-color: var(--color-theme); color: var(--color-theme); }\n\
+  .project-rm-btn { border-color: #c0392b; color: #c0392b; }\n\
+  .project-rm-btn:hover { background: #c0392b; color: #fff; }\n";
 
 var registerFlowPages = "\n\
 <div class=\"page\" id=\"page-selfie\">\n\
@@ -133,6 +139,10 @@ var registerFlowPages = "\n\
       <div>\n\
         <div class=\"field-label\"><i class=\"ti ti-languages\"></i> Local name</div>\n\
         <input id=\"register-local-name\" class=\"field-input normal\" type=\"text\" value=\"\" placeholder=\"Local name\" />\n\
+      </div>\n\
+      <div>\n\
+        <div class=\"field-label\"><i class=\"ti ti-building\"></i> Project name</div>\n\
+        <div id=\"register-project-names\"><div class=\"project-row\"><input class=\"field-input normal register-project-input\" type=\"text\" value=\"\" placeholder=\"Project name\" /><button type=\"button\" class=\"project-add-btn\" onclick=\"addRegisterProjectRow()\"><i class=\"ti ti-plus\"></i></button></div></div>\n\
       </div>\n\
     </div>\n\
     </div>\n\
@@ -189,6 +199,7 @@ var registerFlowPages = "\n\
       <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-diameter\"></div>\n\
       <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-observations\"></div>\n\
       <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-recommendations\"></div>\n\
+      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-project-name\"></div>\n\
     </div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"saveRegisterTree()\"><i class=\"ti ti-device-floppy\"></i> Save</button></div>\n\
   </div>\n\
@@ -228,6 +239,49 @@ function injectRegisterFlow() {
     var screen = document.querySelector('.screen');
     if (screen) screen.insertAdjacentHTML('beforeend', registerFlowPages);
   }
+}
+
+function addRegisterProjectRow() {
+  var container = document.getElementById('register-project-names');
+  if (!container) return;
+  var row = document.createElement('div');
+  row.className = 'project-row';
+  row.innerHTML = '<input class="field-input normal register-project-input" type="text" value="" placeholder="Project name" /><button type="button" class="project-rm-btn" onclick="removeRegisterProjectRow(this)"><i class="ti ti-minus"></i></button><button type="button" class="project-add-btn" onclick="addRegisterProjectRow()"><i class="ti ti-plus"></i></button>';
+  container.appendChild(row);
+}
+
+function removeRegisterProjectRow(btn) {
+  var container = document.getElementById('register-project-names');
+  if (!container) return;
+  var row = btn.closest('.project-row');
+  if (row && container.children.length > 1) row.remove();
+  renderProjectRowButtons();
+}
+
+function renderProjectRowButtons() {
+  var container = document.getElementById('register-project-names');
+  if (!container) return;
+  var rows = container.querySelectorAll('.project-row');
+  for (var i = 0; i < rows.length; i++) {
+    var rmBtn = rows[i].querySelector('.project-rm-btn');
+    if (rmBtn) rmBtn.style.display = rows.length === 1 ? 'none' : '';
+  }
+}
+
+function getRegisterProjectValues() {
+  var inputs = document.querySelectorAll('.register-project-input');
+  var values = [];
+  for (var i = 0; i < inputs.length; i++) {
+    var val = inputs[i].value.trim();
+    if (val) values.push(val);
+  }
+  return values;
+}
+
+function resetRegisterProjectRows() {
+  var container = document.getElementById('register-project-names');
+  if (!container) return;
+  container.innerHTML = '<div class="project-row"><input class="field-input normal register-project-input" type="text" value="" placeholder="Project name" /><button type="button" class="project-add-btn" onclick="addRegisterProjectRow()"><i class="ti ti-plus"></i></button></div>';
 }
 
 function showRegisterDetails() {
@@ -419,6 +473,7 @@ function resetRegisterDetails() {
   }
   var list_el = document.getElementById('register-sci-suggest');
   if (list_el) { list_el.innerHTML = ''; }
+  resetRegisterProjectRows();
   toggleRegisterSciClearButton();
 }
 
@@ -592,6 +647,11 @@ function renderRegisterReview() {
   if (recommendationsEl) {
     recommendationsEl.innerHTML = registerRecommendations || '<span class="review-empty">No recommendation recorded</span>';
   }
+  var projectNameEl = document.getElementById('review-project-name');
+  if (projectNameEl) {
+    var project_name_value = getRegisterProjectValues().join(', ');
+    projectNameEl.innerHTML = 'Project: ' + (project_name_value || '—');
+  }
 }
 
 function buildRegisterTreeName() {
@@ -619,6 +679,7 @@ function saveRegisterTree() {
   var registerRecord = {
     treeId: document.getElementById('register-tree-id').value,
     treeName: buildRegisterTreeName(),
+    projectName: getRegisterProjectValues(),
     gis: {
       latitude: document.getElementById('register-gis-lat').value,
       longitude: document.getElementById('register-gis-lng').value

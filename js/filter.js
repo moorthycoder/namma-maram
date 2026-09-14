@@ -20,7 +20,8 @@ function populatePlaceList() {
   });
   var projects = [];
   (window.__TREE_DATA || []).forEach(function (t) {
-    if (t.project && projects.indexOf(t.project) === -1) projects.push(t.project);
+    if (Array.isArray(t.projectName)) { t.projectName.forEach(function (pr) { if (pr && projects.indexOf(pr) === -1) projects.push(pr); }); }
+    else if (t.projectName && projects.indexOf(t.projectName) === -1) projects.push(t.projectName);
     Object.keys(t.address || {}).forEach(function (addr_key) {
       var al = t.address[addr_key];
       if (al && __SUGGESTIONS.filter(function (s) { return s.value === al; }).length === 0) __SUGGESTIONS.push({ value: al, label: al });
@@ -193,7 +194,7 @@ function searchInTreePlace(place_query) {
     var tree_id = normalizeQuery(p.treeId);
     var addr = normalizeQuery(cardAddressText(p, filterLang));
     var pin = normalizeQuery(p.pincode);
-    var proj = normalizeQuery(p.project);
+    var proj = normalizeQuery(Array.isArray(p.projectName) ? p.projectName.join(', ') : p.projectName);
     if (addr.indexOf(query) > -1 ||
         pin.indexOf(query) > -1 ||
         proj.indexOf(query) > -1 ||
@@ -545,7 +546,7 @@ window.render = {
       albumData = albumData.filter(function(t) { return !ex[t.treeId]; });
     })();
     window.__SEARCH_POOL = albumData.map(function(t) {
-      return { treeId: t.treeId, pincode: t.pincode, project: t.project, speciesName: t.speciesName, address: t.address };
+      return { treeId: t.treeId, pincode: t.pincode, projectName: t.projectName, speciesName: t.speciesName, address: t.address };
     });
     var qp = new URLSearchParams(location.search);
     var placeEl = document.getElementById('album-place');

@@ -50,6 +50,8 @@
   .info-row:last-child { border-bottom: none; }
   .info-key { font-size: 0.8rem; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px; }
   .info-val { font-size: 0.8667rem; font-weight: 500; color: var(--color-text-primary); }
+  .project-info-row { justify-content: flex-start; gap: 6px; flex-wrap: wrap; }
+  .project-info-more { width: 100%; padding-left: 22px; font-size: 0.7667rem; font-weight: 500; color: var(--color-text-primary); }
   .chip { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); }
   .chip-blue { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); display: flex; align-items: center; gap: 3px; }
 .addr-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }

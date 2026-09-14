@@ -36,6 +36,25 @@ function renderProfile() {
   document.getElementById('profile-planted-date').textContent = formatDate(tree['date-of-planting']);
   document.getElementById('profile-age').textContent = (function(d){ var dt=new Date(d); var now=new Date(); var y=now.getFullYear()-dt.getFullYear(); var m=now.getMonth()-dt.getMonth(); var total=y*12+m; var yy=Math.floor(total/12); var mm=total%12; return (yy? yy+' year'+(yy>1?'s':'')+' ':'')+(mm? mm+' month'+(mm>1?'s':''):''); })(tree['date-of-planting']);
   document.getElementById('profile-total-logs').textContent = enc_keys.length;
+  (function(){
+    var name_el = document.getElementById('profile-project');
+    if (!name_el) return;
+    var names = Array.isArray(tree.projectName) ? tree.projectName : (tree.projectName ? [tree.projectName] : []);
+    var filtered = [];
+    for (var np_i = 0; np_i < names.length; np_i++) {
+      var nm = String(names[np_i]).trim();
+      if (nm) filtered.push(nm);
+    }
+    if (!filtered.length) { name_el.textContent = '—'; return; }
+    name_el.textContent = filtered[0];
+    var row_el = name_el.parentNode;
+    for (var nm_i = 1; nm_i < filtered.length; nm_i++) {
+      var line_el = document.createElement('span');
+      line_el.className = 'project-info-more';
+      line_el.textContent = filtered[nm_i];
+      row_el.appendChild(line_el);
+    }
+  })();
   renderLogs(tree);
   syncAddButtonStates();
 }

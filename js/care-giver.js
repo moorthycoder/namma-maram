@@ -377,7 +377,7 @@ function goTo(page) {
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['caregiver-login','caregiver-enroll','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-caregivers','admin-trackers-prospective','admin-caregivers-prospective','ranger-enroll','caregiver-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['caregiver-login','caregiver-dash','caregiver-waiting','caregiver-current','caregiver-past','caregiver-seeing','caregiver-checks-due','caregiver-checks-finished','caregiver-logs-approved','caregiver-logs-submitted','caregiver-browse','selfie','register-tree','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  else if (['caregiver-login','caregiver-dash','caregiver-waiting','caregiver-current','caregiver-survey-current','caregiver-past','caregiver-seeing','caregiver-checks-due','caregiver-checks-finished','caregiver-logs-approved','caregiver-logs-submitted','caregiver-browse','selfie','register-tree','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
   
@@ -726,6 +726,15 @@ function caregiverCurrentCardHtml(t) {
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
     '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
 }
+function caregiverSurveyCurrentCardHtml(t) {
+  var d = caregiverBaseData(t);
+  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
+  return '<div class="tree-card-caregiver caregiver-survey-current-card" onclick="surveyDueTree(\'' + d.t.treeId + '\')">' +
+    '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + d.t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
+    '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+}
 function caregiverPastCardHtml(t) {
   var d = caregiverBaseData(t);
   var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
@@ -838,6 +847,8 @@ function renderCaregiverCards() {
   var pastList = pastIds.length ? data.filter(function (t) { return pastIds.indexOf(t.treeId) > -1; }).sort(function(a,b){ return pastIds.indexOf(a.treeId) - pastIds.indexOf(b.treeId); }).map(function(t){ var c={}; for(var k in t) c[k]=t[k]; c.addedAt=past_map[t.treeId]; c.isPast=true; return c; }) : [];
   var currentCards = document.getElementById('caregiver-current-cards');
   if (currentCards) currentCards.innerHTML = currentList.map(caregiverCurrentCardHtml).join('');
+  var surveyCurrentCards = document.getElementById('caregiver-survey-current-cards');
+  if (surveyCurrentCards) surveyCurrentCards.innerHTML = currentList.map(caregiverSurveyCurrentCardHtml).join('');
   var pastCards = document.getElementById('caregiver-past-cards');
   if (pastCards) pastCards.innerHTML = pastList.map(caregiverPastCardHtml).join('');
   caregiveredCount = currentList.length + pastList.length;
@@ -1237,6 +1248,7 @@ else if (hubMode === 'caregiver-dash') { goTo('caregiver-dash'); }
 else if (hubMode === 'caregiver-waiting') { goTo('caregiver-waiting'); }
 else if (hubMode === 'caregiver-seeing') { goTo('caregiver-seeing'); }
 else if (hubMode === 'caregiver-current') { goTo('caregiver-current'); }
+else if (hubMode === 'caregiver-survey-current') { goTo('caregiver-survey-current'); }
 else if (hubMode === 'caregiver-past') { goTo('caregiver-past'); }
 else if (hubMode === 'caregiver-checks-due') { goTo('caregiver-checks-due'); }
 else if (hubMode === 'caregiver-checks-finished') { goTo('caregiver-checks-finished'); }

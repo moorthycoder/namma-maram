@@ -394,7 +394,7 @@ function renderAlbum(place, tree) {
   var filtered = albumData.filter(function(t) {
     var matchPlace = true;
     var matchTree = true;
-    if (place) matchPlace = q(t.address).indexOf(place) > -1 || q(t.addressLocalLang || '').indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(t.project || '').indexOf(place) > -1;
+    if (place) matchPlace = q(t.address).indexOf(place) > -1 || q(t.addressLocalLang || '').indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(Array.isArray(t.projectName) ? t.projectName.join(', ') : (t.projectName || '')).indexOf(place) > -1;
     if (tree) {
       matchTree = q(t.scientificName).indexOf(tree) > -1 ||
                   q(t.englishName).indexOf(tree) > -1 ||
