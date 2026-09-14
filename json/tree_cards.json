@@ -71,8 +71,8 @@
                 "updatedDate": "2026-02-25",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "16cm",
-                    "height": "7.4m",
+                    "diameter": "15cm",
+                    "height": "7.1m",
                     "health-score": 17
                 },
                 "photos": {
@@ -98,8 +98,8 @@
                 "updatedDate": "2026-03-18",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "16cm",
-                    "height": "7.4m",
+                    "diameter": "15cm",
+                    "height": "7.1m",
                     "health-score": 18
                 },
                 "photos": {
@@ -125,8 +125,8 @@
                 "updatedDate": "2026-04-29",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "16cm",
-                    "height": "7.4m",
+                    "diameter": "15cm",
+                    "height": "7.1m",
                     "health-score": 19
                 },
                 "photos": {
@@ -152,8 +152,8 @@
                 "updatedDate": "2026-05-27",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "16cm",
-                    "height": "7.4m",
+                    "diameter": "15cm",
+                    "height": "7.1m",
                     "health-score": 15
                 },
                 "photos": {
@@ -376,8 +376,8 @@
                 "updatedDate": "2026-02-05",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "13cm",
-                    "height": "6.2m",
+                    "diameter": "15cm",
+                    "height": "6.5m",
                     "health-score": 87
                 },
                 "photos": {
@@ -403,8 +403,8 @@
                 "updatedDate": "2026-02-05",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "13cm",
-                    "height": "6.2m",
+                    "diameter": "17cm",
+                    "height": "6.6m",
                     "health-score": 88
                 },
                 "photos": {
@@ -430,8 +430,8 @@
                 "updatedDate": "2026-02-05",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "13cm",
-                    "height": "6.2m",
+                    "diameter": "19cm",
+                    "height": "6.8m",
                     "health-score": 89
                 },
                 "photos": {
@@ -589,7 +589,7 @@
                 "updatedDate": "2026-04-06",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
+                    "diameter": "13cm",
                     "height": "6.5m",
                     "health-score": 87
                 },
@@ -812,7 +812,7 @@
                 "health-status": {
                     "health": "healthy",
                     "diameter": "23cm",
-                    "height": "7.6m",
+                    "height": "7.5m",
                     "health-score": 87
                 },
                 "photos": {
@@ -838,8 +838,8 @@
                 "updatedDate": "2026-05-13",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "23cm",
-                    "height": "7.6m",
+                    "diameter": "25cm",
+                    "height": "7.7m",
                     "health-score": 88
                 },
                 "photos": {
@@ -865,8 +865,8 @@
                 "updatedDate": "2026-09-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "23cm",
-                    "height": "7.6m",
+                    "diameter": "26cm",
+                    "height": "7.8m",
                     "health-score": 89
                 },
                 "photos": {
@@ -957,7 +957,7 @@
                 "updatedDate": "2026-05-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "26cm",
+                    "diameter": "27cm",
                     "height": "9.2m",
                     "health-score": 87
                 },
@@ -984,8 +984,8 @@
                 "updatedDate": "2026-05-20",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "26cm",
-                    "height": "9.2m",
+                    "diameter": "28cm",
+                    "height": "9.5m",
                     "health-score": 88
                 },
                 "photos": {
@@ -1011,8 +1011,8 @@
                 "updatedDate": "2026-06-28",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "26cm",
-                    "height": "9.2m",
+                    "diameter": "29cm",
+                    "height": "9.7m",
                     "health-score": 89
                 },
                 "photos": {
@@ -1038,8 +1038,8 @@
                 "updatedDate": "2026-07-24",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "26cm",
-                    "height": "9.2m",
+                    "diameter": "31cm",
+                    "height": "10.0m",
                     "health-score": 85
                 },
                 "photos": {
@@ -1065,8 +1065,8 @@
                 "updatedDate": "2026-08-17",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "26cm",
-                    "height": "9.2m",
+                    "diameter": "32cm",
+                    "height": "10.2m",
                     "health-score": 86
                 },
                 "photos": {
@@ -1462,8 +1462,8 @@
                 "updatedDate": "2026-06-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "25cm",
-                    "height": "8.9m",
+                    "diameter": "26cm",
+                    "height": "8.8m",
                     "health-score": 87
                 },
                 "photos": {
@@ -1489,8 +1489,8 @@
                 "updatedDate": "2026-06-23",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "25cm",
-                    "height": "8.9m",
+                    "diameter": "27cm",
+                    "height": "9.1m",
                     "health-score": 88
                 },
                 "photos": {
@@ -1516,8 +1516,8 @@
                 "updatedDate": "2026-07-30",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "25cm",
-                    "height": "8.9m",
+                    "diameter": "29cm",
+                    "height": "9.4m",
                     "health-score": 89
                 },
                 "photos": {
@@ -1543,8 +1543,8 @@
                 "updatedDate": "2026-08-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "25cm",
-                    "height": "8.9m",
+                    "diameter": "31cm",
+                    "height": "9.6m",
                     "health-score": 85
                 },
                 "photos": {
@@ -1701,7 +1701,7 @@
                 "health-status": {
                     "health": "healthy",
                     "diameter": "31cm",
-                    "height": "12.9m",
+                    "height": "12.7m",
                     "health-score": 87
                 },
                 "photos": {
@@ -1727,8 +1727,8 @@
                 "updatedDate": "2026-03-16",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "12.9m",
+                    "diameter": "33cm",
+                    "height": "12.8m",
                     "health-score": 88
                 },
                 "photos": {
@@ -1754,8 +1754,8 @@
                 "updatedDate": "2026-04-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "12.9m",
+                    "diameter": "34cm",
+                    "height": "13.1m",
                     "health-score": 89
                 },
                 "photos": {
@@ -1781,8 +1781,8 @@
                 "updatedDate": "2026-05-19",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "12.9m",
+                    "diameter": "36cm",
+                    "height": "13.4m",
                     "health-score": 85
                 },
                 "photos": {
@@ -1808,8 +1808,8 @@
                 "updatedDate": "2026-06-21",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "12.9m",
+                    "diameter": "38cm",
+                    "height": "13.6m",
                     "health-score": 86
                 },
                 "photos": {
@@ -1835,8 +1835,8 @@
                 "updatedDate": "2026-07-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "12.9m",
+                    "diameter": "39cm",
+                    "height": "13.9m",
                     "health-score": 87
                 },
                 "photos": {
@@ -2257,8 +2257,8 @@
                 "updatedDate": "2026-02-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "30cm",
-                    "height": "11.0m",
+                    "diameter": "31cm",
+                    "height": "11.1m",
                     "health-score": 87
                 },
                 "photos": {
@@ -2284,8 +2284,8 @@
                 "updatedDate": "2026-02-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "30cm",
-                    "height": "11.0m",
+                    "diameter": "32cm",
+                    "height": "11.3m",
                     "health-score": 88
                 },
                 "photos": {
@@ -2636,7 +2636,7 @@
                 "updatedDate": "2026-05-10",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "7cm",
+                    "diameter": "8cm",
                     "height": "4.1m",
                     "health-score": 87
                 },
@@ -2663,8 +2663,8 @@
                 "updatedDate": "2026-06-16",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "7cm",
-                    "height": "4.1m",
+                    "diameter": "10cm",
+                    "height": "4.2m",
                     "health-score": 88
                 },
                 "photos": {
@@ -2690,8 +2690,8 @@
                 "updatedDate": "2026-07-02",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "7cm",
-                    "height": "4.1m",
+                    "diameter": "12cm",
+                    "height": "4.5m",
                     "health-score": 89
                 },
                 "photos": {
@@ -2977,8 +2977,8 @@
                 "updatedDate": "2026-01-15",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "5cm",
-                    "height": "4.8m",
+                    "diameter": "6cm",
+                    "height": "4.7m",
                     "health-score": 57
                 },
                 "photos": {
@@ -3005,7 +3005,7 @@
                 "health-status": {
                     "health": "sick",
                     "diameter": "5cm",
-                    "height": "4.8m",
+                    "height": "4.7m",
                     "health-score": 58
                 },
                 "photos": {
@@ -3031,8 +3031,8 @@
                 "updatedDate": "2026-01-15",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "5cm",
-                    "height": "4.8m",
+                    "diameter": "6cm",
+                    "height": "4.7m",
                     "health-score": 59
                 },
                 "photos": {
@@ -3058,8 +3058,8 @@
                 "updatedDate": "2026-01-15",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "5cm",
-                    "height": "4.8m",
+                    "diameter": "7cm",
+                    "height": "4.6m",
                     "health-score": 55
                 },
                 "photos": {
@@ -3085,8 +3085,8 @@
                 "updatedDate": "2026-01-15",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "5cm",
-                    "height": "4.8m",
+                    "diameter": "7cm",
+                    "height": "4.6m",
                     "health-score": 56
                 },
                 "photos": {
@@ -3634,8 +3634,8 @@
                 "updatedDate": "2026-04-30",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "6.2m",
+                    "diameter": "15cm",
+                    "height": "6.1m",
                     "health-score": 87
                 },
                 "photos": {
@@ -3661,8 +3661,8 @@
                 "updatedDate": "2026-05-15",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "6.2m",
+                    "diameter": "16cm",
+                    "height": "6.3m",
                     "health-score": 88
                 },
                 "photos": {
@@ -3688,8 +3688,8 @@
                 "updatedDate": "2026-06-27",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "6.2m",
+                    "diameter": "17cm",
+                    "height": "6.5m",
                     "health-score": 89
                 },
                 "photos": {
@@ -3845,8 +3845,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
-                    "height": "5.9m",
+                    "diameter": "12cm",
+                    "height": "6.2m",
                     "health-score": 87
                 },
                 "photos": {
@@ -4587,7 +4587,7 @@
                 "updatedDate": "2026-04-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
+                    "diameter": "15cm",
                     "height": "7.1m",
                     "health-score": 87
                 },
@@ -4614,8 +4614,8 @@
                 "updatedDate": "2026-05-05",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "7.1m",
+                    "diameter": "16cm",
+                    "height": "7.3m",
                     "health-score": 88
                 },
                 "photos": {
@@ -4641,8 +4641,8 @@
                 "updatedDate": "2026-06-02",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "7.1m",
+                    "diameter": "17cm",
+                    "height": "7.6m",
                     "health-score": 89
                 },
                 "photos": {
@@ -4863,8 +4863,8 @@
                 "updatedDate": "2026-05-03",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "15cm",
-                    "height": "5.5m",
+                    "diameter": "13cm",
+                    "height": "5.3m",
                     "health-score": 57
                 },
                 "photos": {
@@ -4890,8 +4890,8 @@
                 "updatedDate": "2026-05-23",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "15cm",
-                    "height": "5.5m",
+                    "diameter": "14cm",
+                    "height": "5.4m",
                     "health-score": 58
                 },
                 "photos": {
@@ -4944,7 +4944,7 @@
                 "updatedDate": "2026-07-28",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "15cm",
+                    "diameter": "16cm",
                     "height": "5.5m",
                     "health-score": 55
                 },
@@ -4971,7 +4971,7 @@
                 "updatedDate": "2026-08-26",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "15cm",
+                    "diameter": "17cm",
                     "height": "5.5m",
                     "health-score": 56
                 },
@@ -4998,8 +4998,8 @@
                 "updatedDate": "2026-09-27",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "15cm",
-                    "height": "5.5m",
+                    "diameter": "16cm",
+                    "height": "5.6m",
                     "health-score": 57
                 },
                 "photos": {
@@ -5090,8 +5090,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "5cm",
-                    "height": "9.1m",
+                    "diameter": "7cm",
+                    "height": "9.4m",
                     "health-score": 87
                 },
                 "photos": {
@@ -5117,8 +5117,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "5cm",
-                    "height": "9.1m",
+                    "diameter": "9cm",
+                    "height": "9.6m",
                     "health-score": 88
                 },
                 "photos": {
@@ -5144,8 +5144,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "5cm",
-                    "height": "9.1m",
+                    "diameter": "11cm",
+                    "height": "9.8m",
                     "health-score": 89
                 },
                 "photos": {
@@ -5627,7 +5627,7 @@
                 "health-status": {
                     "health": "healthy",
                     "diameter": "11cm",
-                    "height": "4.8m",
+                    "height": "4.6m",
                     "health-score": 87
                 },
                 "photos": {
@@ -5653,7 +5653,7 @@
                 "updatedDate": "2026-03-30",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
+                    "diameter": "13cm",
                     "height": "4.8m",
                     "health-score": 88
                 },
@@ -5680,8 +5680,8 @@
                 "updatedDate": "2026-05-13",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
-                    "height": "4.8m",
+                    "diameter": "14cm",
+                    "height": "5.1m",
                     "health-score": 89
                 },
                 "photos": {
@@ -5707,8 +5707,8 @@
                 "updatedDate": "2026-05-30",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
-                    "height": "4.8m",
+                    "diameter": "16cm",
+                    "height": "5.2m",
                     "health-score": 85
                 },
                 "photos": {
@@ -5734,8 +5734,8 @@
                 "updatedDate": "2026-07-16",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
-                    "height": "4.8m",
+                    "diameter": "17cm",
+                    "height": "5.3m",
                     "health-score": 86
                 },
                 "photos": {
@@ -5761,8 +5761,8 @@
                 "updatedDate": "2026-07-30",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
-                    "height": "4.8m",
+                    "diameter": "18cm",
+                    "height": "5.5m",
                     "health-score": 87
                 },
                 "photos": {
@@ -6245,8 +6245,8 @@
                 "updatedDate": "2026-04-18",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "34cm",
-                    "height": "12.6m",
+                    "diameter": "35cm",
+                    "height": "12.7m",
                     "health-score": 87
                 },
                 "photos": {
@@ -6272,8 +6272,8 @@
                 "updatedDate": "2026-05-20",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "35cm",
-                    "height": "12.7m",
+                    "diameter": "36cm",
+                    "height": "12.8m",
                     "health-score": 88
                 },
                 "photos": {
@@ -6299,8 +6299,8 @@
                 "updatedDate": "2026-06-21",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "35cm",
-                    "height": "12.8m",
+                    "diameter": "37cm",
+                    "height": "13.1m",
                     "health-score": 89
                 },
                 "photos": {
@@ -6326,8 +6326,8 @@
                 "updatedDate": "2026-07-19",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "35cm",
-                    "height": "12.9m",
+                    "diameter": "38cm",
+                    "height": "13.2m",
                     "health-score": 85
                 },
                 "photos": {
@@ -6418,8 +6418,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "15cm",
-                    "height": "7.7m",
+                    "diameter": "16cm",
+                    "height": "7.8m",
                     "health-score": 87
                 },
                 "photos": {
@@ -6445,8 +6445,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "15cm",
-                    "height": "7.7m",
+                    "diameter": "17cm",
+                    "height": "8.1m",
                     "health-score": 88
                 },
                 "photos": {
@@ -6472,8 +6472,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "15cm",
-                    "height": "7.7m",
+                    "diameter": "19cm",
+                    "height": "8.3m",
                     "health-score": 89
                 },
                 "photos": {
@@ -6499,8 +6499,8 @@
                 "updatedDate": "2026-03-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "15cm",
-                    "height": "7.7m",
+                    "diameter": "20cm",
+                    "height": "8.6m",
                     "health-score": 85
                 },
                 "photos": {
@@ -6593,7 +6593,7 @@
                 "updatedDate": "2026-05-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "38cm",
+                    "diameter": "39cm",
                     "height": "12.9m",
                     "health-score": 87
                 },
@@ -6620,7 +6620,7 @@
                 "updatedDate": "2026-06-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "39cm",
+                    "diameter": "40cm",
                     "height": "13.0m",
                     "health-score": 88
                 },
@@ -6647,8 +6647,8 @@
                 "updatedDate": "2026-07-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "39cm",
-                    "height": "13.1m",
+                    "diameter": "42cm",
+                    "height": "13.3m",
                     "health-score": 89
                 },
                 "photos": {
@@ -6674,8 +6674,8 @@
                 "updatedDate": "2026-07-30",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "39cm",
-                    "height": "13.1m",
+                    "diameter": "43cm",
+                    "height": "13.5m",
                     "health-score": 85
                 },
                 "photos": {
@@ -6858,8 +6858,8 @@
                 "updatedDate": "2026-07-02",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "5.9m",
+                    "diameter": "15cm",
+                    "height": "6.1m",
                     "health-score": 88
                 },
                 "photos": {
@@ -6885,8 +6885,8 @@
                 "updatedDate": "2026-07-18",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "5.9m",
+                    "diameter": "16cm",
+                    "height": "6.4m",
                     "health-score": 89
                 },
                 "photos": {
@@ -6912,8 +6912,8 @@
                 "updatedDate": "2026-08-30",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "5.9m",
+                    "diameter": "18cm",
+                    "height": "6.6m",
                     "health-score": 85
                 },
                 "photos": {
@@ -6939,8 +6939,8 @@
                 "updatedDate": "2026-09-24",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "5.9m",
+                    "diameter": "19cm",
+                    "height": "6.8m",
                     "health-score": 86
                 },
                 "photos": {
@@ -6966,8 +6966,8 @@
                 "updatedDate": "2026-11-01",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "14cm",
-                    "height": "5.9m",
+                    "diameter": "21cm",
+                    "height": "6.9m",
                     "health-score": 87
                 },
                 "photos": {
@@ -7059,7 +7059,7 @@
                 "health-status": {
                     "health": "healthy",
                     "diameter": "31cm",
-                    "height": "9.7m",
+                    "height": "9.5m",
                     "health-score": 87
                 },
                 "photos": {
@@ -7085,8 +7085,8 @@
                 "updatedDate": "2026-07-08",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "9.7m",
+                    "diameter": "33cm",
+                    "height": "9.8m",
                     "health-score": 88
                 },
                 "photos": {
@@ -7112,8 +7112,8 @@
                 "updatedDate": "2026-08-04",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "9.7m",
+                    "diameter": "35cm",
+                    "height": "9.9m",
                     "health-score": 89
                 },
                 "photos": {
@@ -7139,8 +7139,8 @@
                 "updatedDate": "2026-09-02",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "9.7m",
+                    "diameter": "37cm",
+                    "height": "10.2m",
                     "health-score": 85
                 },
                 "photos": {
@@ -7166,8 +7166,8 @@
                 "updatedDate": "2026-09-23",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "31cm",
-                    "height": "9.7m",
+                    "diameter": "38cm",
+                    "height": "10.5m",
                     "health-score": 86
                 },
                 "photos": {
@@ -7610,8 +7610,8 @@
                 "updatedDate": "2026-04-21",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "27cm",
-                    "height": "11.2m",
+                    "diameter": "28cm",
+                    "height": "11.5m",
                     "health-score": 88
                 },
                 "photos": {
@@ -7637,8 +7637,8 @@
                 "updatedDate": "2026-05-28",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "27cm",
-                    "height": "11.2m",
+                    "diameter": "29cm",
+                    "height": "11.8m",
                     "health-score": 89
                 },
                 "photos": {
@@ -7664,8 +7664,8 @@
                 "updatedDate": "2026-06-24",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "27cm",
-                    "height": "11.2m",
+                    "diameter": "31cm",
+                    "height": "12.1m",
                     "health-score": 85
                 },
                 "photos": {
@@ -7691,8 +7691,8 @@
                 "updatedDate": "2026-07-22",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "27cm",
-                    "height": "11.2m",
+                    "diameter": "32cm",
+                    "height": "12.3m",
                     "health-score": 86
                 },
                 "photos": {
@@ -7718,8 +7718,8 @@
                 "updatedDate": "2026-09-03",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "27cm",
-                    "height": "11.2m",
+                    "diameter": "34cm",
+                    "height": "12.5m",
                     "health-score": 87
                 },
                 "photos": {
@@ -7837,8 +7837,8 @@
                 "updatedDate": "2026-05-07",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
-                    "height": "6.3m",
+                    "diameter": "14cm",
+                    "height": "6.5m",
                     "health-score": 88
                 },
                 "photos": {
@@ -7864,8 +7864,8 @@
                 "updatedDate": "2026-05-29",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
-                    "height": "6.3m",
+                    "diameter": "16cm",
+                    "height": "6.8m",
                     "health-score": 89
                 },
                 "photos": {
@@ -7891,8 +7891,8 @@
                 "updatedDate": "2026-06-28",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
-                    "height": "6.3m",
+                    "diameter": "18cm",
+                    "height": "7.1m",
                     "health-score": 85
                 },
                 "photos": {
@@ -7985,8 +7985,8 @@
                 "updatedDate": "2026-04-06",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
-                    "height": "6.1m",
+                    "diameter": "14cm",
+                    "height": "6.3m",
                     "health-score": 87
                 },
                 "photos": {
@@ -8012,8 +8012,8 @@
                 "updatedDate": "2026-05-08",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "13cm",
-                    "height": "6.2m",
+                    "diameter": "15cm",
+                    "height": "6.4m",
                     "health-score": 88
                 },
                 "photos": {
@@ -8039,8 +8039,8 @@
                 "updatedDate": "2026-06-09",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "13cm",
-                    "height": "6.3m",
+                    "diameter": "16cm",
+                    "height": "6.6m",
                     "health-score": 89
                 },
                 "photos": {
@@ -8196,8 +8196,8 @@
                 "updatedDate": "2026-05-05",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "38cm",
-                    "height": "11.4m",
+                    "diameter": "37cm",
+                    "height": "11.1m",
                     "health-score": 17
                 },
                 "photos": {
@@ -8223,8 +8223,8 @@
                 "updatedDate": "2026-06-06",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "38cm",
-                    "height": "11.4m",
+                    "diameter": "37cm",
+                    "height": "11.1m",
                     "health-score": 18
                 },
                 "photos": {
@@ -8250,8 +8250,8 @@
                 "updatedDate": "2026-06-21",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "38cm",
-                    "height": "11.4m",
+                    "diameter": "37cm",
+                    "height": "11.1m",
                     "health-score": 19
                 },
                 "photos": {
@@ -8277,8 +8277,8 @@
                 "updatedDate": "2026-08-04",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "38cm",
-                    "height": "11.4m",
+                    "diameter": "37cm",
+                    "height": "11.1m",
                     "health-score": 15
                 },
                 "photos": {
@@ -8304,8 +8304,8 @@
                 "updatedDate": "2026-08-26",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "38cm",
-                    "height": "11.4m",
+                    "diameter": "37cm",
+                    "height": "11.1m",
                     "health-score": 16
                 },
                 "photos": {
@@ -8331,8 +8331,8 @@
                 "updatedDate": "2026-10-03",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "38cm",
-                    "height": "11.4m",
+                    "diameter": "37cm",
+                    "height": "11.1m",
                     "health-score": 17
                 },
                 "photos": {
@@ -8618,8 +8618,8 @@
                 "updatedDate": "2026-04-16",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
-                    "height": "4.8m",
+                    "diameter": "12cm",
+                    "height": "5.0m",
                     "health-score": 87
                 },
                 "photos": {
@@ -8645,8 +8645,8 @@
                 "updatedDate": "2026-04-16",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "11cm",
-                    "height": "4.8m",
+                    "diameter": "13cm",
+                    "height": "5.2m",
                     "health-score": 88
                 },
                 "photos": {
@@ -8932,8 +8932,8 @@
                 "updatedDate": "2026-03-14",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "15cm",
-                    "height": "7m",
+                    "diameter": "16cm",
+                    "height": "6.9m",
                     "health-score": 87
                 },
                 "photos": {
@@ -8959,8 +8959,8 @@
                 "updatedDate": "2026-04-06",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "15cm",
-                    "height": "7m",
+                    "diameter": "18cm",
+                    "height": "7.1m",
                     "health-score": 88
                 },
                 "photos": {
@@ -9246,8 +9246,8 @@
                 "updatedDate": "2026-04-12",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "7cm",
-                    "height": "3.5m",
+                    "diameter": "6cm",
+                    "height": "3.2m",
                     "health-score": 17
                 },
                 "photos": {
@@ -9273,8 +9273,8 @@
                 "updatedDate": "2026-05-05",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "7cm",
-                    "height": "3.5m",
+                    "diameter": "6cm",
+                    "height": "3.2m",
                     "health-score": 18
                 },
                 "photos": {
@@ -9300,8 +9300,8 @@
                 "updatedDate": "2026-06-02",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "7cm",
-                    "height": "3.5m",
+                    "diameter": "6cm",
+                    "height": "3.2m",
                     "health-score": 19
                 },
                 "photos": {
@@ -9327,8 +9327,8 @@
                 "updatedDate": "2026-07-04",
                 "health-status": {
                     "health": "dead",
-                    "diameter": "7cm",
-                    "height": "3.5m",
+                    "diameter": "6cm",
+                    "height": "3.2m",
                     "health-score": 15
                 },
                 "photos": {
@@ -9680,7 +9680,7 @@
                 "health-status": {
                     "health": "sick",
                     "diameter": "15cm",
-                    "height": "5.5m",
+                    "height": "5.2m",
                     "health-score": 57
                 },
                 "photos": {
@@ -9706,8 +9706,8 @@
                 "updatedDate": "2026-08-06",
                 "health-status": {
                     "health": "sick",
-                    "diameter": "15cm",
-                    "height": "5.5m",
+                    "diameter": "16cm",
+                    "height": "5.3m",
                     "health-score": 58
                 },
                 "photos": {
@@ -9734,7 +9734,7 @@
                 "health-status": {
                     "health": "sick",
                     "diameter": "15cm",
-                    "height": "5.5m",
+                    "height": "5.4m",
                     "health-score": 59
                 },
                 "photos": {
@@ -9890,7 +9890,7 @@
                 "updatedDate": "2026-07-09",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
+                    "diameter": "13cm",
                     "height": "6.3m",
                     "health-score": 87
                 },
@@ -9917,8 +9917,8 @@
                 "updatedDate": "2026-08-10",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
-                    "height": "6.3m",
+                    "diameter": "14cm",
+                    "height": "6.6m",
                     "health-score": 88
                 },
                 "photos": {
@@ -9944,8 +9944,8 @@
                 "updatedDate": "2026-08-26",
                 "health-status": {
                     "health": "healthy",
-                    "diameter": "12cm",
-                    "height": "6.3m",
+                    "diameter": "15cm",
+                    "height": "6.7m",
                     "health-score": 89
                 },
                 "photos": {

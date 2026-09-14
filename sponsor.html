@@ -200,8 +200,41 @@
         <div class="waiting-empty hidden" id="sponsor-seeing-empty">No Seeing trees</div>
       </div></div>
     </div>
+    <div class="page" id="page-sponsor-pay-total">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="sponsor-pay-total-title">Payments — Total</span></div>
+      <div class="scrollable"><div class="dashboard-scroll-pad"><div class="info-card" id="sponsor-pay-total-list"></div></div></div>
+    </div>
+    <div class="page" id="page-sponsor-pay-month">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Payments — This month</span></div>
+      <div class="scrollable"><div class="dashboard-scroll-pad"><div class="info-card" id="sponsor-pay-month-list"></div></div></div>
+    </div>
+    <div class="page" id="page-sponsor-pay-trees">
+      <div class="topbar"><button class="back-btn" onclick="goTo('sponsor-dash')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Sponsored trees</span></div>
+      <div class="scrollable"><div class="dashboard-scroll-pad"><div class="section-title">Sponsored trees</div><div class="info-card" id="sponsor-pay-trees-list"></div></div></div>
+    </div>
+    <div class="page" id="page-sponsor-pay-tree">
+      <div class="topbar"><button class="back-btn" onclick="payTreeBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="sponsor-pay-tree-title">Payments</span></div>
+      <div class="scrollable"><div class="dashboard-scroll-pad"><div class="section-title" id="sponsor-pay-tree-section-title">Payments</div><button class="green-btn" onclick="openSponsorProfile()"><i class="ti ti-tree"></i> Open tree profile</button><button class="blue-btn" id="sponsor-pay-now-trigger" onclick="openSponsorPayNow()"><i class="ti ti-credit-card"></i> Pay now</button><div class="info-card" id="sponsor-pay-tree-list"></div></div></div>
+    </div>
+    <div class="modal-back" id="sponsor-pay-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="modal-title" id="sponsor-pay-modal-title">Pay for</div>
+        <div class="modal-text" id="sponsor-pay-modal-tree-name"></div>
+        <div class="amount-row">
+          <div class="amt-chip" onclick="selectSponsorAmt(this)">₹100</div>
+          <div class="amt-chip" onclick="selectSponsorAmt(this)">₹200</div>
+          <div class="amt-chip selected" onclick="selectSponsorAmt(this)">₹300</div>
+          <div class="amt-chip" onclick="selectSponsorAmt(this)">₹500</div>
+          <div class="amt-chip" onclick="selectSponsorAmt(this)">₹1000</div>
+          <div class="amt-chip" onclick="selectSponsorAmt(this)">₹2000</div>
+        </div>
+        <button class="blue-btn" id="sponsor-pay-now-btn" onclick="recordSponsorPayment()"><i class="ti ti-credit-card"></i> Pay ₹300 now</button>
+        <button class="ghost-btn ghost-btn-mt" onclick="closeSponsorPayNow()">Cancel</button>
+      </div>
+    </div>
   </div>
-<script src="js/storage.js"></script>
+<script src="js/storage.js"></script><script src="js/units.js"></script>
 <script src="js/language.js"></script>
 <script src="js/show-tree-details-in-map.js"></script>
 <script src="js/map.js"></script>

@@ -389,7 +389,9 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
 
     var stats = document.createElement('div');
     stats.className = 'tree-stats';
-    stats.innerHTML = '<span>📏 ' + t.height + '</span><span>⭕ ' + t.diameter + '</span>';
+    var parseVal = function(s){ var m=/([\d.]+)\s*(m|cm)/i.exec(String(s||'')); if(!m) return {v:parseFloat(s)||0,unit:'meter'}; return {v:parseFloat(m[1]),unit:m[2].toLowerCase()==='cm'?'centimeter':'meter'}; };
+    var fmt = function(s,type){ var p=parseVal(s); var meters=p.unit==='centimeter'?p.v/100:p.v; var u=getUnits(type); var cv=convertLength(meters,u); return cv+' '+u; };
+    stats.innerHTML = '<span>📏 ' + fmt(t.height,'height') + '</span><span>⭕ ' + fmt(t.diameter,'diameter') + '</span>';
     health_stats_row.appendChild(stats);
     info.appendChild(health_stats_row);
 

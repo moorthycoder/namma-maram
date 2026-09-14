@@ -48,3 +48,4 @@
   .about-panel.open { display: flex; flex-direction: column; gap: 8px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px; }
   .about-body { font-size: 0.8rem; color: var(--color-text-secondary); line-height: 1.5; }
   .about-link { font-size: 0.8rem; color: var(--color-theme); text-decoration: none; font-weight: 500; }
+  .measure-select { padding: 6px 8px; border-radius: 8px; border: 0.5px solid var(--color-border-tertiary); font-size: 0.8rem; background: var(--color-background-primary); color: var(--color-text-primary); }

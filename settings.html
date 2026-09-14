@@ -7,8 +7,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
-<link rel="stylesheet" href="css/settings.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/settings.css" />
 <script src="js/storage.js"></script>
+<script src="js/units.js"></script>
 <script src="js/language.js"></script>
 <script src="js/settings.js"></script>
 </head>
@@ -39,6 +41,12 @@
             </div>
           </span>
         </div>
+      </div>
+
+      <div class="section-title">Measurement</div>
+      <div class="info-card">
+        <div class="info-row"><span class="info-key"><i class="ti ti-ruler"></i> Height</span><span class="info-val"><select class="measure-select" id="measure-height" onchange="onMeasureChange('height', this.value)"><option value="meter">meter</option><option value="centimeter">centimeter</option><option value="feet" selected>feet</option><option value="inch">inch</option></select></span></div>
+        <div class="info-row"><span class="info-key"><i class="ti ti-circle"></i> Diameter</span><span class="info-val"><select class="measure-select" id="measure-diameter" onchange="onMeasureChange('diameter', this.value)"><option value="meter">meter</option><option value="centimeter">centimeter</option><option value="feet" selected>feet</option><option value="inch">inch</option></select></span></div>
       </div>
 
       <div class="section-title">Language</div>

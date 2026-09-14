@@ -707,8 +707,8 @@ function renderAlbum(place, tree) {
       '<div class="tree-id">' + t.treeId + '</div>' +
       '<div class="tree-name">' + t.englishName + '</div>' +
       '<div class="tree-stats">' +
-        '<span>📏 ' + t.height + '</span>' +
-        '<span>📐 ' + t.diameter + '</span>' +
+        '<span>📏 ' + formatLength(t.height,'height') + '</span>' +
+        '<span>📐 ' + formatLength(t.diameter,'diameter') + '</span>' +
         '<span>📋 ' + t.logs + '</span>' +
       '</div>' +
       '<div class="tree-meta">' +
@@ -815,7 +815,7 @@ function treeCardHtml(t, cfg) {
     '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (t.emoji || c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
     '<div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + addr + '</div></div>' +
     '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (t.bg || c.bg || '') + ';">' + (t.emoji || c.emoji || '') + '</div>' + latest +
-    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (st.height || c.height || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
+    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
     '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
 }
@@ -1296,7 +1296,7 @@ function rangerLogCardHtml(t, loggedAt, hideLogBox, target_id) {
   var header_html = (is_submitted && delete_fn) ? '<div class="ranger-card-header"><span class="ranger-card-header-title">' + header_title + '</span>' + delete_btn + '</div>' : '';
   return '<div class="sponsor-tree-card" onclick="openRangerReviewPage(' + q + t.treeId + q + ',' + q + at + q + ')">' + header_html +
     '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '#234712') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '🌴') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>' +
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div></div></div>' +
     log_box +
     '</div>';
 }
@@ -1341,7 +1341,7 @@ function deleteRangerLogRequest(tree_id) {
 function openRangerReviewPage(treeId, loggedAt) {
   var parent = encodeURIComponent('ranger.html?hub=ranger-dash');
   try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('ranger.html?hub=' + active.id.replace('page-','')); } catch (e) {}
-  window.location.href = 'review-logs.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
+  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
 }
 
 function renderRangerLogCards(target_id, empty_id, id_list, loggedAtMap, hideLogBox) {

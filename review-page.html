@@ -33,8 +33,9 @@
   </div>
 </div>
 <script src="js/storage.js"></script>
+<script src="js/units.js"></script>
 <script>
-var parentUrl = new URLSearchParams(location.search).get('parent') || 'caregiver-logs.html';
+var parentUrl = new URLSearchParams(location.search).get('parent') || 'care-giver.html?hub=caregiver-dash';
 function goBack() { window.location.href = parentUrl; }
 function formatLoggedAt(v) {
   var m = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/.exec(v);
@@ -93,9 +94,9 @@ function renderReview() {
     }
   }
   var heightEl = document.getElementById('review-height');
-  if (heightEl) heightEl.innerHTML = st.height ? 'Height: ' + st.height : '<span class="review-empty">No height recorded</span>';
+  if (heightEl) heightEl.innerHTML = st.height ? 'Height: ' + formatLength(st.height,'height') : '<span class="review-empty">No height recorded</span>';
   var diameterEl = document.getElementById('review-diameter');
-  if (diameterEl) diameterEl.innerHTML = st.diameter ? 'Diameter: ' + st.diameter : '<span class="review-empty">No diameter recorded</span>';
+  if (diameterEl) diameterEl.innerHTML = st.diameter ? 'Diameter: ' + formatLength(st.diameter,'diameter') : '<span class="review-empty">No diameter recorded</span>';
   var obsEl = document.getElementById('review-observations');
   if (obsEl) obsEl.innerHTML = (fo.notes || chosen.notes) ? (fo.notes || chosen.notes) : '<span class="review-empty">No observation recorded</span>';
   var recEl = document.getElementById('review-recommendations');

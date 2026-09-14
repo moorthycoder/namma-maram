@@ -27,6 +27,14 @@ function caregiverCardAddr(t) {
   return a[lang] || a.en || a.ta || '';
 }
 
+function loginCheckCaregiver() {
+  var r = window._login || null;
+  if (r && r['tree-login'] && r['tree-login'].caregiver && r['tree-login'].caregiver.loggedIn) {
+    return true;
+  }
+  goTo('caregiver-login');
+  return false;
+}
 function loadCurrentUser() {
   try {
     var s = sessionStorage.getItem('loginCredentialsV1');
@@ -49,6 +57,15 @@ function checkNewCaregiverTrees() {
   var new_ids = [];
   try { var arr = JSON.parse(caregiver_waiting_str); if (Array.isArray(arr)) new_ids = arr.filter(function(e){ return typeof e === 'string' && e; }); } catch (e) { new_ids = []; }
   if (!new_ids.length) return [];
+  try {
+    var _login_chk = storage.get('login') || window._login || null;
+    if (!_login_chk) { var _s = sessionStorage.getItem('loginCredentialsV1'); if (_s) _login_chk = JSON.parse(_s); }
+    var _caregiver_chk = _login_chk && _login_chk['tree-login'] && _login_chk['tree-login']['caregiver'];
+    if (!_caregiver_chk || !_caregiver_chk.userId) {
+      goTo('caregiver-login');
+      return new_ids;
+    }
+  } catch (e) {}
   var ram_data = storage.get('treeCards') || window.__TREE_DATA || [];
   var pending_trees = [];
   for (var i = 0; i < new_ids.length; i++) { var id = new_ids[i]; for (var r = 0; r < ram_data.length; r++) { if (ram_data[r].treeId === id) { pending_trees.push(ram_data[r]); break; } } }
@@ -58,7 +75,12 @@ function checkNewCaregiverTrees() {
 
 function continueAsCaregiver() {
   console.log('[caregiver] continueAsCaregiver click pending', sessionStorage.getItem('pendingCare'));
-  updateWaitingListFromPendingCaregiver();
+  try {
+    var _lc = window._login || storage.get('login') || {};
+    if (_lc && _lc['tree-login'] && _lc['tree-login'].caregiver) { _lc['tree-login'].caregiver.loggedIn = true; storage.set('login', _lc); window._login = _lc; }
+  } catch (e) {}
+  var _r2 = updateWaitingListFromPendingCaregiver();
+  if (!_r2) { goTo('caregiver-dash'); loadDashboard(); }
 }
 function updateWaitingListFromPendingCaregiver() {
   try {
@@ -109,7 +131,12 @@ function closeCaregiverConflictModal() {
 function handleCaregiverLoginOkay() {
   var modal_el = document.getElementById('login-status-modal');
   if (modal_el) modal_el.classList.remove('open');
-  updateWaitingListFromPendingCaregiver();
+  try {
+    var _lc2 = window._login || storage.get('login') || {};
+    if (_lc2 && _lc2['tree-login'] && _lc2['tree-login'].caregiver) { _lc2['tree-login'].caregiver.loggedIn = true; storage.set('login', _lc2); window._login = _lc2; }
+  } catch (e) {}
+  var _r = updateWaitingListFromPendingCaregiver();
+  if (!_r) { goTo('caregiver-dash'); loadDashboard(); }
 }
 function caregiverLogout() {
   try {
@@ -638,7 +665,7 @@ function caregiverSeeingCardHtml(t) {
   var addr_txt = caregiverCardAddr(t) || c.addr || '';
   return '<div class="sponsor-tree-card">'
     + '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>'
-    + '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (st.height || c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (st.diameter || c.diameter || '—') + '</div></div></div></div>'
+    + '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div></div></div>'
     + '<div class="caregiver-seeing-actions"><button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();confirmPendingCaregiver(' + q + t.treeId + q + ')"><i class="ti ti-check"></i> Confirm</button><button class="tcbtn tcbtn-danger" onclick="event.stopPropagation();removePendingCaregiver(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i> Decline</button></div>'
     + '</div>';
 }
@@ -1039,6 +1066,8 @@ function loadDashboard() {
 
 window.render = {
   init: function () {
+    if (hubMode === 'login' || hubMode === 'register') { return; }
+    if (!loginCheckCaregiver()) return;
     var had_pending = false;
     if (hubMode === 'caregiver-dash' || hubMode === 'caregiver-waiting') { had_pending = consumePendingCaregiverRequest(); }
     loadDashboard();
@@ -1076,7 +1105,7 @@ function treeCardHtml(t, cfg) {
     '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (t.emoji || c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
     '<div class="tcard-addr"><i class="ti ti-map-pin" style="font-size:0.6667rem"></i> ' + addr + '</div></div>' +
     '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (t.bg || c.bg || '') + ';">' + (t.emoji || c.emoji || '') + '</div>' + latest +
-    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (st.height || c.height || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (st.diameter || c.diameter || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
+    '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
     '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
 }
@@ -1142,7 +1171,7 @@ function openLogsPage() {
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['caregiver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
   var userid = role.userId || '';
-  var url = 'caregiver-logs.html?parent=' + parent + '&userid=' + encodeURIComponent(userid);
+  var url = 'care-giver.html?hub=caregiver-logs-approved&parent=' + parent + '&userid=' + encodeURIComponent(userid);
   window.location.href = url;
 }
 function openLogsByType(logType, status) {
@@ -1185,7 +1214,7 @@ function renderCaregiverLogs(logType, status) {
 function openCaregiverReviewPage(treeId, loggedAt) {
   var parent = encodeURIComponent('care-giver.html?hub=caregiver-dash');
   try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('care-giver.html?hub=' + active.id.replace('page-','')); } catch (e) {}
-  window.location.href = 'review-logs.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
+  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
 }
 
 

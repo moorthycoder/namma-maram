@@ -442,8 +442,8 @@ function renderAlbum(place, tree) {
       '<div class="tree-id">' + t.treeId + '</div>' +
       '<div class="tree-name">' + t.englishName + '</div>' +
       '<div class="tree-stats">' +
-        '<span>📏 ' + t.height + '</span>' +
-        '<span>📐 ' + t.diameter + '</span>' +
+        '<span>📏 ' + formatLength(t.height,'height') + '</span>' +
+        '<span>📐 ' + formatLength(t.diameter,'diameter') + '</span>' +
         '<span>📋 ' + t.logs + '</span>' +
       '</div>' +
       '<div class="tree-meta">' +
@@ -627,8 +627,8 @@ function adminRenderAlbum(pincode, place, searchId) {
       '<div class="tree-name">' + t.name + '</div>' +
       '<div class="tree-stats">' +
         '<span>📍 ' + t.pincode + '</span>' +
-        '<span>📏 ' + t.height + '</span>' +
-        '<span>📐 ' + t.diameter + '</span>' +
+        '<span>📏 ' + formatLength(t.height,'height') + '</span>' +
+        '<span>📐 ' + formatLength(t.diameter,'diameter') + '</span>' +
       '</div>';
     card.appendChild(photo);
     card.appendChild(info);

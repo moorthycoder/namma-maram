@@ -164,7 +164,7 @@ var registerFlowPages = "\n\
   <div class=\"steps\"><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot active\">3</div><div class=\"step-line\"></div><div class=\"step-dot pending\">4</div></div>\n\
   <div class=\"step-labels\"><span class=\"step-lbl\">Selfie</span><span class=\"step-lbl\">Snapshots</span><span class=\"step-lbl active\">Notes</span><span class=\"step-lbl\">Review</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
-    <div style=\"display:flex;flex-direction:column;gap:10px;\"><div><div class=\"field-label\"><i class=\"ti ti-ruler\"></i> Height</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-height\" placeholder=\"Type in meter\" style=\"flex:1;\"><span style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">meter</span></div></div><div><div class=\"field-label\"><i class=\"ti ti-circle\"></i> Diameter</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-diameter\" placeholder=\"Type in meter\" style=\"flex:1;\"><span style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">meter</span></div></div></div>\n\
+    <div style=\"display:flex;flex-direction:column;gap:10px;\"><div><div class=\"field-label\"><i class=\"ti ti-ruler\"></i> Height</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-height\" placeholder=\"Type in feet\" style=\"flex:1;\"><span class=\"unit-label\" data-unit-type=\"height\" style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">feet</span></div></div><div><div class=\"field-label\"><i class=\"ti ti-circle\"></i> Diameter</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-diameter\" placeholder=\"Type in feet\" style=\"flex:1;\"><span class=\"unit-label\" data-unit-type=\"diameter\" style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">feet</span></div></div></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-notes\"></i> Observation</div><textarea class=\"notes-box\" id=\"register-observations\" placeholder=\"e.g. New shoots visible, no signs of disease...\"></textarea></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-clipboard-check\"></i> Recommendation</div><textarea class=\"notes-box\" id=\"register-recommendations\" placeholder=\"e.g. Fertilize before monsoon...\"></textarea></div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"openRegisterReview()\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
@@ -576,11 +576,13 @@ function renderRegisterReview() {
   }
   var heightEl = document.getElementById('review-height');
   if (heightEl) {
-    heightEl.innerHTML = registerHeight ? 'Height: ' + registerHeight + ' meter' : '<span class="review-empty">No height recorded</span>';
+    var hu = getUnits('height');
+    heightEl.innerHTML = registerHeight ? 'Height: ' + registerHeight + ' ' + hu : '<span class="review-empty">No height recorded</span>';
   }
   var diameterEl = document.getElementById('review-diameter');
   if (diameterEl) {
-    diameterEl.innerHTML = registerDiameter ? 'Diameter: ' + registerDiameter + ' meter' : '<span class="review-empty">No diameter recorded</span>';
+    var du = getUnits('diameter');
+    diameterEl.innerHTML = registerDiameter ? 'Diameter: ' + registerDiameter + ' ' + du : '<span class="review-empty">No diameter recorded</span>';
   }
   var observationsEl = document.getElementById('review-observations');
   if (observationsEl) {

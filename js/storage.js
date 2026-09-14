@@ -12,7 +12,8 @@ var STORE = {
   treeColours: { url: 'json/tree-colours-in-map-pins.json', ram: 'TREE_COLOURS' },
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
   login:       { url: 'json/login-credentials.json', ram: '_login', session: 'loginCredentialsV1' },
-  placeholderTexts: { url: 'json/placeholder_text.json', ram: '__PLACEHOLDERS' }
+  placeholderTexts: { url: 'json/placeholder_text.json', ram: '__PLACEHOLDERS' },
+  measurement: { url: null, ram: '__MEASUREMENT' }
 };
 function getBackingStore() {
   return sessionStorage;
@@ -31,7 +32,9 @@ var storage = {
   tree: (function () { try { return JSON.parse(getBackingStore().getItem(TREE_KEY) || 'null') || {}; } catch (e) { return {}; } })(),
 
   get: function (name) {
+    if (name === 'measurement' && !storage.tree.measurement) { storage.tree.measurement = { height: 'feet', diameter: 'feet' }; window.__MEASUREMENT = storage.tree.measurement; }
     var item = STORE[name];
+    if (!item) { return null; }
     if (window[item.ram] != null) { return window[item.ram]; }
     var fromParent = parentRam(name);
     if (fromParent != null) { return fromParent; }
@@ -129,11 +132,13 @@ var storage = {
       }
     };
     Object.keys(STORE).forEach(function (name) {
+      if (!STORE[name].url) { return; }
       pending++;
       fetch(STORE[name].url).then(function (r) { return r.json(); })
         .then(function (data) { storage.set(name, data); done(); })
         .catch(function () { done(); });
     });
+    if (pending === 0) { storage.save(); storage.renderAll(); }
   },
 
   destroy: function () {
@@ -159,6 +164,8 @@ try {
     if (storage.tree[n] != null) { window[STORE[n].ram] = storage.tree[n]; }
   });
 } catch (e) {}
+if (!storage.tree.measurement) { storage.tree.measurement = { height: 'feet', diameter: 'feet' }; window.__MEASUREMENT = storage.tree.measurement; try { storage.save(); } catch (e) {} }
+if (!window.__MEASUREMENT) { window.__MEASUREMENT = storage.tree.measurement; }
 
 if (window.top === window.self) {
   var _cachedCards = storage.get('treeCards');

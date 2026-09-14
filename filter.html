@@ -31,12 +31,12 @@
         <form autocomplete="off" onsubmit="return false">
           <div class="filter-row filter-row-stack">
             <div class="clear-wrap">
-              <input class="id-input" id="album-place" type="text" placeholder="Type Place, Pincode, Project or Tree Id" autocomplete="off" oninput="onInput(this)" onkeyup="onInput(this)" />
+              <input class="id-input" id="album-place" type="text" placeholder="Place, Pincode, Project or Tree Id" autocomplete="off" oninput="onInput(this)" onkeyup="onInput(this)" />
               <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
               <div class="album-suggest" id="album-suggest"></div>
             </div>
             <div class="clear-wrap">
-              <input class="id-input" id="album-tree" type="text" placeholder="Type Tree Name" autocomplete="off" oninput="onInput(this)" onkeyup="onInput(this)" />
+              <input class="id-input" id="album-tree" type="text" placeholder="Tree Name" autocomplete="off" oninput="onInput(this)" onkeyup="onInput(this)" />
               <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
             </div>
           </div>
@@ -75,6 +75,7 @@
 
   </div>
 <script src="js/storage.js"></script>
+<script src="js/units.js"></script>
 <script src="js/language.js"></script>
 <script src="js/show-tree-details-in-map.js"></script>
 <script src="js/map.js"></script>

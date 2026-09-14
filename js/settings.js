@@ -50,9 +50,24 @@ function freshUpSampleData() {
   alert('Sample data restored.');
 }
 
+function initMeasurement() {
+  var m = storage.get('measurement') || { height: 'feet', diameter: 'feet' };
+  var h_el = document.getElementById('measure-height');
+  var d_el = document.getElementById('measure-diameter');
+  if (h_el) h_el.value = m.height;
+  if (d_el) d_el.value = m.diameter;
+}
+
+function onMeasureChange(type, value) {
+  var m = storage.get('measurement') || { height: 'feet', diameter: 'feet' };
+  m[type] = value;
+  storage.set('measurement', m);
+}
+
 window.render = {
   init: function () {
     filterLang = appLang;
     renderLangGrid();
+    initMeasurement();
   }
 };
