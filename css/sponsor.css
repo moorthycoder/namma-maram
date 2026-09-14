@@ -230,6 +230,7 @@ body { background: var(--color-background-primary); overflow: hidden; }
   .amount-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
   .amt-chip{padding:10px;border-radius:var(--border-radius-md);border:1.5px solid var(--color-border-secondary);text-align:center;font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);cursor:pointer;font-family:var(--font-sans);}
   .amt-chip.selected{border-color:var(--color-theme);background:var(--color-theme-light);color:var(--color-theme);}
+
   .log-tracker-entry{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;}
   .log-tracker-entry:last-child{border-bottom:none;}
   .log-tracker-entry:hover{opacity:0.75;}

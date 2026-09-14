@@ -99,15 +99,6 @@
   .health-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 5px; }
   .health-bar { height: 6px; border-radius: 3px; background: var(--color-background-secondary); overflow: hidden; }
   .health-fill { height: 100%; border-radius: 3px; background: var(--color-theme); width: 82%; }
-  .log-entry { display: flex; align-items: center; gap: 9px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); cursor: pointer; }
-  .log-entry:last-child { border-bottom: none; }
-  .log-entry:hover { opacity: 0.8; }
-  .log-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .log-body { flex: 1; }
-  .log-date { font-size: 0.6667rem; color: var(--color-text-secondary); margin-bottom: 2px; }
-  .log-text { font-size: 0.8rem; color: var(--color-text-primary); }
-  .log-chips { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
-  .log-thumb { width: 40px; height: 40px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 0.5px solid var(--color-border-tertiary); }
 
   /* ── ALBUM PAGE ── */
   .album-grid-page { padding: 11px 13px; display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
@@ -207,10 +198,6 @@
   .amount-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
   .amt-chip{padding:10px;border-radius:var(--border-radius-md);border:1.5px solid var(--color-border-secondary);text-align:center;font-size:0.9333rem;font-weight:500;color:var(--color-text-primary);cursor:pointer;font-family:var(--font-sans);}
   .amt-chip.selected{border-color:var(--color-theme);background:var(--color-theme-light);color:var(--color-theme);}
-  .log-tracker-entry{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;}
-  .log-tracker-entry:last-child{border-bottom:none;}
-  .log-tracker-entry:hover{opacity:0.75;}
-  .log-by{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:2px;}.log-notes{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:2px;display:flex;align-items:center;gap:4px;}.log-notes b,.log-todo b{color:var(--color-theme-light);font-weight:500;margin-right:5px;flex-shrink:0;}.log-todo{font-size:0.7333rem;color:var(--color-text-secondary);margin-top:2px;display:flex;align-items:center;gap:4px;}
   .dbl-hint{font-size:0.6667rem;color:rgba(192,221,151,0.5);text-align:center;padding:6px 0 2px;letter-spacing:0.2px;}
   .tracker-tree-card{background:rgba(255,255,255,0.07);border-radius:var(--border-radius-lg);padding:11px 12px;margin-bottom:8px;cursor:pointer;border:0.5px solid rgba(255,255,255,0.08);}
   .tracker-tree-card:hover{background:rgba(255,255,255,0.12);}
@@ -292,8 +279,6 @@
   .browse-search-icon { font-size:0.9333rem; color:var(--color-text-secondary); }
   .browse-search-text { font-size:0.8667rem; color:var(--color-text-secondary); }
   .browse-pad { padding:10px 14px; }
-  .log-header-pad { padding:12px 14px; }
-  .log-hint { font-size:0.6667rem; color:var(--color-text-secondary); text-align:center; margin-bottom:10px; }
   .tree-logs-gap { display:flex; flex-direction:column; }
   .history-hint { font-size:0.7333rem; color:var(--color-text-secondary); text-align:center; margin-top:6px; }
   .dashboard-next { cursor:pointer; }
@@ -329,8 +314,6 @@
   .edit-btn { background:rgba(255,255,255,0.15); border:none; border-radius:6px; color:#fff; cursor:pointer; font-size:0.7333rem; padding:3px 8px; vertical-align:middle; margin-left:6px; }
   .profile-scroll { padding:12px 14px 20px; }
   .info-card-mb { margin-bottom:14px; }
-  .log-hint-center { font-size:0.7333rem; color:var(--color-text-secondary); text-align:center; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:4px; }
-  .log-hint-icon { font-size:0.8rem; }
   .album-meta-title { font-size:0.8667rem; font-weight:500; color:var(--color-text-primary); margin-bottom:3px; }
   .album-meta-row { font-size:0.7333rem; color:var(--color-text-secondary); display:flex; gap:10px; }
   .album-meta-item { display:flex; align-items:center; gap:3px; }
@@ -343,12 +326,6 @@
   .chip-icon { font-size:0.6667rem; }
   .chip-blue-icon { font-size:0.6667rem; }
   .photo-off-icon { font-size:1rem; color:var(--color-text-secondary); }
-  .log-dot-green { background:#3B6D11; }
-  .log-dot-light { background:#9FE1CB; }
-  .log-dot-yellow { background:#C0DD97; }
-  .log-thumb-green { background:#2d4a2d; }
-  .log-thumb-dark { background:#1e3d1e; }
-  .log-thumb-empty { background:var(--color-background-secondary); border:0.5px dashed var(--color-border-secondary); }
   .modal-sheet-center { text-align:center; padding:6px 0; }
   .modal-icon { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
   .delete-btn-bg { background:#dc2626; }
