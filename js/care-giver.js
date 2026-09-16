@@ -15,17 +15,17 @@ function getCaregiverLang() {
 function firstOf(v) { return Array.isArray(v) ? (v[0] || '') : (v || ''); }
 function caregiverCardName(t) {
   if (!t) return '';
-  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { return firstOf(storage.treeNameIn(t, getCaregiverLang())) || ''; } catch (e) {} }
-  var n = (t.speciesName) || {};
   var lang = getCaregiverLang();
-  return firstOf(n[lang]) || firstOf(n.en) || firstOf(n.ta) || t.englishName || t.name || '';
+  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { var res = storage.treeNameIn(t, lang); if (Array.isArray(res) && res.length) return res[0]; } catch (e) {} }
+  return t.scientificName || '';
 }
 function caregiverCardAddr(t) {
   if (!t) return '';
   var lang = getCaregiverLang();
-  var a = (t.address) || {};
-  if (typeof a === 'string') return a;
-  return a[lang] || a.en || a.ta || '';
+  var pin = String(t.pincode || '');
+  var pl = t.placeName || '';
+  for (var i = 0; i < (window.__PLACES || []).length; i++) { var p = window.__PLACES[i]; if ((p.placeName && p.placeName.en === pl) || String(p.pinCode || p.pincode || '') === pin) { return p.placeName[lang] || p.placeName.en || pl; } }
+  return pl || (pin ? 'Pincode ' + pin : '');
 }
 
 function loginCheckCaregiver() {
@@ -662,8 +662,8 @@ function caregiverSeeingCardHtml(t) {
   var last = enc[keys[keys.length - 1]] || {};
   var st = last['health-status'] || {};
   var status = c.statusLogged || c.statusChecked || st.health || '';
-  var name_txt = caregiverCardName(t) || t.englishName || t.name || '';
-  var addr_txt = caregiverCardAddr(t) || c.addr || '';
+  var name_txt = caregiverCardName(t);
+  var addr_txt = caregiverCardAddr(t);
   return '<div class="sponsor-tree-card">'
     + '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>'
     + '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div></div></div>'
@@ -710,8 +710,8 @@ function caregiverBaseData(t) {
   var last = enc[keys[keys.length - 1]] || {};
   var st = last['health-status'] || {};
   var status = c.statusLogged || c.statusChecked || st.health || '';
-  var name_txt = caregiverCardName(t) || t.englishName || t.name || '';
-  var addr_txt = caregiverCardAddr(t) || c.addr || '';
+  var name_txt = caregiverCardName(t);
+  var addr_txt = caregiverCardAddr(t);
   var due_raw = t['encounter-due-date'] || '';
   var due_display = '';
   if (due_raw) { var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(due_raw); due_display = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : due_raw; }
