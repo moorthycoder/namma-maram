@@ -19,13 +19,32 @@ function injectAppendPlaceCSS() {
 }
 
 function appendPlaceName(place) {
+  var place_name = {};
+  var en_name = '';
+  Object.keys(place.names || {}).forEach(function (lang) {
+    var vals = place.names[lang] || [];
+    var str = vals.map(function (v) { return String(v).trim(); }).filter(function (v) { return v; }).join(', ');
+    place_name[lang] = str;
+    if (lang === 'en' && !en_name) en_name = str;
+  });
+  if (!en_name) {
+    for (var fallback_i = 0; fallback_i < Object.keys(place_name).length; fallback_i++) {
+      var fl = Object.keys(place_name)[fallback_i];
+      if (place_name[fl]) { en_name = place_name[fl]; break; }
+    }
+  }
   var entry = {
-    placeId: place.pinCode,
+    placeId: String(place.pinCode || '') + (en_name ? '#' + en_name : ''),
     pinCode: place.pinCode,
-    placeName: place.names
+    placeName: place_name
   };
   var db = storage.get('places') || [];
-  db.push(entry);
+  var match_i = -1;
+  for (var di = 0; di < db.length; di++) {
+    if (db[di].placeId === entry.placeId) { match_i = di; break; }
+  }
+  if (match_i === -1) { db.push(entry); }
+  else { db[match_i].placeName = place_name; db[match_i].pinCode = entry.pinCode; }
   storage.commit('places', db);
   return entry;
 }

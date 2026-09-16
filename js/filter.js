@@ -1,6 +1,6 @@
 // filter.js — standalone Search/Album flow (loaded by filter.html)
 
-// Tree data for album — populated from tree_cards.json via loadTreeData
+// Tree data for album — populated from tree_profile_cards.json via loadTreeData
 var albumData = [];
 var filterParentUrl = new URLSearchParams(location.search).get('parent') || '';
 function filterBack() {
@@ -248,8 +248,10 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     }
     var lang = filterLang;
     window._mapLang = lang;
+    var name_hits = {};
+    searchInTreeName(tree).forEach(function(n) { name_hits[n.treeId] = 1; });
     var filtered = searchInTreePlace(place).filter(function (t) {
-      return searchInTreeName(tree).indexOf(t) > -1;
+      return name_hits[t.treeId];
     });
 
   var countEl = document.getElementById('album-count');

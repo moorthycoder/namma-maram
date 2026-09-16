@@ -7,7 +7,7 @@ var TREE_KEY = 'tree';
 
 var STORE = {
   places:      { url: 'json/places_name.json',      ram: '__PLACES' },
-  treeCards:   { url: 'json/tree_cards.json',       ram: '__TREE_DATA' },
+  treeCards:   { url: 'json/tree_profile_cards.json', ram: '__TREE_DATA' },
   treeNames:   { url: 'json/trees_name.json',       ram: 'TREE_NAMES_DB' },
   treeColours: { url: 'json/tree-colours-in-map-pins.json', ram: 'TREE_COLOURS' },
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
