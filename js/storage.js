@@ -8,6 +8,7 @@ var TREE_KEY = 'tree';
 var STORE = {
   places:      { url: 'json/places_name.json',      ram: '__PLACES' },
   treeCards:   { url: 'json/tree_profile_cards.json', ram: '__TREE_DATA' },
+  projects:    { url: 'json/projects_name.json',       ram: '__PROJECTS' },
   treeNames:   { url: 'json/trees_name.json',       ram: 'TREE_NAMES_DB' },
   treeColours: { url: 'json/tree-colours-in-map-pins.json', ram: 'TREE_COLOURS' },
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
@@ -102,19 +103,16 @@ var storage = {
   treeNameIn: function (t, lang) {
     function nn(a) { return (Array.isArray(a) && a.length) ? a : null; }
     var EMPTY = [];
-    if (!t || !t.speciesName) { return EMPTY; }
+    if (!t) { return EMPTY; }
     lang = lang || 'en';
-    if (lang === 'en') { return nn(t.speciesName.en) || nn(t.speciesName.ta) || EMPTY; }
+    var sci = String(t.scientificName || '');
     var db = storage.get('treeNames') || [];
-    var sci = t.speciesName.sn || '';
     for (var i = 0; i < db.length; i++) {
-      if (db[i][sci]) {
-        var names = db[i][sci][lang];
-        if (Array.isArray(names) && names.length) { return names; }
-      }
+      var entry = db[i][sci] || {};
+      var names = entry[lang] || entry.en || [];
+      if (Array.isArray(names) && names.length) { return names; }
     }
-    if (lang === 'ta') { return nn(t.speciesName.ta) || nn(t.speciesName.en) || EMPTY; }
-    return nn(t.speciesName.en) || nn(t.speciesName.ta) || EMPTY;
+    return EMPTY;
   },
 
   save: function () {

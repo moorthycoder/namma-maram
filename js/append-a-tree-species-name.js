@@ -1,4 +1,4 @@
-// append-a-tree-name.js — standalone flow injected into #screen. Reads tree names from storage and appends new tree names.
+// append-a-tree-species-name.js — standalone flow injected into #screen. Reads tree names from storage and appends new tree names.
 // Entry format: { "<scientificName>": { en: [], ta: [], te: [], ... }, "variety": [] }
 
 var appendTreeNameCSS = "\n\
@@ -26,17 +26,29 @@ function injectAppendTreeCSS() {
 }
 
 function appendTreeName(treeName) {
-  var botanicalName = treeName.scientificName || '';
-  var entry = {};
-  entry[botanicalName] = {};
-  (storage.get('languages') || []).forEach(function (l) {
-    entry[botanicalName][l.code] = (treeName.names && treeName.names[l.code]) || [];
-  });
-  entry.variety = [];
+  var botanicalName = (treeName.scientificName || '').trim();
+  var langs = storage.get('languages') || [];
   var db = storage.get('treeNames') || [];
-  db.push(entry);
+  var match_i = -1;
+  for (var i = 0; i < db.length; i++) {
+    if (Object.prototype.hasOwnProperty.call(db[i], botanicalName)) { match_i = i; break; }
+  }
+  if (match_i === -1) {
+    var entry = {};
+    entry[botanicalName] = {};
+    langs.forEach(function(l){ entry[botanicalName][l.code] = (l.code === 'sn') ? [botanicalName] : ((treeName.names && treeName.names[l.code]) || []); });
+    entry.variety = [];
+    db.push(entry);
+  } else {
+    langs.forEach(function(l) {
+      var src = (l.code === 'sn') ? [botanicalName] : (((treeName.names && treeName.names[l.code]) || []).slice());
+      var cur = db[match_i][botanicalName][l.code] || [];
+      src.forEach(function(v){ if (cur.indexOf(v) === -1) { cur = cur.concat([v]); } });
+      db[match_i][botanicalName][l.code] = cur;
+    });
+  }
   storage.commit('treeNames', db);
-  return entry;
+  return match_i === -1 ? db[db.length - 1] : db[match_i];
 }
 
 var appendTreePages = "\n\
@@ -253,9 +265,9 @@ injectAppendTreeFlow();
   },400);
 })();
 
-// --- standalone append-a-tree-name.html support (merged from append-a-tree-name-page.js) ---
+// --- standalone append-a-tree-species-name.html support (merged from append-a-tree-name-page.js) ---
 (function(){
-  if (location.pathname.indexOf('append-a-tree-name.html') === -1) return;
+  if (location.pathname.indexOf('append-a-tree-species-name.html') === -1) return;
   var parentUrl = new URLSearchParams(location.search).get('parent') || 'test-bed-3.html';
   window.roleDash = function(){ return parentUrl; };
   window.appendTreeGoTo = function(page){

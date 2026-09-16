@@ -63,14 +63,22 @@
     var st = lastEnc ? (lastEnc['health-status'] || {}) : {};
     var lang = appLang || getAppLang();
     function nameOf(nv) { return Array.isArray(nv) ? (nv[0] || '') : (nv || ''); }
-    var name = nameOf(record.speciesName[lang]) || nameOf(record.speciesName.en) || nameOf(record.speciesName.ta) || '';
-    var addr = record.address || {};
+    var sci = record.scientificName || '';
+    var db = (window.TREE_NAMES_DB || []);
+    var common_names = [];
+    for (var di = 0; di < db.length; di++) {
+      var entry = db[di][sci] || {};
+      if (entry[lang] && Array.isArray(entry[lang]) && entry[lang].length) { common_names = entry[lang]; break; }
+      if (entry.en && Array.isArray(entry.en) && entry.en.length) { common_names = entry.en; break; }
+    }
+    var name = nameOf(common_names) || sci;
+    var pincode = record.pincode || '';
     return {
-      type: record.speciesName.sn || nameOf(record.speciesName.en) || nameOf(record.speciesName.ta) || 'Tree',
-      name: name || record.englishName || 'Tree',
+      type: sci || 'Tree',
+      name: name || 'Tree',
       localName: record.localName || '',
       treeId: record.treeId || '',
-      address: addr[lang] || addr.en || addr.ta || '',
+      address: pincode,
       caregiver: record['care-giver'] || '',
       careGiverContact: record['care-giver-contact-number'] || '',
       emoji: record.emoji || '🌳',

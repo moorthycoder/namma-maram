@@ -301,7 +301,7 @@ function openAppendTreeName() {
   frame.className = 'app-frame';
   frame.id = 'app-frame';
   frame.title = 'Append Tree Name';
-  frame.src = 'append-a-tree-name.html?parent=' + encodeURIComponent('surveyor.html?hub=surveyor-tree-name-submitted') + '&userid=' + encodeURIComponent(user_id);
+  frame.src = 'append-a-tree-species-name.html?parent=' + encodeURIComponent('surveyor.html?hub=surveyor-tree-name-submitted') + '&userid=' + encodeURIComponent(user_id);
   var dash_page = document.getElementById('page-surveyor-dash');
   if (dash_page) dash_page.style.display = 'none';
   var screen = document.querySelector('.screen');
@@ -929,7 +929,7 @@ function openSurveyorLogsSubmitted() {
 function openTreeNameEditForm(sci) {
   var parent = encodeURIComponent('surveyor.html?hub=surveyor-dash');
   try { var active=document.querySelector('.page.active'); if(active) parent=encodeURIComponent('surveyor.html?hub='+active.id.replace('page-','')); } catch(e){}
-  window.location.href='append-a-tree-name.html?parent='+parent+'&editSci='+encodeURIComponent(sci);
+  window.location.href='append-a-tree-species-name.html?parent='+parent+'&editSci='+encodeURIComponent(sci);
 }
 function surveyorTreeNameCardHtml(entry, is_submitted) {
   var sci = entry.scientificName || entry.sn || '—';

@@ -13,19 +13,26 @@ function filterBack() {
 var __SUGGESTIONS = [];
 function populatePlaceList() {
   __PLACES = __PLACES || [];
+  window.__PLACE_INDEX = __PLACES.map(function (p) {
+    var texts = [];
+    Object.keys(p.placeName || {}).forEach(function (k) {
+      var v = normalizeQuery(p.placeName[k]);
+      if (v) texts.push(v);
+    });
+    return { pin: normalizeQuery(String(p.pinCode || '')), texts: texts };
+  });
   __SUGGESTIONS = [];
   __PLACES.forEach(function (p) {
-    __SUGGESTIONS.push({ value: p.placeName.en, label: p.placeName.en + ' · ' + p.pinCode });
-    if (p.placeName.ta) __SUGGESTIONS.push({ value: p.placeName.ta, label: p.placeName.ta + ' · ' + p.pinCode });
+    Object.keys(p.placeName || {}).forEach(function (k) {
+      var nm = p.placeName[k];
+      if (!nm) return;
+      if (__SUGGESTIONS.filter(function (s) { return s.value === nm; }).length === 0) __SUGGESTIONS.push({ value: nm, label: nm + ' · ' + p.pinCode });
+    });
   });
   var projects = [];
   (window.__TREE_DATA || []).forEach(function (t) {
     if (Array.isArray(t.projectName)) { t.projectName.forEach(function (pr) { if (pr && projects.indexOf(pr) === -1) projects.push(pr); }); }
     else if (t.projectName && projects.indexOf(t.projectName) === -1) projects.push(t.projectName);
-    Object.keys(t.address || {}).forEach(function (addr_key) {
-      var al = t.address[addr_key];
-      if (al && __SUGGESTIONS.filter(function (s) { return s.value === al; }).length === 0) __SUGGESTIONS.push({ value: al, label: al });
-    });
   });
   projects.forEach(function (pr) {
     __SUGGESTIONS.push({ value: pr, label: pr });
@@ -188,23 +195,15 @@ function normalizeQuery(s) {
 function searchInTreePlace(place_query) {
   var query = normalizeQuery(place_query);
   if (!query) { return albumData.slice(); }
-  var normalized_query = query.replace(/-/g, '');
-  var hit = {};
-  var pool = window.__SEARCH_POOL || [];
-  pool.forEach(function(p) {
-    var tree_id = normalizeQuery(p.treeId);
-    var addr = normalizeQuery(cardAddressText(p, filterLang));
-    var pin = normalizeQuery(p.pincode);
-    var proj = normalizeQuery(Array.isArray(p.projectName) ? p.projectName.join(', ') : p.projectName);
-    if (addr.indexOf(query) > -1 ||
-        pin.indexOf(query) > -1 ||
-        proj.indexOf(query) > -1 ||
-        tree_id.indexOf(query) > -1 ||
-        tree_id.replace(/-/g, '').indexOf(normalized_query) > -1) {
-      hit[p.treeId] = 1;
+  var pin_hit = {};
+  (window.__PLACE_INDEX || []).forEach(function(pl) {
+    if (pl.pin.indexOf(query) > -1) { pin_hit[pl.pin] = 1; return; }
+    for (var i = 0; i < pl.texts.length; i++) {
+      if (pl.texts[i].indexOf(query) > -1) { pin_hit[pl.pin] = 1; return; }
     }
   });
-  return albumData.filter(function(t) { return hit[t.treeId]; });
+  if (Object.keys(pin_hit).length === 0) { return []; }
+  return albumData.filter(function(t) { return pin_hit[String(t.pincode || '')]; });
 }
 
 function searchInTreeName(tree_query) {
