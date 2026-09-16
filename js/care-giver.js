@@ -12,12 +12,13 @@ function getCaregiverLang() {
   if (typeof filterLang !== 'undefined' && filterLang) return filterLang;
   try { return sessionStorage.getItem('nm-app-lang') || 'en'; } catch (e) { return 'en'; }
 }
+function firstOf(v) { return Array.isArray(v) ? (v[0] || '') : (v || ''); }
 function caregiverCardName(t) {
   if (!t) return '';
-  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { return storage.treeNameIn(t, getCaregiverLang()) || ''; } catch (e) {} }
+  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { return firstOf(storage.treeNameIn(t, getCaregiverLang())) || ''; } catch (e) {} }
   var n = (t.speciesName) || {};
   var lang = getCaregiverLang();
-  return n[lang] || n.en || n.ta || t.englishName || t.name || '';
+  return firstOf(n[lang]) || firstOf(n.en) || firstOf(n.ta) || t.englishName || t.name || '';
 }
 function caregiverCardAddr(t) {
   if (!t) return '';

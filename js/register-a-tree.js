@@ -138,7 +138,7 @@ var registerFlowPages = "\n\
       </div>\n\
       <div>\n\
         <div class=\"field-label\"><i class=\"ti ti-languages\"></i> Local name</div>\n\
-        <input id=\"register-local-name\" class=\"field-input normal\" type=\"text\" value=\"\" placeholder=\"Local name\" />\n\
+        <div id=\"register-local-names\"><div class=\"project-row\"><input class=\"field-input normal register-local-input\" id=\"register-local-name\" type=\"text\" value=\"\" placeholder=\"Local name\" /><button type=\"button\" class=\"project-add-btn\" onclick=\"addRegisterLocalRow()\"><i class=\"ti ti-plus\"></i></button></div></div>\n\
       </div>\n\
       <div>\n\
         <div class=\"field-label\"><i class=\"ti ti-building\"></i> Project name</div>\n\
@@ -284,6 +284,49 @@ function resetRegisterProjectRows() {
   container.innerHTML = '<div class="project-row"><input class="field-input normal register-project-input" type="text" value="" placeholder="Project name" /><button type="button" class="project-add-btn" onclick="addRegisterProjectRow()"><i class="ti ti-plus"></i></button></div>';
 }
 
+function addRegisterLocalRow() {
+  var container = document.getElementById('register-local-names');
+  if (!container) return;
+  var row = document.createElement('div');
+  row.className = 'project-row';
+  row.innerHTML = '<input class="field-input normal register-local-input" type="text" value="" placeholder="Local name" /><button type="button" class="project-rm-btn" onclick="removeRegisterLocalRow(this)"><i class="ti ti-minus"></i></button><button type="button" class="project-add-btn" onclick="addRegisterLocalRow()"><i class="ti ti-plus"></i></button>';
+  container.appendChild(row);
+}
+
+function removeRegisterLocalRow(btn) {
+  var container = document.getElementById('register-local-names');
+  if (!container) return;
+  var row = btn.closest('.project-row');
+  if (row && container.children.length > 1) row.remove();
+  renderLocalRowButtons();
+}
+
+function renderLocalRowButtons() {
+  var container = document.getElementById('register-local-names');
+  if (!container) return;
+  var rows = container.querySelectorAll('.project-row');
+  for (var i = 0; i < rows.length; i++) {
+    var rmBtn = rows[i].querySelector('.project-rm-btn');
+    if (rmBtn) rmBtn.style.display = rows.length === 1 ? 'none' : '';
+  }
+}
+
+function getRegisterLocalValues() {
+  var inputs = document.querySelectorAll('.register-local-input');
+  var values = [];
+  for (var i = 0; i < inputs.length; i++) {
+    var val = inputs[i].value.trim();
+    if (val) values.push(val);
+  }
+  return values;
+}
+
+function resetRegisterLocalRows() {
+  var container = document.getElementById('register-local-names');
+  if (!container) return;
+  container.innerHTML = '<div class="project-row"><input class="field-input normal register-local-input" id="register-local-name" type="text" value="" placeholder="Local name" /><button type="button" class="project-add-btn" onclick="addRegisterLocalRow()"><i class="ti ti-plus"></i></button></div>';
+}
+
 function showRegisterDetails() {
   var detailsEl = document.getElementById('register-details');
   var navEl = document.getElementById('register-flow-nav');
@@ -296,7 +339,8 @@ function lookupRegisterLocalName() {
   var sciEl = document.getElementById('register-scientific-name');
   var localEl = document.getElementById('register-local-name');
   if (!sciEl || !localEl) { return ''; }
-  var local_name = window.storage ? storage.treeNameIn({ scientificName: sciEl.value.trim() }, 'ta') : '';
+  var local_res = window.storage ? storage.treeNameIn({ scientificName: sciEl.value.trim() }, 'ta') : null;
+  var local_name = Array.isArray(local_res) ? (local_res[0] || '') : (local_res || '');
   localEl.value = local_name;
   return local_name;
 }
@@ -466,7 +510,7 @@ function clearRegisterSelfie() {
 }
 
 function resetRegisterDetails() {
-  var field_ids = ['register-address', 'register-gis-lat', 'register-gis-lng', 'register-tree-id', 'register-scientific-name', 'register-local-name'];
+  var field_ids = ['register-address', 'register-gis-lat', 'register-gis-lng', 'register-tree-id', 'register-scientific-name'];
   for (var field_i = 0; field_i < field_ids.length; field_i++) {
     var field_el = document.getElementById(field_ids[field_i]);
     if (field_el) { field_el.value = ''; }
@@ -474,6 +518,7 @@ function resetRegisterDetails() {
   var list_el = document.getElementById('register-sci-suggest');
   if (list_el) { list_el.innerHTML = ''; }
   resetRegisterProjectRows();
+  resetRegisterLocalRows();
   toggleRegisterSciClearButton();
 }
 
@@ -656,12 +701,12 @@ function renderRegisterReview() {
 
 function buildRegisterTreeName() {
   var sci_el = document.getElementById('register-scientific-name');
-  var local_el = document.getElementById('register-local-name');
   var tree_name = { sn: sci_el && sci_el.value ? sci_el.value.trim() : '' };
-  var local_value = local_el && local_el.value ? local_el.value.trim() : '';
-  if (local_value) {
-    var lang_code = window.storage ? storage.detectLanguage(local_value) : '';
-    tree_name[lang_code] = local_value;
+  var local_values = getRegisterLocalValues();
+  for (var li = 0; li < local_values.length; li++) {
+    var lang_code = window.storage ? storage.detectLanguage(local_values[li]) : 'en';
+    if (!tree_name[lang_code]) { tree_name[lang_code] = []; }
+    tree_name[lang_code].push(local_values[li]);
   }
   return tree_name;
 }

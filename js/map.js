@@ -62,10 +62,11 @@
     });
     var st = lastEnc ? (lastEnc['health-status'] || {}) : {};
     var lang = appLang || getAppLang();
-    var name = record.speciesName[lang] || record.speciesName.en || record.speciesName.ta || '';
+    function nameOf(nv) { return Array.isArray(nv) ? (nv[0] || '') : (nv || ''); }
+    var name = nameOf(record.speciesName[lang]) || nameOf(record.speciesName.en) || nameOf(record.speciesName.ta) || '';
     var addr = record.address || {};
     return {
-      type: record.speciesName.sn || record.speciesName.en || record.speciesName.ta || 'Tree',
+      type: record.speciesName.sn || nameOf(record.speciesName.en) || nameOf(record.speciesName.ta) || 'Tree',
       name: name || record.englishName || 'Tree',
       localName: record.localName || '',
       treeId: record.treeId || '',

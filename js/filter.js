@@ -124,8 +124,9 @@ function ageLabel(dateStr) {
 
 // Helpers: language-keyed readers for nested name/address on a tree card
 function cardNameText(card, lang_key) {
+  function nn(a) { return (Array.isArray(a) && a.length) ? a : null; }
   var names = (card && card.speciesName) || {};
-  return names[lang_key] || names.en || names.ta || '';
+  return nn(names[lang_key]) || nn(names.en) || nn(names.ta) || [];
 }
 
 function cardAddressText(card, lang_key) {
@@ -319,9 +320,13 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
     else fallback_trees.push(t);
   });
   function sortTreeBucket(arr, locale_code) {
+    function sortNameKey(card) {
+      var names_n = treeNameFromCard(card, lang) || [];
+      return Array.isArray(names_n) ? (names_n[0] || '') : String(names_n || '');
+    }
     arr.sort(function(a, b) {
-      var name_a = treeNameFromCard(a, lang) || '';
-      var name_b = treeNameFromCard(b, lang) || '';
+      var name_a = sortNameKey(a);
+      var name_b = sortNameKey(b);
       var cmp = 0;
       try { cmp = name_a.localeCompare(name_b, locale_code, { sensitivity: 'base' }); } catch (e) { cmp = name_a.localeCompare(name_b); }
       if (cmp !== 0) return cmp;
@@ -370,8 +375,11 @@ var isLocalScript = function(s){ return /[\u0900-\u0DFF]/.test(s || ''); };
 
     var info = document.createElement('div');
     info.className = 'tree-info';
+    var tree_name_val = treeNameFromCard(t, lang) || [];
+    var tree_name_arr = Array.isArray(tree_name_val) ? tree_name_val : String(tree_name_val || '').split(',').map(function(s){ return s.trim(); }).filter(function(s){ return s; });
+    var tree_name_html = tree_name_arr.map(function(nm){ return '<div class="tree-name-line">' + nm + '</div>'; }).join('');
     info.innerHTML =
-      '<div class="tree-name">' + treeNameFromCard(t, lang).replace(/, /g, ',<br>') + '</div>' +
+      '<div class="tree-name">' + tree_name_html + '</div>' +
       '<div class="tree-id">' + t.treeId + '</div>' +
       '<div class="tree-addr"><button class="gis-pin" type="button" title="Show in map" onclick="event.stopPropagation();showInMap([\'' + t.treeId + '\'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + (cardAddressText(t, lang) || '—') + '</span></div>';
 
@@ -490,7 +498,7 @@ function normalizeAlbum(t) {
   var st = last['health-status'] || {};
   var c = t.card || {};
   out.id = t.treeId;
-  out.name = cardNameText(t, 'en') || c.addr || '';
+  out.name = (Array.isArray(cardNameText(t, 'en')) ? cardNameText(t, 'en')[0] : cardNameText(t, 'en')) || c.addr || '';
   out.emoji = t.emoji || c.emoji || '🌳';
   out.bg = t.bg || c.bg || '';
   out.pincode = t.pincode || '';

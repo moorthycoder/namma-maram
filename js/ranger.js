@@ -1253,14 +1253,15 @@ function getRangerLang() {
   if (typeof filterLang !== 'undefined' && filterLang) return filterLang;
   try { return sessionStorage.getItem('nm-app-lang') || 'en'; } catch (e) { return 'en'; }
 }
+function firstOf(v) { return Array.isArray(v) ? (v[0] || '') : (v || ''); }
 function rangerCardName(t) {
   if (!t) return '';
-  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { var lang_tmp = getRangerLang(); var res_tmp = storage.treeNameIn(t, lang_tmp); if (res_tmp) return res_tmp; } catch (e) {} }
+  if (typeof storage !== 'undefined' && storage.treeNameIn) { try { var lang_tmp = getRangerLang(); var res_tmp = storage.treeNameIn(t, lang_tmp); if (Array.isArray(res_tmp) && res_tmp.length) return res_tmp[0]; if (res_tmp) return res_tmp; } catch (e) {} }
   if (t.speciesName) {
     if (typeof t.speciesName === 'string') return t.speciesName;
     var lang = getRangerLang();
-    if (t.speciesName[lang]) return t.speciesName[lang];
-    return t.speciesName.en || t.speciesName.ta || Object.values(t.speciesName)[0] || '';
+    var nv = (Array.isArray(t.speciesName[lang]) && t.speciesName[lang].length) ? t.speciesName[lang] : (Array.isArray(t.speciesName.en) && t.speciesName.en.length) ? t.speciesName.en : (Array.isArray(t.speciesName.ta) && t.speciesName.ta.length) ? t.speciesName.ta : (function(){ for (var vl in t.speciesName) { var vv = t.speciesName[vl]; if (Array.isArray(vv) && vv.length) return vv; } return ''; })();
+    return firstOf(nv);
   }
   return t.englishName || t.name || '';
 }

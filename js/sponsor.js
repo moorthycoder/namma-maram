@@ -5,11 +5,12 @@ var treeLogsFrom = 'sponsor-dash';
 var sponsoredCount = 0;
 var payTreeId = '';
 
+function firstOf(v) { return Array.isArray(v) ? (v[0] || '') : (v || ''); }
 function sponsorCardName(t) {
   if (!t) return '';
   var n = (t.speciesName) || {};
   var lang = getAppLang();
-  return n[lang] || n.en || n.ta || '';
+  return firstOf(n[lang]) || firstOf(n.en) || firstOf(n.ta) || '';
 }
 function sponsorCardAddr(t) {
   if (!t) return '';
