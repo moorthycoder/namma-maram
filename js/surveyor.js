@@ -909,7 +909,7 @@ function renderSurveyorStats() {
 function openSurveyorLogsApproved() {
   var stats = getRoleConfig('surveyor').stats || {};
   var logs = stats["survey-log"] || {};
-  var approved_list = Array.isArray(logs.approved) ? logs.approved : [];
+  var approved_list = (Array.isArray(logs.approved) ? logs.approved : []).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var approved_ids = approved_list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {};
   approved_list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
@@ -920,7 +920,7 @@ function openSurveyorLogsApproved() {
 function openSurveyorLogsSubmitted() {
   var stats = getRoleConfig('surveyor').stats || {};
   var logs = stats["survey-log"] || {};
-  var submitted_list = Array.isArray(logs.submitted) ? logs.submitted : [];
+  var submitted_list = (Array.isArray(logs.submitted) ? logs.submitted : []).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var submitted_ids = submitted_list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {};
   submitted_list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
@@ -1125,8 +1125,9 @@ function renderSurveyorSimpleCards(target_id, empty_id, list) {
   if (empty_el) empty_el.style.display = 'none';
   var is_tree = list[0] && (list[0].scientificName || list[0].sn);
   var is_submitted = String(target_id).indexOf('submitted') > -1 ? true : false;
+  var render_list = (is_submitted) ? list.slice().sort(function(a,b){ return String(b.revisedAt||b.loggedAt||'').localeCompare(String(a.revisedAt||a.loggedAt||'')); }) : list;
   var html = '';
-  for (var i = 0; i < list.length; i++) { html += is_tree ? surveyorTreeNameCardHtml(list[i], is_submitted) : surveyorPlaceNameCardHtml(list[i], is_submitted); }
+  for (var i = 0; i < render_list.length; i++) { html += is_tree ? surveyorTreeNameCardHtml(render_list[i], is_submitted) : surveyorPlaceNameCardHtml(render_list[i], is_submitted); }
   target_el.innerHTML = html;
 }
 function openSurveyorTreeName(status) {
@@ -1152,7 +1153,7 @@ function openSurveyorPlaceName(status) {
 function openSurveyorRegisterLog(status) {
   var stats = getRoleConfig('surveyor').stats || {};
   var reg = stats["register-log"] || {};
-  var list = (status === 'submitted') ? (reg.submitted || []) : (reg.approved || []);
+  var list = ((status === 'submitted') ? (reg.submitted || []) : (reg.approved || [])).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var ids = list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {}; list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
   var target = (status === 'submitted') ? 'surveyor-register-log-submitted-cards' : 'surveyor-register-log-approved-cards';
@@ -1164,7 +1165,7 @@ function openSurveyorRegisterLog(status) {
 function openSurveyorSurveyRequests(status) {
   var stats = getRoleConfig('surveyor').stats || {};
   var req = stats["survey-requests"] || {};
-  var list = (status === 'submitted') ? (req.submitted || []) : (req.approved || []);
+  var list = ((status === 'submitted') ? (req.submitted || []) : (req.approved || [])).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var ids = list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {}; list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
   var target = (status === 'submitted') ? 'surveyor-survey-requests-submitted-cards' : 'surveyor-survey-requests-approved-cards';
@@ -1238,7 +1239,7 @@ function openThisMonthSurveyLog(status) {
   var now = new Date();
   var ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
   function getYm(ts){ var s=String(ts||''); return s.indexOf('-')>-1 ? s.slice(0,7) : s.slice(0,4)+'-'+s.slice(4,6); }
-  var list = is_approved ? (logs.approved || []) : (logs.submitted || []);
+  var list = (is_approved ? (logs.approved || []) : (logs.submitted || [])).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var filtered = list.filter(function (e) { return getYm(e.loggedAt) === ym; });
   if (!filtered.length && list.length) filtered = list.slice(0, 5);
   var ids = filtered.map(function (e) { return e.treeId || e; }).filter(Boolean);

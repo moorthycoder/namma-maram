@@ -1206,14 +1206,15 @@ function renderCaregiverLogs(logType, status) {
   if (empty_el) empty_el.style.display = 'none';
   var html = '';
   var is_submitted = type === 'submitted' ? true : false;
-  for (var i = logs.length - 1; i >= 0; i--) {
-    var entry = logs[i]; var tid = entry.treeId || ''; var t = null;
+  var render_logs = logs.slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
+  for (var i = 0; i < render_logs.length; i++) {
+    var entry = render_logs[i]; var tid = entry.treeId || ''; var t = null;
     try { t = storage.pullTreeDetail ? storage.pullTreeDetail(tid) : null; } catch (e) {}
     if (!t) { var d = window.__TREE_DATA || storage.get('treeCards') || []; for (var r = 0; r < d.length; r++) if (d[r].treeId === tid) { t = d[r]; break; } }
     var name = t ? (caregiverCardName(t) || tid) : tid;
     var addr = t ? caregiverCardAddr(t) : '';
     var enc = t ? (t['encounters-list'] || {}) : {}; var keys = t ? Object.keys(enc) : []; var last = t ? enc[keys[keys.length - 1]] || {} : {}; var st = last['health-status'] || {};
-    var date = entry.loggedAt || ''; var dm = /^(\d{4})(\d{2})(\d{2})T/.exec(date); var label = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : date;
+    var date = entry.loggedAt || ''; var label = date;
     var date_param = date || '';
     var delete_btn = is_submitted ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteCaregiverLog(\'' + tid + '\',\'' + typeKey + '\')"><i class="ti ti-trash"></i></button>' : '';
     var header_html = is_submitted ? '<div class="caregiver-log-header"><span class="caregiver-log-header-title">' + (typeKey === 'survey-log' ? 'Survey log' : 'Register request') + '</span>' + delete_btn + '</div>' : '';

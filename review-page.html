@@ -38,8 +38,6 @@
 var parentUrl = new URLSearchParams(location.search).get('parent') || 'care-giver.html?hub=caregiver-dash';
 function goBack() { window.location.href = parentUrl; }
 function formatLoggedAt(v) {
-  var m = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/.exec(v);
-  if (m) return m[3] + '-' + m[2] + '-' + m[1] + ' ' + m[4] + ':' + m[5];
   return v || '—';
 }
 function formatDateDash(v) {
