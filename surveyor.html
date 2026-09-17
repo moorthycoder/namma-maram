@@ -27,18 +27,6 @@
         <div class="s-33b889">Only authorised field surveyors can log entries</div>
       </div>
     </div>
-    <div class="page" id="page-surveyor-enroll">
-      <div class="topbar"><button class="back-btn" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Surveyor enrollment</span></div>
-      <div class="scrollable s-b9761d">
-        <div class="s-879ae8">Become a field surveyor</div>
-        <div class="s-59d216">Fill in your details to apply as a field surveyor. Your application will be reviewed by the admin.</div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-user s-9bdb4a"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Sarita M." /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-phone s-9bdb4a"></i> Phone</div><input class="field-inp" type="tel" placeholder="e.g. 9876543210" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-map-pin s-9bdb4a"></i> Area / Location</div><input class="field-inp" type="text" placeholder="e.g. Kallanai" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-mail s-9bdb4a"></i> Email (optional)</div><input class="field-inp" type="email" placeholder="you@example.com" /></div>
-        <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit application</button>
-      </div>
-    </div>
     <div class="page" id="page-surveyor-dash">
       <div class="dash-header">
         <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name"></div></div><div class="avatar s-0bda1d" onclick="toggleSurveyorLogoutDrop()"><span id="user-avatar"></span><div class="logout-drop" id="logout-drop-surveyor"><div class="dd-item s-567789" onclick="surveyorLogout()"><i class="ti ti-logout s-64dd69"></i> Sign out</div></div></div></div>
@@ -213,25 +201,6 @@
           </div>
         </div>
       </div>
-    <div class="modal-back" id="register-status-modal">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="s-d44a8f">
-          <div class="lsm-icon s-5b20f9" id="rsm-icon"><i class="ti ti-clock s-74af75"></i></div>
-          <div class="lsm-title s-c5c660" id="rsm-title">Application under review</div>
-          <div class="lsm-text s-9d97f8" id="rsm-text">Your registration is waiting for admin approval.</div>
-          <button class="green-btn" id="rsm-ok-btn" onclick="closeRegisterStatus(true)"><i class="ti ti-check"></i> Okay</button>
-          <div class="lsm-test s-dba459" id="rsm-test">
-            <div class="s-e5a31d">TESTING · simulate result</div>
-            <div class="s-9bfd70">
-              <button class="ghost-btn s-84311d" onclick="showRegisterStatus('waiting')">Waiting</button>
-              <button class="ghost-btn s-84311d" onclick="showRegisterStatus('existing_member')">Existing</button>
-              <button class="ghost-btn s-84311d" onclick="showRegisterStatus('blocked')">Blocked</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="modal-back" id="delete-confirm-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>

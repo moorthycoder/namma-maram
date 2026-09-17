@@ -268,7 +268,7 @@ body {
 }
 .placeholder-text-sn::placeholder { font-size: 0.8rem; }
 .placeholder-text-en::placeholder { font-size: 0.8rem; }
-.placeholder-text-ta::placeholder { font-size: 0.8rem; }
+.placeholder-text-ta::placeholder { font-size: 0.6125rem; }
 .placeholder-text-ml::placeholder { font-size: 0.8rem; }
 .placeholder-text-te::placeholder { font-size: 0.8rem; }
 .placeholder-text-kn::placeholder { font-size: 0.8rem; }

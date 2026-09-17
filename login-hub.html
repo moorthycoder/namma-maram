@@ -7,29 +7,74 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/app.css" />
 <link rel="stylesheet" href="css/login-hub.css" />
+<link rel="stylesheet" href="css/register-hub.css" />
+<script src="js/storage.js"></script>
 <script src="js/login-hub.js"></script>
 </head>
 <body>
 <div class="screen">
     <div class="status-bar dark"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
-    <div class="page">
+
+    <!-- HUB -->
+    <div class="page active" id="page-login-hub">
       <div class="dash-header">
-        <div class="flex-row"><button class="back-btn inv" onclick="history.back()"><i class="ti ti-arrow-left"></i></button></div>
         <h2 class="dash-title">Login</h2>
         <p class="dash-sub">Choose an account to continue</p>
       </div>
       <div class="scrollable enroll-scroll">
         <div class="hub-grid">
-          <div class="hub-tile"><i class="ti ti-currency-rupee"></i><span>Sponsor</span><small>Support and donate</small></div>
-          <div class="hub-tile"><i class="ti ti-heart-handshake"></i><span>Care-giver</span><small>Adopt and care</small></div>
-          <div class="hub-tile"><i class="ti ti-stars"></i><span>Ten Tree Ranger</span><small>Be Citizen Vigilant</small></div>
-          <div class="hub-tile"><i class="ti ti-users-group"></i><span>Project Leader</span><small>Manage projects</small></div>
-          <div class="hub-tile"><i class="ti ti-user-heart"></i><span>Project Member</span><small>Adopt and grow</small></div>
+          <div class="hub-tile" data-role="sponsor"><i class="ti ti-currency-rupee"></i><span>Sponsor</span><small>Support and donate</small></div>
+          <div class="hub-tile" data-role="care-giver"><i class="ti ti-heart-handshake"></i><span>Care-giver</span><small>Adopt and care</small></div>
+          <div class="hub-tile" data-role="ten-trees-ranger"><i class="ti ti-stars"></i><span>Ten Tree Ranger</span><small>Be Citizen Vigilant</small></div>
+          <div class="hub-tile" data-role="project-leader"><i class="ti ti-users-group"></i><span>Project Leader</span><small>Manage projects</small></div>
+          <div class="hub-tile" data-role="project-member"><i class="ti ti-user-heart"></i><span>Project Member</span><small>Adopt and grow</small></div>
           <div class="hub-tile empty"></div>
-          <div class="hub-tile"><i class="ti ti-shield-checkered"></i><span>Ranger</span><small>Log field data</small></div>
-          <div class="hub-tile"><i class="ti ti-clipboard-list"></i><span>Surveyor</span><small>Survey field data</small></div>
-          <div class="hub-tile"><i class="ti ti-shield-lock"></i><span>App Admin</span><small>System management</small></div>
+          <div class="hub-tile" data-role="ranger"><i class="ti ti-shield-checkered"></i><span>Ranger</span><small>Log field data</small></div>
+          <div class="hub-tile" data-role="surveyor"><i class="ti ti-clipboard-list"></i><span>Surveyor</span><small>Survey field data</small></div>
+          <div class="hub-tile" data-role="admin"><i class="ti ti-shield-lock"></i><span>App Admin</span><small>System management</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLE LOGIN -->
+    <div class="page" id="page-role-login">
+      <div class="topbar"><button class="back-btn" onclick="goTo('login-hub')"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Login</span></div>
+      <div class="scrollable enroll-scroll">
+        <div class="enroll-title" id="login-role-title"></div>
+        <div class="enroll-desc" id="login-role-desc"></div>
+        <div class="field-group"><div class="field-lbl"><i class="ti ti-phone field-icon-sm"></i> Mobile number</div><input class="field-inp login-mobile-inp" type="tel" maxlength="10" inputmode="numeric" placeholder="e.g. 9876543210" /></div>
+        <button class="green-btn" id="login-send-btn" onclick="sendOtp()" disabled><i class="ti ti-send"></i> Send OTP</button>
+      </div>
+    </div>
+
+    <!-- OTP MODAL -->
+    <div class="modal-back" id="otp-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="modal-sheet-center">
+          <div class="modal-title">Enter OTP</div>
+          <div class="modal-text" id="otp-sent-to">A one-time password was sent to your mobile</div>
+          <div class="otp-timer" id="otp-timer"><i class="ti ti-clock"></i> 1:00</div>
+          <input class="otp-input" id="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="· · · · · ·" />
+          <button class="green-btn" id="otp-confirm-btn" onclick="verifyOtp()" disabled><i class="ti ti-check"></i> Confirm OTP</button>
+          <div class="otp-testing" id="otp-testing">
+            <div class="testing-label">TESTING · your OTP is <b id="otp-code">------</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTP ERROR MODAL -->
+    <div class="modal-back" id="otp-error-modal">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="modal-sheet-center">
+          <div class="modal-icon"><i class="ti ti-alert-circle modal-icon-large" style="color:#dc2626;font-size:26px;"></i></div>
+          <div class="modal-title" id="otp-error-title">Incorrect OTP</div>
+          <div class="modal-text" id="otp-error-text">The code you entered does not match. Please re-type the OTP.</div>
+          <button class="green-btn" onclick="retypeOtp()"><i class="ti ti-refresh"></i> Re-enter OTP</button>
         </div>
       </div>
     </div>

@@ -26,18 +26,6 @@
         <div class="support-text">Support urban green cover wherever you want</div>
       </div>
     </div>
-    <div class="page" id="page-ten-trees-ranger-enroll">
-      <div class="topbar"><button class="back-btn" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Ten Tree Ranger enrollment</span></div>
-      <div class="scrollable enroll-scroll">
-        <div class="enroll-title">Become a Ten Tree Ranger</div>
-        <div class="enroll-desc">Adopt and look after registered trees in your neighbourhood. Your application will be reviewed by the admin.</div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-user field-icon-sm"></i> Full name</div><input class="field-inp" type="text" placeholder="e.g. Madhavi I." /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-mail field-icon-sm"></i> Email</div><input class="field-inp" type="email" placeholder="you@example.com" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-phone field-icon-sm"></i> Phone</div><input class="field-inp" type="tel" placeholder="e.g. 9876543210" /></div>
-        <div class="field-group"><div class="field-lbl"><i class="ti ti-tree field-icon-sm"></i> Preferred tree species</div><select class="field-inp field-inp-pointer"><option>Neem</option><option>Peepal</option><option>Banyan</option><option>Mango</option><option>Any</option></select></div>
-        <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit enrollment</button>
-      </div>
-    </div>
     <div class="page dashboard" id="page-ten-trees-ranger-dash">
       <div class="dashboard-header">
         <div class="dashboard-topbar"><div><div class="dashboard-name" id="user-name"></div></div><div class="savatar avatar-wrap" onclick="toggleSLogoutDrop()"><span id="user-avatar"></span><div class="logout-drop" id="slogout-drop"><div class="dd-item logout-item" onclick="tenTreesRangerLogout()"><i class="ti ti-logout logout-icon"></i> Sign out</div></div></div></div>
@@ -215,25 +203,6 @@
           <div class="modal-title" id="lsm-title">Application under review</div>
           <div class="modal-text" id="lsm-text">Your login request is waiting for admin approval.</div>
           <button class="green-btn" onclick="handleTenTreesRangerLoginOkay()"><i class="ti ti-check"></i> Okay</button>
-        </div>
-      </div>
-    </div>
-    <div class="modal-back" id="register-status-modal">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="modal-sheet-center">
-          <div class="modal-icon" id="rsm-icon"><i class="ti ti-clock modal-icon-large"></i></div>
-          <div class="modal-title" id="rsm-title">Application under review</div>
-          <div class="modal-text" id="rsm-text">Your registration is waiting for admin approval.</div>
-          <button class="green-btn" id="rsm-ok-btn" onclick="closeRegisterStatus(true)"><i class="ti ti-check"></i> Okay</button>
-          <div class="lsm-test hidden" id="rsm-test">
-            <div class="testing-label">TESTING · simulate result</div>
-            <div class="testing-grid">
-              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('waiting')">Waiting</button>
-              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('existing_member')">Existing</button>
-              <button class="ghost-btn testing-btn" onclick="showRegisterStatus('blocked')">Blocked</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -409,8 +409,11 @@ function applyFilterPlaceholders() {
   var tree_el = document.getElementById('album-tree');
   if (place_el && ph['album-place']) place_el.placeholder = ph['album-place'];
   if (tree_el && ph['album-tree']) tree_el.placeholder = ph['album-tree'];
-  if (place_el) place_el.classList.add('placeholder-text-' + lang);
-  if (tree_el) tree_el.classList.add('placeholder-text-' + lang);
+  [place_el, tree_el].forEach(function (el) {
+    if (!el) return;
+    el.className = el.className.replace(/\bplaceholder-text-\S+/g, '').trim();
+    el.classList.add('placeholder-text-' + lang);
+  });
 }
 
 function toggleSummary() {
