@@ -626,9 +626,9 @@ function openAlbum(i) {
 }
 
 
-// Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
+// Helper: location from place (renamed from address)
 
-function treeLoc(t) { return t.address ? t.address.split(', ')[0] : ''; }
+function treeLoc(t) { return rangerCardAddr(t); }
 
 
 // Album render - additive filters: place (address) + tree name (scientific/english/local)
@@ -645,11 +645,12 @@ function renderAlbum(place, tree) {
   var filtered = albumData.filter(function(t) {
     var matchPlace = true;
     var matchTree = true;
-    if (place) matchPlace = q(t.address).indexOf(place) > -1 || q(t.addressLocalLang || '').indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(Array.isArray(t.projectName) ? t.projectName.join(', ') : (t.projectName || '')).indexOf(place) > -1;
+    if (place) {
+      matchPlace = q(rangerCardAddr(t)).indexOf(place) > -1 || q(t.placeName || '').indexOf(place) > -1 || q(t.pincode || '').indexOf(place) > -1 || q(Array.isArray(t.projectName) ? t.projectName.join(', ') : (t.projectName || '')).indexOf(place) > -1;
+    }
     if (tree) {
       matchTree = q(t.scientificName).indexOf(tree) > -1 ||
-                  q(t.englishName).indexOf(tree) > -1 ||
-                  q(t.localName).indexOf(tree) > -1;
+                  q(rangerCardName(t) || '').indexOf(tree) > -1;
     }
     return matchPlace && matchTree;
   });
@@ -663,7 +664,8 @@ function renderAlbum(place, tree) {
     if (filtered.length > 0) {
       var groups = {};
       filtered.forEach(function(t) {
-        groups[t.englishName] = (groups[t.englishName] || 0) + 1;
+        var gname = rangerCardName(t) || t.scientificName || '—';
+        groups[gname] = (groups[gname] || 0) + 1;
       });
       var chips = Object.keys(groups).map(function(k) {
         return '<span class="album-chip chip-click" onclick="filterByTree(\'' + k + '\')">' + k + ' <b>– ' + groups[k] + '</b></span>';
@@ -705,7 +707,7 @@ function renderAlbum(place, tree) {
     info.className = 'tree-info';
     info.innerHTML = 
       '<div class="tree-id">' + t.treeId + '</div>' +
-      '<div class="tree-name">' + t.englishName + '</div>' +
+      '<div class="tree-name">' + (rangerCardName(t) || t.scientificName || '') + '</div>' +
       '<div class="tree-stats">' +
         '<span>📏 ' + formatLength(t.height,'height') + '</span>' +
         '<span>📐 ' + formatLength(t.diameter,'diameter') + '</span>' +
@@ -800,7 +802,7 @@ function treeCardHtml(t, cfg) {
   var keys = Object.keys(enc);
   var last = enc[keys[keys.length - 1]] || {};
   var st = last['health-status'] || {};
-  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.address || c.addr || '');
+  var addr = (cfg.addrMode === 'full' && c.addrFull) ? c.addrFull : (t.placeName || t.pincode || c.addr || '');
   var status = t.past ? (c.status || '') : (cfg.verb === 'logged' ? (c.statusLogged || c.statusChecked || st.health || '') : (c.statusChecked || c.statusLogged || st.health || ''));
   var latest = (cfg.showLatest && c.latest) ? '<div class="tcard-latest"><i class="ti ti-timeline" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.latest + '</span></div>' : '';
   var todo = (cfg.showTodo && c.todo) ? '<div class="tcard-todo"><i class="ti ti-clipboard-check" style="font-size:0.7333rem;flex-shrink:0"></i><span>' + c.todo + '</span></div>' : '';
@@ -907,7 +909,7 @@ function renderRangerStats() {
 function openRangerLogsApproved() {
   var stats = getRoleConfig('ranger').stats || {};
   var logs = stats["survey-log"] || {};
-  var approved_list = Array.isArray(logs.approved) ? logs.approved : [];
+  var approved_list = (Array.isArray(logs.approved) ? logs.approved : []).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var approved_ids = approved_list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {};
   approved_list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
@@ -918,7 +920,7 @@ function openRangerLogsApproved() {
 function openRangerLogsSubmitted() {
   var stats = getRoleConfig('ranger').stats || {};
   var logs = stats["survey-log"] || {};
-  var submitted_list = Array.isArray(logs.submitted) ? logs.submitted : [];
+  var submitted_list = (Array.isArray(logs.submitted) ? logs.submitted : []).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var submitted_ids = submitted_list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {};
   submitted_list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
@@ -1123,8 +1125,9 @@ function renderRangerSimpleCards(target_id, empty_id, list) {
   if (empty_el) empty_el.style.display = 'none';
   var is_tree = list[0] && (list[0].scientificName || list[0].sn);
   var is_submitted = String(target_id).indexOf('submitted') > -1 ? true : false;
+  var render_list = (is_submitted) ? list.slice().sort(function(a,b){ return String(b.revisedAt||b.loggedAt||'').localeCompare(String(a.revisedAt||a.loggedAt||'')); }) : list;
   var html = '';
-  for (var i = 0; i < list.length; i++) { html += is_tree ? rangerTreeNameCardHtml(list[i], is_submitted) : rangerPlaceNameCardHtml(list[i], is_submitted); }
+  for (var i = 0; i < render_list.length; i++) { html += is_tree ? rangerTreeNameCardHtml(render_list[i], is_submitted) : rangerPlaceNameCardHtml(render_list[i], is_submitted); }
   target_el.innerHTML = html;
 }
 function openRangerTreeName(status) {
@@ -1150,7 +1153,7 @@ function openRangerPlaceName(status) {
 function openRangerRegisterLog(status) {
   var stats = getRoleConfig('ranger').stats || {};
   var reg = stats["register-log"] || {};
-  var list = (status === 'submitted') ? (reg.submitted || []) : (reg.approved || []);
+  var list = ((status === 'submitted') ? (reg.submitted || []) : (reg.approved || [])).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var ids = list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {}; list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
   var target = (status === 'submitted') ? 'ranger-register-log-submitted-cards' : 'ranger-register-log-approved-cards';
@@ -1162,7 +1165,7 @@ function openRangerRegisterLog(status) {
 function openRangerSurveyRequests(status) {
   var stats = getRoleConfig('ranger').stats || {};
   var req = stats["survey-requests"] || {};
-  var list = (status === 'submitted') ? (req.submitted || []) : (req.approved || []);
+  var list = ((status === 'submitted') ? (req.submitted || []) : (req.approved || [])).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var ids = list.map(function (e) { return e.treeId || e; }).filter(Boolean);
   var map = {}; list.forEach(function (e) { if (e.treeId) map[e.treeId] = e.loggedAt || ''; });
   var target = (status === 'submitted') ? 'ranger-survey-requests-submitted-cards' : 'ranger-survey-requests-approved-cards';
@@ -1236,7 +1239,7 @@ function openThisMonthSurveyLog(status) {
   var now = new Date();
   var ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
   function getYm(ts){ var s=String(ts||''); return s.indexOf('-')>-1 ? s.slice(0,7) : s.slice(0,4)+'-'+s.slice(4,6); }
-  var list = is_approved ? (logs.approved || []) : (logs.submitted || []);
+  var list = (is_approved ? (logs.approved || []) : (logs.submitted || [])).slice().sort(function(a,b){ return String(b.loggedAt||'').localeCompare(String(a.loggedAt||'')); });
   var filtered = list.filter(function (e) { return getYm(e.loggedAt) === ym; });
   if (!filtered.length && list.length) filtered = list.slice(0, 5);
   var ids = filtered.map(function (e) { return e.treeId || e; }).filter(Boolean);
@@ -1257,21 +1260,16 @@ function firstOf(v) { return Array.isArray(v) ? (v[0] || '') : (v || ''); }
 function rangerCardName(t) {
   if (!t) return '';
   if (typeof storage !== 'undefined' && storage.treeNameIn) { try { var lang_tmp = getRangerLang(); var res_tmp = storage.treeNameIn(t, lang_tmp); if (Array.isArray(res_tmp) && res_tmp.length) return res_tmp[0]; if (res_tmp) return res_tmp; } catch (e) {} }
-  if (t.speciesName) {
-    if (typeof t.speciesName === 'string') return t.speciesName;
-    var lang = getRangerLang();
-    var nv = (Array.isArray(t.speciesName[lang]) && t.speciesName[lang].length) ? t.speciesName[lang] : (Array.isArray(t.speciesName.en) && t.speciesName.en.length) ? t.speciesName.en : (Array.isArray(t.speciesName.ta) && t.speciesName.ta.length) ? t.speciesName.ta : (function(){ for (var vl in t.speciesName) { var vv = t.speciesName[vl]; if (Array.isArray(vv) && vv.length) return vv; } return ''; })();
-    return firstOf(nv);
-  }
-  return t.englishName || t.name || '';
+  return t.scientificName || '';
 }
 
 function rangerCardAddr(t) {
-  if (!t || !t.address) return '';
+  if (!t) return '';
   var lang = getRangerLang();
-  var addr = t.address;
-  if (typeof addr === 'string') return addr;
-  return addr[lang] || addr.en || addr.ta || Object.values(addr)[0] || '';
+  var pin = String(t.pincode || '');
+  var pl = t.placeName || '';
+  for (var i = 0; i < (window.__PLACES || []).length; i++) { var p = window.__PLACES[i]; if ((p.placeName && p.placeName.en === pl) || String(p.pinCode || p.pincode || '') === pin) { return p.placeName[lang] || p.placeName.en || pl; } }
+  return pl || (pin ? 'Pincode ' + pin : '');
 }
 
 function rangerLogCardHtml(t, loggedAt, hideLogBox, target_id) {
