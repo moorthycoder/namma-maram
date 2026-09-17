@@ -1,6 +1,8 @@
 [
   {
     "projectId": "Green TN 2025",
+    "startedAt": "2025-01-01",
+    "endedAt": "2025-12-31",
     "projectName": {
       "en": "Green TN 2025",
       "ta": "கிரீன் TN 2025",
@@ -20,6 +22,8 @@
   },
   {
     "projectId": "self care",
+    "startedAt": "",
+    "endedAt": "",
     "projectName": {
       "en": "Self Care",
       "ta": "செல்ஃப் கேர்",
@@ -39,6 +43,8 @@
   },
   {
     "projectId": "Student Awarness Scheme 2021",
+    "startedAt": "2021-06-01",
+    "endedAt": "2022-05-31",
     "projectName": {
       "en": "Student Awarness Scheme 2021",
       "ta": "ஸ்டூடண்ட் அவர்னஸ் ஸ்கீம் 2021",
@@ -58,6 +64,8 @@
   },
   {
     "projectId": "School Green Drive 2024",
+    "startedAt": "2024-01-01",
+    "endedAt": "2024-12-31",
     "projectName": {
       "en": "School Green Drive 2024",
       "ta": "ஸ்கூல் கிரீன் ட்ரைவ் 2024",
@@ -77,6 +85,8 @@
   },
   {
     "projectId": "River Bank Reforestation 2022",
+    "startedAt": "2022-06-01",
+    "endedAt": "2023-05-31",
     "projectName": {
       "en": "River Bank Reforestation 2022",
       "ta": "ரிவர் பேங்க் ரீபாரெஸ்டேஷன் 2022",
@@ -96,6 +106,8 @@
   },
   {
     "projectId": "personal memorial",
+    "startedAt": "",
+    "endedAt": "",
     "projectName": {
       "en": "Personal Memorial",
       "ta": "பெர்சனல் மெமோரியல்",
@@ -115,6 +127,8 @@
   },
   {
     "projectId": "Urban Canopy 2023",
+    "startedAt": "2023-01-01",
+    "endedAt": "2023-12-31",
     "projectName": {
       "en": "Urban Canopy 2023",
       "ta": "அர்பன் கேனோபி 2023",
@@ -134,6 +148,8 @@
   },
   {
     "projectId": "leadership",
+    "startedAt": "",
+    "endedAt": "",
     "projectName": {
       "en": "Leadership",
       "ta": "லீடர்ஷிப்",
@@ -153,6 +169,8 @@
   },
   {
     "projectId": "legacy tree",
+    "startedAt": "",
+    "endedAt": "",
     "projectName": {
       "en": "Legacy Tree",
       "ta": "லெகசி ட்ரீ",
@@ -172,6 +190,8 @@
   },
   {
     "projectId": "college fest",
+    "startedAt": "",
+    "endedAt": "",
     "projectName": {
       "en": "College Fest",
       "ta": "காலேஜ் ஃபெஸ்ட்",
@@ -191,6 +211,8 @@
   },
   {
     "projectId": "student awareness",
+    "startedAt": "",
+    "endedAt": "",
     "projectName": {
       "en": "Student Awareness",
       "ta": "ஸ்டூடண்ட் அவர்னஸ்",

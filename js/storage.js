@@ -115,6 +115,26 @@ var storage = {
     return EMPTY;
   },
 
+  projectNameIn: function (project, lang) {
+    var EMPTY = '';
+    if (!project) { return EMPTY; }
+    lang = lang || 'en';
+    var id = String(project.projectId || '');
+    var names_obj = project.names || project.projectName || {};
+    var direct = names_obj[lang];
+    if (Array.isArray(direct) && direct.length) { return direct[0]; }
+    if (typeof direct === 'string' && direct) { return direct; }
+    var db = storage.get('projects') || [];
+    for (var i = 0; i < db.length; i++) {
+      if (db[i].projectId === id) {
+        var pn = db[i].projectName || {};
+        var fallback = pn[lang] || pn.en || '';
+        return typeof fallback === 'string' ? fallback : (Array.isArray(fallback) && fallback.length ? fallback[0] : EMPTY);
+      }
+    }
+    return EMPTY;
+  },
+
   save: function () {
     try {
       getBackingStore().removeItem(TREE_KEY);

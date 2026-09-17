@@ -330,6 +330,28 @@ function openAppendPlaceName() {
   if (screen) screen.insertBefore(frame, dash_page ? dash_page.nextSibling : null);
 }
 
+function openAppendProjectName() {
+  var login_data = storage.get('login') || window._login || {};
+  var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
+  try {
+    if (!project_leader_role.userId) {
+      var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1') || '{}');
+      var sp = sess['tree-login'] && sess['tree-login']['project-leader'];
+      if (sp && sp.userId) { project_leader_role = sp; }
+    }
+  } catch (e) {}
+  var user_id = project_leader_role.userId || 'PLD-TEST-003';
+  var frame = document.createElement('iframe');
+  frame.className = 'app-frame';
+  frame.id = 'app-frame';
+  frame.title = 'Append Project Name';
+  frame.src = 'append-a-project-name.html?parent=' + encodeURIComponent('project-leader.html?hub=project-leader-project-name-submitted') + '&userid=' + encodeURIComponent(user_id);
+  var dash_page = document.getElementById('page-project-leader-dash');
+  if (dash_page) dash_page.style.display = 'none';
+  var screen = document.querySelector('.screen');
+  if (screen) screen.insertBefore(frame, dash_page ? dash_page.nextSibling : null);
+}
+
 function requestTreeForSurvey() {
   var login_data = storage.get('login') || window._login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
@@ -845,6 +867,11 @@ function renderProjectLeaderStats() {
   var place_submitted = Array.isArray(place_name.submitted) ? place_name.submitted.length : place_name.submitted;
   setStatById('pld-place-approved', place_approved != null ? place_approved : 0);
   setStatById('pld-place-submitted', place_submitted != null ? place_submitted : 0);
+  var project_name = stats['project-name'] || stats.projectName || stats.project_name || {};
+  var project_approved = Array.isArray(project_name.approved) ? project_name.approved.length : project_name.approved;
+  var project_submitted = Array.isArray(project_name.submitted) ? project_name.submitted.length : project_name.submitted;
+  setStatById('pld-project-approved', project_approved != null ? project_approved : 0);
+  setStatById('pld-project-submitted', project_submitted != null ? project_submitted : 0);
   var register = stats["register-log"] || {};
   var register_approved = Array.isArray(register.approved) ? register.approved.length : register.approved;
   var register_submitted = Array.isArray(register.submitted) ? register.submitted.length : register.submitted;
@@ -1003,6 +1030,22 @@ function confirmDeleteProjectLeaderCard() {
     if (target_el2) target_el2.innerHTML = filtered_list2.length ? filtered_list2.map(function (e) { return projectLeaderPlaceNameCardHtml(e, true); }).join('') : '';
     var empty_el2 = document.getElementById('project-leader-place-name-submitted-empty');
     if (empty_el2) empty_el2.style.display = filtered_list2.length ? 'none' : 'block';
+  } else if (type === 'project') {
+    var project_key = key;
+    var role_cfg_proj = getRoleConfig('project-leader');
+    var stats_proj = role_cfg_proj.stats || {};
+    var project_name = stats_proj['project-name'] || {};
+    var submitted_list_proj = project_name.submitted || [];
+    var filtered_list_proj = submitted_list_proj.filter(function (e) { return String(e.projectId || '') !== String(project_key); });
+    project_name.submitted = filtered_list_proj;
+    stats_proj['project-name'] = project_name;
+    role_cfg_proj.stats = stats_proj;
+    try { var login_data_proj = window._login || storage.get('login') || {}; login_data_proj['tree-login'] = login_data_proj['tree-login'] || {}; login_data_proj['tree-login']['project-leader'] = role_cfg_proj; storage.set('login', login_data_proj); window._login = login_data_proj; } catch (e) {}
+    try { renderProjectLeaderStats(); } catch (e) {}
+    var target_el_proj = document.getElementById('project-leader-project-name-submitted-cards');
+    if (target_el_proj) target_el_proj.innerHTML = filtered_list_proj.length ? filtered_list_proj.map(function (e) { return projectLeaderProjectNameCardHtml(e, true); }).join('') : '';
+    var empty_el_proj = document.getElementById('project-leader-project-name-submitted-empty');
+    if (empty_el_proj) empty_el_proj.style.display = filtered_list_proj.length ? 'none' : 'block';
   } else if (type === 'survey') {
     var tid = key;
     var role_cfg3 = getRoleConfig('project-leader');
@@ -1117,6 +1160,77 @@ function deleteProjectLeaderPlaceName(pin_code) {
   var modal_el = document.getElementById('delete-confirm-modal');
   if (modal_el) modal_el.classList.add('open');
 }
+function deleteProjectLeaderProjectName(project_id) {
+  var pid = project_id || '';
+  pending_project_leader_delete_type = 'project';
+  pending_project_leader_delete_key = pid;
+  var text_el = document.getElementById('delete-confirm-text');
+  if (text_el) text_el.textContent = 'Remove project name request "' + pid + '"? This will remove it from your submitted list.';
+  var modal_el = document.getElementById('delete-confirm-modal');
+  if (modal_el) modal_el.classList.add('open');
+}
+function projectLeaderProjectNameCardHtml(entry, is_submitted) {
+  var pid = entry.projectId || '—';
+  var lang = (typeof getAppLang === 'function') ? getAppLang() : 'en';
+  var name_txt = '';
+  if (typeof storage !== 'undefined' && storage.projectNameIn) { try { name_txt = storage.projectNameIn(entry, lang); } catch (e) {} }
+  if (!name_txt) {
+    var names_obj = entry.names || entry.projectName || {};
+    var direct = names_obj[lang];
+    name_txt = Array.isArray(direct) ? (direct[0] || '') : (direct || names_obj.en || '');
+    name_txt = Array.isArray(name_txt) ? (name_txt[0] || '') : name_txt;
+  }
+  var added_raw = entry.addAt || entry.addedAt || entry.revisedAt || '';
+  var added_label = (function(){ var m=/^(\d{4})(\d{2})(\d{2})T?/.exec(added_raw); return m ? m[3]+'-'+m[2]+'-'+m[1] : (added_raw || '—'); })();
+  var started = entry.startedAt || entry.startDate || entry.startAt || '—';
+  var ended = entry.endedAt || entry.endDate || entry.endAt || '—';
+  var q=String.fromCharCode(39);
+  var delete_btn = is_submitted ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteProjectLeaderProjectName('+q+pid.replace(/\'/g,"\\'")+q+')"><i class="ti ti-trash"></i></button>' : '';
+  var header_html = is_submitted ? '<div class="project-leader-card-header"><span class="project-leader-card-header-title">Project name request</span>' + delete_btn + '</div>' : '';
+  var body_html = '<div class="info-row"><span class="info-key"><i class="ti ti-folder field-icon-sm"></i>Project</span><span class="info-val project-leader-val-strong">' + (name_txt || pid) + '</span></div>' +
+    '<div class="info-row"><span class="info-key"><i class="ti ti-clock field-icon-sm"></i>Added at</span><span class="info-val">' + added_label + '</span></div>' +
+    '<div class="info-row"><span class="info-key"><i class="ti ti-calendar-event field-icon-sm"></i>Started at</span><span class="info-val">' + started + '</span></div>' +
+    '<div class="info-row"><span class="info-key"><i class="ti ti-calendar-minus field-icon-sm"></i>Ended at</span><span class="info-val">' + ended + '</span></div>' +
+    '<div class="info-row"><span class="info-key"><i class="ti ti-check field-icon-sm"></i>Status</span><span class="info-val">' + (entry.status || '—') + '</span></div>' +
+    '<div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>By</span><span class="info-val">' + (entry.updatedBy || '—') + '</span></div>';
+  var view_btn = is_submitted ? '' : '<div style="padding:12px 13px 12px;border-top:0.5px solid var(--color-border-tertiary);"><button class="green-btn" type="button" style="margin:0;font-size:0.8rem;padding:9px 12px;" onclick="event.stopPropagation(); openProjectLeaderProjectTrees('+q+pid.replace(/\'/g,"\\'")+q+')"><i class="ti ti-tree" style="font-size:0.8667rem"></i> View trees</button></div>';
+  return '<div class="info-card project-leader-card">' + header_html + body_html + view_btn + '</div>';
+}
+function openProjectLeaderProjectName(status) {
+  var stats = getRoleConfig('project-leader').stats || {};
+  var project_name = stats['project-name'] || {};
+  var list = (status === 'submitted') ? (project_name.submitted || []) : (project_name.approved || []);
+  var target = (status === 'submitted') ? 'project-leader-project-name-submitted-cards' : 'project-leader-project-name-approved-cards';
+  var empty = (status === 'submitted') ? 'project-leader-project-name-submitted-empty' : 'project-leader-project-name-approved-empty';
+  var page = (status === 'submitted') ? 'project-leader-project-name-submitted' : 'project-leader-project-name-approved';
+  renderProjectLeaderSimpleCards(target, empty, list);
+  goTo(page);
+}
+function openProjectLeaderProjectTrees(projectId) {
+  var pid = projectId || '';
+  try { sessionStorage.setItem('projectLeaderProjectTreesPid', pid); } catch (e) {}
+  var data = window.__TREE_DATA || storage.get('treeCards') || [];
+  var filtered = data.filter(function (t) { var pn = t.projectName || t['project-name'] || []; if (typeof pn === 'string') pn = [pn]; if (Array.isArray(pn)) { for (var i = 0; i < pn.length; i++) { if (String(pn[i]) === String(pid)) return true; } } return false; });
+  filtered.sort(function(a,b){ return String(a.treeId).localeCompare(String(b.treeId)); });
+  var cards_el = document.getElementById('project-leader-project-trees-cards');
+  var empty_el = document.getElementById('project-leader-project-trees-empty');
+  if (cards_el) cards_el.innerHTML = filtered.map(function (t) { return projectLeaderMyTreeCardHtml(t, false, true); }).join('');
+  if (empty_el) empty_el.style.display = filtered.length ? 'none' : 'block';
+  var stats = getRoleConfig('project-leader').stats || {};
+  var project_name = stats['project-name'] || {};
+  var all_list = (project_name.submitted || []).concat(project_name.approved || []);
+  var match = null;
+  for (var i = 0; i < all_list.length; i++) { if (String(all_list[i].projectId) === pid) { match = all_list[i]; break; } }
+  var lang = (typeof getAppLang === 'function') ? getAppLang() : 'en';
+  var title_txt = '';
+  if (match) { try { title_txt = storage.projectNameIn(match, lang); } catch (e) {} }
+  if (!title_txt) title_txt = pid;
+  var title_el = document.getElementById('project-leader-project-trees-title');
+  if (title_el) title_el.textContent = title_txt + ' — Trees';
+  var section_el = document.getElementById('project-leader-project-trees-section-title');
+  if (section_el) section_el.textContent = 'Trees in ' + title_txt;
+  goTo('project-leader-project-trees');
+}
 function renderProjectLeaderSimpleCards(target_id, empty_id, list) {
   var target_el = document.getElementById(target_id);
   var empty_el = document.getElementById(empty_id);
@@ -1124,10 +1238,11 @@ function renderProjectLeaderSimpleCards(target_id, empty_id, list) {
   if (!list || !list.length) { target_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; return; }
   if (empty_el) empty_el.style.display = 'none';
   var is_tree = list[0] && (list[0].scientificName || list[0].sn);
+  var is_project = list[0] && list[0].projectId;
   var is_submitted = String(target_id).indexOf('submitted') > -1 ? true : false;
   var render_list = (is_submitted) ? list.slice().sort(function(a,b){ return String(b.revisedAt||b.loggedAt||'').localeCompare(String(a.revisedAt||a.loggedAt||'')); }) : list;
   var html = '';
-  for (var i = 0; i < render_list.length; i++) { html += is_tree ? projectLeaderTreeNameCardHtml(render_list[i], is_submitted) : projectLeaderPlaceNameCardHtml(render_list[i], is_submitted); }
+  for (var i = 0; i < render_list.length; i++) { html += is_tree ? projectLeaderTreeNameCardHtml(render_list[i], is_submitted) : (is_project ? projectLeaderProjectNameCardHtml(render_list[i], is_submitted) : projectLeaderPlaceNameCardHtml(render_list[i], is_submitted)); }
   target_el.innerHTML = html;
 }
 function openProjectLeaderTreeName(status) {
@@ -1574,6 +1689,26 @@ else if (hubMode === 'project-leader-place-name-submitted') {
   setTimeout(function() {
     if (typeof openProjectLeaderPlaceName === 'function') { openProjectLeaderPlaceName('submitted'); }
     else { goTo('project-leader-place-name-submitted'); }
+  }, 50);
+}
+else if (hubMode === 'project-leader-project-name-approved') {
+  setTimeout(function() {
+    if (typeof openProjectLeaderProjectName === 'function') { openProjectLeaderProjectName('approved'); }
+    else { goTo('project-leader-project-name-approved'); }
+  }, 50);
+}
+else if (hubMode === 'project-leader-project-name-submitted') {
+  setTimeout(function() {
+    if (typeof openProjectLeaderProjectName === 'function') { openProjectLeaderProjectName('submitted'); }
+    else { goTo('project-leader-project-name-submitted'); }
+  }, 50);
+}
+else if (hubMode === 'project-leader-project-trees') {
+  setTimeout(function() {
+    var pid = '';
+    try { pid = sessionStorage.getItem('projectLeaderProjectTreesPid') || ''; } catch (e) {}
+    if (pid && typeof openProjectLeaderProjectTrees === 'function') { openProjectLeaderProjectTrees(pid); }
+    else { goTo('project-leader-project-trees'); }
   }, 50);
 }
 else if (hubMode === 'project-leader-survey-requests-approved') {

@@ -39,7 +39,7 @@
         <button class="green-btn" onclick="showRegisterStatus('waiting')"><i class="ti ti-send"></i> Submit application</button>
       </div>
     </div>
-    <div class="page" id="page-project-leader-dash">
+    <div class="page dash-page" id="page-project-leader-dash">
       <div class="dash-header">
         <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name"></div></div><div class="avatar s-0bda1d" onclick="toggleProjectLeaderLogoutDrop()"><span id="user-avatar"></span><div class="logout-drop" id="logout-drop-project-leader"><div class="dd-item s-567789" onclick="projectLeaderLogout()"><i class="ti ti-logout s-64dd69"></i> Sign out</div></div></div></div>
         <div class="dash-toggle" id="dash-toggle-project-leader">
@@ -49,7 +49,8 @@
         <div class="dash-stats is-hidden" id="panel-project-leader-stat">
           <div class="dash-stat"><div class="dash-stat-label">Tree name requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderTreeName('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="pld-tree-name-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderTreeName('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="pld-tree-name-submitted">—</div></div></div></div>
           <div class="dash-stat"><div class="dash-stat-label">Place name requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderPlaceName('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="pld-place-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderPlaceName('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="pld-place-submitted">—</div></div></div></div>
-          <div class="dash-stat"><div class="dash-stat-label">Register requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderRegisterLog('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="pld-register-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderRegisterLog('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="pld-register-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Project name requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderProjectName('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="pld-project-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderProjectName('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="pld-project-submitted">—</div></div></div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Tree Register requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderRegisterLog('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="pld-register-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderRegisterLog('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="pld-register-submitted">—</div></div></div></div>
           <div class="dash-stat"><div class="dash-stat-label">Survey requests</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderSurveyRequests('approved')"><div class="dash-split-title">Approved</div><div class="dash-split-val" id="pld-survey-requests-approved">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderSurveyRequests('submitted')"><div class="dash-split-title">Submitted</div><div class="dash-split-val" id="pld-survey-requests-submitted">—</div></div></div></div>
           <div class="dash-stat"><div class="dash-stat-label">My Trees</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderMyCurrent()"><div class="dash-split-title">Current</div><div class="dash-split-val" id="pld-my-trees-current">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openProjectLeaderMyPast()"><div class="dash-split-title">Past</div><div class="dash-split-val" id="pld-my-trees-past">—</div></div></div></div>
           <div class="dash-stat"><div class="dash-stat-label">This month trees</div><div class="dash-split"><div class="dash-split-col dash-split-btn" onclick="openThisMonthTree('covered')"><div class="dash-split-title">Covered</div><div class="dash-split-val" id="pld-covered">—</div></div><div class="dash-split-divider"></div><div class="dash-split-col dash-split-btn" onclick="openThisMonthTree('waiting')"><div class="dash-split-title">Waiting</div><div class="dash-split-val" id="pld-waiting">—</div></div></div></div>
@@ -65,6 +66,11 @@
           <div class="action-tile tile-bg" onclick="openAppendPlaceName()">
             <div class="action-tile-icon green">📍</div>
             <div class="action-tile-title">Append Place Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAppendProjectName()">
+            <div class="action-tile-icon green">🗂️</div>
+            <div class="action-tile-title">Append Project Name</div>
             <div class="action-tile-sub">Add to database</div>
           </div>
           <div class="action-tile tile-bg" onclick="openRegisterATreePage()">
@@ -126,6 +132,18 @@
     <div class="page" id="page-project-leader-place-name-submitted">
       <div class="topbar"><button class="back-btn" onclick="goBackToProjectLeaderStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Place name — Submitted</span></div>
       <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb">Submitted place names</div><div id="project-leader-place-name-submitted-cards"></div><div class="waiting-empty is-hidden" id="project-leader-place-name-submitted-empty">No submitted place names</div></div></div>
+    </div>
+    <div class="page" id="page-project-leader-project-name-approved">
+      <div class="topbar"><button class="back-btn" onclick="goBackToProjectLeaderStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Project name — Approved</span></div>
+      <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb">Approved project names</div><div id="project-leader-project-name-approved-cards"></div><div class="waiting-empty is-hidden" id="project-leader-project-name-approved-empty">No approved project names</div></div></div>
+    </div>
+    <div class="page" id="page-project-leader-project-name-submitted">
+      <div class="topbar"><button class="back-btn" onclick="goBackToProjectLeaderStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Project name — Submitted</span></div>
+      <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb">Submitted project names</div><div id="project-leader-project-name-submitted-cards"></div><div class="waiting-empty is-hidden" id="project-leader-project-name-submitted-empty">No submitted project names</div></div></div>
+    </div>
+    <div class="page" id="page-project-leader-project-trees">
+      <div class="topbar"><button class="back-btn" onclick="goBackToProjectLeaderStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="project-leader-project-trees-title">Project trees</span></div>
+      <div class="scrollable"><div class="section-head-pad"><div class="section-title section-title-mb" id="project-leader-project-trees-section-title">Trees in project</div><div id="project-leader-project-trees-cards"></div><div class="waiting-empty is-hidden" id="project-leader-project-trees-empty">No trees in this project</div></div></div>
     </div>
     <div class="page" id="page-project-leader-register-log-approved">
       <div class="topbar"><button class="back-btn" onclick="goBackToProjectLeaderStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Register — Approved</span></div>
