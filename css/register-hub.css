@@ -32,6 +32,8 @@
   .hub-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; text-align: center; min-height: 96px; }
   .hub-tile:hover { border-color: var(--color-theme); }
   .hub-tile.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+  .hub-tile.empty { background: transparent; border: none; padding: 0; gap: 0; cursor: default; min-height: 0; }
+  .hub-tile.empty:hover { border-color: transparent; transform: none; opacity: 1; }
   .hub-tile i { font-size: 1.3333rem; color: var(--color-theme); }
   .hub-tile span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-primary); }
   .hub-tile small { font-size: 0.6rem; color: var(--color-text-secondary); }
