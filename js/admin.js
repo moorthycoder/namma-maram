@@ -246,6 +246,26 @@ function goTo(page) {
   }
 }
 
+function switchAdminPanel(panel_id) {
+  var is_activity = panel_id === 'activity';
+  var activity_panel = document.getElementById('panel-admin-activity');
+  var role_panel = document.getElementById('panel-admin-role');
+  var activity_btn = document.getElementById('admin-btn-activity');
+  var role_btn = document.getElementById('admin-btn-role');
+  if (activity_panel) activity_panel.classList.toggle('is-hidden', !is_activity);
+  if (role_panel) role_panel.classList.toggle('is-hidden', is_activity);
+  if (activity_btn) activity_btn.classList.toggle('active', is_activity);
+  if (role_btn) role_btn.classList.toggle('active', !is_activity);
+}
+
+function openAdminRole(role_id) {
+  console.log('[admin] open role ->', role_id);
+}
+
+function openAdminActivity(activity_id) {
+  console.log('[admin] open activity ->', activity_id);
+}
+
 
 
 function treeLogsBack() {

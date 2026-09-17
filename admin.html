@@ -25,20 +25,82 @@
         <div class="login-hint">Only authorised system administrators</div>
       </div>
     </div>
-    <div class="page" id="page-admin-dash">
+    <div class="page dash-page" id="page-admin-dash">
       <div class="dash-header">
         <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name"></div></div><div class="avatar" onclick="toggleALogoutDrop()"><span id="user-avatar"></span><div class="logout-drop" id="alogout-drop"><div class="dd-item" onclick="location.href='settings.html'"><i class="ti ti-settings icon-theme"></i> Settings</div><div class="dd-item logout-item" onclick="window.top.location.href='login-hub.html'"><i class="ti ti-logout icon-theme"></i> Sign out</div></div></div></div>
-        <div class="dash-stats">
-          <div class="dash-stat dash-stat-click" onclick="goTo('admin-trackers')"><div class="dash-stat-label">Rangers</div><div class="dash-stat-val" id="admin-rangers">0</div><div class="stat-waiting"><span id="admin-rangers-waiting">0</span> waiting for approval</div></div>
-          <div class="dash-stat dash-stat-click" onclick="goTo('admin-sponsors')"><div class="dash-stat-label">Sponsors</div><div class="dash-stat-val" id="admin-sponsors">0</div><div class="stat-waiting"><span id="admin-sponsors-waiting">0</span> waiting for approval</div></div>
-          <div class="dash-stat dash-stat-click" onclick="goTo('admin-trees')"><div class="dash-stat-label">Trees</div><div class="dash-stat-val" id="admin-trees">0</div></div>
+        <div class="dash-toggle">
+          <button class="dash-toggle-btn active" id="admin-btn-activity" onclick="switchAdminPanel('activity')">Activity</button>
+          <button class="dash-toggle-btn" id="admin-btn-role" onclick="switchAdminPanel('role')">Role</button>
         </div>
-      </div>
-      <div class="scrollable admin-scroll">
-        <div class="section-label">Recent activity</div>
-        <div class="recent-row"><div class="recent-dot theme"></div><div><div class="recent-id">New ranger registered</div><div class="recent-date">GRR-2026-042 · 10 min ago</div></div></div>
-        <div class="recent-row"><div class="recent-dot theme"></div><div><div class="recent-id">Sponsor payment verified</div><div class="recent-date">Madhavi I · ₹300 · 2 hrs ago</div></div></div>
-        <div class="recent-row"><div class="recent-dot theme"></div><div><div class="recent-id">Tree log flagged</div><div class="recent-date">625501-02-0001 · Needs review · 1 day ago</div></div></div>
+        <div class="action-tiles" id="panel-admin-activity">
+          <div class="action-tile tile-bg" onclick="openAdminActivity('tree-species-name')">
+            <div class="action-tile-icon green">🌿</div>
+            <div class="action-tile-title">Species Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminActivity('place-name')">
+            <div class="action-tile-icon green">📍</div>
+            <div class="action-tile-title">Place Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminActivity('project-name')">
+            <div class="action-tile-icon green">🗂️</div>
+            <div class="action-tile-title">Project Name</div>
+            <div class="action-tile-sub">Add to database</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminActivity('register-tree')">
+            <div class="action-tile-icon beige">🏷️</div>
+            <div class="action-tile-title">Register Tree</div>
+            <div class="action-tile-sub">Add to registry</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminActivity('survey-log')">
+            <div class="action-tile-icon beige">🔍</div>
+            <div class="action-tile-title">Survey Log</div>
+            <div class="action-tile-sub">Log measurements</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminActivity('fund-log')">
+            <div class="action-tile-icon green">💰</div>
+            <div class="action-tile-title">Fund Log</div>
+            <div class="action-tile-sub">Record contribution</div>
+          </div>
+        </div>
+        <div class="action-tiles is-hidden" id="panel-admin-role">
+          <div class="action-tile tile-bg" onclick="openAdminRole('sponsor')">
+            <div class="action-tile-icon green">🤝</div>
+            <div class="action-tile-title">Sponsors</div>
+            <div class="action-tile-sub">Fund trees & upkeep</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminRole('caregiver')">
+            <div class="action-tile-icon green">🌿</div>
+            <div class="action-tile-title">Care Givers</div>
+            <div class="action-tile-sub">Care for registered trees</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminRole('ttr')">
+            <div class="action-tile-icon beige">🏷️</div>
+            <div class="action-tile-title">Ten Tree Rangers</div>
+            <div class="action-tile-sub">Register & watch trees</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminRole('project-leader')">
+            <div class="action-tile-icon green">🗂️</div>
+            <div class="action-tile-title">Project Leaders</div>
+            <div class="action-tile-sub">Approve & submit names</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminRole('project-member')">
+            <div class="action-tile-icon beige">👥</div>
+            <div class="action-tile-title">Project Members</div>
+            <div class="action-tile-sub">Join & maintain drives</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminRole('ranger')">
+            <div class="action-tile-icon green">🌳</div>
+            <div class="action-tile-title">Rangers</div>
+            <div class="action-tile-sub">Plant & maintain trees</div>
+          </div>
+          <div class="action-tile tile-bg" onclick="openAdminRole('surveyor')">
+            <div class="action-tile-icon beige">🔍</div>
+            <div class="action-tile-title">Surveyors</div>
+            <div class="action-tile-sub">Inspect & verify trees</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="page" id="page-admin-trackers">
