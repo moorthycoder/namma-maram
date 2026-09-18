@@ -170,6 +170,10 @@ function summaryPanelCardHtml(species_name, count, search_value) {
   return '<span class="album-chip chip-click" data-tree-name="' + String(search_value || species_name).replace(/"/g, '&quot;') + '">' + species_name + ' <b>– ' + count + '</b></span>';
 }
 
+function openMap(tree_ids) {
+  showInMap(tree_ids || []);
+}
+
 function loadSummaryPanel(tree_ids) {
   var summaryEl = document.getElementById('album-summary');
   var countEl = document.getElementById('album-count');
@@ -206,6 +210,12 @@ var n = names[lang_key] || names.en || [];
   summaryEl.querySelectorAll('.chip-click').forEach(function (chip) {
     chip.onclick = function () { filterByTree(chip.getAttribute('data-tree-name')); };
   });
+  var mapBtn = document.createElement('button');
+  mapBtn.type = 'button';
+  mapBtn.className = 'map-btn';
+  mapBtn.innerHTML = '<i class="ti ti-map-2"></i> Show in map';
+  mapBtn.onclick = function () { openMap(tree_ids); };
+  summaryEl.appendChild(mapBtn);
   summaryEl.style.display = (window._summaryOpen === false) ? 'none' : 'flex';
   if (countEl) { countEl.innerHTML = '<span class="album-count-line">' + keys.length + ' species</span><span class="album-count-line">' + total + ' trees</span>'; }
 }

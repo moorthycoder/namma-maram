@@ -2,7 +2,7 @@ var TESTING_MODE = true;
 
 var login_role_config = {
   'sponsor':           { title: 'Sponsor login',                     desc: 'Sign in to manage the trees you sponsor.',          file: 'sponsor.html',          dashPage: 'sponsor-dash' },
-  'care-giver':        { title: 'Care-giver login',                  desc: 'Sign in to manage the trees you care for.',        file: 'care-giver.html',       dashPage: 'caregiver-dash' },
+  'care-giver':        { title: 'Care-giver login',                  desc: 'Sign in to manage the trees you care for.',        file: 'care-giver.html',       dashPage: 'care-giver-dash' },
   'ten-trees-ranger':  { title: 'Ten Tree Ranger login',             desc: 'Sign in to manage the trees in your block.',       file: 'ten-trees-ranger.html', dashPage: 'ten-trees-ranger-dash' },
   'project-leader':    { title: 'Project Leader login',              desc: 'Sign in to manage projects.',                      file: 'project-leader.html',   dashPage: 'project-leader-dash' },
   'project-member':    { title: 'Project member login',              desc: 'Sign in to manage the trees you grow.',            file: 'project-member.html',   dashPage: 'project-member-dash' },
@@ -59,6 +59,14 @@ function navigateToLoginPage(role) {
   if (mobile_inp) { mobile_inp.value = ''; mobile_inp.classList.remove('field-error'); }
   var send_btn = document.getElementById('login-send-btn');
   if (send_btn) send_btn.disabled = true;
+  if (TESTING_MODE) {
+    var cred = getUserCredentialsByRole(role);
+    if (cred && cred.phone && mobile_inp) {
+      mobile_inp.value = stringifyPhone(cred.phone);
+      mobile_inp.classList.remove('field-error');
+      if (send_btn) send_btn.disabled = false;
+    }
+  }
   history.pushState({}, '', 'login-hub.html?role=' + encodeURIComponent(role));
   goTo('role-login');
 }

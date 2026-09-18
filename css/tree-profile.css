@@ -155,4 +155,6 @@
   .report-success-title{font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;}
   .report-success-text{font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px;}
   .btn-disabled{opacity:0.6;cursor:not-allowed;}
-  .btn-added{opacity:0.9;}
+  .btn-added{opacity:0.9;}.details-link{text-decoration:underline;cursor:pointer;color:#2563eb;}
+.species-val{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.species-see-more{font-size:0.7333rem;}

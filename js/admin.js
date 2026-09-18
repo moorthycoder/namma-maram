@@ -89,7 +89,7 @@ function googleAuth(page, status) {
 
 
 // Open the shared role login page (Care-giver, Ten Tree Ranger, Surveyor)
-var currentRole = 'caregiver';
+var currentRole = 'care-giver';
 
 
 
@@ -236,7 +236,7 @@ function goTo(page) {
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['admin-login','admin-login','ranger-login','ranger-dash','surveyor-login','surveyor-dash','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','surveyor-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  else if (['sponsor-login','sponsor-dash','care-giver-login','care-giver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
 

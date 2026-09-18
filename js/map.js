@@ -211,7 +211,7 @@
           (info.treeId ? '<div class="map-id">' + info.treeId + '</div>' : '') +
           '<div class="map-coords">' + lat.toFixed(4) + ', ' + lng.toFixed(4) + '</div>' +
           (info.address ? '<div class="map-addr">' + info.address + '</div>' : '') +
-          (info.caregiver ? '<div class="map-cg">Caregiver: ' + info.caregiver + '</div>' : '') +
+          (info.caregiver ? '<div class="map-cg">Care-giver: ' + info.caregiver + '</div>' : '') +
           (info.careGiverContact ? '<div class="map-cg">📞 ' + info.careGiverContact + '</div>' : '') +
           '<div class="map-cg">&nbsp;</div>' +
           '<div class="map-stats">📏 ' + formatLength(info.height,'height') + ' · 📐 ' + formatLength(info.diameter,'diameter') + '</div>' +

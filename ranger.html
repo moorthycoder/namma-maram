@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -15,19 +15,7 @@
   <div class="screen">
     <div class="status-bar dark" id="sbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
 
-    <div class="page active" id="page-ranger-login">
-      <div class="dash-header">
-        <div class="s-75e36a"><button class="back-btn inv" onclick="goBackFromRangerLogin()"><i class="ti ti-arrow-left"></i></button></div>
-        <h2 class="s-ddcbbf">Ranger login</h2>
-        <p class="s-adfe10">Sign in to survey and record tree measurements</p>
-      </div>
-      <div class="s-e480cb">
-        <button class="green-btn continue-visible" id="continue-as-btn" type="button" onclick="continueAsRanger()"><i class="ti ti-login"></i> Continue as <span id="continue-as-name">—</span></button>
-        <button class="google-btn s-002535" onclick="currentRole='ranger';googleAuth('ranger-dash')"><svg class="google-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Login as different user</button>
-        <div class="s-33b889">Only authorised field rangers can log entries</div>
-      </div>
-    </div>
-    <div class="page" id="page-ranger-dash">
+    <div class="page active" id="page-ranger-dash">
       <div class="dash-header">
         <div class="dash-topbar"><div><div class="dash-greeting">Welcome back,</div><div class="dash-name" id="user-name"></div></div><div class="avatar s-0bda1d" onclick="toggleRangerLogoutDrop()"><span id="user-avatar"></span><div class="logout-drop" id="logout-drop-ranger"><div class="dd-item s-567789" onclick="rangerLogout()"><i class="ti ti-logout s-64dd69"></i> Sign out</div></div></div></div>
         <div class="dash-toggle" id="dash-toggle-ranger">
@@ -149,7 +137,7 @@
     </div>
     <div class="page" id="page-profile">
       <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span></div>
-      <div class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin map-pin-icon"></i> <span id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin map-pin-btn-icon"></i></button></p></div></div>
+      <div class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin map-pin-icon"></i> <span class="profile-hero-addr" class="profile-hero-addr" id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin map-pin-btn-icon"></i></button></p></div></div>
       <div class="scrollable profile-scroll">
         <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value" id="profile-stat-height">—</div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value" id="profile-stat-diameter">—</div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">—</div></div></div>
         <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span class="health-score" id="profile-health-score">— / 100</span></div><div class="health-bar"><div class="health-fill" id="profile-health-fill"></div></div></div>
@@ -161,7 +149,7 @@
           <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list field-icon-sm"></i>Total logs</span><span class="info-val" id="profile-total-logs">—</span></div>
         </div>
         <div class="section-title">Growth logs</div>
-        <div class="info-card" id="profile-logs"></div>
+        <div class="info-card" class="profile-logs" class="profile-logs" id="profile-logs"></div>
         <div class="log-hint-center"><i class="ti ti-hand-click log-hint-icon"></i> Tap a log to view photos</div>
       </div>
     </div>
@@ -190,17 +178,6 @@
       </div>
       <iframe class="map-frame" id="map-frame" title="Tree map"></iframe>
     </div>
-    <div class="modal-back" id="login-status-modal">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="s-d44a8f">
-          <div class="lsm-icon s-5b20f9" id="lsm-icon"><i class="ti ti-clock s-74af75"></i></div>
-          <div class="lsm-title s-c5c660" id="lsm-title">Application under review</div>
-          <div class="lsm-text s-9d97f8" id="lsm-text">Your login request is waiting for admin approval.</div>
-          <button class="green-btn" onclick="closeLoginStatus(true)"><i class="ti ti-check"></i> Okay</button>
-          </div>
-        </div>
-      </div>
     <div class="modal-back" id="delete-confirm-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>

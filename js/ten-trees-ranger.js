@@ -1,6 +1,6 @@
 
 var TESTING_MODE = true;
-var profileFrom = 'ten-trees-ranger-login';
+var profileFrom = 'ten-trees-ranger-dash';
 var albumFrom = 'profile';
 var treeLogsFrom = 'trees';
 var tenTreesRangerCaredCount = 0;
@@ -33,7 +33,7 @@ function loginCheckTenTreesRanger() {
   if (r && r['tree-login'] && r['tree-login']['ten-trees-ranger'] && r['tree-login']['ten-trees-ranger'].loggedIn) {
     return true;
   }
-  goTo('ten-trees-ranger-login');
+  window.location.href = 'login-hub.html?role=ten-trees-ranger';
   return false;
 }
 function loadCurrentUser() {
@@ -63,7 +63,7 @@ function checkNewTenTreesRangerTrees() {
     if (!_login_chk) { var _s = sessionStorage.getItem('loginCredentialsV1'); if (_s) _login_chk = JSON.parse(_s); }
     var _ten_trees_ranger_chk = _login_chk && _login_chk['tree-login'] && _login_chk['tree-login']['ten-trees-ranger'];
     if (!_ten_trees_ranger_chk || !_ten_trees_ranger_chk.userId) {
-      goTo('ten-trees-ranger-login');
+      window.location.href = 'login-hub.html?role=ten-trees-ranger';
       return new_ids;
     }
   } catch (e) {}
@@ -74,15 +74,6 @@ function checkNewTenTreesRangerTrees() {
   return new_ids;
 }
 
-function continueAsTenTreesRanger() {
-  console.log('[ten-trees-ranger] continueAsTenTreesRanger click pending', sessionStorage.getItem('pendingCare'));
-  try {
-    var _lc = window._login || storage.get('login') || {};
-    if (_lc && _lc['tree-login'] && _lc['tree-login']['ten-trees-ranger']) { _lc['tree-login']['ten-trees-ranger'].loggedIn = true; storage.set('login', _lc); window._login = _lc; }
-  } catch (e) {}
-  var _r2 = updateWaitingListFromPendingTenTreesRanger();
-  if (!_r2) { goTo('ten-trees-ranger-dash'); loadDashboard(); }
-}
 function updateWaitingListFromPendingTenTreesRanger() {
   try {
     var raw_data = sessionStorage.getItem('pendingCare');
@@ -129,16 +120,6 @@ function openTenTreesRangerConflictModal(conflict_tree_id, conflict_list) {
 function closeTenTreesRangerConflictModal() {
   document.getElementById('conflict-resolution-modal').classList.remove('open');
 }
-function handleTenTreesRangerLoginOkay() {
-  var modal_el = document.getElementById('login-status-modal');
-  if (modal_el) modal_el.classList.remove('open');
-  try {
-    var _lc2 = window._login || storage.get('login') || {};
-    if (_lc2 && _lc2['tree-login'] && _lc2['tree-login']['ten-trees-ranger']) { _lc2['tree-login']['ten-trees-ranger'].loggedIn = true; storage.set('login', _lc2); window._login = _lc2; }
-  } catch (e) {}
-  var _r = updateWaitingListFromPendingTenTreesRanger();
-  if (!_r) { goTo('ten-trees-ranger-dash'); loadDashboard(); }
-}
 function tenTreesRangerLogout() {
   try {
     if (window.parent && window.parent.goNav) { window.parent.goNav('login-hub.html'); return; }
@@ -146,28 +127,6 @@ function tenTreesRangerLogout() {
   } catch (e) {}
   window.top.location.href = 'login-hub.html';
 }
-document.addEventListener('DOMContentLoaded', function() {
-  try {
-    var cred = null;
-    try { cred = storage.get('login'); } catch (e) {}
-    if (!cred) { var s = sessionStorage.getItem('loginCredentialsV1'); if (s) cred = JSON.parse(s); }
-    var role = cred && cred['tree-login'] && cred['tree-login']['ten-trees-ranger'];
-    if (role) {
-      var btn = document.getElementById('continue-as-btn');
-      var name_el = document.getElementById('continue-as-name');
-      if (btn) btn.style.display = 'flex';
-      if (name_el) name_el.textContent = role.name || 'Ten Tree Ranger';
-    }
-  } catch (e) {}
-});
-
-var loginStatusData = {
-  waiting:   { icon:'ti ti-clock',        color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your login request is waiting for admin approval. We will notify you once it is reviewed.' },
-  rejected:  { icon:'ti ti-x',            color:'#dc2626', bg:'#fee2e2', title:'Application rejected',      text:'Your login request was rejected. Please contact support if you think this is a mistake.' },
-  approved:  { icon:'ti ti-check',        color:'#16a34a', bg:'#dcfce7', title:'Login approved',            text:'Welcome! Your login was approved. You can now continue to your dashboard.' },
-  withdrawn: { icon:'ti ti-user-off',     color:'#64748b', bg:'#e2e8f0', title:'Access withdrawn',          text:'Your access has been withdrawn. Please contact the administrator for details.' }
-};
-
 var registerStatusData = {
   waiting:          { icon:'ti ti-clock',       color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your registration is waiting for admin approval. We will notify you once it is reviewed.', go:'Login' },
   existing_member:  { icon:'ti ti-user-check',  color:'#16a34a', bg:'#dcfce7', title:'Already registered',        text:'An account with this email already exists. Please log in instead of registering again.', go:'Login', to:'ten-trees-ranger-login' },
@@ -211,21 +170,6 @@ function closeRegisterStatus(go) {
 }
 
 
-// Google OAuth — simulates result in TESTING_MODE, else real OAuth redirect
-
-function googleAuth(page, status) {
-  status = status || (TESTING_MODE ? 'approved' : null);
-  if (TESTING_MODE) {
-    showLoginStatus(page, status);
-    return;
-  }
-  var clientId = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
-  var redirect = encodeURIComponent(window.location.origin + window.location.pathname);
-  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=' + clientId +
-    '&redirect_uri=' + redirect + '&response_type=code&scope=openid%20email%20profile';
-}
-
-
 // Open the shared role login page (Care-giver, Ten Tree Ranger, Surveyor)
 var currentRole = 'ten-trees-ranger';
 
@@ -234,27 +178,6 @@ var currentRole = 'ten-trees-ranger';
 function roleDash() {
   return currentRole === 'surveyor' ? 'surveyor-dash' : 'ranger-dash';
 }
-
-
-// Show login-result modal based on status
-
-function showLoginStatus(page, status) {
-  var d = loginStatusData[status] || loginStatusData.waiting;
-  var icon = document.getElementById('lsm-icon');
-  icon.style.background = d.bg;
-  icon.style.color = d.color;
-  icon.innerHTML = '<i class="' + d.icon + '" style="font-size:24px;"></i>';
-  document.getElementById('lsm-title').textContent = d.title;
-  document.getElementById('lsm-text').textContent = d.text;
-  var test = document.getElementById('lsm-test');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
-  logoutTarget = page;
-  document.getElementById('login-status-modal').classList.add('open');
-}
-
-
-
-
 
 
 // Font size (S/M/L) — text-only scaling via root html font-size (all fonts are rem)
@@ -1078,7 +1001,7 @@ function loadDashboard() {
 
 window.render = {
   init: function () {
-    if (hubMode === 'login' || hubMode === 'register') { return; }
+    if (hubMode === 'login') { return; }
     if (!loginCheckTenTreesRanger()) return;
     var had_pending = false;
     if (hubMode === 'ten-trees-ranger-dash' || hubMode === 'ten-trees-ranger-waiting') { had_pending = consumePendingTenTreesRangerRequest(); }
@@ -1236,16 +1159,10 @@ function getTenTreesRangerParentUrl() {
   return parent_url ? parent_url : null;
 }
 
-function goBackFromTenTreesRangerLogin() {
-  var parent_url = getTenTreesRangerParentUrl();
-  if (parent_url) { window.location.href = parent_url; return; }
-  window.location.href = 'login-hub.html';
-}
-
 var hubMode = new URLSearchParams(location.search).get('hub');
 console.log('[ten-trees-ranger] hubMode', hubMode, 'href', location.href);
-if (hubMode === 'login') { goTo('ten-trees-ranger-login'); }
-else if (hubMode === 'register') { goTo('ten-trees-ranger-enroll'); }
+if (hubMode === 'login') { window.location.href = 'login-hub.html?role=ten-trees-ranger'; }
+
 else if (hubMode === 'ten-trees-ranger-dash') { goTo('ten-trees-ranger-dash'); }
 else if (hubMode === 'ten-trees-ranger-waiting') { goTo('ten-trees-ranger-waiting'); }
 else if (hubMode === 'ten-trees-ranger-seeing') { goTo('ten-trees-ranger-seeing'); }

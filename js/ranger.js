@@ -1,6 +1,6 @@
 
 var TESTING_MODE = true;
-var profileFrom = 'ranger-login';
+var profileFrom = 'ranger-dash';
 var albumFrom = 'profile';
 var treeLogsFrom = 'trees';
 var sponsoredCount = 2;
@@ -22,43 +22,6 @@ function loadCurrentUser() {
   } catch (e) {}
 }
 loadCurrentUser();
-
-function continueAsRanger() {
-  goTo('ranger-dash');
-}
-
-function getRangerParentUrl() {
-  var parent_url = new URLSearchParams(location.search).get('parent');
-  return parent_url ? parent_url : null;
-}
-
-function goBackFromRangerLogin() {
-  var parent_url = getRangerParentUrl();
-  if (parent_url) { window.location.href = parent_url; return; }
-  window.location.href = 'login-hub.html';
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  try {
-    var cred = null;
-    try { cred = storage.get('login'); } catch (e) {}
-    if (!cred) { var s = sessionStorage.getItem('loginCredentialsV1'); if (s) cred = JSON.parse(s); }
-    var role = cred && cred['tree-login'] && cred['tree-login']['ranger'];
-    if (role) {
-      var btn = document.getElementById('continue-as-btn');
-      var name_el = document.getElementById('continue-as-name');
-      if (btn) btn.style.display = 'flex';
-      if (name_el) name_el.textContent = role.name || 'Ranger';
-    }
-  } catch (e) {}
-});
-
-var loginStatusData = {
-  waiting:   { icon:'ti ti-clock',        color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your login request is waiting for admin approval. We will notify you once it is reviewed.' },
-  rejected:  { icon:'ti ti-x',            color:'#dc2626', bg:'#fee2e2', title:'Application rejected',      text:'Your login request was rejected. Please contact support if you think this is a mistake.' },
-  approved:  { icon:'ti ti-check',        color:'#16a34a', bg:'#dcfce7', title:'Login approved',            text:'Welcome! Your login was approved. You can now continue to your dashboard.' },
-  withdrawn: { icon:'ti ti-user-off',     color:'#64748b', bg:'#e2e8f0', title:'Access withdrawn',          text:'Your access has been withdrawn. Please contact the administrator for details.' }
-};
 
 var registerStatusData = {
   waiting:          { icon:'ti ti-clock',       color:'#f59e0b', bg:'#fef3c7', title:'Application under review',  text:'Your registration is waiting for admin approval. We will notify you once it is reviewed.', go:'Login' },
@@ -106,52 +69,13 @@ function closeRegisterStatus(go) {
 }
 
 
-// Google OAuth — simulates result in TESTING_MODE, else real OAuth redirect
-
-function googleAuth(page, status) {
-  status = status || (TESTING_MODE ? 'approved' : null);
-  if (TESTING_MODE) {
-    showLoginStatus(page, status);
-    return;
-  }
-  var clientId = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
-  var redirect = encodeURIComponent(window.location.origin + window.location.pathname);
-  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=' + clientId +
-    '&redirect_uri=' + redirect + '&response_type=code&scope=openid%20email%20profile';
-}
-
-
 // Open the shared role login page (Care-giver, Ten Tree Ranger, Ranger)
-var currentRole = 'caregiver';
+var currentRole = 'care-giver';
 
 
 
 function roleDash() {
   return currentRole === 'ranger' ? 'ranger-dash' : 'ranger-dash';
-}
-
-
-// Show login-result modal based on status
-
-function showLoginStatus(page, status) {
-  var d = loginStatusData[status] || loginStatusData.waiting;
-  var icon = document.getElementById('lsm-icon');
-  icon.style.background = d.bg;
-  icon.style.color = d.color;
-  icon.innerHTML = '<i class="' + d.icon + '" style="font-size:24px;"></i>';
-  document.getElementById('lsm-title').textContent = d.title;
-  document.getElementById('lsm-text').textContent = d.text;
-  var test = document.getElementById('lsm-test');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
-  logoutTarget = page;
-  document.getElementById('login-status-modal').classList.add('open');
-}
-
-
-
-function closeLoginStatus(go) {
-  document.getElementById('login-status-modal').classList.remove('open');
-  if (go) goTo(logoutTarget);
 }
 
 
@@ -496,7 +420,7 @@ function goTo(page) {
   var sb = document.getElementById('sbar');
   sb.className = 'status-bar';
   if (['ranger-login','ranger-enroll','ranger-login','ranger-dash','ranger-login','ranger-dash','append-tree-name','append-place-name','register-tree','trees','admin-login','admin-dash','admin-trees','admin-edit-tree','admin-add-tree','admin-trackers','admin-sponsors','admin-trackers-prospective','admin-sponsors-prospective','ranger-enroll','sponsor-enroll','ranger-enroll','role-login'].indexOf(page) > -1) sb.classList.add('dark');
-  else if (['sponsor-login','sponsor-dash','caregiver-login','caregiver-dash'].indexOf(page) > -1) sb.classList.add('blue');
+  else if (['sponsor-login','sponsor-dash','care-giver-login','care-giver-dash'].indexOf(page) > -1) sb.classList.add('blue');
   var alogout = document.getElementById('alogout-drop');
   if (alogout) alogout.classList.remove('open');
   
@@ -1513,8 +1437,8 @@ window.render = {
 };
 
 var hubMode = new URLSearchParams(location.search).get('hub');
-if (hubMode === 'login') { goTo('ranger-login'); }
-else if (hubMode === 'register') { goTo('ranger-enroll'); }
+if (hubMode === 'login') { window.location.href = 'login-hub.html?role=ranger'; }
+
 else if (hubMode === 'ranger-dash') { goTo('ranger-dash'); }
 else if (hubMode === 'ranger-logs-approved') {
   setTimeout(function() {
@@ -1614,4 +1538,14 @@ else if (hubMode === 'this-month-log-submitted') {
 }
 else if (hubMode === 'trees') { goTo('trees'); }
 else { window.location.href = 'login-hub.html'; }
+
+function loginCheckRanger() {
+  var _r = window._login || null;
+  if (_r && _r['tree-login'] && _r['tree-login'].ranger && _r['tree-login'].ranger.loggedIn) {
+    return true;
+  }
+  window.location.href = 'login-hub.html?role=ranger';
+  return false;
+}
+if (hubMode !== 'login' && hubMode !== 'register') { loginCheckRanger(); }
 
