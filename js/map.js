@@ -43,10 +43,15 @@
     var d = new Date(dateStr);
     if (isNaN(d.getTime())) return '';
     var years = ((Date.now() - d.getTime()) / (365.25 * 24 * 60 * 60 * 1000)).toFixed(1);
+    return years + ' years old';
+  }
+  function plantedDateText(dateStr) {
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '';
     var dd = String(d.getDate()).padStart(2, '0');
     var mm = String(d.getMonth() + 1).padStart(2, '0');
     var yyyy = d.getFullYear();
-    return 'Age:' + years + 'y(' + dd + '-' + mm + '-' + yyyy + ')';
+    return '(' + dd + '-' + mm + '-' + yyyy + ')';
   }
 
   function treeDetails(treeId, appLang) {
@@ -78,7 +83,7 @@
       name: name || 'Tree',
       localName: record.localName || '',
       treeId: record.treeId || '',
-      address: pincode,
+      address: [record.placeName, pincode].filter(Boolean).join(', '),
       caregiver: record['care-giver'] || '',
       careGiverContact: record['care-giver-contact-number'] || '',
       emoji: record.emoji || '🌳',
@@ -100,7 +105,7 @@
   function initMap() {
     var ids = decodeTreeIds(location.search);
     if (!ids.length) {
-      document.getElementById('map').innerHTML = '<div style="padding:40px;font-size:15px;">No coordinates provided.</div>';
+      document.getElementById('map').innerHTML = '<div class="map-empty">No coordinates provided.</div>';
       return;
     }
 
@@ -115,7 +120,7 @@
     });
 
     if (!markers.length) {
-      document.getElementById('map').innerHTML = '<div style="padding:40px;font-size:15px;">No coordinates provided.</div>';
+      document.getElementById('map').innerHTML = '<div class="map-empty">No coordinates provided.</div>';
       return;
     }
 
@@ -201,9 +206,10 @@
     return '' +
       '<div class="map-card">' +
         '<div class="map-photo"><span class="map-emoji">' + info.emoji + '</span>' +
-          '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center">' +
-            (info.health ? '<span class="map-health health-' + String(info.health).toLowerCase().replace(/\s+/g, '-') + '">' + info.health + '</span>' : '') +
-            (info.plantedDate ? '<span class="map-planted" style="color:white">' + ageLabel(info.plantedDate) + '</span>' : '') +
+          '<div class="map-row-wrap">' +
+            (info.health ? '<div class="map-row"><span class="map-health health-' + String(info.health).toLowerCase().replace(/\s+/g, '-') + '">' + info.health + '</span></div>' : '') +
+            (info.plantedDate ? '<div class="map-row"><span class="map-planted">' + ageLabel(info.plantedDate) + '</span></div>' : '') +
+            (info.plantedDate ? '<div class="map-row"><span class="map-planted">' + plantedDateText(info.plantedDate) + '</span></div>' : '') +
           '</div>' +
         '</div>' +
         '<div class="map-info">' +

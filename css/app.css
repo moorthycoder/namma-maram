@@ -362,6 +362,15 @@ body {
   transform: scale(1.05);
 }
 
+.card-wiki-btn {
+  top: 40px;
+}
+
+.card-outgoing-w {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
 .card-zoom-btn {
   position: absolute;
   top: 6px;

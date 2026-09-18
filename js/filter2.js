@@ -155,6 +155,7 @@ function profileCardPanelCardHtml(card, lang_key) {
 
   return '<div class="tree-snapshot" onclick="openTreeProfile(\'' + card.treeId + '\')">' +
     '<button type="button" class="card-outgoing-btn" title="Open profile" onclick="event.stopPropagation();openTreeProfile(\'' + card.treeId + '\')"><i class="ti ti-external-link"></i></button>' +
+    '<button type="button" class="card-outgoing-btn card-wiki-btn" title="Open in Wikipedia" onclick="event.stopPropagation();openSpeciesInWikipedia(\'' + card.scientificName + '\')"><span class="card-outgoing-w">W</span></button>' +
     '<div class="tree-info">' +
       '<div class="tree-name">' + name_lines + '</div>' +
       '<div class="tree-id">' + esc(card.treeId) + '</div>' +

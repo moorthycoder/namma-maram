@@ -8,7 +8,11 @@
   .map-photo { display: flex; flex-direction: column; align-items: center; width: 84px; flex-shrink: 0; background: linear-gradient(135deg,#2d5a1b,#4a7c2f); }
   .map-emoji { font-size: 36px; margin: auto 0; }
   .map-health { display: inline-block; padding: 1px 6px; font-size: 10px; color: #fff; background: #374151; }
-  .map-planted { display: inline-block; padding: 1px 6px; font-size: 10px; background: rgba(0,0,0,0.12); }
+  .map-planted { display: inline-block; padding: 1px 6px; font-size: 10px; color: #fff; background: rgba(0,0,0,0.12); }
+  .map-empty { padding: 40px; font-size: 15px; }
+  .map-row-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .map-row { line-height: 1.4; font-size: 10px; }
+  .map-row > * { font-size: 10px; }
   .map-health.healthy { background: #16a34a; }
   .map-health.dead { background: #dc2626; }
   .map-health.weak { background: #f59e0b; }

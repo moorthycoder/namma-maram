@@ -431,7 +431,21 @@ body {
 }
 
 .album-toggle.off {
-  opacity: 0.4;
+  position: relative;
+  opacity: 1;
+  border-color: rgba(220, 38, 38, 0.6);
+  color: #dc2626;
+}
+
+.album-toggle.off::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 50%;
+  width: 2px;
+  background: #dc2626;
+  transform: translateX(-50%) rotate(45deg);
 }
 
 .album-grid {
