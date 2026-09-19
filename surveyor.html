@@ -135,49 +135,7 @@
       <div class="topbar"><button class="back-btn" onclick="goBackToSurveyorStats()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">This month Survey Log — Submitted</span></div>
       <div class="scrollable"><div class="surveyor-list-pad"><div id="this-month-log-submitted-cards"></div><div class="waiting-empty is-hidden" id="this-month-log-submitted-empty">No submitted logs this month</div></div></div>
     </div>
-    <div class="page" id="page-profile">
-      <div class="topbar"><button class="back-btn" id="profile-back-btn" onclick="profileBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="profile-id-label"></span></div>
-      <div class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-badge"><div class="hero-dot"></div><span id="profile-health-badge">—</span></div><div class="hero-title"><h1 id="profile-hero-name"></h1><p><i class="ti ti-map-pin map-pin-icon"></i> <span class="profile-hero-addr" class="profile-hero-addr" id="profile-hero-addr"></span> <button class="gis-pin" type="button" onclick="openTreeMap()"><i class="ti ti-map-pin map-pin-btn-icon"></i></button></p></div></div>
-      <div class="scrollable profile-scroll">
-        <div class="stats-row"><div class="stat-card"><div class="stat-label">Height</div><div class="stat-value" id="profile-stat-height">—</div></div><div class="stat-card"><div class="stat-label">Diameter</div><div class="stat-value" id="profile-stat-diameter">—</div></div><div class="stat-card"><div class="stat-label">Logs</div><div class="stat-value" id="profile-stat-logs">—</div></div></div>
-        <div class="health-bar-wrap"><div class="health-label"><span>Health score</span><span class="health-score" id="profile-health-score">— / 100</span></div><div class="health-bar"><div class="health-fill" id="profile-health-fill"></div></div></div>
-        <div class="section-title">Tree info</div>
-        <div class="info-card info-card-mb">
-          <div class="info-row"><span class="info-key"><i class="ti ti-leaf field-icon-sm"></i>Species</span><span class="info-val" id="profile-species">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>Added by</span><span class="info-val" id="profile-registered-by">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-calendar field-icon-sm"></i>First logged</span><span class="info-val" id="profile-first-logged">—</span></div>
-          <div class="info-row"><span class="info-key"><i class="ti ti-clipboard-list field-icon-sm"></i>Total logs</span><span class="info-val" id="profile-total-logs">—</span></div>
-        </div>
-        <div class="section-title">Growth logs</div>
-        <div class="info-card" class="profile-logs" class="profile-logs" id="profile-logs"></div>
-        <div class="log-hint-center"><i class="ti ti-hand-click log-hint-icon"></i> Tap a log to view photos</div>
-      </div>
-    </div>
-    <div class="page" id="page-album">
-      <div class="topbar"><button class="back-btn" id="album-back-btn" onclick="goTo(albumFrom)"><i class="ti ti-arrow-left"></i></button><span class="topbar-title" id="album-title">Log photos</span></div>
-      <div class="album-meta"><div class="s-4b65e9" id="album-date">12 Jun 2026</div><div class="s-2c9e0e"><span class="s-d6d09e"><i class="ti ti-ruler s-e92560"></i><span id="album-h">8.4 m</span></span><span class="s-d6d09e"><i class="ti ti-circle s-e92560"></i><span id="album-d">22 cm</span></span><span class="s-d6d09e"><i class="ti ti-camera s-e92560"></i><span id="album-c">3 photos</span></span></div></div>
-      <div class="scrollable"><div class="album-grid-page" id="album-grid-page"></div><div class="album-note"><div class="album-note-label">Field notes</div><div class="s-e20456" id="album-note"></div></div></div>
-    </div>
-    <div class="page" id="page-tree-logs">
-      <div class="topbar"><button class="back-btn" id="tree-logs-back-btn" onclick="treeLogsBack()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Neem Tree #0042 — Logs</span></div>
-      <div class="scrollable"><div class="s-4f7a6b">
-        <div class="s-621e2e">Double-tap a log to view photos</div>
-        <div class="section-title">Growth logs</div>
-        <div class="info-card">
-          <div class="log-tracker-entry" onclick="openAlbum(0)"><div class="log-dot s-c59061"></div><div><div class="log-date">12 Jun 2026</div><div class="log-text s-ec1a31">Height 8.4 m · Diameter 22 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> New shoots visible, no signs of disease.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Fertilize before monsoon.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.3 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>3 photos</span></div></div></div>
-          <div class="log-tracker-entry" onclick="openAlbum(1)"><div class="log-dot s-650134"></div><div><div class="log-date">10 Jan 2026</div><div class="log-text s-ec1a31">Height 8.1 m · Diameter 21 cm</div><div class="log-by">By Ravi K. · GRR-2024-081</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Watered and mulched; canopy looks healthy.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Schedule next check-up in March.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.5 m</span><span class="chip-blue"><i class="ti ti-photo s-d2831c"></i>2 photos</span></div></div></div>
-          <div class="log-tracker-entry" onclick="openAlbum(2)"><div class="log-dot s-93f575"></div><div><div class="log-date">15 Jul 2025</div><div class="log-text s-ec1a31">Height 7.6 m · Diameter 21 cm</div><div class="log-by">By Priya S. · GRR-2023-042</div><div class="log-notes"><i class="ti ti-notes s-cb5178"></i><span><b>Field notes</b> Pest marks on lower leaves; keep monitoring.</span></div><div class="log-todo"><i class="ti ti-clipboard-check s-cb5178"></i><span><b>To do</b> Apply neem spray and follow up in 2 weeks.</span></div><div class="log-chips s-bb680e"><span class="chip">+0.4 m</span></div></div></div>
-        </div>
-      </div></div>
-    </div>
-
-    <div class="map-modal-back" id="map-modal">
-      <div class="map-modal-head">
-        <button class="back-btn" onclick="closeMapModal()"><i class="ti ti-arrow-left"></i></button>
-        <span class="topbar-title">Tree map</span>
-      </div>
-      <iframe class="map-frame" id="map-frame" title="Tree map"></iframe>
-    </div>
+    
     <div class="modal-back" id="delete-confirm-modal">
       <div class="modal-sheet">
         <div class="modal-handle"></div>
@@ -190,12 +148,20 @@
         </div>
       </div>
     </div>
+    <div class="map-modal-back" id="map-modal">
+      <div class="map-modal-head">
+        <button class="back-btn" onclick="closeMapModal()"><i class="ti ti-arrow-left"></i></button>
+        <span class="topbar-title">Tree map</span>
+      </div>
+      <iframe class="map-frame" id="map-frame" title="Tree map"></iframe>
+    </div>
   </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/storage.js"></script><script src="js/units.js"></script>
 <script src="js/gis.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/show-tree-details-in-map.js"></script>
+<script src="js/map.js"></script>
 <script src="js/surveyor.js"></script>
 <script src="js/append-a-tree-species-name.js"></script>
 <script src="js/append-a-place-name.js"></script>

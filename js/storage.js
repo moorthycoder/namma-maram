@@ -188,6 +188,13 @@ try {
 if (!storage.tree.measurement) { storage.tree.measurement = { height: 'feet', diameter: 'feet' }; window.__MEASUREMENT = storage.tree.measurement; try { storage.save(); } catch (e) {} }
 if (!window.__MEASUREMENT) { window.__MEASUREMENT = storage.tree.measurement; }
 
+function goBackToParent(fallback_url) {
+  var parent_url = new URLSearchParams(location.search).get('parent') || '';
+  if (parent_url) { window.location.href = parent_url; return; }
+  if (window.history.length > 1) { window.history.back(); return; }
+  window.location.href = fallback_url || 'index.html';
+}
+
 if (window.top === window.self) {
   var _cachedCards = storage.get('treeCards');
   if (_cachedCards == null || !_cachedCards.length || !_cachedCards[0]['date-of-planting']) {

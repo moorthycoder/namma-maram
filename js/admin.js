@@ -1,8 +1,5 @@
 
 var TESTING_MODE = true;
-var profileFrom = 'admin-login';
-var albumFrom = 'profile';
-var treeLogsFrom = 'trees';
 var sponsoredCount = 2;
 var caredCount = 4;
 var logoutTarget = 'admin-login';
@@ -174,12 +171,6 @@ window.render = {
   }
 };
 
-var logs = [
-  { date:'12 Jun 2026', height:'8.4 m', diam:'22 cm', note:'Canopy looking dense. New shoots visible on upper branches. No signs of disease.', photos:[{bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)',emoji:'🌿',label:'Full canopy',time:'9:12 AM',main:true},{bg:'linear-gradient(135deg,#1a3a0a,#2d5a1b)',emoji:'🌲',label:'Trunk close-up',time:'9:14 AM'},{bg:'linear-gradient(135deg,#3B6D11,#639922)',emoji:'🍃',label:'New shoots',time:'9:16 AM'}] },
-  { date:'10 Jan 2026', height:'8.1 m', diam:'21 cm', note:'Some yellowing on lower leaves — likely seasonal.', photos:[{bg:'linear-gradient(135deg,#1e3d0f,#2d5a1b)',emoji:'🌳',label:'Full tree',time:'10:05 AM',main:true},{bg:'linear-gradient(135deg,#27500A,#3B6D11)',emoji:'🍂',label:'Lower leaves',time:'10:08 AM'}] },
-  { date:'15 Jul 2025', height:'7.6 m', diam:'21 cm', note:'Measurement only. Camera not available. Tree looks healthy overall.', photos:[] }
-];
-
 // Close dropdown on outside click
 document.addEventListener('click', function(e) {
   var ld = document.getElementById('logout-drop');
@@ -221,16 +212,6 @@ function toggleALogoutDrop() {
 // Navigation
 
 function goTo(page) {
-  if (page === 'tree-logs') {
-    var activePage = document.querySelector('.page.active');
-    if (activePage) {
-      var fromPage = activePage.id.replace('page-', '');
-      if (fromPage !== 'album' && fromPage !== 'profile') {
-        treeLogsFrom = fromPage;
-      }
-    }
-  }
-  
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.getElementById('page-'+page).classList.add('active');
   var sb = document.getElementById('sbar');
@@ -268,11 +249,6 @@ function openAdminActivity(activity_id) {
 
 
 
-function treeLogsBack() {
-  goTo(treeLogsFrom);
-}
-
-
 // Password toggle
 
 function togglePw(id, btn) {
@@ -295,91 +271,29 @@ function searchTree() {
 }
 
 
-// Open profile
+// Open profile — external redirect to individual-tree-profile.html
 
 function openProfile(treeId) {
-  var from = document.querySelector('.page.active').id.replace('page-','');
-  profileFrom = from;
   var id = treeId || '625501-06-0001';
-  document.getElementById('profile-id-label').textContent = id;
-  goTo('profile');
+  var active = document.querySelector('.page.active');
+  var current_hub = active ? active.id.replace('page-','') : 'admin-dash';
+  var parent = encodeURIComponent('admin.html?hub=' + current_hub);
+  try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch (e) {}
+  var userid = '';
+  try {
+    var login = storage.get('login') || window._login || {};
+    var role = (login['tree-login'] && login['tree-login']['admin']) || {};
+    userid = role.userId || new URLSearchParams(location.search).get('userid') || '';
+  } catch (e) {}
+  var userid_param = userid ? '&userid=' + encodeURIComponent(userid) : '';
+  var flang = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
+  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent + '&flang=' + encodeURIComponent(flang) + userid_param;
 }
-
-
-// Open the map pinned to a tree by its ID (from a card)
-
-function openTreeMapById(id) {
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (hasTreeGis(tree)) {
-    showTreeDetailsInMap(tree);
-  } else {
-    alert('Location not available for this tree.');
-  }
-}
-
-
-
-function profileBack() { goTo(profileFrom); }
 
 
 // Open the map pinned to the tree currently shown in the profile
 
-function openTreeMap() {
-  var id = document.getElementById('profile-id-label').textContent;
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (hasTreeGis(tree)) {
-    showTreeDetailsInMap(tree);
-  } else {
-    alert('Location not available for this tree.');
-  }
-}
-
-
-// Opening the map as a fullscreen in-app modal
-
-function showMap(coordsParam) {
-  document.getElementById('map-frame').src = 'map.html?coords=' + encodeURIComponent(coordsParam);
-  document.getElementById('map-modal').classList.add('open');
-}
-
-
-
-function closeMapModal() {
-  document.getElementById('map-modal').classList.remove('open');
-  document.getElementById('map-frame').src = '';
-}
-
-
 // Album
-
-function openAlbum(i) {
-  var log = logs[i];
-  if (!log.photos.length) return;
-  albumFrom = document.querySelector('.page.active').id.replace('page-','');
-  document.getElementById('album-title').textContent = 'Log · ' + log.date;
-  document.getElementById('album-date').textContent = log.date;
-  document.getElementById('album-h').textContent = log.height;
-  document.getElementById('album-d').textContent = log.diam;
-  document.getElementById('album-c').textContent = log.photos.length + ' photo' + (log.photos.length > 1 ? 's' : '');
-  document.getElementById('album-note').textContent = log.note;
-  var grid = document.getElementById('album-grid-page');
-  grid.innerHTML = '';
-  log.photos.forEach(function(p){
-    var div = document.createElement('div');
-    div.className = 'album-photo' + (p.main ? ' album-photo-main' : '');
-    div.style.background = p.bg;
-    div.innerHTML = '<div style="font-size:'+(p.main?'38px':'26px')+'">' + p.emoji + '</div><div class="photo-label">'+p.label+'</div><div class="photo-time">'+p.time+'</div>';
-    grid.appendChild(div);
-  });
-  goTo('album');
-}
-
 
 // Helper: location read from address ("School, pincode, Tamil Nadu" -> "School")
 
@@ -424,12 +338,6 @@ function renderAlbum(place, tree) {
         return '<span class="album-chip chip-click" onclick="filterByTree(\'' + k + '\')">' + k + ' <b>– ' + groups[k] + '</b></span>';
       }).join('');
       summaryEl.innerHTML = chips;
-      var mapBtn = document.createElement('button');
-      mapBtn.type = 'button';
-      mapBtn.className = 'map-btn';
-      mapBtn.innerHTML = '<i class="ti ti-map-2"></i> Show in map';
-      mapBtn.onclick = openMap;
-      summaryEl.appendChild(mapBtn);
       summaryEl.style.display = window._summaryOpen === false ? 'none' : 'flex';
     } else {
       summaryEl.style.display = 'none';
@@ -454,7 +362,7 @@ function renderAlbum(place, tree) {
     var photo = document.createElement('div');
     photo.className = 'tree-photo';
     photo.style.background = t.bg;
-    photo.innerHTML = '<button class="card-pin-btn" type="button" title="Show in map" onclick="event.stopPropagation();openTreeMapById(\'' + t.treeId + '\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-emoji">' + t.emoji + '</div><div class="tree-location">' + treeLoc(t) + '</div>';
+    photo.innerHTML = '<div class="tree-emoji">' + t.emoji + '</div><div class="tree-location">' + treeLoc(t) + '</div>';
     
     var info = document.createElement('div');
     info.className = 'tree-info';
@@ -527,23 +435,6 @@ function clearInput(id) {
   var btn = el.parentNode.querySelector('.clear-btn');
   if (btn) btn.disabled = true;
   applyFilters();
-}
-
-
-// Spread the current result set over Google Maps (one pin per tree)
-
-function openMap() {
-  var trees = window._mapTrees || albumData;
-  var coords = trees.filter(function(t){
-    return hasTreeGis(t);
-  }).map(function(t){
-    return treeMapCoords(t);
-  });
-  if (coords.length > 0) {
-    showMap(coords.join('|'));
-  } else {
-    alert('No tree locations found to show on the map.');
-  }
 }
 
 
@@ -639,7 +530,7 @@ function adminRenderAlbum(pincode, place, searchId) {
     var photo = document.createElement('div');
     photo.className = 'tree-photo';
     photo.style.background = t.bg;
-    photo.innerHTML = '<div class="tree-emoji">' + t.emoji + '</div><div class="tree-location">' + treeLoc(t) + '</div>';
+    photo.innerHTML = '<div class="tree-emoji">' + t.emoji + '</div><div class="tree-location"><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([\'' + t.id + '\'])"><i class="ti ti-map-pin"></i></button><span>' + treeLoc(t) + '</span></div>';
     var info = document.createElement('div');
     info.className = 'tree-info';
     info.innerHTML =

@@ -34,7 +34,7 @@
   .lang-popup-back.open { display: flex; }
   .lang-popup-card { width: 86%; max-height: 78%; background: var(--color-background-primary); border-radius: var(--border-radius-lg); padding: 12px; display: flex; flex-direction: column; }
   .lang-popup-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-shrink: 0; }
-  #lang-popup .lang-grid { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .lang-popup-back .lang-grid { overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .topbar-title { font-size: 1rem; font-weight: 500; color: var(--color-text-primary); }
   .back-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--color-text-primary); border: none; flex-shrink: 0; }
   .lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }

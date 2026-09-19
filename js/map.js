@@ -13,7 +13,7 @@
       frame.src = 'map.html?ids=' + encodeURIComponent(param);
       modal.classList.add('open');
     } else {
-      window.location.href = 'map.html?ids=' + encodeURIComponent(param);
+      window.location.href = 'map.html?ids=' + encodeURIComponent(param) + '&parent=' + encodeURIComponent(window.location.href);
     }
   }
 
@@ -225,4 +225,23 @@
       '</div>';
   }
 
+  function showStandaloneBack() {
+    var head = document.getElementById('map-back-head');
+    if (!head) { return; }
+    var is_iframe = (window.self !== window.top);
+    head.style.display = is_iframe ? 'none' : 'flex';
+  }
+
+  function mapBack() {
+    goBackToParent('map.html');
+  }
+
+  function closeMapModal() {
+    var modal = document.getElementById('map-modal');
+    var frame = document.getElementById('map-frame');
+    if (modal) { modal.classList.remove('open'); }
+    if (frame) { frame.src = ''; }
+  }
+
+  showStandaloneBack();
   if (document.getElementById('map')) { initMap(); }

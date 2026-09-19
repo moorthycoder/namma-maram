@@ -339,7 +339,7 @@ function addToComplaint() {
     "complaint.html?treeId=" +
     encodeURIComponent(profileTreeId) +
     "&parent=" +
-    encodeURIComponent("tree-profile.html" + location.search);
+    encodeURIComponent("individual-tree-profile.html" + location.search);
   if (userid_q) url += "&userid=" + encodeURIComponent(userid_q);
   window.location.href = url;
 }

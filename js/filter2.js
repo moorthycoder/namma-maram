@@ -335,7 +335,7 @@ function openTreeProfile(treeId) {
   qp.set('place', place); qp.set('tree', tree);
   var parent_url = encodeURIComponent('filter.html?' + qp.toString());
   var flang = 'flang=' + encodeURIComponent(filterLang);
-  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(treeId) + '&from=filter&parent=' + parent_url + '&' + flang;
+  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(treeId) + '&from=filter&parent=' + parent_url + '&' + flang;
 }
 
 function populatePlaceSuggestions() {

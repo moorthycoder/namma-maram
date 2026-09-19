@@ -1,8 +1,5 @@
 
 var TESTING_MODE = true;
-var profileFrom = 'care-giver-dash';
-var albumFrom = 'profile';
-var treeLogsFrom = 'trees';
 var caregiveredCount = 0;
 var caredCount = 4;
 var logoutTarget = 'care-giver-login';
@@ -220,30 +217,6 @@ function toggleNotif(btn) {
 // Tree data for album — read from storage
 var albumData = [];
 
-var logs = [];
-function loadLogsFromRam() {
-  var ram_data = window.__TREE_DATA || storage.get('treeCards') || [];
-  var target_id = (ram_data[0] && ram_data[0].treeId) || '';
-  var target_tree = null;
-  for (var i = 0; i < ram_data.length; i++) { if (ram_data[i].treeId === target_id) { target_tree = ram_data[i]; break; } }
-  if (!target_tree && ram_data.length) target_tree = ram_data[0];
-  if (!target_tree) { logs = []; return; }
-  var enc = target_tree['encounters-list'] || {};
-  var keys = Object.keys(enc);
-  logs = keys.map(function(k){
-    var e = enc[k] || {};
-    var hs = e['health-status'] || {};
-    var photos = (e.photos && e.photos.snapshots) || [];
-    return {
-      date: e.registeredDate || e.updatedDate || k,
-      height: hs.height || '—',
-      diam: hs.diameter || '—',
-      note: (e.fieldObservation && e.fieldObservation.notes) || '',
-      photos: photos.map(function(p, idx){ return {bg:'linear-gradient(135deg,#2d5a1b,#4a7c2f)', emoji: target_tree.emoji || '🌳', label:'Photo '+(idx+1), time: e.registeredDate || '', main: idx===0}; })
-    };
-  });
-}
-
 
 
 // Close dropdown on outside click
@@ -287,15 +260,6 @@ function toggleSLogoutDrop() {
 // Navigation
 
 function goTo(page) {
-  if (page === 'tree-logs') {
-    var activePage = document.querySelector('.page.active');
-    if (activePage) {
-      var fromPage = activePage.id.replace('page-', '');
-      if (fromPage !== 'album' && fromPage !== 'profile') {
-        treeLogsFrom = fromPage;
-      }
-    }
-  }
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.getElementById('page-'+page).classList.add('active');
   var sb = document.getElementById('sbar');
@@ -309,11 +273,6 @@ function goTo(page) {
 
 
 
-function treeLogsBack() {
-  goTo(treeLogsFrom);
-}
-
-
 // Password toggle
 
 function togglePw(id, btn) {
@@ -323,7 +282,7 @@ function togglePw(id, btn) {
 }
 
 
-// Open profile — clone sponsor: navigate to tree-profile.html with treeId
+// Open profile — clone sponsor: navigate to individual-tree-profile.html with treeId
 
 function openProfile(treeId) {
   var id = treeId || '625501-06-0001';
@@ -339,7 +298,7 @@ function openProfile(treeId) {
   } catch (e) {}
   var user_param = user_id ? '&userid=' + encodeURIComponent(user_id) : '';
   var flang_val = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
-  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent_url + '&flang=' + encodeURIComponent(flang_val) + user_param;
+  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent_url + '&flang=' + encodeURIComponent(flang_val) + user_param;
 }
 
 
@@ -355,90 +314,6 @@ function openTreeMapById(id) {
   } else {
     alert('Location not available for this tree.');
   }
-}
-
-
-
-function profileBack() { goTo(profileFrom); }
-
-
-// Open the map pinned to the tree currently shown in the profile
-
-function openTreeMap() {
-  var id = document.getElementById('profile-id-label').textContent;
-  var tree = null;
-  for (var i = 0; i < albumData.length; i++) {
-    if (albumData[i].treeId === id) { tree = albumData[i]; break; }
-  }
-  if (hasTreeGis(tree)) {
-    showInMap([id]);
-  } else {
-    alert('Location not available for this tree.');
-  }
-}
-
-
-function closeMapModal() {
-  document.getElementById('map-modal').classList.remove('open');
-  document.getElementById('map-frame').src = '';
-}
-
-function openTreeLogs(treeId) {
-  var data = window.__TREE_DATA || storage.get('treeCards') || [];
-  var tree = null;
-  for (var i = 0; i < data.length; i++) { if (data[i].treeId === treeId) { tree = data[i]; break; } }
-  if (!tree) return;
-  var title_el = document.getElementById('tree-logs-title');
-  if (title_el) title_el.textContent = (caregiverCardName(tree) || treeId) + ' — Logs';
-  var list_el = document.getElementById('tree-logs-list');
-  if (list_el) {
-    var enc = tree['encounters-list'] || {};
-    var keys = Object.keys(enc);
-    var dots = ['#3B6D11','#9FE1CB','#C0DD97'];
-    var html = '';
-    for (var idx = keys.length - 1; idx >= 0; idx--) {
-      var k = keys[idx];
-      var e = enc[k] || {};
-      var hs = e['health-status'] || {};
-      var note_val = e.notes || (e.fieldObservation && e.fieldObservation.notes) || '';
-      var rec_val = e.recommendations || (e.fieldObservation && e.fieldObservation.recommendations) || '';
-      var c = tree.card || {};
-      html += '<div class="log-tracker-entry" onclick="openAlbumForTree(\'' + treeId + '\', ' + idx + ')"><div class="log-dot" style="background:' + dots[idx % 3] + ';margin-top:4px;flex-shrink:0;width:7px;height:7px;border-radius:50%;"></div><div><div class="log-header"><span>#' + k + '</span><span>' + (e.registeredDate || e.updatedDate || k) + '</span></div><div class="log-text">Height ' + formatLength(hs.height||c.height,'height') + ' · Diameter ' + formatLength(hs.diameter||c.diameter,'diameter') + '</div><div class="log-text"><span style="color:#dc2626">Note:</span> ' + (note_val || '—') + '</div><div class="log-text"><span style="color:#dc2626">Recommendation:</span> ' + (rec_val || '—') + '</div>' + (e.photos && e.photos.snapshots && e.photos.snapshots.length ? '<div class="log-text"><span class="chip-blue"><i class="ti ti-photo" style="font-size:0.6667rem"></i>' + e.photos.snapshots.length + ' photos</span></div>' : '<div class="log-text">No photos</div>') + '</div></div>';
-    }
-    list_el.innerHTML = html || '<div style="font-size:0.8rem;color:var(--color-text-secondary);text-align:center;padding:20px;">No logs yet</div>';
-  }
-  loadLogsFromRam();
-  goTo('tree-logs');
-}
-function openAlbumForTree(treeId, logIdx) {
-  loadLogsFromRam();
-  openAlbum(logIdx);
-}
-
-
-// Album
-
-function openAlbum(i) {
-  if (!logs.length) loadLogsFromRam();
-  var log = logs[i];
-  if (!log.photos.length) return;
-  albumFrom = document.querySelector('.page.active').id.replace('page-','');
-  document.getElementById('album-title').textContent = 'Log · ' + log.date;
-  document.getElementById('album-date').textContent = log.date;
-  document.getElementById('album-h').textContent = log.height;
-  document.getElementById('album-d').textContent = log.diam;
-  document.getElementById('album-c').textContent = log.photos.length + ' photo' + (log.photos.length > 1 ? 's' : '');
-  document.getElementById('album-note').textContent = log.note;
-  var grid = document.getElementById('album-grid-page');
-  grid.innerHTML = '';
-  log.photos.forEach(function(p){
-    var div = document.createElement('div');
-    div.className = 'album-photo' + (p.main ? ' album-photo-main' : '');
-    div.style.background = p.bg;
-    div.innerHTML = '<div style="font-size:'+(p.main?'38px':'26px')+'">' + p.emoji + '</div><div class="photo-label">'+p.label+'</div><div class="photo-time">'+p.time+'</div>';
-    grid.appendChild(div);
-  });
-  goTo('album');
 }
 
 
@@ -501,7 +376,7 @@ function appendCaregiverWaitingCard(form) {
   var card = document.createElement('div');
   card.className = 'tree-card-caregiver';
   var height_display = height === '—' ? '—' : String(height).replace(/\s*m$/, '') + 'm';
-  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;position:relative;" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(\'tree-logs\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button></div>';
+  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;position:relative;" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div></div></div>';
   cardsEl.appendChild(card);
   console.log('[caregiver] appendCaregiverWaitingCard added card', id, 'now count', cardsEl.querySelectorAll('.tree-card-caregiver').length);
   setStatById('c-care-waiting', cardsEl.querySelectorAll('.tree-card-caregiver').length);
@@ -643,57 +518,46 @@ function caregiverBaseData(t) {
 }
 function caregiverCurrentCardHtml(t) {
   var d = caregiverBaseData(t);
-  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
   return '<div class="tree-card-caregiver caregiver-current-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
     '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + d.t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
     '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' + '</div>';
 }
 function caregiverSurveyCurrentCardHtml(t) {
   var d = caregiverBaseData(t);
-  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
   return '<div class="tree-card-caregiver caregiver-survey-current-card" onclick="surveyDueTree(\'' + d.t.treeId + '\')">' +
     '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + d.t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
     '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' + '</div>';
 }
 function caregiverPastCardHtml(t) {
   var d = caregiverBaseData(t);
-  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
   return '<div class="tree-card-caregiver caregiver-past-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
     '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span></div>' +
     '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' + '</div>';
 }
 function caregiverSubmittedCardHtml(t) {
   var d = caregiverBaseData(t);
-  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
   return '<div class="tree-card-caregiver caregiver-submitted-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
     '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + d.t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
     '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-status"><div class="status-dot status-dot-warn"></div><div class="status-txt">Waiting approval</div></div><div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+    '<div class="tree-card-status"><div class="status-dot status-dot-warn"></div><div class="status-txt">Waiting approval</div></div></div>';
 }
 function caregiverDueCardHtml(t) {
   var d = caregiverBaseData(t);
-  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
   return '<div class="tree-card-caregiver caregiver-due-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
     '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Due: ' + d.due_display + '</span></div>' +
     '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' + '</div>';
 }
 function caregiverFinishedCardHtml(t) {
   var d = caregiverBaseData(t);
-  var view_logs_btn = '<button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();openTreeLogs(\'' + d.t.treeId + '\')" style="width:100%"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>';
   return '<div class="tree-card-caregiver caregiver-finished-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
     '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span></div>' +
     '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-btns">' + view_logs_btn + '</div></div>';
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' + '</div>';
 }
 function caregiverCardHtml(t) { return caregiverSubmittedCardHtml(t); }
 function removeCaregiverCard(remove_tree_id) {
@@ -1033,8 +897,7 @@ function treeCardHtml(t, cfg) {
   var btn2Type = (cfg.btn2 !== undefined) ? cfg.btn2 : (c.btn2 || null);
   var btn2 = '';
   if (btn2Type === 'profile') {
-    btn2 = cfg.btn2GoTo ? '<button class="tcbtn tcbtn-pay" onclick="goTo(' + q + 'profile' + q + ')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button>'
-                       : '<button class="tcbtn tcbtn-pay" onclick="openProfile(' + q + t.treeId + q + ')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button>';
+    btn2 = '<button class="tcbtn tcbtn-pay" onclick="openProfile(' + q + t.treeId + q + ')"><i class="ti ti-leaf" style="font-size:0.8667rem"></i> Tree profile</button>';
   }
   return '<div class="tree-card-caregiver tcard">' +
     '<div class="tcard-head"><div class="tcard-row"><span class="tcard-id">' + (t.emoji || c.emoji || '') + ' ' + t.treeId + '</span><button class="tcard-toggle" type="button" onclick="toggleTreeCard(this)"><i class="ti ti-chevron-down"></i></button></div>' +
@@ -1042,7 +905,7 @@ function treeCardHtml(t, cfg) {
     '<div class="tcard-collapse" style="display:none;"><div class="tcard-img" style="background:' + (t.bg || c.bg || '') + ';">' + (t.emoji || c.emoji || '') + '</div>' + latest +
     '<div class="tcard-stats"><div class="tcard-stat"><div class="tcard-stat-lbl">Height</div><div class="tcard-stat-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Diameter</div><div class="tcard-stat-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div><div class="tcard-stat"><div class="tcard-stat-lbl">Logs</div><div class="tcard-stat-val">' + (keys.length || c.logs || 0) + '</div></div></div>' +
     '<div class="tcard-status"><div class="status-dot" style="background:' + (c.statusDot || '#4ade80') + '"></div><div class="status-txt">' + status + '</div></div>' + todo +
-    '<div class="tcard-btns"><button class="tcbtn tcbtn-logs" onclick="goTo(' + q + 'tree-logs' + q + ')"><i class="ti ti-list" style="font-size:0.8667rem"></i> View logs</button>' + btn2 + '</div></div></div>';
+    '<div class="tcard-btns">' + btn2 + '</div></div></div>';
 }
 function renderRoleCards(target, role, cfg) {
   var el = document.getElementById(target);

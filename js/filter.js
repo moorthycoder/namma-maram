@@ -91,7 +91,7 @@ function openProfile(treeId) {
   var flangParam = 'flang=' + encodeURIComponent(filterLang);
   var userid_q = new URLSearchParams(location.search).get('userid') || new URLSearchParams(location.search).get('role');
   var userid_param = userid_q ? '&userid=' + encodeURIComponent(userid_q) : '';
-  window.location.href = 'tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter&parent=' + parentUrl + '&' + flangParam + userid_param;
+  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(id) + '&from=filter&parent=' + parentUrl + '&' + flangParam + userid_param;
 }
 
 function closeMapModal() {
