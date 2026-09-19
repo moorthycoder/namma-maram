@@ -167,8 +167,9 @@ function profileCardPanelCardHtml(card, lang_key) {
   '</div>';
 }
 
-function summaryPanelCardHtml(species_name, count, search_value) {
-  return '<span class="album-chip chip-click" data-tree-name="' + String(search_value || species_name).replace(/"/g, '&quot;') + '">' + species_name + ' <b>– ' + count + '</b></span>';
+function summaryPanelCardHtml(species_name, count, search_value, scientific_name) {
+  return '<span class="chip-big"><span class="album-chip chip-click" title="Filter by species" data-tree-name="' + String(search_value || species_name).replace(/"/g, '&quot;') + '">' + species_name + ' <b>– ' + count + '</b></span>' +
+    '<button type="button" class="album-chip-w" title="Open in Wikipedia" onclick="event.stopPropagation();openSpeciesInWikipedia(\'' + String(scientific_name || '').replace(/'/g, "\\'") + '\')">W</button></span>';
 }
 
 function openMap(tree_ids) {
@@ -182,6 +183,7 @@ function loadSummaryPanel(tree_ids) {
   var lang_key = (typeof filterLang !== 'undefined' && filterLang) || (typeof appLang !== 'undefined' && appLang) || 'en';
   var groups = {};
   var search_names = {};
+  var sci_names = {};
   var total = 0;
   (tree_ids || []).forEach(function (id) {
     var c = storage.pullTreeDetail(id);
@@ -195,7 +197,7 @@ function loadSummaryPanel(tree_ids) {
 var n = names[lang_key] || names.en || [];
       if (Array.isArray(n) && n.length) { name = n.join(', '); var first_name = n[0]; break; }
     }
-    if (!groups[name]) { groups[name] = 0; search_names[name] = first_name || name; }
+    if (!groups[name]) { groups[name] = 0; search_names[name] = first_name || name; sci_names[name] = sci; }
     groups[name]++;
   });
   if (total === 0) {
@@ -207,7 +209,7 @@ var n = names[lang_key] || names.en || [];
   var keys = Object.keys(groups).sort(function (a, b) {
     try { return a.localeCompare(b, lang_key, { sensitivity: 'base' }); } catch (e) { return a.localeCompare(b); }
   });
-  summaryEl.innerHTML = keys.map(function (k) { return summaryPanelCardHtml(k, groups[k], search_names[k]); }).join('');
+  summaryEl.innerHTML = keys.map(function (k) { return summaryPanelCardHtml(k, groups[k], search_names[k], sci_names[k]); }).join('');
   summaryEl.querySelectorAll('.chip-click').forEach(function (chip) {
     chip.onclick = function () { filterByTree(chip.getAttribute('data-tree-name')); };
   });

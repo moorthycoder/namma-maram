@@ -477,6 +477,34 @@ body {
   font-weight: 600;
 }
 
+.chip-big {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  background: transparent;
+}
+
+.album-chip-w {
+  flex-shrink: 0;
+  margin-left: 0;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(192, 221, 151, 0.8);
+  background: #ffffff;
+  color: #1e3d0f;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-chip-w:hover {
+  background: var(--color-theme-light);
+}
+
 .chip-click {
   cursor: pointer;
 }
