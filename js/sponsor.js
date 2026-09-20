@@ -400,11 +400,28 @@ function goTo(page) {
 
 
 
+function restoreHubScrollPosition(scroll_value) {
+  if (!scroll_value) return;
+  try { sessionStorage.removeItem('hubScrollTop'); } catch (e) {}
+  var active_page = document.querySelector('.page.active');
+  var scroll_el = active_page ? active_page.querySelector('.scrollable') : null;
+  if (scroll_el) {
+    var target_scroll = parseInt(scroll_value, 10) || 0;
+    scroll_el.scrollTop = target_scroll;
+    requestAnimationFrame(function () {
+      scroll_el.scrollTop = target_scroll;
+    });
+  }
+}
+
 function openProfile(treeId) {
   var id = treeId || '625501-06-0001';
   var active = document.querySelector('.page.active');
+  var scroll_el = active ? active.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
   var current_hub = active ? active.id.replace('page-','') : 'sponsor-dash';
-  var parent = encodeURIComponent('sponsor.html?hub=' + current_hub);
+  var parent = encodeURIComponent('sponsor.html?hub=' + current_hub + '&scroll=' + scroll_pos);
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch(e) {}
   var userid = '';
   try {
@@ -726,18 +743,31 @@ window.render = {
   init: function () {
     if (hubMode === 'login') { return; }
     if (!loginCheckSponsor()) return;
-    var sponsorId_param = new URLSearchParams(location.search).get('userid') || '';
+    var qp = new URLSearchParams(location.search);
+    var saved_scroll = qp.get('scroll');
+    if (!saved_scroll) {
+      try { saved_scroll = sessionStorage.getItem('hubScrollTop'); } catch (e) {}
+    }
+    var sponsorId_param = qp.get('userid') || '';
     var had_pending = false;
     if (hubMode === 'sponsor-dash' || hubMode === 'sponsor-waiting-submitted' || hubMode === 'sponsor-next-due') { had_pending = consumePendingSponsorRequest(); }
     var result = loadDashboard();
-    if (had_pending) { openSponsorWaitingSubmittedRequests(); return; }
+    if (had_pending) { openSponsorWaitingSubmittedRequests(); restoreHubScrollPosition(saved_scroll); return; }
     if (hubMode === 'sponsor-waiting-submitted') { openSponsorWaitingSubmittedRequests(); }
     if (hubMode === 'sponsor-next-due') {
       var single = null; try { single = sessionStorage.getItem('sponsorNextDueSingle'); } catch (e) {}
       if (single && renderSponsorNextDueSingleCard(single)) { goTo('sponsor-next-due'); } else { openSponsorNextDue(); }
     }
+    restoreHubScrollPosition(saved_scroll);
   }
 };
+
+window.addEventListener('pageshow', function () {
+  try {
+    var saved_scroll = sessionStorage.getItem('hubScrollTop');
+    if (saved_scroll) restoreHubScrollPosition(saved_scroll);
+  } catch (e) {}
+});
 function openTreePool() {
   var login = storage.get('login') || window._login || {};
   var role = (login['tree-login'] && login['tree-login']['sponsor']) || (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
