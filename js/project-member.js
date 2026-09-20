@@ -284,17 +284,34 @@ function togglePw(id, btn) {
 
 // Open profile — clone sponsor: navigate to individual-tree-profile.html with treeId
 
+function restoreHubScrollPosition(scroll_value) {
+  if (!scroll_value) return;
+  try { sessionStorage.removeItem('hubScrollTop'); } catch (e) {}
+  var active_page = document.querySelector('.page.active');
+  var scroll_el = active_page ? active_page.querySelector('.scrollable') : null;
+  if (scroll_el) {
+    var target_scroll = parseInt(scroll_value, 10) || 0;
+    scroll_el.scrollTop = target_scroll;
+    requestAnimationFrame(function () {
+      scroll_el.scrollTop = target_scroll;
+    });
+  }
+}
+
 function openProfile(treeId) {
-  var id = treeId || '625501-06-0001';
+  var id = treeId ? treeId : '625501-06-0001';
   var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
   var current_hub = active_el ? active_el.id.replace('page-','') : 'project-member-dash';
-  var parent_url = encodeURIComponent('project-member.html?hub=' + current_hub);
+  var parent_url = encodeURIComponent('project-member.html?hub=' + current_hub + '&scroll=' + scroll_pos);
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent_url)); } catch (e) {}
   var user_id = '';
   try {
     var login_data = storage.get('login') || window._login || {};
-    var projectMember_role = (login_data['tree-login'] && login_data['tree-login']['project-member']) || {};
-    user_id = projectMember_role.userId || new URLSearchParams(location.search).get('userid') || '';
+    var project_member_role = (login_data['tree-login'] && login_data['tree-login']['project-member']) || {};
+    user_id = project_member_role.userId || new URLSearchParams(location.search).get('userid') || '';
   } catch (e) {}
   var user_param = user_id ? '&userid=' + encodeURIComponent(user_id) : '';
   var flang_val = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
@@ -376,7 +393,7 @@ function appendProjectMemberWaitingCard(form) {
   var card = document.createElement('div');
   card.className = 'tree-card-projectMember';
   var height_display = height === '—' ? '—' : String(height).replace(/\s*m$/, '') + 'm';
-  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;position:relative;" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div><div class="tree-card-status"><div class="status-dot" style="background:#f59e0b"></div><div class="status-txt">Waiting approval</div></div></div></div>';
+  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+';cursor:pointer;position:relative;" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();openTreeMapById(\''+id+'\')"><i class="ti ti-map-pin" style="font-size:0.8rem"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin" style="font-size:0.6rem"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div></div>';
   cardsEl.appendChild(card);
   console.log('[project-member] appendProjectMemberWaitingCard added card', id, 'now count', cardsEl.querySelectorAll('.tree-card-projectMember').length);
   setStatById('c-care-waiting', cardsEl.querySelectorAll('.tree-card-projectMember').length);
@@ -542,8 +559,7 @@ function projectMemberSubmittedCardHtml(t) {
   return '<div class="tree-card-projectMember project-member-submitted-card" onclick="openProfile(\'' + d.t.treeId + '\')">' +
     '<div class="tcard-added-at"><span><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + d.t.addedAt + '</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\'' + d.t.treeId + '\')"><i class="ti ti-trash"></i></button></div>' +
     '<div class="tree-card-hero" style="background:' + (d.t.bg || d.c.bg || '') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (d.t.emoji || d.c.emoji || '') + ' ' + d.name_txt + ' <span class="tcard-id">' + d.t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + d.t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
-    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' +
-    '<div class="tree-card-status"><div class="status-dot status-dot-warn"></div><div class="status-txt">Waiting approval</div></div></div>';
+    '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Status</div><div class="tcs-val">' + (d.status || d.st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (d.st.height || d.c.height || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (d.st.diameter || d.c.diameter || '—') + '</div></div></div></div>' + '</div>';
 }
 function projectMemberDueCardHtml(t) {
   var d = projectMemberBaseData(t);
@@ -867,20 +883,35 @@ window.render = {
   init: function () {
     if (hubMode === 'login') { return; }
     if (!loginCheckProjectMember()) return;
+    var qp = new URLSearchParams(location.search);
+    var saved_scroll = qp.get('scroll');
+    if (!saved_scroll) {
+      try { saved_scroll = sessionStorage.getItem('hubScrollTop'); } catch (e) {}
+    }
     var had_pending = false;
     if (hubMode === 'project-member-dash' || hubMode === 'project-member-waiting') { had_pending = consumePendingProjectMemberRequest(); }
     loadDashboard();
     var role = (window._login && window._login['tree-login'] && window._login['tree-login']['project-member']) || {};
     var cards = role.cards || {};
-    if (had_pending) { openProjectMemberWaitingRequests(); return; }
+    if (had_pending) { openProjectMemberWaitingRequests(); restoreHubScrollPosition(saved_scroll); return; }
     if (hubMode === 'project-member-waiting') { openProjectMemberWaitingRequests(); }
     if (hubMode === 'project-member-seeing') { checkNewProjectMemberTrees(); }
     if (hubMode === 'project-member-checks-due') {
       var single = null; try { single = sessionStorage.getItem('projectMemberNextDueSingle'); } catch (e) {}
       if (single && renderProjectMemberNextDueSingleCard(single)) { goTo('project-member-checks-due'); }
     }
+    if (hubMode === 'project-member-logs-approved') { goTo('project-member-logs-approved'); renderProjectMemberLogs('approved'); }
+    if (hubMode === 'project-member-logs-submitted') { goTo('project-member-logs-submitted'); renderProjectMemberLogs('submitted'); }
+    restoreHubScrollPosition(saved_scroll);
   }
 };
+
+window.addEventListener('pageshow', function () {
+  try {
+    var saved_scroll = sessionStorage.getItem('hubScrollTop');
+    if (saved_scroll) restoreHubScrollPosition(saved_scroll);
+  } catch (e) {}
+});
 function treeCardHtml(t, cfg) {
   var q = String.fromCharCode(39);
   cfg = cfg || {};
@@ -920,19 +951,24 @@ function openTreePool() {
   var role = (login['tree-login'] && login['tree-login']['project-member']) || (window._login && window._login['tree-login'] && window._login['tree-login']['project-member']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['project-member']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var cards = role.cards || {};
-  var projectMember_waiting = []; try { projectMember_waiting = JSON.parse(sessionStorage.getItem('projectMemberWaiting') || '[]'); } catch (e) {}
+  var project_member_waiting = []; try { project_member_waiting = JSON.parse(sessionStorage.getItem('projectMemberWaiting') || '[]'); } catch (e) {}
   var exclude = [].concat(
     (cards.current || []).map(function(c){ return c.treeId; }),
     (cards.past || []).map(function(c){ return c.treeId; }),
     (cards.waiting || []).map(function(c){ return c.treeId; }),
-    projectMember_waiting
+    project_member_waiting
   ).join(',');
-  var parent = encodeURIComponent('project-member.html?hub=project-member-dash');
-  var userid = role.userId || '';
-  var url = 'filter.html?userid=' + encodeURIComponent(userid) + '&parent=' + parent + '&exclude=' + encodeURIComponent(exclude);
-  sessionStorage.setItem('gobackFromTreeProfile', url);
-  console.log('[project-member] openTreePool ->', url);
-  window.location.href = url;
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'project-member-dash';
+  var parent_url = encodeURIComponent('project-member.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var user_id = role.userId ? role.userId : '';
+  var target_url = 'filter.html?userid=' + encodeURIComponent(user_id) + '&parent=' + parent_url + '&exclude=' + encodeURIComponent(exclude);
+  sessionStorage.setItem('gobackFromTreeProfile', target_url);
+  console.log('[project-member] openTreePool ->', target_url);
+  window.location.href = target_url;
 }
 function openSurveyATreePage() {
   var login = storage.get('login') || window._login || {};
@@ -948,11 +984,14 @@ function surveyDueTree(treeId) {
   var role = (login['tree-login'] && login['tree-login']['project-member']) || (window._login && window._login['tree-login'] && window._login['tree-login']['project-member']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['project-member']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
   var current_hub = active_el ? active_el.id.replace('page-','') : 'project-member-dash';
-  var parent = encodeURIComponent('project-member.html?hub=' + current_hub);
-  var userid = role.userId || '';
-  var url = 'survey-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(userid) + '&treeid=' + encodeURIComponent(treeId);
-  window.location.href = url;
+  var parent_url = encodeURIComponent('project-member.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var user_id = role.userId ? role.userId : '';
+  var target_url = 'survey-a-tree.html?parent=' + parent_url + '&userid=' + encodeURIComponent(user_id) + '&treeid=' + encodeURIComponent(treeId);
+  window.location.href = target_url;
 }
 function openRegisterATreePage() {
   var login = storage.get('login') || window._login || {};
@@ -1011,9 +1050,14 @@ function renderProjectMemberLogs(logType, status) {
 }
 
 function openProjectMemberReviewPage(treeId, loggedAt) {
-  var parent = encodeURIComponent('project-member.html?hub=project-member-dash');
-  try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('project-member.html?hub=' + active.id.replace('page-','')); } catch (e) {}
-  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'project-member-dash';
+  var parent_url = encodeURIComponent('project-member.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var log_date = loggedAt ? loggedAt : '';
+  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(log_date) + '&parent=' + parent_url;
 }
 
 
