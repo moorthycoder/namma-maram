@@ -171,6 +171,15 @@ function goBackToProjectLeaderStats() {
   switchProjectLeaderPanel('stat');
 }
 
+function goBackFromProjectTrees() {
+  var parent_url = new URLSearchParams(location.search).get('parent');
+  if (parent_url) {
+    window.location.href = parent_url;
+    return;
+  }
+  openProjectLeaderProjectName('approved');
+}
+
 function openRegisterATreePage() {
   var login_data = storage.get('login') || window._login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
@@ -293,7 +302,12 @@ function requestTreeForSurvey() {
     project_leader_waiting
   ).filter(Boolean);
   var exclude_param = exclude_list.join(',');
-  var parent_param = encodeURIComponent('project-leader.html?hub=project-leader-dash');
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'project-leader-dash';
+  var parent_param = encodeURIComponent('project-leader.html?hub=' + current_hub + '&scroll=' + scroll_pos);
   var user_id = project_leader_role.userId || '';
   var target_url = 'filter.html?userid=' + encodeURIComponent(user_id) + '&parent=' + parent_param + '&exclude=' + encodeURIComponent(exclude_param);
   try { sessionStorage.setItem('gobackFromTreeProfile', target_url); } catch (e) {}
@@ -469,21 +483,44 @@ function searchTree() {
 
 // Open profile
 
+function restoreHubScrollPosition(scroll_value) {
+  if (!scroll_value) return;
+  try { sessionStorage.removeItem('hubScrollTop'); } catch (e) {}
+  var target_scroll = parseInt(scroll_value, 10) || 0;
+  var apply_scroll = function () {
+    var active_page = document.querySelector('.page.active');
+    var scroll_el = active_page ? active_page.querySelector('.scrollable') : null;
+    if (scroll_el) {
+      scroll_el.scrollTop = target_scroll;
+    }
+  };
+  apply_scroll();
+  requestAnimationFrame(apply_scroll);
+  setTimeout(apply_scroll, 60);
+}
+
 function openProfile(treeId) {
-  var id = treeId || '625501-06-0001';
-  var active = document.querySelector('.page.active');
-  var current_hub = active ? active.id.replace('page-','') : 'project-leader-dash';
-  var parent = encodeURIComponent('project-leader.html?hub=' + current_hub);
-  try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch (e) {}
-  var userid = '';
+  var id = treeId ? treeId : '625501-06-0001';
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'project-leader-dash';
+  var pid = sessionStorage.getItem('projectLeaderProjectTreesPid') || new URLSearchParams(location.search).get('projectId') || '';
+  var pid_param = (current_hub === 'project-leader-project-trees' && pid) ? '&projectId=' + encodeURIComponent(pid) : '';
+  var orig_parent = new URLSearchParams(location.search).get('parent') || '';
+  var orig_parent_param = (current_hub === 'project-leader-project-trees' && orig_parent) ? '&parent=' + encodeURIComponent(orig_parent) : '';
+  var parent_url = encodeURIComponent('project-leader.html?hub=' + current_hub + '&scroll=' + scroll_pos + pid_param + orig_parent_param);
+  try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent_url)); } catch (e) {}
+  var user_id = '';
   try {
-    var login = storage.get('login') || window._login || {};
-    var role = (login['tree-login'] && login['tree-login']['project-leader']) || {};
-    userid = role.userId || new URLSearchParams(location.search).get('userid') || '';
+    var login_data = storage.get('login') || window._login || {};
+    var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
+    user_id = project_leader_role.userId || new URLSearchParams(location.search).get('userid') || '';
   } catch (e) {}
-  var userid_param = userid ? '&userid=' + encodeURIComponent(userid) : '';
+  var user_param = user_id ? '&userid=' + encodeURIComponent(user_id) : '';
   var flang = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
-  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent + '&flang=' + encodeURIComponent(flang) + userid_param;
+  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent_url + '&flang=' + encodeURIComponent(flang) + user_param;
 }
 
 
@@ -986,6 +1023,16 @@ function deleteProjectLeaderProjectName(project_id) {
   var modal_el = document.getElementById('delete-confirm-modal');
   if (modal_el) modal_el.classList.add('open');
 }
+function openProjectLeaderProjectTreesPage(projectId) {
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var parent_url = encodeURIComponent('project-leader.html?hub=project-leader-project-name-approved&scroll=' + scroll_pos);
+  try { sessionStorage.setItem('projectLeaderProjectTreesPid', projectId); } catch (e) {}
+  window.location.href = 'project-leader.html?hub=project-leader-project-trees&projectId=' + encodeURIComponent(projectId) + '&parent=' + parent_url;
+}
+
 function projectLeaderProjectNameCardHtml(entry, is_submitted) {
   var pid = entry.projectId || '—';
   var lang = (typeof getAppLang === 'function') ? getAppLang() : 'en';
@@ -1010,7 +1057,7 @@ function projectLeaderProjectNameCardHtml(entry, is_submitted) {
     '<div class="info-row"><span class="info-key"><i class="ti ti-calendar-minus field-icon-sm"></i>Ended at</span><span class="info-val">' + ended + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-check field-icon-sm"></i>Status</span><span class="info-val">' + (entry.status || '—') + '</span></div>' +
     '<div class="info-row"><span class="info-key"><i class="ti ti-user field-icon-sm"></i>By</span><span class="info-val">' + (entry.updatedBy || '—') + '</span></div>';
-  var view_btn = is_submitted ? '' : '<div style="padding:12px 13px 12px;border-top:0.5px solid var(--color-border-tertiary);"><button class="green-btn" type="button" style="margin:0;font-size:0.8rem;padding:9px 12px;" onclick="event.stopPropagation(); openProjectLeaderProjectTrees('+q+pid.replace(/\'/g,"\\'")+q+')"><i class="ti ti-tree" style="font-size:0.8667rem"></i> View trees</button></div>';
+  var view_btn = is_submitted ? '' : '<div style="padding:12px 13px 12px;border-top:0.5px solid var(--color-border-tertiary);"><button class="green-btn" type="button" style="margin:0;font-size:0.8rem;padding:9px 12px;" onclick="event.stopPropagation(); openProjectLeaderProjectTreesPage('+q+pid.replace(/\'/g,"\\'")+q+')"><i class="ti ti-tree" style="font-size:0.8667rem"></i> View trees</button></div>';
   return '<div class="info-card project-leader-card">' + header_html + body_html + view_btn + '</div>';
 }
 function openProjectLeaderProjectName(status) {
@@ -1270,8 +1317,12 @@ function deleteProjectLeaderLogRequest(tree_id) {
 }
 
 function openProjectLeaderReviewPage(treeId, loggedAt) {
-  var parent = encodeURIComponent('project-leader.html?hub=project-leader-dash');
-  try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('project-leader.html?hub=' + active.id.replace('page-','')); } catch (e) {}
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'project-leader-dash';
+  var parent = encodeURIComponent('project-leader.html?hub=' + current_hub + '&scroll=' + scroll_pos);
   window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
 }
 
@@ -1323,8 +1374,11 @@ function projectLeaderSurveyTree(treeId) {
   var role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['project-leader']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
   var current_hub = active_el ? active_el.id.replace('page-','') : 'project-leader-dash';
-  var parent = encodeURIComponent('project-leader.html?hub=' + current_hub);
+  var parent = encodeURIComponent('project-leader.html?hub=' + current_hub + '&scroll=' + scroll_pos);
   var userid = role.userId || '';
   window.location.href = 'survey-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(userid) + '&treeid=' + encodeURIComponent(treeId);
 }
@@ -1440,9 +1494,23 @@ function loadDashboard() {
 
 window.render = {
   init: function () {
-    return loadDashboard();
+    var qp = new URLSearchParams(location.search);
+    var saved_scroll = qp.get('scroll');
+    if (!saved_scroll) {
+      try { saved_scroll = sessionStorage.getItem('hubScrollTop'); } catch (e) {}
+    }
+    var result = loadDashboard();
+    restoreHubScrollPosition(saved_scroll);
+    return result;
   }
 };
+
+window.addEventListener('pageshow', function () {
+  try {
+    var saved_scroll = sessionStorage.getItem('hubScrollTop');
+    if (saved_scroll) restoreHubScrollPosition(saved_scroll);
+  } catch (e) {}
+});
 
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { window.location.href = 'login-hub.html?role=project-leader'; }
@@ -1522,8 +1590,10 @@ else if (hubMode === 'project-leader-project-name-submitted') {
 }
 else if (hubMode === 'project-leader-project-trees') {
   setTimeout(function() {
-    var pid = '';
-    try { pid = sessionStorage.getItem('projectLeaderProjectTreesPid') || ''; } catch (e) {}
+    var pid = new URLSearchParams(location.search).get('projectId') || '';
+    if (!pid) {
+      try { pid = sessionStorage.getItem('projectLeaderProjectTreesPid') || ''; } catch (e) {}
+    }
     if (pid && typeof openProjectLeaderProjectTrees === 'function') { openProjectLeaderProjectTrees(pid); }
     else { goTo('project-leader-project-trees'); }
   }, 50);
