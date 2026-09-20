@@ -331,13 +331,32 @@ function openPhotoModal(emoji, bg) { var e = document.getElementById('photo-moda
 function closePhotoModal() { var m = document.getElementById('photo-modal'); if (m) m.classList.remove('open'); }
 
 function openTreeProfile(treeId) {
+  var container = document.querySelector('.album-container');
+  var scroll_pos = container ? container.scrollTop : 0;
+  try { sessionStorage.setItem('filterScrollTop', String(scroll_pos)); } catch (e) {}
   var place = (document.getElementById('album-place') || {}).value || '';
   var tree = (document.getElementById('album-tree') || {}).value || '';
   var qp = new URLSearchParams(location.search);
-  qp.set('place', place); qp.set('tree', tree);
+  qp.set('place', place);
+  qp.set('tree', tree);
+  qp.set('scroll', String(scroll_pos));
   var parent_url = encodeURIComponent('filter.html?' + qp.toString());
+  try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent_url)); } catch (e) {}
   var flang = 'flang=' + encodeURIComponent(filterLang);
   window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(treeId) + '&from=filter&parent=' + parent_url + '&' + flang;
+}
+
+function restoreFilterScrollPosition(scroll_value) {
+  if (!scroll_value) return;
+  try { sessionStorage.removeItem('filterScrollTop'); } catch (e) {}
+  var container = document.querySelector('.album-container');
+  if (container) {
+    var target_scroll = parseInt(scroll_value, 10) || 0;
+    container.scrollTop = target_scroll;
+    requestAnimationFrame(function () {
+      container.scrollTop = target_scroll;
+    });
+  }
 }
 
 function populatePlaceSuggestions() {
@@ -451,7 +470,11 @@ window.render = {
     if (back_btn) { if (qp.get('parent')) back_btn.classList.remove('hidden'); else back_btn.classList.add('hidden'); }
     var place_el = document.getElementById('album-place');
     var tree_el = document.getElementById('album-tree');
-    if (qp.get('place') || qp.get('tree')) {
+    var saved_scroll = qp.get('scroll');
+    if (!saved_scroll) {
+      try { saved_scroll = sessionStorage.getItem('filterScrollTop'); } catch (e) {}
+    }
+    if (qp.get('place') || qp.get('tree') || qp.get('scroll')) {
       if (place_el) place_el.value = qp.get('place') || '';
       if (tree_el) tree_el.value = qp.get('tree') || '';
       history.replaceState(null, '', 'filter.html');
@@ -461,5 +484,13 @@ window.render = {
     populateTreeSuggestions();
     applyFilterPlaceholders();
     runSearch();
+    restoreFilterScrollPosition(saved_scroll);
   }
 };
+
+window.addEventListener('pageshow', function () {
+  try {
+    var saved_scroll = sessionStorage.getItem('filterScrollTop');
+    if (saved_scroll) restoreFilterScrollPosition(saved_scroll);
+  } catch (e) {}
+});
