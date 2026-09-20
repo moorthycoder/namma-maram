@@ -32,6 +32,12 @@ function renderProfile() {
   document.querySelector('.health-fill').style.width = (last_status['health-score'] || 0) + '%';
   document.getElementById('profile-health-score').textContent = (last_status['health-score'] || 0) + ' / 100';
   document.getElementById('profile-species').textContent = tree.scientificName;
+  var see_more = document.querySelector('.species-see-more');
+  if (see_more) {
+    see_more.onclick = function () {
+      openSpeciesInWikipedia(tree.scientificName);
+    };
+  }
   document.getElementById('profile-registered-by').textContent = first_enc.registeredBy;
   document.getElementById('profile-user-id').textContent = first_enc.registererId;
   document.getElementById('profile-registered-date').textContent = formatDate(first_enc.registeredDate);

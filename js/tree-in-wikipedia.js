@@ -8,14 +8,10 @@ function getWikipediaUrl(sn) {
   return 'https://en.wikipedia.org/wiki/' + title;
 }
 
-function openMoreDetails() {
-  var tree = (window.__TREE_DATA || storage.get('treeCards') || []).find(function(t){ return t.treeId===profileTreeId; });
-  var sci = tree ? tree.scientificName : '';
-  if (!sci) return;
-  window.open(getWikipediaUrl(sci), '_blank');
-}
-
-function openSpeciesInWikipedia(sci) {
-  if (!sci) return;
-  window.open(getWikipediaUrl(sci), '_blank');
+function openSpeciesInWikipedia(sn) {
+  if (!sn) return;
+  var url = getWikipediaUrl(sn);
+  if (url) {
+    window.open(url, '_blank');
+  }
 }
