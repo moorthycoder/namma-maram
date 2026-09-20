@@ -171,6 +171,25 @@ function goBackToRangerStats() {
   switchRangerPanel('stat');
 }
 
+function restoreHubScrollPosition(saved_scroll) {
+  if (saved_scroll == null || saved_scroll === '') return;
+  var target_top = parseInt(saved_scroll, 10);
+  if (isNaN(target_top) || target_top <= 0) return;
+  var attempts = 0;
+  function tryScroll() {
+    var active_el = document.querySelector('.page.active');
+    var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+    if (scroll_el) {
+      scroll_el.scrollTop = target_top;
+    }
+    attempts++;
+    if (attempts < 8) {
+      setTimeout(tryScroll, 60);
+    }
+  }
+  tryScroll();
+}
+
 function openRegisterATreePage() {
   var login_data = storage.get('login') || window._login || {};
   var ranger_role = (login_data['tree-login'] && login_data['tree-login']['ranger']) || {};
@@ -181,9 +200,14 @@ function openRegisterATreePage() {
       if (sp && sp.userId) { ranger_role = sp; }
     }
   } catch (e) {}
-  var parent = encodeURIComponent('ranger.html?hub=ranger-dash');
-  var user_id = ranger_role.userId || '';
-  window.location.href = 'register-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(user_id);
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
+  var parent_url = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var user_id = ranger_role.userId ? ranger_role.userId : '';
+  window.location.href = 'register-a-tree.html?parent=' + parent_url + '&userid=' + encodeURIComponent(user_id);
 }
 
 function openSurveyATreePage() {
@@ -196,9 +220,14 @@ function openSurveyATreePage() {
       if (sp && sp.userId) { ranger_role = sp; }
     }
   } catch (e) {}
-  var parent = encodeURIComponent('ranger.html?hub=ranger-dash');
-  var user_id = ranger_role.userId || '';
-  window.location.href = 'survey-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(user_id);
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
+  var parent_url = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var user_id = ranger_role.userId ? ranger_role.userId : '';
+  window.location.href = 'survey-a-tree.html?parent=' + parent_url + '&userid=' + encodeURIComponent(user_id);
 }
 
 function openAppendTreeName() {
@@ -271,8 +300,13 @@ function requestTreeForSurvey() {
     ranger_waiting
   ).filter(Boolean);
   var exclude_param = exclude_list.join(',');
-  var parent_param = encodeURIComponent('ranger.html?hub=ranger-dash');
-  var user_id = ranger_role.userId || '';
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
+  var parent_param = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var user_id = ranger_role.userId ? ranger_role.userId : '';
   var target_url = 'filter.html?userid=' + encodeURIComponent(user_id) + '&parent=' + parent_param + '&exclude=' + encodeURIComponent(exclude_param);
   try { sessionStorage.setItem('gobackFromTreeProfile', target_url); } catch (e) {}
   window.location.href = target_url;
@@ -444,19 +478,22 @@ function searchTree() {
 
 function openProfile(treeId) {
   var id = treeId || '625501-06-0001';
-  var active = document.querySelector('.page.active');
-  var current_hub = active ? active.id.replace('page-','') : 'ranger-dash';
-  var parent = encodeURIComponent('ranger.html?hub=' + current_hub);
-  try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch (e) {}
-  var userid = '';
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
+  var parent_url = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent_url)); } catch (e) {}
+  var user_id = '';
   try {
-    var login = storage.get('login') || window._login || {};
-    var role = (login['tree-login'] && login['tree-login']['ranger']) || {};
-    userid = role.userId || new URLSearchParams(location.search).get('userid') || '';
+    var login_data = storage.get('login') || window._login || {};
+    var role = (login_data['tree-login'] && login_data['tree-login']['ranger']) || {};
+    user_id = role.userId ? role.userId : (new URLSearchParams(location.search).get('userid') ? new URLSearchParams(location.search).get('userid') : '');
   } catch (e) {}
-  var userid_param = userid ? '&userid=' + encodeURIComponent(userid) : '';
+  var userid_param = user_id ? '&userid=' + encodeURIComponent(user_id) : '';
   var flang = (typeof filterLang !== 'undefined' ? filterLang : (typeof appLang !== 'undefined' ? appLang : 'en'));
-  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent + '&flang=' + encodeURIComponent(flang) + userid_param;
+  window.location.href = 'individual-tree-profile.html?treeId=' + encodeURIComponent(id) + '&parent=' + parent_url + '&flang=' + encodeURIComponent(flang) + userid_param;
 }
 
 
@@ -741,9 +778,13 @@ function openRangerLogsSubmitted() {
 }
 
 function openTreeNameEditForm(sci) {
-  var parent = encodeURIComponent('ranger.html?hub=ranger-dash');
-  try { var active=document.querySelector('.page.active'); if(active) parent=encodeURIComponent('ranger.html?hub='+active.id.replace('page-','')); } catch(e){}
-  window.location.href='append-a-tree-species-name.html?parent='+parent+'&editSci='+encodeURIComponent(sci);
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
+  var parent_url = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  window.location.href = 'append-a-tree-species-name.html?parent=' + parent_url + '&editSci=' + encodeURIComponent(sci);
 }
 function rangerTreeNameCardHtml(entry, is_submitted) {
   var sci = entry.scientificName || entry.sn || '—';
@@ -895,9 +936,13 @@ function cancelDeleteRangerCard() {
   if (modal_el) modal_el.classList.remove('open');
 }
 function openPlaceNameEditForm(pin) {
-  var parent=encodeURIComponent('ranger.html?hub=ranger-dash');
-  try{ var active=document.querySelector('.page.active'); if(active) parent=encodeURIComponent('ranger.html?hub='+active.id.replace('page-','')); }catch(e){}
-  window.location.href='append-a-place-name.html?parent='+parent+'&editPin='+encodeURIComponent(pin);
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
+  var parent_url = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  window.location.href = 'append-a-place-name.html?parent=' + parent_url + '&editPin=' + encodeURIComponent(pin);
 }
 function rangerPlaceNameCardHtml(entry, is_submitted) {
   var pin = entry.pinCode || entry.pincode || '—';
@@ -939,7 +984,7 @@ function renderRangerSimpleCards(target_id, empty_id, list) {
   var is_submitted = String(target_id).indexOf('submitted') > -1 ? true : false;
   var render_list = (is_submitted) ? list.slice().sort(function(a,b){ return String(b.revisedAt||b.loggedAt||'').localeCompare(String(a.revisedAt||a.loggedAt||'')); }) : list;
   var html = '';
-  for (var i = 0; i < render_list.length; i++) { html += is_tree ? rangerTreeNameCardHtml(render_list[i], is_submitted) : rangerPlaceNameCardHtml(render_list[i], is_submitted); }
+  for (var i = 0; i < render_list.length; i++) { html += is_tree ? rangerTreeNameCardWrapper(render_list[i], is_submitted) : rangerPlaceNameCardWrapper(render_list[i], is_submitted); }
   target_el.innerHTML = html;
 }
 function openRangerTreeName(status) {
@@ -1150,9 +1195,14 @@ function deleteRangerLogRequest(tree_id) {
 }
 
 function openRangerReviewPage(treeId, loggedAt) {
-  var parent = encodeURIComponent('ranger.html?hub=ranger-dash');
-  try { var active = document.querySelector('.page.active'); if (active) parent = encodeURIComponent('ranger.html?hub=' + active.id.replace('page-','')); } catch (e) {}
-  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(loggedAt || '') + '&parent=' + parent;
+  var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
+  var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
+  var parent_url = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var log_date = loggedAt ? loggedAt : '';
+  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(treeId) + '&loggedAt=' + encodeURIComponent(log_date) + '&parent=' + parent_url;
 }
 
 function renderRangerLogCards(target_id, empty_id, id_list, loggedAtMap, hideLogBox) {
@@ -1168,7 +1218,7 @@ function renderRangerLogCards(target_id, empty_id, id_list, loggedAtMap, hideLog
   var data = window.__TREE_DATA || storage.get('treeCards') || [];
   var filtered = data.filter(function (t) { return id_list.indexOf(t.treeId) > -1; });
   filtered.sort(function (a, b) { return id_list.indexOf(a.treeId) - id_list.indexOf(b.treeId); });
-  target_el.innerHTML = filtered.map(function (t) { var at = (loggedAtMap && loggedAtMap[t.treeId]) || ''; return rangerLogCardHtml(t, at, hideLogBox, target_id); }).join('');
+  target_el.innerHTML = filtered.map(function (t) { var at = (loggedAtMap && loggedAtMap[t.treeId]) || ''; return rangerLogCardWrapper(t, at, hideLogBox, target_id); }).join('');
   if (!filtered.length) { target_el.innerHTML = ''; if (empty_el) empty_el.style.display = 'block'; }
 }
 
@@ -1185,7 +1235,7 @@ function rangerMyTreeCardHtml(t, is_current, hide_actions) {
   var d = rangerBaseData(t);
   var added_label = t.addedAt ? (function(){ var m=/^(\d{4})(\d{2})(\d{2})T/.exec(t.addedAt); return m ? m[3]+'-'+m[2]+'-'+m[1] : t.addedAt; })() : '';
   var delete_btn = is_current ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); deleteRangerMyCurrent(' + d.q + t.treeId + d.q + ')"><i class="ti ti-trash"></i></button>' : '';
-  var top_row = added_label ? '<div class="tcard-added-at" style="padding:8px 11px;font-size:0.6667rem;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:space-between;gap:4px;"><span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + added_label + '</span>' + delete_btn + '</div>' : (is_current ? '<div class="tcard-added-at" style="padding:8px 11px;font-size:0.6667rem;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:space-between;gap:4px;"><span></span>' + delete_btn + '</div>' : '');
+  var top_row = added_label ? '<div class="tcard-added-at ranger-top-row" style="justify-content:space-between;"><span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-clock" style="font-size:0.6667rem"></i> Added: ' + added_label + '</span>' + delete_btn + '</div>' : (is_current ? '<div class="tcard-added-at ranger-top-row" style="justify-content:space-between;"><span></span>' + delete_btn + '</div>' : '');
   return '<div class="sponsor-tree-card ranger-my-card" onclick="openProfile(' + d.q + t.treeId + d.q + ')">' +
     top_row +
     '<div class="tree-card-hero" style="background:' + (t.bg || d.c.bg || '#234712') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || d.c.emoji || '🌴') + ' ' + d.name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + d.q + t.treeId + d.q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + d.addr_txt + '</span></p></div></div>' +
@@ -1203,10 +1253,13 @@ function rangerSurveyTree(treeId) {
   var role = (login_data['tree-login'] && login_data['tree-login']['ranger']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['ranger']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var active_el = document.querySelector('.page.active');
+  var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
+  var scroll_pos = scroll_el ? scroll_el.scrollTop : 0;
+  try { sessionStorage.setItem('hubScrollTop', String(scroll_pos)); } catch (e) {}
   var current_hub = active_el ? active_el.id.replace('page-','') : 'ranger-dash';
-  var parent = encodeURIComponent('ranger.html?hub=' + current_hub);
-  var userid = role.userId || '';
-  window.location.href = 'survey-a-tree.html?parent=' + parent + '&userid=' + encodeURIComponent(userid) + '&treeid=' + encodeURIComponent(treeId);
+  var parent_url = encodeURIComponent('ranger.html?hub=' + current_hub + '&scroll=' + scroll_pos);
+  var user_id = role.userId ? role.userId : '';
+  window.location.href = 'survey-a-tree.html?parent=' + parent_url + '&userid=' + encodeURIComponent(user_id) + '&treeid=' + encodeURIComponent(treeId);
 }
 function renderRangerMyTreeCards(target_id, empty_id, id_list, addedAtMap) {
   var target_el = document.getElementById(target_id);
@@ -1320,9 +1373,23 @@ function loadDashboard() {
 
 window.render = {
   init: function () {
-    return loadDashboard();
+    var res = loadDashboard();
+    var qp = new URLSearchParams(location.search);
+    var saved_scroll = qp.get('scroll');
+    if (!saved_scroll) {
+      try { saved_scroll = sessionStorage.getItem('hubScrollTop'); } catch (e) {}
+    }
+    restoreHubScrollPosition(saved_scroll);
+    return res;
   }
 };
+
+window.addEventListener('pageshow', function () {
+  try {
+    var saved_scroll = sessionStorage.getItem('hubScrollTop');
+    if (saved_scroll) restoreHubScrollPosition(saved_scroll);
+  } catch (e) {}
+});
 
 var hubMode = new URLSearchParams(location.search).get('hub');
 if (hubMode === 'login') { window.location.href = 'login-hub.html?role=ranger'; }
