@@ -53,7 +53,7 @@ function appendTreeName(treeName) {
 
 var appendTreePages = "\n\
 <div class=\"page\" id=\"page-append-tree-name\">\n\
-  <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Append tree name</span></div>\n\
+  <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goBackAppendFlowPage()\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Append tree name</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
     <div style=\"font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);\">Append a tree name to the database</div>\n\
     <div style=\"font-size:0.7333rem;color:var(--color-text-secondary);\">Add a new tree name with its scientific name and names in each language. It will be available across the app.</div>\n\
@@ -282,6 +282,17 @@ injectAppendTreeFlow();
     if (el) el.classList.add('active');
   };
   window.goTo = window.appendTreeGoTo;
+  window.goBackAppendFlowPage = function(){
+    try {
+      if (window.parent && window.parent !== window && typeof window.parent.goBackAppendFlow === 'function') { window.parent.goBackAppendFlow(); return; }
+    } catch(e){}
+    try {
+      if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') { window.parent.backToStart(); return; }
+    } catch(e){}
+    var p = new URLSearchParams(location.search).get('parent');
+    if (p) { window.location.href = decodeURIComponent(p); return; }
+    window.location.href = 'index.html';
+  };
   window.render = { init: function () { buildAppendNameFields(); } };
   window.goTo('append-tree-name');
 })();

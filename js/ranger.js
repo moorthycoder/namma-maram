@@ -370,6 +370,15 @@ function backToStart() {
   if (dash_page) { dash_page.style.display = 'flex'; dash_page.classList.add('active'); }
 }
 
+function goBackAppendFlow() {
+  var frame = document.getElementById('app-frame');
+  if (frame && frame.parentNode) { frame.parentNode.removeChild(frame); }
+  var dash_page = document.getElementById('page-ranger-dash');
+  if (dash_page) dash_page.style.display = '';
+  switchRangerPanel('action');
+  goTo('ranger-dash');
+}
+
 
 
 

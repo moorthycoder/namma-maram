@@ -63,7 +63,7 @@ var appendProjectNamePlaceholders = {
 
 var appendProjectPages = "\n\
 <div class=\"page\" id=\"page-append-project-name\">\n\
-  <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Append project name</span></div>\n\
+  <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goBackAppendFlowPage()\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Append project name</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
     <div style=\"font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);\">Append a project name to the database</div>\n\
     <div style=\"font-size:0.7333rem;color:var(--color-text-secondary);\">Add a new project with its name, start and end. It will be available across the app.</div>\n\
@@ -172,6 +172,17 @@ injectAppendProjectFlow();
     if (el) el.classList.add('active');
   };
   window.goTo = window.appendProjectGoTo;
+  window.goBackAppendFlowPage = function(){
+    try {
+      if (window.parent && window.parent !== window && typeof window.parent.goBackAppendFlow === 'function') { window.parent.goBackAppendFlow(); return; }
+    } catch(e){}
+    try {
+      if (window.parent && window.parent !== window && typeof window.parent.backToStart === 'function') { window.parent.backToStart(); return; }
+    } catch(e){}
+    var p = new URLSearchParams(location.search).get('parent');
+    if (p) { window.location.href = decodeURIComponent(p); return; }
+    window.location.href = 'index.html';
+  };
   window.render = { init: function () { buildAppendProjectFields(); } };
   window.goTo('append-project-name');
 })();

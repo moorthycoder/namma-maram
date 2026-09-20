@@ -388,8 +388,22 @@ function backToStart() {
     if (return_to.indexOf('submitted') > -1) openProjectLeaderPlaceName('submitted'); else openProjectLeaderPlaceName('approved');
     return;
   }
+  if (return_to && return_to.indexOf('hub=project-leader-project-name') > -1) {
+    try { renderProjectLeaderStats(); } catch (e) {}
+    if (return_to.indexOf('submitted') > -1) openProjectLeaderProjectName('submitted'); else openProjectLeaderProjectName('approved');
+    return;
+  }
   if (return_to) { window.top.location.href = return_to; return; }
   if (dash_page) { dash_page.style.display = 'flex'; dash_page.classList.add('active'); }
+}
+
+function goBackAppendFlow() {
+  var frame = document.getElementById('app-frame');
+  if (frame && frame.parentNode) { frame.parentNode.removeChild(frame); }
+  var dash_page = document.getElementById('page-project-leader-dash');
+  if (dash_page) dash_page.style.display = '';
+  switchProjectLeaderPanel('action');
+  goTo('project-leader-dash');
 }
 
 

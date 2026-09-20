@@ -122,8 +122,13 @@ function sendOtp() {
   var timer = document.getElementById('otp-timer');
   timer.textContent = '1:00';
   timer.classList.remove('expired');
-  document.getElementById('otp-input').value = '';
-  document.getElementById('otp-confirm-btn').disabled = true;
+  if (TESTING_MODE) {
+    document.getElementById('otp-input').value = otp_value;
+    document.getElementById('otp-confirm-btn').disabled = false;
+  } else {
+    document.getElementById('otp-input').value = '';
+    document.getElementById('otp-confirm-btn').disabled = true;
+  }
   var test = document.getElementById('otp-testing');
   if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
   document.getElementById('otp-modal').classList.add('open');
