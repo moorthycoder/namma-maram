@@ -477,7 +477,11 @@ window.render = {
     if (qp.get('place') || qp.get('tree') || qp.get('scroll')) {
       if (place_el) place_el.value = qp.get('place') || '';
       if (tree_el) tree_el.value = qp.get('tree') || '';
-      history.replaceState(null, '', 'filter.html');
+      var kept = new URLSearchParams(location.search);
+      kept.delete('place');
+      kept.delete('tree');
+      kept.delete('scroll');
+      history.replaceState(null, '', 'filter.html' + (kept.toString() ? '?' + kept.toString() : ''));
     }
     syncClearButtons();
     populatePlaceSuggestions();

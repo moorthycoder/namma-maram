@@ -40,10 +40,10 @@ function showRegisterStatus(status, page) {
   if (page) regTarget = page;
   var d = registerStatusData[status] || registerStatusData.waiting;
   if (d.to) regTarget = d.to;
+  var s = registerStatusData[status] ? status : 'waiting';
   var icon = document.getElementById('rsm-icon');
-  icon.style.background = d.bg;
-  icon.style.color = d.color;
-  icon.innerHTML = '<i class="' + d.icon + '" style="font-size:24px;"></i>';
+  icon.className = 'rsm-icon status-' + s;
+  icon.innerHTML = '<i class="' + d.icon + '"></i>';
   document.getElementById('rsm-title').textContent = d.title;
   document.getElementById('rsm-text').textContent = d.text;
   var ok = document.getElementById('rsm-ok-btn');
@@ -52,13 +52,9 @@ function showRegisterStatus(status, page) {
   } else {
     ok.innerHTML = '<i class="ti ti-check"></i> Okay';
   }
-  if (status === 'blocked') {
-    ok.style.background = '#dc2626';
-  } else {
-    ok.style.background = 'var(--color-theme)';
-  }
+  ok.classList.toggle('btn-danger', status === 'blocked');
   var test = document.getElementById('rsm-test');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  if (test) test.classList.toggle('hidden', !TESTING_MODE);
   document.getElementById('register-status-modal').classList.add('open');
 }
 
@@ -99,14 +95,14 @@ function roleDash() {
 
 function showLoginStatus(page, status) {
   var d = loginStatusData[status] || loginStatusData.waiting;
+  var s = loginStatusData[status] ? status : 'waiting';
   var icon = document.getElementById('lsm-icon');
-  icon.style.background = d.bg;
-  icon.style.color = d.color;
-  icon.innerHTML = '<i class="' + d.icon + '" style="font-size:24px;"></i>';
+  icon.className = 'lsm-icon modal-icon-lg status-' + s;
+  icon.innerHTML = '<i class="' + d.icon + '"></i>';
   document.getElementById('lsm-title').textContent = d.title;
   document.getElementById('lsm-text').textContent = d.text;
   var test = document.getElementById('lsm-test');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  if (test) test.classList.toggle('hidden', !TESTING_MODE);
   logoutTarget = page;
   document.getElementById('login-status-modal').classList.add('open');
 }

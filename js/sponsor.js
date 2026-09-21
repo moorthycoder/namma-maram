@@ -124,7 +124,7 @@ function loadDashboard() {
   var legacy_next_due_id_el = document.getElementById('s-next-due-id');
   if (legacy_next_due_id_el) {
     legacy_next_due_id_el.textContent = window._sponsorNextDueId || '';
-    legacy_next_due_id_el.style.display = window._sponsorNextDueId ? '' : 'none';
+    legacy_next_due_id_el.classList.toggle('hidden', !window._sponsorNextDueId);
   }
   return { ram_data: ram_data, waiting_submitted_ids: waiting_submitted_ids, current_ids: current_ids, past_ids: past_ids, new_sponsor_ids: new_sponsor_ids };
 }
@@ -147,11 +147,11 @@ function openSponsorNextDue() {
   var emptyEl = document.getElementById('sponsor-next-due-empty');
   if (!sponsor_next_due_list_local.length) {
     if (cardEl) cardEl.innerHTML = '';
-    if (emptyEl) emptyEl.style.display = 'block';
+    if (emptyEl) emptyEl.classList.remove('hidden');
     goTo('sponsor-next-due');
     return;
   }
-  if (emptyEl) emptyEl.style.display = 'none';
+  if (emptyEl) emptyEl.classList.add('hidden');
   var login_data = storage.get('login') || window.__login || {};
   var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   var sorted_current = getSortedWaitingList(sponsor_cards.current || [], 'desc');
@@ -169,7 +169,7 @@ function openSponsorNextDue() {
   }
   if (!sponsor_next_due_html) {
     if (cardEl) cardEl.innerHTML = '';
-    if (emptyEl) emptyEl.style.display = 'block';
+    if (emptyEl) emptyEl.classList.remove('hidden');
     goTo('sponsor-next-due');
     return;
   }
@@ -212,7 +212,7 @@ function renderSponsorNextDueSingleCard(single_tid) {
   var sorted = getSortedWaitingList(cards.current || [], 'desc'); var m = {}; sorted.forEach(function(e){ if(e && e.treeId) m[e.treeId] = e.addedAt; });
   var c = {}; for (var k in t) c[k] = t[k]; c.addedAt = m[single_tid] || '';
   var cardEl = document.getElementById('sponsor-next-due-card'); var emptyEl = document.getElementById('sponsor-next-due-empty');
-  if (emptyEl) emptyEl.style.display = 'none'; if (cardEl) cardEl.innerHTML = sponsorNextDueCardHtml(c);
+  if (emptyEl) emptyEl.classList.add('hidden'); if (cardEl) cardEl.innerHTML = sponsorNextDueCardHtml(c);
   return true;
 }
 
@@ -237,7 +237,7 @@ function loadListForDashBoardBtns(btn_name) {
   var el = document.getElementById(target_map[key]);
   if (el) el.innerHTML = html;
   var empty_el = document.getElementById(empty_map[key]);
-  if (empty_el) empty_el.style.display = tree_list.length ? 'none' : 'block';
+  if (empty_el) empty_el.classList.toggle('hidden', tree_list.length > 0);
   if (key === 'waiting') goTo('sponsor-waiting-submitted');
   else if (key === 'current' || key === 'past') goTo('sponsor-' + key);
   return tree_list;
@@ -309,10 +309,10 @@ function showRegisterStatus(status, page) {
   if (page) regTarget = page;
   var d = registerStatusData[status] || registerStatusData.waiting;
   if (d.to) regTarget = d.to;
+  var s = registerStatusData[status] ? status : 'waiting';
   var icon = document.getElementById('rsm-icon');
-  icon.style.background = d.bg;
-  icon.style.color = d.color;
-  icon.innerHTML = '<i class="' + d.icon + ' status-icon"></i>';
+  icon.className = 'modal-icon status-' + s;
+  icon.innerHTML = '<i class="' + d.icon + '"></i>';
   document.getElementById('rsm-title').textContent = d.title;
   document.getElementById('rsm-text').textContent = d.text;
   var ok = document.getElementById('rsm-ok-btn');
@@ -322,12 +322,12 @@ function showRegisterStatus(status, page) {
     ok.innerHTML = '<i class="ti ti-check"></i> Okay';
   }
   if (status === 'blocked') {
-    ok.style.background = '#dc2626';
+    ok.classList.add('btn-blocked');
   } else {
-    ok.style.background = 'var(--color-theme)';
+    ok.classList.remove('btn-blocked');
   }
   var test = document.getElementById('rsm-test');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  if (test) test.classList.toggle('hidden', !TESTING_MODE);
   document.getElementById('register-status-modal').classList.add('open');
 }
 
@@ -501,19 +501,18 @@ function appendSponsorWaitingSubmittedCard(form) {
   var name = form.name || (tree ? (full_name ? full_name + ' #' + id : '#' + id) : '');
   var full_addr = tree ? sponsorCardAddr(tree) : '';
   var loc = form.loc || (tree ? (full_addr ? full_addr.split(', ')[0] : full_addr) : '');
-  var bg = form.bg || (tree ? tree.bg || '' : '');
   var emoji = form.emoji || (tree ? tree.emoji || '🌳' : '🌳');
   var height = form.height != null ? form.height : (st.height || (tree && tree.card && tree.card.height) || '—');
   var diam = form.diam || st.diameter || (tree && tree.card && tree.card.diameter) || '—';
   var logs = form.logs != null ? form.logs : (keys.length || (tree && tree.encounters) || 0);
   var cardsEl = document.getElementById('sponsor-waiting-submitted-cards');
   var emptyEl = document.getElementById('sponsor-waiting-submitted-empty');
-  if (emptyEl) emptyEl.style.display = 'none';
+  if (emptyEl) emptyEl.classList.add('hidden');
   if (!cardsEl) { return; }
   var card = document.createElement('div');
   card.className = 'sponsor-tree-card';
   var height_display = height === '—' ? '—' : String(height).replace(/\s*m$/, '') + 'm';
-  card.innerHTML = '<div class="tree-card-hero" style="background:'+bg+'" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();showInMap([\''+id+'\'])"><i class="ti ti-map-pin"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-pay" onclick="paylogTree(\''+id+'\',\'sponsor-waiting-submitted\')"><i class="ti ti-receipt"></i> Payments</button></div>';
+  card.innerHTML = '<div class="tree-card-hero" onclick="openProfile(\''+id+'\')"><button class="card-pin-btn" type="button" onclick="event.stopPropagation();showInMap([\''+id+'\'])"><i class="ti ti-map-pin"></i></button><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+emoji+' '+name+'</h3><p><i class="ti ti-map-pin"></i> '+loc+'</p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+height_display+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+diam+'</div></div><div class="tcs"><div class="tcs-label">Logs</div><div class="tcs-val">'+logs+'</div></div></div></div><div class="tree-card-btns"><button class="tcbtn tcbtn-pay" onclick="paylogTree(\''+id+'\',\'sponsor-waiting-submitted\')"><i class="ti ti-receipt"></i> Payments</button></div>';
   cardsEl.appendChild(card);
   console.log('[sponsor] appendSponsorWaitingSubmittedCard added card', id, 'now count', cardsEl.querySelectorAll('.sponsor-tree-card').length);
   setStatById('s-sponsor-waiting-submitted', cardsEl.querySelectorAll('.sponsor-tree-card').length);
@@ -558,7 +557,7 @@ function openSponsorWaitingSubmittedRequests() {
   var cardsEl = document.getElementById('sponsor-waiting-submitted-cards');
   var emptyEl = document.getElementById('sponsor-waiting-submitted-empty');
   if (cardsEl) cardsEl.innerHTML = requestList.map(sponsorTreeCardHtml).join('');
-  if (emptyEl) emptyEl.style.display = requestList.length ? 'none' : 'block';
+  if (emptyEl) emptyEl.classList.toggle('hidden', requestList.length > 0);
   goTo('sponsor-waiting-submitted');
 }
 
@@ -570,10 +569,10 @@ function openSponsorSeeing() {
 
 
 function sponsorBaseData(t){ var q=String.fromCharCode(39); var c=t.card||{}; var enc=t['encounters-list']||{}; var keys=Object.keys(enc); var last=enc[keys[keys.length-1]]||{}; var st=last['health-status']||{}; var login_for_pay=storage.get('login')||window.__login||{}; var pay_list=(((login_for_pay['tree-login']&&login_for_pay['tree-login']['sponsor']&&login_for_pay['tree-login']['sponsor'].cards)||{}).payments||[]); var paid_amount=0; for(var pi=0;pi<pay_list.length;pi++){ if(pay_list[pi].treeId===t.treeId&&pay_list[pi].status!=='retried'){ var amt=parseInt(String(pay_list[pi].amount||'').replace(/\D/g,'')||0); paid_amount+=amt; } } return {t:t,q:q,c:c,enc:enc,keys:keys,st:st,paid_display:paid_amount?'₹'+paid_amount:'—',logs_display:keys.length||c.logs||0,name_txt:sponsorCardName(t),addr_txt:sponsorCardAddr(t),pay_onclick:'paylogTree(\''+t.treeId+'\',\''+(t.payFrom||'sponsor-current')+'\')'}; }
-function sponsorCurrentCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-current-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\''+d.t.treeId+'\')"><i class="ti ti-trash"></i></button></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||d.c.statusLogged||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+formatLength(d.st.height||d.c.height,'height')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+formatLength(d.st.diameter||d.c.diameter,'diameter')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="'+d.pay_onclick+'">'+d.paid_display+'</span></div></div></div></div>'; }
-function sponsorPastCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-past-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="'+d.pay_onclick+'">'+d.paid_display+'</span></div></div></div></div>'; }
-function sponsorSubmittedCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-submitted-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\''+d.t.treeId+'\')"><i class="ti ti-trash"></i></button></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="paylogTree(\''+d.t.treeId+'\',\'sponsor-waiting-submitted\')">'+d.paid_display+'</span></div></div></div></div>'; }
-function sponsorNextDueCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-nextdue-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Due: '+(d.t.dueDate||d.t.addedAt||'—')+'</span></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="paylogTree(\''+d.t.treeId+'\',\'sponsor-next-due\')">'+d.paid_display+'</span></div></div></div></div>'; }
+function sponsorCurrentCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-current-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\''+d.t.treeId+'\')"><i class="ti ti-trash"></i></button></div><div class="tree-card-hero" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||d.c.statusLogged||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+formatLength(d.st.height||d.c.height,'height')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+formatLength(d.st.diameter||d.c.diameter,'diameter')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="'+d.pay_onclick+'">'+d.paid_display+'</span></div></div></div></div>'; }
+function sponsorPastCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-past-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span></div><div class="tree-card-hero" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="'+d.pay_onclick+'">'+d.paid_display+'</span></div></div></div></div>'; }
+function sponsorSubmittedCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-submitted-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\''+d.t.treeId+'\')"><i class="ti ti-trash"></i></button></div><div class="tree-card-hero" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="paylogTree(\''+d.t.treeId+'\',\'sponsor-waiting-submitted\')">'+d.paid_display+'</span></div></div></div></div>'; }
+function sponsorNextDueCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-nextdue-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Due: '+(d.t.dueDate||d.t.addedAt||'—')+'</span></div><div class="tree-card-hero" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="paylogTree(\''+d.t.treeId+'\',\'sponsor-next-due\')">'+d.paid_display+'</span></div></div></div></div>'; }
 function sponsorTreeCardHtml(t){ return sponsorSubmittedCardHtml(t); }
 function removeSponsorCard(remove_tree_id) {
   var login_data = window.__login || {};
@@ -634,7 +633,7 @@ function renderSponsorCards() {
   var waitingSubmittedCards = document.getElementById('sponsor-waiting-submitted-cards');
   if (waitingSubmittedCards) waitingSubmittedCards.innerHTML = waiting_submitted_list.map(sponsorSubmittedCardHtml).join('');
   var waitingSubmittedEmpty = document.getElementById('sponsor-waiting-submitted-empty');
-  if (waitingSubmittedEmpty) waitingSubmittedEmpty.style.display = waiting_submitted_list.length ? 'none' : 'block';
+  if (waitingSubmittedEmpty) waitingSubmittedEmpty.classList.toggle('hidden', waiting_submitted_list.length > 0);
   sponsoredCount = currentList.length + pastList.length;
   setStatById('s-tree-current', currentList.length);
   setStatById('s-tree-past', pastList.length);
@@ -673,7 +672,7 @@ function sponsorSeeingCardHtml(t) {
   var paid_display = paid_amount ? '₹' + paid_amount : '—';
   var logs_display = keys.length || c.logs || 0;
   return '<div class="sponsor-tree-card">'
-    + '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '') + '" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>'
+    + '<div class="tree-card-hero" onclick="openProfile(' + q + t.treeId + q + ')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap([' + q + t.treeId + q + '])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + addr_txt + '</span></p></div></div>'
     + '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || status || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div></div></div>'
     + '<div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">' + logs_display + '</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="paylogTree(\'' + t.treeId + '\',\'sponsor-seeing\')">' + paid_display + '</span></div></div></div>'
     + '<div class="sponsor-seeing-actions"><button class="tcbtn tcbtn-logs" onclick="event.stopPropagation();confirmPendingSponsor(' + q + t.treeId + q + ')"><i class="ti ti-check"></i> Confirm</button><button class="tcbtn tcbtn-danger" onclick="event.stopPropagation();removePendingSponsor(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i> Decline</button></div>'
@@ -683,7 +682,7 @@ function openSponsorSeeingModal(pending_trees) {
   var grid = document.getElementById('sponsor-seeing-grid');
   var empty = document.getElementById('sponsor-seeing-empty');
   if (grid) grid.innerHTML = pending_trees.map(sponsorSeeingCardHtml).join('');
-  if (empty) empty.style.display = pending_trees.length ? 'none' : 'block';
+  if (empty) empty.classList.toggle('hidden', pending_trees.length > 0);
   goTo('sponsor-seeing');
   window._sponsorSeeingBack = 'sponsor-dash';
 }

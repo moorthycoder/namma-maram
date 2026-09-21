@@ -130,7 +130,7 @@
   .waiting-empty{text-align:center;font-size:0.8rem;color:var(--color-text-secondary);padding:26px 10px;}
   .tree-card-sponsor{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);}
   .tree-card-caregiver{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);}
-  .tree-card-hero{height:72px;display:flex;align-items:flex-end;position:relative;cursor:pointer;}
+  .tree-card-hero{height:72px;display:flex;align-items:flex-end;position:relative;cursor:pointer;background:var(--color-theme);}
   .tree-card-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.5));}
   .tree-card-title{position:relative;z-index:1;padding:7px 11px;display:flex;flex-direction:column;gap:8px;}
   .tree-card-title h3{font-size:0.8667rem;font-weight:500;color:#fff;margin:0;}
@@ -277,6 +277,12 @@
   .block { display:block; }
   .flex { display:flex; }
   .tcard-clock-icon { font-size:0.6667rem; }
+.card-pin-btn i { font-size:0.8rem; }
+.log-entry-interactive { cursor:pointer; align-items:stretch; }
+.log-entry-row { display:flex; gap:9px; align-items:center; cursor:pointer; }
+.log-dot-green { background:#16a34a; }
+.log-addr { font-size:0.7333rem; color:var(--color-text-secondary); }
+.log-label-danger { color:#dc2626; }
   .addr-icon { font-size:0.6667rem; }
   .dashboard-cta-icon { font-size:0.9333rem; }
   .field-inp-pointer { cursor:pointer; }
