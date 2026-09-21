@@ -19,7 +19,7 @@ function sponsorCardAddr(t) {
 }
 
 function loginCheckSponsor() {
-  var r = window._login || null;
+  var r = window.__login || null;
   if (r && r['tree-login'] && r['tree-login'].sponsor && r['tree-login'].sponsor.loggedIn) {
     return true;
   }
@@ -38,7 +38,7 @@ function loadCurrentUser() {
     var avatarEl = document.getElementById('user-avatar');
     if (nameEl) nameEl.textContent = role.name;
     if (avatarEl) avatarEl.textContent = role.avatar;
-    window._login = cred;
+    window.__login = cred;
   } catch (e) {}
 }
 loadCurrentUser();
@@ -50,7 +50,7 @@ function checkNewSponserTrees() {
   try { var arr = JSON.parse(sponsor_waiting_str); if (Array.isArray(arr)) new_ids = arr.filter(function(e){ return typeof e === 'string' && e; }); } catch (e) { new_ids = []; }
   if (!new_ids.length) return [];
   try {
-    var _login_chk = storage.get('login') || window._login || null;
+    var _login_chk = storage.get('login') || window.__login || null;
     if (!_login_chk) { var _s = sessionStorage.getItem('loginCredentialsV1'); if (_s) _login_chk = JSON.parse(_s); }
     var _sponsor_chk = _login_chk && _login_chk['tree-login'] && _login_chk['tree-login']['sponsor'];
     if (!_sponsor_chk || !_sponsor_chk.userId) {
@@ -80,7 +80,7 @@ function loadDashboard() {
   console.log('[sponsor] loadDashboard RAM', ram_data.length, 'login', (storage.get('login')||{}));
   window.__TREE_DATA = ram_data;
   albumData = Array.isArray(ram_data) ? ram_data : (ram_data.albumData || []);
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   function normalizeIds(list) { return (list || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; }).filter(Boolean); }
   var waiting_submitted_ids = normalizeIds(sponsor_cards.waiting);
@@ -135,7 +135,7 @@ function openSponsorNextDue() {
   var ram = storage.get('treeCards') || window.__TREE_DATA || [];
   if (!sponsor_next_due_list_local.length) {
     try {
-      var lg2 = storage.get('login') || window._login || {};
+      var lg2 = storage.get('login') || window.__login || {};
       var cur2 = ((lg2['tree-login'] && lg2['tree-login']['sponsor']) || {}).cards || {};
       var curIds2 = (cur2.current || []).map(function(e){ return typeof e==='string'?e:e.treeId; }).filter(Boolean);
       sponsor_next_due_list_local = getSponsorNextDueList(ram, curIds2, 3);
@@ -152,7 +152,7 @@ function openSponsorNextDue() {
     return;
   }
   if (emptyEl) emptyEl.style.display = 'none';
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   var sorted_current = getSortedWaitingList(sponsor_cards.current || [], 'desc');
   var current_map = {};
@@ -207,7 +207,7 @@ function renderSponsorNextDueSingleCard(single_tid) {
   var ram = storage.get('treeCards') || window.__TREE_DATA || [];
   var t = null; for (var i = 0; i < ram.length; i++) if (ram[i].treeId === single_tid) { t = ram[i]; break; }
   if (!t) return false;
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   var sorted = getSortedWaitingList(cards.current || [], 'desc'); var m = {}; sorted.forEach(function(e){ if(e && e.treeId) m[e.treeId] = e.addedAt; });
   var c = {}; for (var k in t) c[k] = t[k]; c.addedAt = m[single_tid] || '';
@@ -217,7 +217,7 @@ function renderSponsorNextDueSingleCard(single_tid) {
 }
 
 function loadListForDashBoardBtns(btn_name) {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var sponsor_cards = ((login_data['tree-login'] && login_data['tree-login']['sponsor']) || {}).cards || {};
   var snake_case = String(btn_name || '').toLowerCase();
   var key = snake_case.indexOf('waiting') > -1 ? 'waiting' : snake_case.indexOf('current') > -1 ? 'current' : snake_case.indexOf('past') > -1 ? 'past' : '';
@@ -264,7 +264,7 @@ function updateWaitingListFromPendingSponsor() {
   } catch (e) { console.log('[sponsor] updateWaitingListFromPendingSponsor error', e); goTo('sponsor-dash'); return false; }
 }
 function isTreeIdAlreadyInSponsorLists(check_tree_id) {
-  var login_data = window._login || {};
+  var login_data = window.__login || {};
   var tree_login = login_data['tree-login'] || {};
   var sponsor_role = tree_login.sponsor || {};
   var sponsor_cards = sponsor_role.cards || {};
@@ -425,7 +425,7 @@ function openProfile(treeId) {
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch(e) {}
   var userid = '';
   try {
-    var login = storage.get('login') || window._login || {};
+    var login = storage.get('login') || window.__login || {};
     var role = (login['tree-login'] && login['tree-login']['sponsor']) || {};
     userid = role.userId || new URLSearchParams(location.search).get('userid') || '';
   } catch (e) {}
@@ -458,7 +458,7 @@ function payTreeBack(){ var dest=window._sponsorPayTreeFrom||sessionStorage.getI
 
 function sponsorATree(f) {
   console.log('[sponsor] sponsorATree called', f);
-  var login = window._login || (window._login = {});
+  var login = window.__login || (window.__login = {});
   var tl = login['tree-login'] || (login['tree-login'] = {});
   var role = tl.sponsor || (tl.sponsor = {});
   var cards = role.cards || (role.cards = {});
@@ -547,7 +547,7 @@ function getSortedWaitingList(waiting_list, sort_order) {
 function openSponsorWaitingSubmittedRequests() {
   var titleEl = document.getElementById('swaiting-submitted-page-title');
   if (titleEl) titleEl.textContent = 'New requests';
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['sponsor']) || {};
   var waiting_raw = (role.cards || {}).waiting || [];
   var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
   var ids = sorted_waiting.map(function(e){ return e.treeId; });
@@ -569,14 +569,14 @@ function openSponsorSeeing() {
 
 
 
-function sponsorBaseData(t){ var q=String.fromCharCode(39); var c=t.card||{}; var enc=t['encounters-list']||{}; var keys=Object.keys(enc); var last=enc[keys[keys.length-1]]||{}; var st=last['health-status']||{}; var login_for_pay=storage.get('login')||window._login||{}; var pay_list=(((login_for_pay['tree-login']&&login_for_pay['tree-login']['sponsor']&&login_for_pay['tree-login']['sponsor'].cards)||{}).payments||[]); var paid_amount=0; for(var pi=0;pi<pay_list.length;pi++){ if(pay_list[pi].treeId===t.treeId&&pay_list[pi].status!=='retried'){ var amt=parseInt(String(pay_list[pi].amount||'').replace(/\D/g,'')||0); paid_amount+=amt; } } return {t:t,q:q,c:c,enc:enc,keys:keys,st:st,paid_display:paid_amount?'₹'+paid_amount:'—',logs_display:keys.length||c.logs||0,name_txt:sponsorCardName(t),addr_txt:sponsorCardAddr(t),pay_onclick:'paylogTree(\''+t.treeId+'\',\''+(t.payFrom||'sponsor-current')+'\')'}; }
+function sponsorBaseData(t){ var q=String.fromCharCode(39); var c=t.card||{}; var enc=t['encounters-list']||{}; var keys=Object.keys(enc); var last=enc[keys[keys.length-1]]||{}; var st=last['health-status']||{}; var login_for_pay=storage.get('login')||window.__login||{}; var pay_list=(((login_for_pay['tree-login']&&login_for_pay['tree-login']['sponsor']&&login_for_pay['tree-login']['sponsor'].cards)||{}).payments||[]); var paid_amount=0; for(var pi=0;pi<pay_list.length;pi++){ if(pay_list[pi].treeId===t.treeId&&pay_list[pi].status!=='retried'){ var amt=parseInt(String(pay_list[pi].amount||'').replace(/\D/g,'')||0); paid_amount+=amt; } } return {t:t,q:q,c:c,enc:enc,keys:keys,st:st,paid_display:paid_amount?'₹'+paid_amount:'—',logs_display:keys.length||c.logs||0,name_txt:sponsorCardName(t),addr_txt:sponsorCardAddr(t),pay_onclick:'paylogTree(\''+t.treeId+'\',\''+(t.payFrom||'sponsor-current')+'\')'}; }
 function sponsorCurrentCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-current-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\''+d.t.treeId+'\')"><i class="ti ti-trash"></i></button></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||d.c.statusLogged||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+formatLength(d.st.height||d.c.height,'height')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+formatLength(d.st.diameter||d.c.diameter,'diameter')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="'+d.pay_onclick+'">'+d.paid_display+'</span></div></div></div></div>'; }
 function sponsorPastCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-past-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="'+d.pay_onclick+'">'+d.paid_display+'</span></div></div></div></div>'; }
 function sponsorSubmittedCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-submitted-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Added: '+d.t.addedAt+'</span><button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); openDeleteConfirm(\''+d.t.treeId+'\')"><i class="ti ti-trash"></i></button></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="paylogTree(\''+d.t.treeId+'\',\'sponsor-waiting-submitted\')">'+d.paid_display+'</span></div></div></div></div>'; }
 function sponsorNextDueCardHtml(t){ var d=sponsorBaseData(t); return '<div class="sponsor-tree-card sponsor-nextdue-card"><div class="tcard-added-at"><span><i class="ti ti-clock"></i> Due: '+(d.t.dueDate||d.t.addedAt||'—')+'</span></div><div class="tree-card-hero" style="background:'+(d.t.bg||d.c.bg||'')+'" onclick="openProfile('+d.q+d.t.treeId+d.q+')"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>'+(d.t.emoji||d.c.emoji||'')+' '+d.name_txt+' <span class="tcard-id">'+d.t.treeId+'</span></h3><p><button class="gis-pin" type="button" onclick="event.stopPropagation();showInMap(['+d.q+d.t.treeId+d.q+'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">'+d.addr_txt+'</span></p></div></div><div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">'+(d.st.health||'—')+'</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">'+(formatLength(d.st.height,'height')||'—')+'</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">'+(formatLength(d.st.diameter,'diameter')||'—')+'</div></div></div></div><div class="s-metric-row"><div class="s-metric-col"><span class="s-metric-label">Logs</span><div class="s-metric-val-row"><span class="sponsor-underline">'+d.logs_display+'</span></div></div><div class="s-metric-divider"></div><div class="s-metric-col"><span class="s-metric-label">Total paid</span><div class="s-metric-val-row"><span class="sponsor-underline" onclick="paylogTree(\''+d.t.treeId+'\',\'sponsor-next-due\')">'+d.paid_display+'</span></div></div></div></div>'; }
 function sponsorTreeCardHtml(t){ return sponsorSubmittedCardHtml(t); }
 function removeSponsorCard(remove_tree_id) {
-  var login_data = window._login || {};
+  var login_data = window.__login || {};
   var tree_login = login_data['tree-login'] || {};
   var sponsor_role = tree_login.sponsor || {};
   var sponsor_cards = sponsor_role.cards || {};
@@ -610,7 +610,7 @@ function getCurrentMonthPrefixForPayments() {
 }
 function renderSponsorCards() {
   var data = window.__TREE_DATA || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['sponsor']) || {};
   var cards = role.cards || {};
   var current_raw = cards.current || [];
   var past_raw = cards.past || [];
@@ -666,7 +666,7 @@ function sponsorSeeingCardHtml(t) {
   var status = c.statusLogged || c.statusChecked || st.health || '';
   var name_txt = sponsorCardName(t);
   var addr_txt = sponsorCardAddr(t);
-  var login_for_pay = storage.get('login') || window._login || {};
+  var login_for_pay = storage.get('login') || window.__login || {};
   var pay_list = (((login_for_pay['tree-login'] && login_for_pay['tree-login']['sponsor'] && login_for_pay['tree-login']['sponsor'].cards) || {}).payments || []);
   var paid_amount = 0;
   for (var pi = 0; pi < pay_list.length; pi++) { if (pay_list[pi].treeId === t.treeId && pay_list[pi].status !== 'retried') { var amt = parseInt(String(pay_list[pi].amount || '').replace(/\D/g, '') || 0); paid_amount += amt; } }
@@ -712,7 +712,7 @@ function consumePendingSponsorRequest() {
     console.log('[sponsor] consumePendingSponsor raw', raw);
     if (!raw) return false;
     var pending = JSON.parse(raw);
-    var login = storage.get('login') || window._login || {};
+    var login = storage.get('login') || window.__login || {};
     var tl = login['tree-login'] || (login['tree-login'] = {});
     var changed = false;
     for (var userid in pending) {
@@ -733,7 +733,7 @@ function consumePendingSponsorRequest() {
         cards.waiting = waiting; target.cards = cards; tl[target_key] = target;
       } else { console.log('[sponsor] no target for userid', userid); }
     }
-    if (changed) { login['tree-login'] = tl; storage.set('login', login); window._login = login; console.log('[sponsor] saved login', login); }
+    if (changed) { login['tree-login'] = tl; storage.set('login', login); window.__login = login; console.log('[sponsor] saved login', login); }
     sessionStorage.removeItem('pendingSponsor');
     console.log('[sponsor] consume done changed', changed);
     return changed;
@@ -769,8 +769,8 @@ window.addEventListener('pageshow', function () {
   } catch (e) {}
 });
 function openTreePool() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['sponsor']) || (window._login && window._login['tree-login'] && window._login['tree-login']['sponsor']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['sponsor']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['sponsor']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['sponsor']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var cards = role.cards || {};
   var sponsor_waiting = []; try { sponsor_waiting = JSON.parse(sessionStorage.getItem('sponsorWaiting') || '[]'); } catch (e) {}

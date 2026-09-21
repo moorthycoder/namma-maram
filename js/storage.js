@@ -9,11 +9,11 @@ var STORE = {
   places:      { url: 'json/places_name.json',      ram: '__PLACES' },
   treeCards:   { url: 'json/tree_profile_cards.json', ram: '__TREE_DATA' },
   projects:    { url: 'json/projects_name.json',       ram: '__PROJECTS' },
-  treeNames:   { url: 'json/tree_species_name.json', ram: 'TREE_NAMES_DB' },
-  treeSpeciesNameException: { url: 'json/tree_species_name_exception.json', ram: 'TREE_SPECIES_NAME_EXCEPTION' },
+  treeSpeciesName:   { url: 'json/tree_species_name.json', ram: '__TREE_SPECIES_NAME' },
+  treeSpeciesNameException: { url: 'json/tree_species_name_exception.json', ram: '__TREE_SPECIES_NAME_EXCEPTION' },
   treeColours: { url: 'json/tree-colours-in-map-pins.json', ram: 'TREE_COLOURS' },
   languages:   { url: 'json/languages.json',        ram: '__LANGS' },
-  login:       { url: 'json/login-credentials.json', ram: '_login', session: 'loginCredentialsV1' },
+  login:       { url: 'json/login-credentials.json', ram: '__login', session: 'loginCredentialsV1' },
   placeholderTexts: { url: 'json/placeholder_text.json', ram: '__PLACEHOLDERS' },
   measurement: { url: null, ram: '__MEASUREMENT' }
 };
@@ -107,7 +107,7 @@ var storage = {
     if (!t) { return EMPTY; }
     lang = lang || 'en';
     var sci = String(t.scientificName || '');
-    var db = storage.get('treeNames') || [];
+    var db = storage.get('treeSpeciesName') || [];
     for (var i = 0; i < db.length; i++) {
       var entry = db[i][sci] || {};
       var names = entry[lang] || entry.en || [];

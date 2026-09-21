@@ -1,6 +1,6 @@
 // dashboard.js — shared dashboard helpers for role pages.
 // Every stat/recent-entry is read from the role config in login-credentials.json
-// (RAM via window._login) and tree detail pulled from RAM via storage.pullTreeDetail.
+// (RAM via window.__login) and tree detail pulled from RAM via storage.pullTreeDetail.
 
 function setStatById(idValue, statValue) {
   var matchingElements = document.querySelectorAll('[id="' + idValue + '"]');
@@ -8,7 +8,7 @@ function setStatById(idValue, statValue) {
 }
 
 function getRoleConfig(roleName) {
-  return (window._login && window._login['tree-login'] && window._login['tree-login'][roleName]) || {};
+  return (window.__login && window.__login['tree-login'] && window.__login['tree-login'][roleName]) || {};
 }
 
 function roleRecentEntries(roleName) {

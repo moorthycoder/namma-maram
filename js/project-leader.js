@@ -15,7 +15,7 @@ function loadCurrentUser() {
     var avatarEl = document.getElementById('user-avatar');
     if (nameEl) nameEl.textContent = role.name;
     if (avatarEl) avatarEl.textContent = role.avatar;
-    window._login = cred;
+    window.__login = cred;
   } catch (e) {}
 }
 loadCurrentUser();
@@ -181,7 +181,7 @@ function goBackFromProjectTrees() {
 }
 
 function openRegisterATreePage() {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try {
     if (!project_leader_role.userId) {
@@ -196,7 +196,7 @@ function openRegisterATreePage() {
 }
 
 function openSurveyATreePage() {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try {
     if (!project_leader_role.userId) {
@@ -211,7 +211,7 @@ function openSurveyATreePage() {
 }
 
 function openAppendTreeName() {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try {
     if (!project_leader_role.userId) {
@@ -233,7 +233,7 @@ function openAppendTreeName() {
 }
 
 function openAppendPlaceName() {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try {
     if (!project_leader_role.userId) {
@@ -255,7 +255,7 @@ function openAppendPlaceName() {
 }
 
 function openAppendProjectName() {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try {
     if (!project_leader_role.userId) {
@@ -277,7 +277,7 @@ function openAppendProjectName() {
 }
 
 function requestTreeForSurvey() {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try {
     if (!project_leader_role.userId) {
@@ -326,7 +326,7 @@ function getCurrentAddedAtStringProjectLeader() {
 }
 
 function projectLeaderRequestATree(form_data) {
-  var login_data = window._login || {};
+  var login_data = window.__login || {};
   var tree_login = login_data['tree-login'] || {};
   var project_leader_role = tree_login['project-leader'] || {};
   var stats = (function () { try { return getRoleConfig('project-leader').stats || {}; } catch (e) { return {}; } })();
@@ -356,7 +356,7 @@ function checkNewProjectLeaderTrees() {
     for (var r = 0; r < ram_data.length; r++) { if (ram_data[r].treeId === tree_id) { pending_trees.push(ram_data[r]); break; } }
   }
   if (pending_trees.length) {
-    var login_data = window._login || {};
+    var login_data = window.__login || {};
     var tree_login = login_data['tree-login'] || {};
     var project_leader_role = tree_login['project-leader'] || {};
     var role_cfg = getRoleConfig('project-leader');
@@ -371,7 +371,7 @@ function checkNewProjectLeaderTrees() {
       if (!already) { submitted_list.push({ treeId: pid, loggedAt: getCurrentAddedAtStringProjectLeader() }); added_count++; }
     }
     role_cfg.stats['survey-requests'].submitted = submitted_list;
-    try { storage.set('login', login_data); window._login = login_data; } catch (e) {}
+    try { storage.set('login', login_data); window.__login = login_data; } catch (e) {}
     sessionStorage.removeItem('projectLeaderSurveyWaiting');
     try { renderProjectLeaderStats(); } catch (e) {}
     if (added_count) setTimeout(function () { if (typeof openProjectLeaderSurveyRequests === 'function') openProjectLeaderSurveyRequests('submitted'); }, 300);
@@ -514,7 +514,7 @@ function openProfile(treeId) {
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent_url)); } catch (e) {}
   var user_id = '';
   try {
-    var login_data = storage.get('login') || window._login || {};
+    var login_data = storage.get('login') || window.__login || {};
     var project_leader_role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
     user_id = project_leader_role.userId || new URLSearchParams(location.search).get('userid') || '';
   } catch (e) {}
@@ -862,7 +862,7 @@ function confirmDeleteProjectLeaderCard() {
     tree_name.submitted = filtered_list;
     stats['tree-name'] = tree_name;
     role_cfg.stats = stats;
-    try { var login_data = window._login || storage.get('login') || {}; login_data['tree-login'] = login_data['tree-login'] || {}; login_data['tree-login']['project-leader'] = role_cfg; storage.set('login', login_data); window._login = login_data; } catch (e) {}
+    try { var login_data = window.__login || storage.get('login') || {}; login_data['tree-login'] = login_data['tree-login'] || {}; login_data['tree-login']['project-leader'] = role_cfg; storage.set('login', login_data); window.__login = login_data; } catch (e) {}
     try { renderProjectLeaderStats(); } catch (e) {}
     var target_el = document.getElementById('project-leader-tree-name-submitted-cards');
     if (target_el) target_el.innerHTML = filtered_list.length ? filtered_list.map(function (e) { return projectLeaderTreeNameCardHtml(e, true); }).join('') : '';
@@ -878,7 +878,7 @@ function confirmDeleteProjectLeaderCard() {
     place_name.submitted = filtered_list2;
     stats2['place-name'] = place_name;
     role_cfg2.stats = stats2;
-    try { var login_data2 = window._login || storage.get('login') || {}; login_data2['tree-login'] = login_data2['tree-login'] || {}; login_data2['tree-login']['project-leader'] = role_cfg2; storage.set('login', login_data2); window._login = login_data2; } catch (e) {}
+    try { var login_data2 = window.__login || storage.get('login') || {}; login_data2['tree-login'] = login_data2['tree-login'] || {}; login_data2['tree-login']['project-leader'] = role_cfg2; storage.set('login', login_data2); window.__login = login_data2; } catch (e) {}
     try { renderProjectLeaderStats(); } catch (e) {}
     var target_el2 = document.getElementById('project-leader-place-name-submitted-cards');
     if (target_el2) target_el2.innerHTML = filtered_list2.length ? filtered_list2.map(function (e) { return projectLeaderPlaceNameCardHtml(e, true); }).join('') : '';
@@ -894,7 +894,7 @@ function confirmDeleteProjectLeaderCard() {
     project_name.submitted = filtered_list_proj;
     stats_proj['project-name'] = project_name;
     role_cfg_proj.stats = stats_proj;
-    try { var login_data_proj = window._login || storage.get('login') || {}; login_data_proj['tree-login'] = login_data_proj['tree-login'] || {}; login_data_proj['tree-login']['project-leader'] = role_cfg_proj; storage.set('login', login_data_proj); window._login = login_data_proj; } catch (e) {}
+    try { var login_data_proj = window.__login || storage.get('login') || {}; login_data_proj['tree-login'] = login_data_proj['tree-login'] || {}; login_data_proj['tree-login']['project-leader'] = role_cfg_proj; storage.set('login', login_data_proj); window.__login = login_data_proj; } catch (e) {}
     try { renderProjectLeaderStats(); } catch (e) {}
     var target_el_proj = document.getElementById('project-leader-project-name-submitted-cards');
     if (target_el_proj) target_el_proj.innerHTML = filtered_list_proj.length ? filtered_list_proj.map(function (e) { return projectLeaderProjectNameCardHtml(e, true); }).join('') : '';
@@ -913,7 +913,7 @@ function confirmDeleteProjectLeaderCard() {
     survey_req.approved = filtered_approved3;
     stats3['survey-requests'] = survey_req;
     role_cfg3.stats = stats3;
-    try { var login_data3 = window._login || storage.get('login') || {}; login_data3['tree-login'] = login_data3['tree-login'] || {}; login_data3['tree-login']['project-leader'] = role_cfg3; storage.set('login', login_data3); window._login = login_data3; } catch (e) {}
+    try { var login_data3 = window.__login || storage.get('login') || {}; login_data3['tree-login'] = login_data3['tree-login'] || {}; login_data3['tree-login']['project-leader'] = role_cfg3; storage.set('login', login_data3); window.__login = login_data3; } catch (e) {}
     try { renderProjectLeaderStats(); } catch (e) {}
     var active_el = document.querySelector('.page.active');
     var active_id = active_el ? active_el.id : '';
@@ -937,7 +937,7 @@ function confirmDeleteProjectLeaderCard() {
     reg_log.submitted = filtered_list4;
     stats4['register-log'] = reg_log;
     role_cfg4.stats = stats4;
-    try { var login_data4 = window._login || storage.get('login') || {}; login_data4['tree-login'] = login_data4['tree-login'] || {}; login_data4['tree-login']['project-leader'] = role_cfg4; storage.set('login', login_data4); window._login = login_data4; } catch (e) {}
+    try { var login_data4 = window.__login || storage.get('login') || {}; login_data4['tree-login'] = login_data4['tree-login'] || {}; login_data4['tree-login']['project-leader'] = role_cfg4; storage.set('login', login_data4); window.__login = login_data4; } catch (e) {}
     try { renderProjectLeaderStats(); } catch (e) {}
     var map4 = {}; filtered_list4.forEach(function (e) { if (e.treeId) map4[e.treeId] = e.loggedAt || ''; });
     var ids4 = filtered_list4.map(function (e) { return e.treeId || e; }).filter(Boolean);
@@ -951,7 +951,7 @@ function confirmDeleteProjectLeaderCard() {
     tiles_my.current = filtered_current;
     role_cfg5.tiles = role_cfg5.tiles || {};
     role_cfg5.tiles['my-trees'] = tiles_my;
-    try { var login_data5 = window._login || storage.get('login') || {}; login_data5['tree-login'] = login_data5['tree-login'] || {}; login_data5['tree-login']['project-leader'] = role_cfg5; storage.set('login', login_data5); window._login = login_data5; } catch (e) {}
+    try { var login_data5 = window.__login || storage.get('login') || {}; login_data5['tree-login'] = login_data5['tree-login'] || {}; login_data5['tree-login']['project-leader'] = role_cfg5; storage.set('login', login_data5); window.__login = login_data5; } catch (e) {}
     try { renderProjectLeaderStats(); } catch (e) {}
     var map5 = {}; filtered_current.forEach(function (e) { if (e.treeId) map5[e.treeId] = e.addedAt || ''; });
     var ids5 = filtered_current.map(function (e) { return e.treeId || e; }).filter(Boolean);
@@ -966,7 +966,7 @@ function confirmDeleteProjectLeaderCard() {
     log_data.submitted = filtered_list6;
     stats6['survey-log'] = log_data;
     role_cfg6.stats = stats6;
-    try { var login_data6 = window._login || storage.get('login') || {}; login_data6['tree-login'] = login_data6['tree-login'] || {}; login_data6['tree-login']['project-leader'] = role_cfg6; storage.set('login', login_data6); window._login = login_data6; } catch (e) {}
+    try { var login_data6 = window.__login || storage.get('login') || {}; login_data6['tree-login'] = login_data6['tree-login'] || {}; login_data6['tree-login']['project-leader'] = role_cfg6; storage.set('login', login_data6); window.__login = login_data6; } catch (e) {}
     try { renderProjectLeaderStats(); } catch (e) {}
     var map6 = {}; filtered_list6.forEach(function (e) { if (e.treeId) map6[e.treeId] = e.loggedAt || ''; });
     var ids6 = filtered_list6.map(function (e) { return e.treeId || e; }).filter(Boolean);
@@ -1370,7 +1370,7 @@ function projectLeaderLogCardWrapper(t,at,hide,cls){ var h=projectLeaderLogCardH
 function projectLeaderTreeNameCardWrapper(e,sub){ var h=projectLeaderTreeNameCardHtml(e,sub); return h.replace('project-leader-card','project-leader-card '+(sub?'project-leader-tree-submitted-card':'project-leader-tree-approved-card')); }
 function projectLeaderPlaceNameCardWrapper(e,sub){ var h=projectLeaderPlaceNameCardHtml(e,sub); return h.replace('project-leader-card','project-leader-card '+(sub?'project-leader-place-submitted-card':'project-leader-place-approved-card')); }
 function projectLeaderSurveyTree(treeId) {
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var role = (login_data['tree-login'] && login_data['tree-login']['project-leader']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['project-leader']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var active_el = document.querySelector('.page.active');
@@ -1460,8 +1460,8 @@ function loadDashboard() {
   window.__TREE_DATA = ram_data;
   albumData = Array.isArray(ram_data) ? ram_data : (ram_data.albumData || []);
   try {
-    var login_data = storage.get('login') || window._login || {};
-    if (login_data && login_data['tree-login']) { window._login = login_data; }
+    var login_data = storage.get('login') || window.__login || {};
+    if (login_data && login_data['tree-login']) { window.__login = login_data; }
   } catch (e) {}
   applyFilters();
   renderRoleCards('page-trees-cards', 'project-leader', { verb: 'logged', showLatest: false, showTodo: false, btn2: 'profile', addrMode: 'short' });
@@ -1638,7 +1638,7 @@ else if (hubMode === 'trees') { goTo('trees'); }
 else { window.location.href = 'login-hub.html'; }
 
 function loginCheckProjectLeader() {
-  var _r = window._login || null;
+  var _r = window.__login || null;
   if (_r && _r['tree-login'] && _r['tree-login']['project-leader'] && _r['tree-login']['project-leader'].loggedIn) {
     return true;
   }

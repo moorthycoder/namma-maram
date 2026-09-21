@@ -69,10 +69,10 @@
     var lang = appLang || getAppLang();
     function nameOf(nv) { return Array.isArray(nv) ? (nv[0] || '') : (nv || ''); }
     var sci = record.scientificName || '';
-    var db = (window.TREE_NAMES_DB || []);
+    var tree_species_name_db = (window.__TREE_SPECIES_NAME || []);
     var common_names = [];
-    for (var di = 0; di < db.length; di++) {
-      var entry = db[di][sci] || {};
+    for (var di = 0; di < tree_species_name_db.length; di++) {
+      var entry = tree_species_name_db[di][sci] || {};
       if (entry[lang] && Array.isArray(entry[lang]) && entry[lang].length) { common_names = entry[lang]; break; }
       if (entry.en && Array.isArray(entry.en) && entry.en.length) { common_names = entry.en; break; }
     }

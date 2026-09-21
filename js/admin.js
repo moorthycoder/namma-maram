@@ -15,7 +15,7 @@ function loadCurrentUser() {
     var avatarEl = document.getElementById('user-avatar');
     if (nameEl) nameEl.textContent = role.name;
     if (avatarEl) avatarEl.textContent = role.avatar;
-    window._login = cred;
+    window.__login = cred;
   } catch (e) {}
 }
 loadCurrentUser();
@@ -281,7 +281,7 @@ function openProfile(treeId) {
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent)); } catch (e) {}
   var userid = '';
   try {
-    var login = storage.get('login') || window._login || {};
+    var login = storage.get('login') || window.__login || {};
     var role = (login['tree-login'] && login['tree-login']['admin']) || {};
     userid = role.userId || new URLSearchParams(location.search).get('userid') || '';
   } catch (e) {}

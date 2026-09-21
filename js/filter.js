@@ -519,7 +519,7 @@ window.render = {
     __PLACES = storage.get('places') || [];
     storage.syncTreeCards();
     window.TREE_COLOURS = storage.get('treeColours') || [];
-    window._login = storage.get('login') || {};
+    window.__login = storage.get('login') || {};
     filterLang = appLang;
     (function() {
       var qp_hero = new URLSearchParams(location.search);

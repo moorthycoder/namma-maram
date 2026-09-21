@@ -26,7 +26,7 @@ function caregiverCardAddr(t) {
 }
 
 function loginCheckCaregiver() {
-  var r = window._login || null;
+  var r = window.__login || null;
   if (r && r['tree-login'] && r['tree-login']['care-giver'] && r['tree-login']['care-giver'].loggedIn) {
     return true;
   }
@@ -44,7 +44,7 @@ function loadCurrentUser() {
     var avatarEl = document.getElementById('user-avatar');
     if (nameEl) nameEl.textContent = role.name;
     if (avatarEl) avatarEl.textContent = role.avatar;
-    window._login = cred;
+    window.__login = cred;
   } catch (e) {}
 }
 loadCurrentUser();
@@ -56,7 +56,7 @@ function checkNewCaregiverTrees() {
   try { var arr = JSON.parse(caregiver_waiting_str); if (Array.isArray(arr)) new_ids = arr.filter(function(e){ return typeof e === 'string' && e; }); } catch (e) { new_ids = []; }
   if (!new_ids.length) return [];
   try {
-    var _login_chk = storage.get('login') || window._login || null;
+    var _login_chk = storage.get('login') || window.__login || null;
     if (!_login_chk) { var _s = sessionStorage.getItem('loginCredentialsV1'); if (_s) _login_chk = JSON.parse(_s); }
     var _caregiver_chk = _login_chk && _login_chk['tree-login'] && _login_chk['tree-login']['care-giver'];
     if (!_caregiver_chk || !_caregiver_chk.userId) {
@@ -92,7 +92,7 @@ function updateWaitingListFromPendingCaregiver() {
   } catch (e) { console.log('[caregiver] updateWaitingListFromPendingCaregiver error', e); goTo('care-giver-dash'); return false; }
 }
 function isTreeIdAlreadyInCaregiverLists(check_tree_id) {
-  var login_data = window._login || {};
+  var login_data = window.__login || {};
   var tree_login = login_data['tree-login'] || {};
   var caregiver_role = tree_login['care-giver'] || {};
   var caregiver_cards = caregiver_role.cards || {};
@@ -309,7 +309,7 @@ function openProfile(treeId) {
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent_url)); } catch (e) {}
   var user_id = '';
   try {
-    var login_data = storage.get('login') || window._login || {};
+    var login_data = storage.get('login') || window.__login || {};
     var caregiver_role = (login_data['tree-login'] && login_data['tree-login']['care-giver']) || {};
     user_id = caregiver_role.userId || new URLSearchParams(location.search).get('userid') || '';
   } catch (e) {}
@@ -338,7 +338,7 @@ function openTreeMapById(id) {
 
 function caregiverATree(f) {
   console.log('[caregiver] caregiverATree called', f);
-  var login = window._login || (window._login = {});
+  var login = window.__login || (window.__login = {});
   var tl = login['tree-login'] || (login['tree-login'] = {});
   var role = tl['care-giver'] || (tl['care-giver'] = {});
   var cards = role.cards || (role.cards = {});
@@ -427,7 +427,7 @@ function getSortedWaitingList(waiting_list, sort_order) {
 function openCaregiverWaitingRequests() {
   var titleEl = document.getElementById('swaiting-page-title');
   if (titleEl) titleEl.textContent = 'Caregiver request';
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   var waiting_raw = (role.cards || {}).waiting || [];
   var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
   var ids = sorted_waiting.map(function(e){ return e.treeId; });
@@ -577,7 +577,7 @@ function caregiverFinishedCardHtml(t) {
 }
 function caregiverCardHtml(t) { return caregiverSubmittedCardHtml(t); }
 function removeCaregiverCard(remove_tree_id) {
-  var login_data = window._login || {};
+  var login_data = window.__login || {};
   var tree_login = login_data['tree-login'] || {};
   var caregiver_role = tree_login['care-giver'] || {};
   var caregiver_cards = caregiver_role.cards || {};
@@ -613,7 +613,7 @@ function confirmDeleteCard() {
     var log_key = pending_caregiver_log_key;
     pending_caregiver_log_type = '';
     pending_caregiver_log_key = '';
-    var login_data = window._login || storage.get('login') || {};
+    var login_data = window.__login || storage.get('login') || {};
     var caregiver_role = (login_data['tree-login'] && login_data['tree-login']['care-giver']) || {};
     var cards = caregiver_role.cards || {};
     var log_list = (cards[log_type] && cards[log_type].submitted) || [];
@@ -622,7 +622,7 @@ function confirmDeleteCard() {
     caregiver_role.cards = cards;
     login_data['tree-login'] = login_data['tree-login'] || {};
     login_data['tree-login']['care-giver'] = caregiver_role;
-    try { storage.set('login', login_data); window._login = login_data; } catch (e) {}
+    try { storage.set('login', login_data); window.__login = login_data; } catch (e) {}
     try { var is_survey = log_type === 'survey-log'; setStatById(is_survey ? 'c-survey-log-submitted' : 'c-register-log-submitted', filtered.length); } catch (e) {}
     renderCaregiverLogs(log_type, 'submitted');
     return;
@@ -637,7 +637,7 @@ function cancelDeleteCard() {
 }
 function renderCaregiverCards() {
   var data = window.__TREE_DATA || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   var cards = role.cards || {};
   var current_raw = cards.current || [];
   var past_raw = cards.past || [];
@@ -671,7 +671,7 @@ function consumePendingCaregiverRequest() {
     console.log('[caregiver] consumePendingCaregiver raw', raw);
     if (!raw) return false;
     var pending = JSON.parse(raw);
-    var login = storage.get('login') || window._login || {};
+    var login = storage.get('login') || window.__login || {};
     var tl = login['tree-login'] || (login['tree-login'] = {});
     var changed = false;
     for (var userid in pending) {
@@ -692,7 +692,7 @@ function consumePendingCaregiverRequest() {
         cards.waiting = waiting; target.cards = cards; tl[target_key] = target;
       } else { console.log('[caregiver] no target for userid', userid); }
     }
-    if (changed) { login['tree-login'] = tl; storage.set('login', login); window._login = login; console.log('[caregiver] saved login', login); }
+    if (changed) { login['tree-login'] = tl; storage.set('login', login); window.__login = login; console.log('[caregiver] saved login', login); }
     sessionStorage.removeItem('pendingCare');
     console.log('[caregiver] consume done changed', changed);
     return changed;
@@ -700,7 +700,7 @@ function consumePendingCaregiverRequest() {
 }
 function updateChecksThisMonthStats() {
   var data = window.__TREE_DATA || storage.get('treeCards') || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   var cards = role.cards || {};
   var currentIds = (cards.current || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; });
   var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }) : data.filter(function (t) { return t.roles && t.roles.indexOf('care-giver') > -1; });
@@ -807,7 +807,7 @@ function openNextCheckTree() {
   try { sessionStorage.removeItem('caregiverNextDueSingle'); } catch (e) {}
   if (window._nextCheckTreeId && typeof openProfile === 'function') { openProfile(window._nextCheckTreeId); return; }
   var data = window.__TREE_DATA || storage.get('treeCards') || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   var cards = role.cards || {};
   var currentIds = (cards.current || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; });
   var currentList = currentIds.length ? data.filter(function(t){ return currentIds.indexOf(t.treeId) > -1; }) : data.filter(function(t){ return t.roles && t.roles.indexOf('care-giver') > -1; });
@@ -828,7 +828,7 @@ function renderCaregiverNextDueSingleCard(single_tid) {
   var ram = storage.get('treeCards') || window.__TREE_DATA || [];
   var t = null; for (var i = 0; i < ram.length; i++) if (ram[i].treeId === single_tid) { t = ram[i]; break; }
   if (!t) return false;
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var cards = ((login_data['tree-login'] && login_data['tree-login']['care-giver']) || {}).cards || {};
   var sorted = getSortedWaitingList(cards.current || [], 'desc'); var m = {}; sorted.forEach(function(e){ if(e && e.treeId) m[e.treeId] = e.addedAt; });
   var c = {}; for (var k in t) c[k] = t[k]; c.addedAt = m[single_tid] || ''; c.isDueCard = true;
@@ -864,7 +864,7 @@ function loadDashboard() {
   updateChecksThisMonthStats();
   var new_caregiver_ids = checkNewCaregiverTrees();
   setStatById('c-care-seeing', new_caregiver_ids.length);
-  var dash_role = (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var dash_role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   var dash_register = dash_role.cards && dash_role.cards["register-log"];
   var dash_survey = dash_role.cards && dash_role.cards["survey-log"];
   var register_approved = (dash_register && Array.isArray(dash_register.approved)) ? dash_register.approved : [];
@@ -891,7 +891,7 @@ window.render = {
     var had_pending = false;
     if (hubMode === 'care-giver-dash' || hubMode === 'care-giver-waiting') { had_pending = consumePendingCaregiverRequest(); }
     loadDashboard();
-    var role = (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+    var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
     var cards = role.cards || {};
     if (had_pending) { openCaregiverWaitingRequests(); restoreHubScrollPosition(saved_scroll); return; }
     if (hubMode === 'care-giver-waiting') { openCaregiverWaitingRequests(); }
@@ -947,8 +947,8 @@ function renderRoleCards(target, role, cfg) {
 }
 
 function openTreePool() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['care-giver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var cards = role.cards || {};
   var caregiver_waiting = []; try { caregiver_waiting = JSON.parse(sessionStorage.getItem('caregiverWaiting') || '[]'); } catch (e) {}
@@ -971,8 +971,8 @@ function openTreePool() {
   window.location.href = target_url;
 }
 function openSurveyATreePage() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['care-giver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('care-giver.html?hub=care-giver-dash');
   var userid = role.userId || '';
@@ -980,8 +980,8 @@ function openSurveyATreePage() {
   window.location.href = url;
 }
 function surveyDueTree(treeId) {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['care-giver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var active_el = document.querySelector('.page.active');
   var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
@@ -994,8 +994,8 @@ function surveyDueTree(treeId) {
   window.location.href = target_url;
 }
 function openRegisterATreePage() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['care-giver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('care-giver.html?hub=care-giver-dash');
   var userid = role.userId || '';
@@ -1003,8 +1003,8 @@ function openRegisterATreePage() {
   window.location.href = url;
 }
 function openLogsPage() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window._login && window._login['tree-login'] && window._login['tree-login']['care-giver']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['care-giver']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['care-giver']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['care-giver']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('care-giver.html?hub=care-giver-dash');
   var userid = role.userId || '';
@@ -1023,7 +1023,7 @@ function renderCaregiverLogs(logType, status) {
   var type = (status === 'submitted') ? 'submitted' : 'approved';
   var list_el = document.getElementById(type === 'submitted' ? 'caregiver-logs-submitted-list' : 'caregiver-logs-approved-list');
   var empty_el = document.getElementById(type === 'submitted' ? 'caregiver-logs-submitted-empty' : 'caregiver-logs-approved-empty');
-  var login = storage.get('login') || window._login || {};
+  var login = storage.get('login') || window.__login || {};
   var caregiver_cards = ((login['tree-login'] && login['tree-login']['care-giver'] && login['tree-login']['care-giver'].cards) || {});
   var logs = (caregiver_cards[typeKey] && caregiver_cards[typeKey][type]) || [];
   if (!list_el) return 0;

@@ -122,10 +122,10 @@ function searchByProjectName(project_name, card_file, lookup_file) {
 function profileCardPanelCardHtml(card, lang_key) {
   var esc = function(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); };
   var sci = card.scientificName || '';
-  var db = (typeof TREE_NAMES_DB !== 'undefined' && TREE_NAMES_DB) || [];
+  var tree_species_name_db = (typeof __TREE_SPECIES_NAME !== 'undefined' && __TREE_SPECIES_NAME) || [];
   var names_list = [];
-  for (var i = 0; i < db.length; i++) {
-    var names = db[i][sci] || {};
+  for (var i = 0; i < tree_species_name_db.length; i++) {
+    var names = tree_species_name_db[i][sci] || {};
     var n = names[lang_key] || names.en || [];
     if (Array.isArray(n) && n.length) { names_list = n; break; }
   }
@@ -191,9 +191,9 @@ function loadSummaryPanel(tree_ids) {
     total++;
     var sci = c.scientificName || '';
     var name = sci;
-    var db = (typeof TREE_NAMES_DB !== 'undefined' && TREE_NAMES_DB) || [];
-    for (var i = 0; i < db.length; i++) {
-      var names = db[i][sci] || {};
+    var tree_species_name_db = (typeof __TREE_SPECIES_NAME !== 'undefined' && __TREE_SPECIES_NAME) || [];
+    for (var i = 0; i < tree_species_name_db.length; i++) {
+      var names = tree_species_name_db[i][sci] || {};
 var n = names[lang_key] || names.en || [];
       if (Array.isArray(n) && n.length) { name = n.join(', '); var first_name = n[0]; break; }
     }
@@ -266,7 +266,7 @@ function runSearch() {
   var tree_ids = null;
   if (qt) {
     var set2 = {};
-    searchBySpeciesName(qt, card_file, TREE_NAMES_DB || []).forEach(function (id) { set2[id] = 1; });
+    searchBySpeciesName(qt, card_file, (typeof __TREE_SPECIES_NAME !== 'undefined' && __TREE_SPECIES_NAME) || []).forEach(function (id) { set2[id] = 1; });
     tree_ids = set2;
   }
 
@@ -389,7 +389,7 @@ function populateTreeSuggestions() {
     seen[value] = 1;
     __TREE_SUGGESTIONS.push({ value: value, label: value });
   }
-  (typeof TREE_NAMES_DB !== 'undefined' ? TREE_NAMES_DB : []).forEach(function (entry) {
+  (typeof __TREE_SPECIES_NAME !== 'undefined' ? __TREE_SPECIES_NAME : []).forEach(function (entry) {
     var sci = Object.keys(entry)[0];
     var names = entry[sci] || {};
     var n = names[lang_key] || names.en || [];
@@ -460,7 +460,7 @@ window.render = {
     __PLACES = storage.get('places') || [];
     storage.syncTreeCards();
     window.TREE_COLOURS = storage.get('treeColours') || [];
-    window._login = storage.get('login') || {};
+    window.__login = storage.get('login') || {};
     filterLang = appLang;
     var qp = new URLSearchParams(location.search);
     var userid = (qp.get('userid') || qp.get('role') || '').trim();

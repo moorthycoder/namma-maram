@@ -28,7 +28,7 @@ function injectAppendTreeCSS() {
 function appendTreeName(treeName) {
   var botanicalName = (treeName.scientificName || '').trim();
   var langs = storage.get('languages') || [];
-  var db = storage.get('treeNames') || [];
+  var db = storage.get('treeSpeciesName') || [];
   var match_i = -1;
   for (var i = 0; i < db.length; i++) {
     if (Object.prototype.hasOwnProperty.call(db[i], botanicalName)) { match_i = i; break; }
@@ -47,7 +47,7 @@ function appendTreeName(treeName) {
       db[match_i][botanicalName][l.code] = cur;
     });
   }
-  storage.commit('treeNames', db);
+  storage.commit('treeSpeciesName', db);
   return match_i === -1 ? db[db.length - 1] : db[match_i];
 }
 
@@ -173,7 +173,7 @@ function appendTreeNameToDatabase() {
           try{ var u=(login['tree-login'].surveyor.userId||'SVY2612345678'); entry.updatedBy=u; }catch(e){}
           tn.submitted=tn.submitted||[]; tn.submitted.push(entry);
           try{ sessionStorage.setItem('loginCredentialsV1', JSON.stringify(login)); }catch(e){}
-          try{ if(window.parent&&window.parent!==window&&window.parent._login) window.parent._login=login; window._login=login; if(typeof storage!=='undefined'&&storage.set) storage.set('login', login); }catch(e){}
+          try{ if(window.parent&&window.parent!==window&&window.parent.__login) window.parent.__login=login; window.__login=login; if(typeof storage!=='undefined'&&storage.set) storage.set('login', login); }catch(e){}
         } else {
           appendAndRecordTreeName(payload);
         }
@@ -210,7 +210,7 @@ function appendAndRecordTreeName(payload) {
     tree_name_stats.submitted.push(recorded_entry);
     login['tree-login'].surveyor.stats['tree-name'] = tree_name_stats;
     try { sessionStorage.setItem('loginCredentialsV1', JSON.stringify(login)); } catch (e) {}
-    try { if (window.parent && window.parent !== window && window.parent._login) window.parent._login = login; window._login = login; if (typeof storage !== 'undefined' && storage.set) storage.set('login', login); } catch (e) {}
+    try { if (window.parent && window.parent !== window && window.parent.__login) window.parent.__login = login; window.__login = login; if (typeof storage !== 'undefined' && storage.set) storage.set('login', login); } catch (e) {}
   } catch (e) {}
   return true;
 }

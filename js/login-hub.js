@@ -15,7 +15,7 @@ var current_login_role = '';
 
 function getUserCredentialsByRole(role, phone) {
   var login_data = null;
-  try { login_data = (window.storage && storage.get('login')) || window._login || null; } catch (e) {}
+  try { login_data = (window.storage && storage.get('login')) || window.__login || null; } catch (e) {}
   if (!login_data) { return null; }
   var tl = login_data['tree-login'] || {};
   var cred = tl[role] || null;
@@ -26,7 +26,7 @@ function getUserCredentialsByRole(role, phone) {
 
 function getRoleByPhone(phone) {
   var login_data = null;
-  try { login_data = (window.storage && storage.get('login')) || window._login || null; } catch (e) {}
+  try { login_data = (window.storage && storage.get('login')) || window.__login || null; } catch (e) {}
   if (!login_data) { return null; }
   var tl = login_data['tree-login'] || {};
   var normalized = stringifyPhone(phone);

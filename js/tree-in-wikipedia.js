@@ -1,7 +1,7 @@
 // tree-in-wikipedia.js — open the tree species on Wikipedia from a tree profile.
 
 function getWikipediaUrlForSnEn(sn) {
-  var exceptions = window.TREE_SPECIES_NAME_EXCEPTION || storage.get('treeSpeciesNameException') || [];
+  var exceptions = window.__TREE_SPECIES_NAME_EXCEPTION || storage.get('treeSpeciesNameException') || [];
   var map = {};
   exceptions.forEach(function (e) { if (e && e.sn) { map[e.sn] = e.wikipedia; } });
   var title = map[sn] || String(sn || '').trim().replace(/\s+/g, '_');
@@ -10,10 +10,10 @@ function getWikipediaUrlForSnEn(sn) {
 
 function getWikipediaUrlForOtherLang(sn, lang) {
   if (!sn || !lang) return '';
-  var tree_names_db = window.TREE_NAMES_DB || storage.get('treeNames') || [];
+  var tree_species_name_db = window.__TREE_SPECIES_NAME || storage.get('treeSpeciesName') || [];
   var first_name = '';
-  for (var i = 0; i < tree_names_db.length; i++) {
-    var entry = tree_names_db[i] || {};
+  for (var i = 0; i < tree_species_name_db.length; i++) {
+    var entry = tree_species_name_db[i] || {};
     var species_data = entry[sn];
     if (species_data && species_data[lang]) {
       var lang_names = species_data[lang];

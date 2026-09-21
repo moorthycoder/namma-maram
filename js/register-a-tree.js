@@ -366,10 +366,10 @@ function clearRegisterScientificName() {
 }
 
 function registerScientificNamePool() {
-  var tree_names_db = window.storage ? (storage.get('treeNames') || []) : [];
+  var tree_species_name_db = window.storage ? (storage.get('treeSpeciesName') || []) : [];
   var species_pool = [];
-  for (var db_i = 0; db_i < tree_names_db.length; db_i++) {
-    var entry_keys = Object.keys(tree_names_db[db_i]);
+  for (var db_i = 0; db_i < tree_species_name_db.length; db_i++) {
+    var entry_keys = Object.keys(tree_species_name_db[db_i]);
     for (var key_i = 0; key_i < entry_keys.length; key_i++) {
       if (entry_keys[key_i] !== 'variety') { species_pool.push(entry_keys[key_i]); }
     }

@@ -139,7 +139,7 @@ function appendProjectNameToDatabase() {
     project_name_stats.submitted.push(recorded_entry);
     login['tree-login']['project-leader'].stats['project-name'] = project_name_stats;
     try { sessionStorage.setItem('loginCredentialsV1', JSON.stringify(login)); } catch (e) {}
-    try { if (window.parent && window.parent !== window && window.parent._login) window.parent._login = login; window._login = login; if (typeof storage !== 'undefined' && storage.set) storage.set('login', login); } catch (e) {}
+    try { if (window.parent && window.parent !== window && window.parent.__login) window.parent.__login = login; window.__login = login; if (typeof storage !== 'undefined' && storage.set) storage.set('login', login); } catch (e) {}
   } catch (e) {}
   goTo('append-project-success');
 }

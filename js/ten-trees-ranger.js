@@ -26,7 +26,7 @@ function tenTreesRangerCardAddr(t) {
 }
 
 function loginCheckTenTreesRanger() {
-  var r = window._login || null;
+  var r = window.__login || null;
   if (r && r['tree-login'] && r['tree-login']['ten-trees-ranger'] && r['tree-login']['ten-trees-ranger'].loggedIn) {
     return true;
   }
@@ -44,7 +44,7 @@ function loadCurrentUser() {
     var avatarEl = document.getElementById('user-avatar');
     if (nameEl) nameEl.textContent = role.name;
     if (avatarEl) avatarEl.textContent = role.avatar;
-    window._login = cred;
+    window.__login = cred;
   } catch (e) {}
 }
 loadCurrentUser();
@@ -56,7 +56,7 @@ function checkNewTenTreesRangerTrees() {
   try { var arr = JSON.parse(ten_trees_ranger_waiting_str); if (Array.isArray(arr)) new_ids = arr.filter(function(e){ return typeof e === 'string' && e; }); } catch (e) { new_ids = []; }
   if (!new_ids.length) return [];
   try {
-    var _login_chk = storage.get('login') || window._login || null;
+    var _login_chk = storage.get('login') || window.__login || null;
     if (!_login_chk) { var _s = sessionStorage.getItem('loginCredentialsV1'); if (_s) _login_chk = JSON.parse(_s); }
     var _ten_trees_ranger_chk = _login_chk && _login_chk['tree-login'] && _login_chk['tree-login']['ten-trees-ranger'];
     if (!_ten_trees_ranger_chk || !_ten_trees_ranger_chk.userId) {
@@ -92,7 +92,7 @@ function updateWaitingListFromPendingTenTreesRanger() {
   } catch (e) { console.log('[ten-trees-ranger] updateWaitingListFromPendingTenTreesRanger error', e); goTo('ten-trees-ranger-dash'); return false; }
 }
 function isTreeIdAlreadyInTenTreesRangerLists(check_tree_id) {
-  var login_data = window._login || {};
+  var login_data = window.__login || {};
   var tree_login = login_data['tree-login'] || {};
   var ten_trees_ranger_role = tree_login['ten-trees-ranger'] || {};
   var ten_trees_ranger_cards = ten_trees_ranger_role.cards || {};
@@ -309,7 +309,7 @@ function openProfile(treeId) {
   try { sessionStorage.setItem('gobackFromTreeProfile', decodeURIComponent(parent_url)); } catch (e) {}
   var user_id = '';
   try {
-    var login_data = storage.get('login') || window._login || {};
+    var login_data = storage.get('login') || window.__login || {};
     var ten_trees_ranger_role = (login_data['tree-login'] && login_data['tree-login']['ten-trees-ranger']) || {};
     user_id = ten_trees_ranger_role.userId || new URLSearchParams(location.search).get('userid') || '';
   } catch (e) {}
@@ -338,7 +338,7 @@ function openTreeMapById(id) {
 
 function tenTreesRangerATree(f) {
   console.log('[ten-trees-ranger] tenTreesRangerATree called', f);
-  var login = window._login || (window._login = {});
+  var login = window.__login || (window.__login = {});
   var tl = login['tree-login'] || (login['tree-login'] = {});
   var role = tl['ten-trees-ranger'] || (tl['ten-trees-ranger'] = {});
   var cards = role.cards || (role.cards = {});
@@ -427,7 +427,7 @@ function getSortedWaitingList(waiting_list, sort_order) {
 function openTenTreesRangerWaitingRequests() {
   var titleEl = document.getElementById('swaiting-page-title');
   if (titleEl) titleEl.textContent = 'TenTreesRanger request';
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   var waiting_raw = (role.cards || {}).waiting || [];
   var sorted_waiting = getSortedWaitingList(waiting_raw, 'desc');
   var ids = sorted_waiting.map(function(e){ return e.treeId; });
@@ -578,7 +578,7 @@ function tenTreesRangerFinishedCardHtml(t) {
 }
 function tenTreesRangerCardHtml(t) { return tenTreesRangerSubmittedCardHtml(t); }
 function removeTenTreesRangerCard(remove_tree_id) {
-  var login_data = window._login || {};
+  var login_data = window.__login || {};
   var tree_login = login_data['tree-login'] || {};
   var ten_trees_ranger_role = tree_login['ten-trees-ranger'] || {};
   var ten_trees_ranger_cards = ten_trees_ranger_role.cards || {};
@@ -614,7 +614,7 @@ function confirmDeleteCard() {
     var log_key = pending_ten_trees_ranger_log_key;
     pending_ten_trees_ranger_log_type = '';
     pending_ten_trees_ranger_log_key = '';
-    var login_data = window._login || storage.get('login') || {};
+    var login_data = window.__login || storage.get('login') || {};
     var ten_trees_ranger_role = (login_data['tree-login'] && login_data['tree-login']['ten-trees-ranger']) || {};
     var cards = ten_trees_ranger_role.cards || {};
     var log_list = (cards[log_type] && cards[log_type].submitted) || [];
@@ -623,7 +623,7 @@ function confirmDeleteCard() {
     ten_trees_ranger_role.cards = cards;
     login_data['tree-login'] = login_data['tree-login'] || {};
     login_data['tree-login']['ten-trees-ranger'] = ten_trees_ranger_role;
-    try { storage.set('login', login_data); window._login = login_data; } catch (e) {}
+    try { storage.set('login', login_data); window.__login = login_data; } catch (e) {}
     try { var is_survey = log_type === 'survey-log'; setStatById(is_survey ? 'ttr-survey-log-submitted' : 'ttr-register-log-submitted', filtered.length); } catch (e) {}
     renderTenTreesRangerLogs(log_type, 'submitted');
     return;
@@ -638,7 +638,7 @@ function cancelDeleteCard() {
 }
 function renderTenTreesRangerCards() {
   var data = window.__TREE_DATA || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   var cards = role.cards || {};
   var current_raw = cards.current || [];
   var past_raw = cards.past || [];
@@ -672,7 +672,7 @@ function consumePendingTenTreesRangerRequest() {
     console.log('[ten-trees-ranger] consumePendingTenTreesRanger raw', raw);
     if (!raw) return false;
     var pending = JSON.parse(raw);
-    var login = storage.get('login') || window._login || {};
+    var login = storage.get('login') || window.__login || {};
     var tl = login['tree-login'] || (login['tree-login'] = {});
     var changed = false;
     for (var userid in pending) {
@@ -693,7 +693,7 @@ function consumePendingTenTreesRangerRequest() {
         cards.waiting = waiting; target.cards = cards; tl[target_key] = target;
       } else { console.log('[ten-trees-ranger] no target for userid', userid); }
     }
-    if (changed) { login['tree-login'] = tl; storage.set('login', login); window._login = login; console.log('[ten-trees-ranger] saved login', login); }
+    if (changed) { login['tree-login'] = tl; storage.set('login', login); window.__login = login; console.log('[ten-trees-ranger] saved login', login); }
     sessionStorage.removeItem('pendingCare');
     console.log('[ten-trees-ranger] consume done changed', changed);
     return changed;
@@ -701,7 +701,7 @@ function consumePendingTenTreesRangerRequest() {
 }
 function updateChecksThisMonthStats() {
   var data = window.__TREE_DATA || storage.get('treeCards') || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   var cards = role.cards || {};
   var currentIds = (cards.current || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; });
   var currentList = currentIds.length ? data.filter(function (t) { return currentIds.indexOf(t.treeId) > -1; }) : data.filter(function (t) { return t.roles && t.roles.indexOf('ten-trees-ranger') > -1; });
@@ -808,7 +808,7 @@ function openNextCheckTree() {
   try { sessionStorage.removeItem('tenTreesRangerNextDueSingle'); } catch (e) {}
   if (window._nextCheckTreeId && typeof openProfile === 'function') { openProfile(window._nextCheckTreeId); return; }
   var data = window.__TREE_DATA || storage.get('treeCards') || [];
-  var role = (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   var cards = role.cards || {};
   var currentIds = (cards.current || []).map(function(e){ return typeof e === 'string' ? e : e.treeId; });
   var currentList = currentIds.length ? data.filter(function(t){ return currentIds.indexOf(t.treeId) > -1; }) : data.filter(function(t){ return t.roles && t.roles.indexOf('ten-trees-ranger') > -1; });
@@ -829,7 +829,7 @@ function renderTenTreesRangerNextDueSingleCard(single_tid) {
   var ram = storage.get('treeCards') || window.__TREE_DATA || [];
   var t = null; for (var i = 0; i < ram.length; i++) if (ram[i].treeId === single_tid) { t = ram[i]; break; }
   if (!t) return false;
-  var login_data = storage.get('login') || window._login || {};
+  var login_data = storage.get('login') || window.__login || {};
   var cards = ((login_data['tree-login'] && login_data['tree-login']['ten-trees-ranger']) || {}).cards || {};
   var sorted = getSortedWaitingList(cards.current || [], 'desc'); var m = {}; sorted.forEach(function(e){ if(e && e.treeId) m[e.treeId] = e.addedAt; });
   var c = {}; for (var k in t) c[k] = t[k]; c.addedAt = m[single_tid] || ''; c.isDueCard = true;
@@ -865,7 +865,7 @@ function loadDashboard() {
   updateChecksThisMonthStats();
   var new_ten_trees_ranger_ids = checkNewTenTreesRangerTrees();
   setStatById('ttr-care-seeing', new_ten_trees_ranger_ids.length);
-  var dash_role = (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var dash_role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   var dash_register = dash_role.cards && dash_role.cards["register-log"];
   var dash_survey = dash_role.cards && dash_role.cards["survey-log"];
   var register_approved = (dash_register && Array.isArray(dash_register.approved)) ? dash_register.approved : [];
@@ -892,7 +892,7 @@ window.render = {
     var had_pending = false;
     if (hubMode === 'ten-trees-ranger-dash' || hubMode === 'ten-trees-ranger-waiting') { had_pending = consumePendingTenTreesRangerRequest(); }
     loadDashboard();
-    var role = (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+    var role = (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
     var cards = role.cards || {};
     if (had_pending) { openTenTreesRangerWaitingRequests(); restoreHubScrollPosition(saved_scroll); return; }
     if (hubMode === 'ten-trees-ranger-waiting') { openTenTreesRangerWaitingRequests(); }
@@ -948,8 +948,8 @@ function renderRoleCards(target, role, cfg) {
 }
 
 function openTreePool() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['ten-trees-ranger']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var cards = role.cards || {};
   var ten_trees_ranger_waiting = []; try { ten_trees_ranger_waiting = JSON.parse(sessionStorage.getItem('tenTreesRangerWaiting') || '[]'); } catch (e) {}
@@ -972,8 +972,8 @@ function openTreePool() {
   window.location.href = target_url;
 }
 function openSurveyATreePage() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['ten-trees-ranger']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('ten-trees-ranger.html?hub=ten-trees-ranger-dash');
   var userid = role.userId || '';
@@ -981,8 +981,8 @@ function openSurveyATreePage() {
   window.location.href = url;
 }
 function surveyDueTree(treeId) {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['ten-trees-ranger']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var active_el = document.querySelector('.page.active');
   var scroll_el = active_el ? active_el.querySelector('.scrollable') : null;
@@ -995,8 +995,8 @@ function surveyDueTree(treeId) {
   window.location.href = target_url;
 }
 function openRegisterATreePage() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['ten-trees-ranger']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('ten-trees-ranger.html?hub=ten-trees-ranger-dash');
   var userid = role.userId || '';
@@ -1004,8 +1004,8 @@ function openRegisterATreePage() {
   window.location.href = url;
 }
 function openLogsPage() {
-  var login = storage.get('login') || window._login || {};
-  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window._login && window._login['tree-login'] && window._login['tree-login']['ten-trees-ranger']) || {};
+  var login = storage.get('login') || window.__login || {};
+  var role = (login['tree-login'] && login['tree-login']['ten-trees-ranger']) || (window.__login && window.__login['tree-login'] && window.__login['tree-login']['ten-trees-ranger']) || {};
   try { if (!role.userId) { var sess = JSON.parse(sessionStorage.getItem('loginCredentialsV1')||'{}'); var sp = sess['tree-login'] && sess['tree-login']['ten-trees-ranger']; if (sp && sp.userId) role = sp; } } catch (e) {}
   var parent = encodeURIComponent('ten-trees-ranger.html?hub=ten-trees-ranger-dash');
   var userid = role.userId || '';
@@ -1024,7 +1024,7 @@ function renderTenTreesRangerLogs(logType, status) {
   var type = (status === 'submitted') ? 'submitted' : 'approved';
   var list_el = document.getElementById(type === 'submitted' ? 'ten-trees-ranger-logs-submitted-list' : 'ten-trees-ranger-logs-approved-list');
   var empty_el = document.getElementById(type === 'submitted' ? 'ten-trees-ranger-logs-submitted-empty' : 'ten-trees-ranger-logs-approved-empty');
-  var login = storage.get('login') || window._login || {};
+  var login = storage.get('login') || window.__login || {};
   var ten_trees_ranger_cards = ((login['tree-login'] && login['tree-login']['ten-trees-ranger'] && login['tree-login']['ten-trees-ranger'].cards) || {});
   var logs = (ten_trees_ranger_cards[typeKey] && ten_trees_ranger_cards[typeKey][type]) || [];
   if (!list_el) return 0;
