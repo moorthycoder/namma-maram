@@ -36,6 +36,10 @@
   .sponsor-cta:hover { opacity: 0.9; }
   .care-cta { width: 100%; margin-top: 10px; padding: 10px; border-radius: var(--border-radius-md); background: #dc2626; color: #ffffff; border: none; cursor: pointer; font-size: 0.8667rem; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-sans); }
   .care-cta:hover { opacity: 0.9; }
+  .add-attend-btn { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #dc2626; color: #ffffff; border: none; cursor: pointer; font-size: 0.9rem; flex-shrink: 0; }
+  .add-attend-btn:hover { opacity: 0.9; }
+  .attend-cta { width: 100%; margin-top: 10px; padding: 10px; border-radius: var(--border-radius-md); background: #dc2626; color: #ffffff; border: none; cursor: pointer; font-size: 0.8667rem; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-sans); }
+  .attend-cta:hover { opacity: 0.9; }
   .add-report-btn { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #059669; color: #ffffff; border: none; cursor: pointer; font-size: 0.9rem; flex-shrink: 0; }
   .add-report-btn:hover { opacity: 0.9; }
   .add-watch-btn { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #7c3aed; color: #ffffff; border: none; cursor: pointer; font-size: 0.9rem; flex-shrink: 0; }

@@ -178,7 +178,7 @@ function appendTreeNameToDatabase() {
           var now=new Date(); var pad=function(n){ return String(n).padStart(2,'0'); };
           entry.revisedAt=''+now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'T'+pad(now.getHours())+pad(now.getMinutes())+pad(now.getSeconds());
           entry.status='submitted';
-          try{ var u=(login['tree-login'].surveyor.userId||'SVY2612345678'); entry.updatedBy=u; }catch(e){}
+          try{ var u=(login['tree-login'].surveyor.userId||'SUR2612345678'); entry.updatedBy=u; }catch(e){}
           tn.submitted=tn.submitted||[]; tn.submitted.push(entry);
           try{ sessionStorage.setItem('loginCredentialsV1', JSON.stringify(login)); }catch(e){}
           try{ if(window.parent&&window.parent!==window&&window.parent.__login) window.parent.__login=login; window.__login=login; if(typeof storage!=='undefined'&&storage.set) storage.set('login', login); }catch(e){}
@@ -212,7 +212,7 @@ function appendAndRecordTreeName(payload) {
       names: payload.names || {},
       revisedAt: '' + current_time.getFullYear() + pad_number(current_time.getMonth() + 1) + pad_number(current_time.getDate()) + 'T' + pad_number(current_time.getHours()) + pad_number(current_time.getMinutes()) + pad_number(current_time.getSeconds()),
       status: 'submitted',
-      updatedBy: login['tree-login'].surveyor.userId || 'SVY2612345678'
+      updatedBy: login['tree-login'].surveyor.userId || 'SUR2612345678'
     };
     tree_name_stats.submitted = tree_name_stats.submitted || [];
     tree_name_stats.submitted.push(recorded_entry);

@@ -240,7 +240,7 @@ function openAppendTreeName() {
       if (sp && sp.userId) { surveyor_role = sp; }
     }
   } catch (e) {}
-  var user_id = surveyor_role.userId || 'SVY-TEST-003';
+  var user_id = surveyor_role.userId || 'SUR-TEST-003';
   var frame = document.createElement('iframe');
   frame.className = 'app-frame';
   frame.id = 'app-frame';
@@ -262,7 +262,7 @@ function openAppendPlaceName() {
       if (sp && sp.userId) { surveyor_role = sp; }
     }
   } catch (e) {}
-  var user_id = surveyor_role.userId || 'SVY-TEST-003';
+  var user_id = surveyor_role.userId || 'SUR-TEST-003';
   var frame = document.createElement('iframe');
   frame.className = 'app-frame';
   frame.id = 'app-frame';
