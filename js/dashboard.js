@@ -48,8 +48,8 @@ function renderRecentEntries(listElId, roleName, openFnName) {
     if (!t) { return ''; }
     var date = entry.date || '—';
     var time = entry.time || '';
-    return '<div class="recent-row" style="cursor:pointer" onclick="' + openFnName + '(\'' + entry.treeId + '\')">' +
-      '<div class="recent-dot" style="background:#3B6D11"></div>' +
+    return '<div class="recent-row" onclick="' + openFnName + '(\'' + entry.treeId + '\')">' +
+      '<div class="recent-dot"></div>' +
       '<div><div class="recent-id">' + entry.treeId + '</div>' +
       '<div class="recent-date">' + date + (time ? ' · ' + time : '') + '</div></div>' +
       '<div class="recent-badge">' + (entry.badge || 'Saved') + '</div></div>';

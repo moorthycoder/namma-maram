@@ -1,10 +1,10 @@
-﻿(function () {
+(function () {
   const enter_btn_element = document.querySelector('.enter-btn');
 
   const handleButtonClickFeedback = (event_object) => {
-    enter_btn_element.style.transform = 'scale(0.96)';
+    enter_btn_element.classList.add('pressed');
     setTimeout(() => {
-      enter_btn_element.style.transform = '';
+      enter_btn_element.classList.remove('pressed');
     }, 150);
     return true;
   };

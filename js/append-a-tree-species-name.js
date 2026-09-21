@@ -15,6 +15,14 @@ var appendTreeNameCSS = "\n\
   @keyframes popIn{0%{transform:scale(0.4);opacity:0;}70%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}\n\
   .flow-scroll{padding:12px 13px;display:flex;flex-direction:column;gap:10px;min-height:auto;}\n\
   .flow-footer{padding:12px 13px;background:var(--color-background-primary);border-top:0.5px solid var(--color-border-tertiary);flex-shrink:0;}\n\
+  .field-label i{font-size:0.8667rem;}\n\
+  .flow-title{font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);}\n\
+  .flow-desc{font-size:0.7333rem;color:var(--color-text-secondary);}\n\
+  .check-ring i{font-size:1.8667rem;color:var(--color-theme-light);}\n\
+  .success-title{font-size:1.1333rem;font-weight:500;color:#27500A;}\n\
+  .success-subtitle{font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;}\n\
+  .green-btn:disabled{opacity:0.5;cursor:not-allowed;}\n\
+  .green-btn i{font-size:0.9333rem;}\n\
 ";
 
 function injectAppendTreeCSS() {
@@ -55,18 +63,18 @@ var appendTreePages = "\n\
 <div class=\"page\" id=\"page-append-tree-name\">\n\
   <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goBackAppendFlowPage()\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Append tree name</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
-    <div style=\"font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);\">Append a tree name to the database</div>\n\
-    <div style=\"font-size:0.7333rem;color:var(--color-text-secondary);\">Add a new tree name with its scientific name and names in each language. It will be available across the app.</div>\n\
-    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-abc\" style=\"font-size:0.8667rem\"></i> Scientific name</div><input id=\"app-scientific-name\" class=\"field-input\" type=\"text\" placeholder=\"e.g. Borassus flabellifer\" /></div>\n\
+    <div class=\"flow-title\">Append a tree name to the database</div>\n\
+    <div class=\"flow-desc\">Add a new tree name with its scientific name and names in each language. It will be available across the app.</div>\n\
+    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-abc\"></i> Scientific name</div><input id=\"app-scientific-name\" class=\"field-input\" type=\"text\" placeholder=\"e.g. Borassus flabellifer\" /></div>\n\
     <div id=\"app-name-fields\"></div>\n\
   </div>\n\
-  <div class=\"flow-footer\"><button class=\"green-btn\" onclick=\"appendTreeNameToDatabase()\"><i class=\"ti ti-database-plus\" style=\"font-size:0.9333rem\"></i> Append to database</button></div>\n\
+  <div class=\"flow-footer\"><button class=\"green-btn\" onclick=\"appendTreeNameToDatabase()\"><i class=\"ti ti-database-plus\"></i> Append to database</button></div>\n\
 </div>\n\
 <div class=\"page\" id=\"page-append-tree-success\">\n\
   <div class=\"success-top\">\n\
-    <div class=\"check-ring\"><i class=\"ti ti-check\" style=\"font-size:1.8667rem;color:var(--color-theme-light)\"></i></div>\n\
-    <div style=\"font-size:1.1333rem;font-weight:500;color:#27500A;\">Tree name added!</div>\n\
-    <div style=\"font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;\">The tree name has been appended to the database.</div>\n\
+    <div class=\"check-ring\"><i class=\"ti ti-check\"></i></div>\n\
+    <div class=\"success-title\">Tree name added!</div>\n\
+    <div class=\"success-subtitle\">The tree name has been appended to the database.</div>\n\
   </div>\n\
   <div class=\"scrollable flow-scroll\">\n\
     <button class=\"green-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-list\"></i> Back to list</button>\n\
@@ -107,7 +115,7 @@ function buildAppendNameFields() {
   });
   wrap.innerHTML = langs.map(function (l) {
     return '<div class="field-wrap app-name-group" data-lang="' + l.code + '">' +
-      '<div class="field-label app-name-lbl"><i class="ti ti-language" style="font-size:0.8667rem"></i> ' + l.name + ' <span class="app-name-script">' + l.script + '</span><button type="button" class="app-name-add" onclick="addAppNameBox(this)"><i class="ti ti-plus"></i></button></div>' +
+      '<div class="field-label app-name-lbl"><i class="ti ti-language"></i> ' + l.name + ' <span class="app-name-script">' + l.script + '</span><button type="button" class="app-name-add" onclick="addAppNameBox(this)"><i class="ti ti-plus"></i></button></div>' +
       appendNameBoxHtml(appendTreeNamePlaceholders[l.code] || ('Type in ' + l.name)) +
     '</div>';
   }).join('');
@@ -251,13 +259,13 @@ injectAppendTreeFlow();
       }
       window._editOriginal={ sci:entry.scientificName||sci, names:JSON.parse(JSON.stringify(entry.names||{})) };
       var btn=document.querySelector('.flow-footer .green-btn');
-      if(btn){ btn.disabled=true; btn.style.opacity='0.5'; btn.style.cursor='not-allowed'; }
+      if(btn){ btn.disabled=true; }
       function checkDirty(){
         var curSci=(document.getElementById('app-scientific-name')||{}).value||'';
         var curNames={}; document.querySelectorAll('.app-name-group').forEach(function(g){ var vals=[]; g.querySelectorAll('.app-name-inp').forEach(function(i){ if(i.value.trim()) vals.push(i.value.trim()); }); curNames[g.getAttribute('data-lang')]=vals; });
         var dirty=false;
         try{ dirty=(curSci!==window._editOriginal.sci)||(JSON.stringify(curNames)!==JSON.stringify(window._editOriginal.names)); }catch(e){ dirty=true; }
-        if(btn){ btn.disabled=!dirty; btn.style.opacity=dirty?'1':'0.5'; btn.style.cursor=dirty?'pointer':'not-allowed'; }
+        if(btn){ btn.disabled=!dirty; }
       }
       document.addEventListener('input', checkDirty);
       document.addEventListener('click', function(e){ if(e.target.closest('.app-name-add')||e.target.closest('.app-name-row-del')) setTimeout(checkDirty,50); });

@@ -130,7 +130,7 @@ function sendOtp() {
     document.getElementById('otp-confirm-btn').disabled = true;
   }
   var test = document.getElementById('otp-testing');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  if (test) { TESTING_MODE ? test.classList.add('show') : test.classList.remove('show'); }
   document.getElementById('otp-modal').classList.add('open');
   if (otp_timer_handle) window.clearInterval(otp_timer_handle);
   otp_timer_handle = window.setInterval(updateOtpTimer, 1000);

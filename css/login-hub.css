@@ -1,4 +1,4 @@
-﻿
+
   :root {
     --color-theme: #3B6D11;
     --color-theme-dark: #1e3d0f;
@@ -38,3 +38,6 @@
   .hub-tile i { font-size: 1.3333rem; color: var(--color-theme); }
   .hub-tile span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-primary); }
   .hub-tile small { font-size: 0.6rem; color: var(--color-text-secondary); }
+  .otp-testing { display: none; font-size: 0.7rem; color: var(--color-text-secondary); margin-top: 12px; }
+  .otp-testing.show { display: block; }
+  .otp-testing b { color: var(--color-theme); letter-spacing: 0.15em; }

@@ -1,4 +1,4 @@
-﻿
+
   :root {
     --color-theme: #3B6D11;
     --color-theme-dark: #1e3d0f;
@@ -259,6 +259,12 @@
   .modal-icon-sm.bg-amber { background:#fef3c7; }
   .modal-icon-lg { width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px; }
   .lsm-icon { width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px; }
+  .rsm-icon { width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px; }
+  .lsm-icon i, .rsm-icon i { font-size: 1.5rem; }
+  .lsm-icon.status-waiting, .rsm-icon.status-waiting { background: #fef3c7; color: #f59e0b; }
+  .lsm-icon.status-existing_member, .rsm-icon.status-existing_member { background: #dcfce7; color: #16a34a; }
+  .lsm-icon.status-blocked, .rsm-icon.status-blocked { background: #fee2e2; color: #dc2626; }
+  .green-btn.btn-blocked { background: #dc2626; }
   .lsm-title { font-size:1.0667rem;font-weight:500;color:var(--color-text-primary);margin-bottom:6px; }
   .lsm-text { font-size:0.8rem;color:var(--color-text-secondary);line-height:1.5;margin-bottom:18px; }
   .ghost-btn-mt { margin-top:8px; }

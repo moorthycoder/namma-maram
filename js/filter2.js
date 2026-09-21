@@ -160,7 +160,7 @@ function profileCardPanelCardHtml(card, lang_key) {
       '<div class="tree-name">' + name_lines + '</div>' +
       '<div class="tree-id">' + esc(card.treeId) + '</div>' +
       '<div class="tree-addr"><button class="gis-pin" type="button" title="Show in map" onclick="event.stopPropagation();showInMap([\'' + card.treeId + '\'])"><i class="ti ti-map-pin"></i></button><span class="addr-text">' + esc(card.placeName || '—') + '</span></div>' +
-      '<div class="tree-photo" style="background:' + esc(card.bg || '#4f7c46') + '" onclick="event.stopPropagation();openPhotoModal(\'' + esc(card.emoji || '🌳') + '\',\'' + esc(card.bg || '') + '\')"><div class="tree-emoji">' + esc(card.emoji || '🌳') + '</div><button type="button" class="card-zoom-btn" title="Zoom photo" onclick="event.stopPropagation();openPhotoModal(\'' + esc(card.emoji || '🌳') + '\',\'' + esc(card.bg || '') + '\')"><i class="ti ti-zoom-in"></i></button></div>' +
+      '<div class="tree-photo" onclick="event.stopPropagation();openPhotoModal(\'' + esc(card.emoji || '🌳') + '\')"><div class="tree-emoji">' + esc(card.emoji || '🌳') + '</div><button type="button" class="card-zoom-btn" title="Zoom photo" onclick="event.stopPropagation();openPhotoModal(\'' + esc(card.emoji || '🌳') + '\')"><i class="ti ti-zoom-in"></i></button></div>' +
       '<div class="health-stats-row">' + health_html + '<div class="tree-stats">' + stats_html + '</div></div>' +
       '<div class="tree-meta">' + meta_html + '</div>' +
     '</div>' +
@@ -201,7 +201,7 @@ var n = names[lang_key] || names.en || [];
     groups[name]++;
   });
   if (total === 0) {
-    summaryEl.style.display = 'none';
+    summaryEl.classList.add('hidden');
     summaryEl.innerHTML = '';
     if (countEl) { countEl.innerHTML = '<span class="album-count-line">0 species</span><span class="album-count-line">0 trees</span>'; }
     return;
@@ -219,7 +219,7 @@ var n = names[lang_key] || names.en || [];
   mapBtn.innerHTML = '<i class="ti ti-map-2"></i> Show in map';
   mapBtn.onclick = function () { openMap(tree_ids); };
   summaryEl.appendChild(mapBtn);
-  summaryEl.style.display = (window._summaryOpen === false) ? 'none' : 'flex';
+  window._summaryOpen === false ? summaryEl.classList.add('hidden') : summaryEl.classList.remove('hidden');
   if (countEl) { countEl.innerHTML = '<span class="album-count-line">' + keys.length + ' species</span><span class="album-count-line">' + total + ' trees</span>'; }
 }
 
@@ -327,7 +327,7 @@ function filterBack() {
 }
 
 function closeMapModal() { var m = document.getElementById('map-modal'); if (m) { m.classList.remove('open'); } var f = document.getElementById('map-frame'); if (f) f.src = ''; }
-function openPhotoModal(emoji, bg) { var e = document.getElementById('photo-modal-emoji'); if (e) e.textContent = emoji || '🌳'; var m = document.getElementById('photo-modal'); if (m) { m.style.background = bg || 'rgba(0,0,0,0.9)'; m.classList.add('open'); } }
+function openPhotoModal(emoji) { var e = document.getElementById('photo-modal-emoji'); if (e) e.textContent = emoji || '🌳'; var m = document.getElementById('photo-modal'); if (m) { m.classList.add('open'); } }
 function closePhotoModal() { var m = document.getElementById('photo-modal'); if (m) m.classList.remove('open'); }
 
 function openTreeProfile(treeId) {
@@ -466,7 +466,7 @@ window.render = {
     var userid = (qp.get('userid') || qp.get('role') || '').trim();
     var hero = document.getElementById('main-hero');
     var back_btn = document.getElementById('filter-back');
-    if (userid && hero) { hero.setAttribute('data-role', userid.toLowerCase()); hero.style.display = ''; }
+    if (userid && hero) { hero.setAttribute('data-role', userid.toLowerCase()); hero.classList.remove('hidden'); }
     if (back_btn) { if (qp.get('parent')) back_btn.classList.remove('hidden'); else back_btn.classList.add('hidden'); }
     var place_el = document.getElementById('album-place');
     var tree_el = document.getElementById('album-tree');

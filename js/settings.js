@@ -26,7 +26,9 @@ function applyFontSize() {
   document.getElementById('fs-val').textContent = lv.label;
   document.getElementById('fs-minus').disabled = fontSizeLevel === 0;
   document.getElementById('fs-plus').disabled = fontSizeLevel === 2;
-  document.documentElement.style.fontSize = (15 * lv.mul) + 'px';
+  var root_el = document.documentElement;
+  root_el.classList.remove('fs-s', 'fs-m', 'fs-l');
+  root_el.classList.add('fs-' + lv.label.toLowerCase());
 }
 
 function renderLangGrid() {

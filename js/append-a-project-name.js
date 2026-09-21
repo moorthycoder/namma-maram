@@ -8,6 +8,13 @@ var appendProjectNameCSS = "\n\
   @keyframes popIn{0%{transform:scale(0.4);opacity:0;}70%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}\n\
   .flow-scroll{padding:12px 13px;display:flex;flex-direction:column;gap:10px;min-height:auto;}\n\
   .flow-footer{padding:12px 13px;background:var(--color-background-primary);border-top:0.5px solid var(--color-border-tertiary);flex-shrink:0;}\n\
+  .field-label i{font-size:0.8667rem;}\n\
+  .flow-title{font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);}\n\
+  .flow-desc{font-size:0.7333rem;color:var(--color-text-secondary);}\n\
+  .check-ring i{font-size:1.8667rem;color:var(--color-theme-light);}\n\
+  .success-title{font-size:1.1333rem;font-weight:500;color:#27500A;}\n\
+  .success-subtitle{font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;}\n\
+  .green-btn i{font-size:0.9333rem;}\n\
 ";
 
 function injectAppendProjectCSS() {
@@ -65,20 +72,20 @@ var appendProjectPages = "\n\
 <div class=\"page\" id=\"page-append-project-name\">\n\
   <div class=\"topbar\"><button class=\"back-btn\" onclick=\"goBackAppendFlowPage()\"><i class=\"ti ti-arrow-left\"></i></button><span class=\"topbar-title\">Append project name</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
-    <div style=\"font-size:0.8667rem;font-weight:500;color:var(--color-text-primary);\">Append a project name to the database</div>\n\
-    <div style=\"font-size:0.7333rem;color:var(--color-text-secondary);\">Add a new project with its name, start and end. It will be available across the app.</div>\n\
-    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-calendar-event\" style=\"font-size:0.8667rem\"></i> Started at</div><input id=\"app-project-startedat\" class=\"field-input\" type=\"date\" /></div>\n\
-    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-calendar-minus\" style=\"font-size:0.8667rem\"></i> Ended at</div><input id=\"app-project-endedat\" class=\"field-input\" type=\"date\" /></div>\n\
-    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-hash\" style=\"font-size:0.8667rem\"></i> Project ID</div><input id=\"app-project-projectid\" class=\"field-input\" type=\"text\" placeholder=\"e.g. Green TN 2026\" /></div>\n\
+    <div class=\"flow-title\">Append a project name to the database</div>\n\
+    <div class=\"flow-desc\">Add a new project with its name, start and end. It will be available across the app.</div>\n\
+    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-calendar-event\"></i> Started at</div><input id=\"app-project-startedat\" class=\"field-input\" type=\"date\" /></div>\n\
+    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-calendar-minus\"></i> Ended at</div><input id=\"app-project-endedat\" class=\"field-input\" type=\"date\" /></div>\n\
+    <div class=\"field-wrap\"><div class=\"field-label\"><i class=\"ti ti-hash\"></i> Project ID</div><input id=\"app-project-projectid\" class=\"field-input\" type=\"text\" placeholder=\"e.g. Green TN 2026\" /></div>\n\
     <div id=\"app-project-name-fields\"></div>\n\
   </div>\n\
-  <div class=\"flow-footer\"><button class=\"green-btn\" onclick=\"appendProjectNameToDatabase()\"><i class=\"ti ti-database-plus\" style=\"font-size:0.9333rem\"></i> Append to database</button></div>\n\
+  <div class=\"flow-footer\"><button class=\"green-btn\" onclick=\"appendProjectNameToDatabase()\"><i class=\"ti ti-database-plus\"></i> Append to database</button></div>\n\
 </div>\n\
 <div class=\"page\" id=\"page-append-project-success\">\n\
   <div class=\"success-top\">\n\
-    <div class=\"check-ring\"><i class=\"ti ti-check\" style=\"font-size:1.8667rem;color:var(--color-theme-light)\"></i></div>\n\
-    <div style=\"font-size:1.1333rem;font-weight:500;color:#27500A;\">Project name added!</div>\n\
-    <div style=\"font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;\">The project name has been appended to the database.</div>\n\
+    <div class=\"check-ring\"><i class=\"ti ti-check\"></i></div>\n\
+    <div class=\"success-title\">Project name added!</div>\n\
+    <div class=\"success-subtitle\">The project name has been appended to the database.</div>\n\
   </div>\n\
   <div class=\"scrollable flow-scroll\">\n\
     <button class=\"green-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-list\"></i> Back to list</button>\n\
@@ -95,7 +102,7 @@ function buildAppendProjectFields() {
   });
   wrap.innerHTML = langs.map(function (l) {
     return '<div class="field-wrap app-name-group" data-lang="' + l.code + '">' +
-      '<div class="field-label app-name-lbl"><i class="ti ti-language" style="font-size:0.8667rem"></i> ' + l.name + ' <span class="app-name-script">' + l.script + '</span></div>' +
+      '<div class="field-label app-name-lbl"><i class="ti ti-language"></i> ' + l.name + ' <span class="app-name-script">' + l.script + '</span></div>' +
       '<input class="field-input app-name-inp" type="text" placeholder="' + (appendProjectNamePlaceholders[l.code] || ('Type in ' + l.name)) + '" />' +
     '</div>';
   }).join('');

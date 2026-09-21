@@ -48,24 +48,15 @@ function showRegisterStatus(status, page) {
   var d = registerStatusData[status] || registerStatusData.waiting;
   if (d.to) regTarget = d.to;
   var icon = document.getElementById('rsm-icon');
-  icon.style.background = d.bg;
-  icon.style.color = d.color;
-  icon.innerHTML = '<i class="' + d.icon + '" style="font-size:24px;"></i>';
+  icon.className = 'modal-icon status-' + status;
+  icon.innerHTML = '<i class="' + d.icon + '"></i>';
   document.getElementById('rsm-title').textContent = d.title;
   document.getElementById('rsm-text').textContent = d.text;
   var ok = document.getElementById('rsm-ok-btn');
-  if (status === 'existing_member') {
-    ok.innerHTML = '<i class="ti ti-login"></i> ' + d.go;
-  } else {
-    ok.innerHTML = '<i class="ti ti-check"></i> Okay';
-  }
-  if (status === 'blocked') {
-    ok.style.background = '#dc2626';
-  } else {
-    ok.style.background = 'var(--color-theme)';
-  }
+  ok.innerHTML = status === 'existing_member' ? ('<i class="ti ti-login"></i> ' + d.go) : '<i class="ti ti-check"></i> Okay';
+  ok.classList.toggle('btn-blocked', status === 'blocked');
   var test = document.getElementById('rsm-test');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  if (test) test.classList.toggle('hidden', !TESTING_MODE);
   document.getElementById('register-status-modal').classList.add('open');
 }
 
@@ -131,7 +122,7 @@ function sendOtp() {
   document.getElementById('otp-input').value = '';
   document.getElementById('otp-confirm-btn').disabled = true;
   var test = document.getElementById('otp-testing');
-  if (test) test.style.display = TESTING_MODE ? 'block' : 'none';
+  if (test) test.classList.toggle('show', TESTING_MODE);
   document.getElementById('otp-modal').classList.add('open');
   if (otp_timer_handle) window.clearInterval(otp_timer_handle);
   otp_timer_handle = window.setInterval(updateOtpTimer, 1000);

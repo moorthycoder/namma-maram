@@ -94,6 +94,15 @@ var registerFlowCSS = "\n\
   .gis-map { position: relative; width: 100%; height: 200px; border-radius: 12px; border: 1px solid var(--color-border-secondary); margin-bottom: 10px; overflow: hidden; z-index: 0; }\n\
   .success-top { background: var(--color-theme-light); padding: 24px 20px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }\n\
   .check-ring { width: 58px; height: 58px; border-radius: 50%; background: var(--color-theme); display: flex; align-items: center; justify-content: center; }\n\
+  .check-ring i { font-size: 1.8667rem; color: var(--color-theme-light); }\n\
+  .success-title { font-size: 1.1333rem; font-weight: 500; color: #27500A; }\n\
+  .success-subtitle { font-size: 0.8rem; color: #3B6D11; text-align: center; line-height: 1.5; }\n\
+  .review-text + .review-text { margin-top: 8px; }\n\
+  .dimension-fields { display: flex; flex-direction: column; gap: 10px; }\n\
+  .input-with-unit { display: flex; align-items: center; gap: 6px; }\n\
+  .input-with-unit .field-input { flex: 1; }\n\
+  .input-with-unit .unit-label { font-size: 0.8rem; color: var(--color-text-secondary); white-space: nowrap; }\n\
+  .hidden { display: none; }\n\
   @keyframes popIn { 0% { transform: scale(0.4); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }\n\
   .check-ring { animation: popIn 0.5s ease forwards; }\n\
   .project-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }\n\
@@ -174,7 +183,7 @@ var registerFlowPages = "\n\
   <div class=\"steps\"><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot done\"><i class=\"ti ti-check\"></i></div><div class=\"step-line done\"></div><div class=\"step-dot active\">3</div><div class=\"step-line\"></div><div class=\"step-dot pending\">4</div></div>\n\
   <div class=\"step-labels\"><span class=\"step-lbl\">Selfie</span><span class=\"step-lbl\">Snapshots</span><span class=\"step-lbl active\">Notes</span><span class=\"step-lbl\">Review</span></div>\n\
   <div class=\"scrollable flow-scroll\">\n\
-    <div style=\"display:flex;flex-direction:column;gap:10px;\"><div><div class=\"field-label\"><i class=\"ti ti-ruler\"></i> Height</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-height\" placeholder=\"Type in feet\" style=\"flex:1;\"><span class=\"unit-label\" data-unit-type=\"height\" style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">feet</span></div></div><div><div class=\"field-label\"><i class=\"ti ti-circle\"></i> Diameter</div><div style=\"display:flex;align-items:center;gap:6px;\"><input class=\"field-input normal\" id=\"register-diameter\" placeholder=\"Type in feet\" style=\"flex:1;\"><span class=\"unit-label\" data-unit-type=\"diameter\" style=\"font-size:0.8rem;color:var(--color-text-secondary);white-space:nowrap;\">feet</span></div></div></div>\n\
+    <div class=\"dimension-fields\"><div><div class=\"field-label\"><i class=\"ti ti-ruler\"></i> Height</div><div class=\"input-with-unit\"><input class=\"field-input normal\" id=\"register-height\" placeholder=\"Type in feet\"><span class=\"unit-label\" data-unit-type=\"height\">feet</span></div></div><div><div class=\"field-label\"><i class=\"ti ti-circle\"></i> Diameter</div><div class=\"input-with-unit\"><input class=\"field-input normal\" id=\"register-diameter\" placeholder=\"Type in feet\"><span class=\"unit-label\" data-unit-type=\"diameter\">feet</span></div></div></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-notes\"></i> Observation</div><textarea class=\"notes-box\" id=\"register-observations\" placeholder=\"e.g. New shoots visible, no signs of disease...\"></textarea></div>\n\
     <div><div class=\"field-label\"><i class=\"ti ti-clipboard-check\"></i> Recommendation</div><textarea class=\"notes-box\" id=\"register-recommendations\" placeholder=\"e.g. Fertilize before monsoon...\"></textarea></div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('snapshots')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"openRegisterReview()\"><i class=\"ti ti-arrow-right\"></i> Next</button></div>\n\
@@ -196,19 +205,19 @@ var registerFlowPages = "\n\
     <div class=\"review-section\">\n\
       <div class=\"review-head\"><span class=\"review-title\"><i class=\"ti ti-notes\"></i> Field Notes</span><button class=\"review-edit\" onclick=\"goTo('notes')\"><i class=\"ti ti-pencil\"></i> Edit</button></div>\n\
       <div class=\"review-text\" id=\"review-height\"></div>\n\
-      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-diameter\"></div>\n\
-      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-observations\"></div>\n\
-      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-recommendations\"></div>\n\
-      <div class=\"review-text\" style=\"margin-top:8px\" id=\"review-project-name\"></div>\n\
+      <div class=\"review-text\" id=\"review-diameter\"></div>\n\
+      <div class=\"review-text\" id=\"review-observations\"></div>\n\
+      <div class=\"review-text\" id=\"review-recommendations\"></div>\n\
+      <div class=\"review-text\" id=\"review-project-name\"></div>\n\
     </div>\n\
     <div class=\"flow-nav\"><button class=\"ghost-btn\" onclick=\"goTo('notes')\"><i class=\"ti ti-arrow-left\"></i> Back</button><button class=\"green-btn\" onclick=\"saveRegisterTree()\"><i class=\"ti ti-device-floppy\"></i> Save</button></div>\n\
   </div>\n\
 </div>\n\
 <div class=\"page\" id=\"page-success\">\n\
   <div class=\"success-top\">\n\
-    <div class=\"check-ring\"><i class=\"ti ti-check\" style=\"font-size:1.8667rem;color:var(--color-theme-light)\"></i></div>\n\
-    <div style=\"font-size:1.1333rem;font-weight:500;color:#27500A;\">Tree registered!</div>\n\
-    <div style=\"font-size:0.8rem;color:#3B6D11;text-align:center;line-height:1.5;\">Tree registered successfully.</div>\n\
+    <div class=\"check-ring\"><i class=\"ti ti-check\"></i></div>\n\
+    <div class=\"success-title\">Tree registered!</div>\n\
+    <div class=\"success-subtitle\">Tree registered successfully.</div>\n\
   </div>\n\
   <div class=\"scrollable flow-scroll\">\n\
     <button class=\"green-btn\" onclick=\"goTo(roleDash())\"><i class=\"ti ti-layout-dashboard\"></i> Back to dashboard</button>\n\
@@ -264,7 +273,7 @@ function renderProjectRowButtons() {
   var rows = container.querySelectorAll('.project-row');
   for (var i = 0; i < rows.length; i++) {
     var rmBtn = rows[i].querySelector('.project-rm-btn');
-    if (rmBtn) rmBtn.style.display = rows.length === 1 ? 'none' : '';
+    if (rmBtn) rmBtn.classList.toggle('hidden', rows.length === 1);
   }
 }
 
@@ -307,7 +316,7 @@ function renderLocalRowButtons() {
   var rows = container.querySelectorAll('.project-row');
   for (var i = 0; i < rows.length; i++) {
     var rmBtn = rows[i].querySelector('.project-rm-btn');
-    if (rmBtn) rmBtn.style.display = rows.length === 1 ? 'none' : '';
+    if (rmBtn) rmBtn.classList.toggle('hidden', rows.length === 1);
   }
 }
 
@@ -482,7 +491,7 @@ function buildRegisterSelfiePreview() {
   return '<div class="photo-fill">📸</div>' +
     '<div class="gis-overlay">' +
     '<div class="gis-overlay-body">' +
-    '<div class="gis-overlay-map"><i class="ti ti-map-pin gis-overlay-pin" style="top:' + pin.top + '%;left:' + pin.left + '%;transform:translate(-50%,-100%);"></i></div>' +
+    '<div class="gis-overlay-map"><i class="ti ti-map-pin gis-overlay-pin" style="top:' + pin.top + '%;left:' + pin.left + '%;"></i></div>' +
     '<div class="gis-overlay-right">' +
     '<div class="gis-overlay-address"><i class="ti ti-map-pin"></i> ' + address + '</div>' +
     '<div class="gis-overlay-row"><i class="ti ti-gps"></i> ' + lat + ', ' + lng + '</div>' +
