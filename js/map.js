@@ -220,7 +220,7 @@
           (info.caregiver ? '<div class="map-cg">Care-giver: ' + info.caregiver + '</div>' : '') +
           (info.careGiverContact ? '<div class="map-cg">📞 ' + info.careGiverContact + '</div>' : '') +
           '<div class="map-cg">&nbsp;</div>' +
-          '<div class="map-stats">📏 ' + formatLength(info.height,'height') + ' · 📐 ' + formatLength(info.diameter,'diameter') + '</div>' +
+          '<div class="map-stats">📏 ' + formatLength(info.height,'height') + ' · ⭕ ' + formatLength(info.diameter,'diameter') + '</div>' +
         '</div>' +
       '</div>';
   }
@@ -229,7 +229,7 @@
     var head = document.getElementById('map-back-head');
     if (!head) { return; }
     var is_iframe = (window.self !== window.top);
-    head.style.display = is_iframe ? 'none' : 'flex';
+    is_iframe ? head.classList.add('hidden') : head.classList.remove('hidden');
   }
 
   function mapBack() {
