@@ -4,6 +4,8 @@
     --color-theme-dark: #1e3d0f;
     --color-theme-light: #EAF3DE;
     --color-theme-accent: #C0DD97;
+    --color-blue: #1D4ED8;
+    --color-blue-light: #DBEAFE;
     --color-background-primary: #ffffff;
     --color-background-secondary: #f4f4f4;
     --color-text-primary: #111111;
@@ -52,7 +54,7 @@ body { background: var(--color-background-primary); overflow: hidden; }
   .info-key { font-size: 0.8rem; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px; }
   .info-val { font-size: 0.8667rem; font-weight: 500; color: var(--color-text-primary); }
   .chip { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); }
-  .chip-blue { font-size: 0.6667rem; padding: 2px 7px; border-radius: 20px; background: var(--color-theme-light); color: var(--color-theme); display: flex; align-items: center; gap: 3px; }
+  .chip-blue { font-size: calc(0.6667rem + 2px); height: calc(1.3333rem + 5px); min-width: 1.3333rem; padding: 0 7px; border-radius: 20px; background: var(--color-blue-light); color: var(--color-blue); display: flex; align-items: center; justify-content: center; gap: 3px; margin-top: 3px; }
   .chip-blue i { font-size: 0.6667rem; }
   .field-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
   .field-lbl { font-size: 0.8rem; color: var(--color-text-secondary); display: flex; align-items: center; gap: 5px; }
