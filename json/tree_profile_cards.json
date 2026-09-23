@@ -304,6 +304,7 @@
         "registererId": "RAN2612345681",
         "registererContactNo": "9876543213",
         "registeredDate": "2026-02-05",
+        "registeredAt": "20260205T100000",
         "health-status": {
           "health": "healthy",
           "diameter": "13cm",
@@ -331,6 +332,7 @@
         "updaterId": "RAN2612345681",
         "updaterContactNo": "9876543213",
         "updatedDate": "2026-02-05",
+        "updatedAt": "20260205T110000",
         "health-status": {
           "health": "healthy",
           "diameter": "15cm",
@@ -358,6 +360,7 @@
         "updaterId": "RAN2612345681",
         "updaterContactNo": "9876543213",
         "updatedDate": "2026-02-05",
+        "updatedAt": "20260205T140000",
         "health-status": {
           "health": "healthy",
           "diameter": "17cm",
@@ -385,6 +388,7 @@
         "updaterId": "RAN2612345681",
         "updaterContactNo": "9876543213",
         "updatedDate": "2026-02-05",
+        "updatedAt": "20260205T150000",
         "health-status": {
           "health": "healthy",
           "diameter": "19cm",
@@ -1129,6 +1133,7 @@
         "registererId": "RAN2612345690",
         "registererContactNo": "9876543222",
         "registeredDate": "2026-04-09",
+        "registeredAt": "20260409T100000",
         "health-status": {
           "health": "dead",
           "diameter": "12cm",
@@ -1156,6 +1161,7 @@
         "updaterId": "RAN2612345690",
         "updaterContactNo": "9876543222",
         "updatedDate": "2026-04-09",
+        "updatedAt": "20260409T110000",
         "health-status": {
           "health": "dead",
           "diameter": "12cm",
@@ -1183,6 +1189,7 @@
         "updaterId": "RAN2612345690",
         "updaterContactNo": "9876543222",
         "updatedDate": "2026-04-09",
+        "updatedAt": "20260409T140000",
         "health-status": {
           "health": "dead",
           "diameter": "12cm",
@@ -1210,6 +1217,7 @@
         "updaterId": "RAN2612345690",
         "updaterContactNo": "9876543222",
         "updatedDate": "2026-04-09",
+        "updatedAt": "20260409T150000",
         "health-status": {
           "health": "dead",
           "diameter": "12cm",
@@ -1237,6 +1245,7 @@
         "updaterId": "RAN2612345690",
         "updaterContactNo": "9876543222",
         "updatedDate": "2026-04-09",
+        "updatedAt": "20260409T160000",
         "health-status": {
           "health": "dead",
           "diameter": "12cm",
@@ -2644,6 +2653,7 @@
         "registererId": "RAN2612345678",
         "registererContactNo": "9876543210",
         "registeredDate": "2026-01-15",
+        "registeredAt": "20260115T100000",
         "health-status": {
           "health": "sick",
           "diameter": "5cm",
@@ -2671,6 +2681,7 @@
         "updaterId": "RAN2612345678",
         "updaterContactNo": "9876543210",
         "updatedDate": "2026-01-15",
+        "updatedAt": "20260115T110000",
         "health-status": {
           "health": "sick",
           "diameter": "6cm",
@@ -2698,6 +2709,7 @@
         "updaterId": "RAN2612345678",
         "updaterContactNo": "9876543210",
         "updatedDate": "2026-01-15",
+        "updatedAt": "20260115T140000",
         "health-status": {
           "health": "sick",
           "diameter": "5cm",
@@ -2725,6 +2737,7 @@
         "updaterId": "RAN2612345678",
         "updaterContactNo": "9876543210",
         "updatedDate": "2026-01-15",
+        "updatedAt": "20260115T150000",
         "health-status": {
           "health": "sick",
           "diameter": "6cm",
@@ -2752,6 +2765,7 @@
         "updaterId": "RAN2612345678",
         "updaterContactNo": "9876543210",
         "updatedDate": "2026-01-15",
+        "updatedAt": "20260115T160000",
         "health-status": {
           "health": "sick",
           "diameter": "7cm",
@@ -2779,6 +2793,7 @@
         "updaterId": "RAN2612345678",
         "updaterContactNo": "9876543210",
         "updatedDate": "2026-01-15",
+        "updatedAt": "20260115T170000",
         "health-status": {
           "health": "sick",
           "diameter": "7cm",
@@ -3411,6 +3426,7 @@
         "registererId": "RAN2612345688",
         "registererContactNo": "9876543220",
         "registeredDate": "2026-03-26",
+        "registeredAt": "20260326T100000",
         "health-status": {
           "health": "healthy",
           "diameter": "11cm",
@@ -3438,6 +3454,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T110000",
         "health-status": {
           "health": "healthy",
           "diameter": "12cm",
@@ -4516,6 +4533,7 @@
         "registererId": "RAN2612345688",
         "registererContactNo": "9876543220",
         "registeredDate": "2026-03-26",
+        "registeredAt": "20260326T100000",
         "health-status": {
           "health": "healthy",
           "diameter": "5cm",
@@ -4543,6 +4561,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T110000",
         "health-status": {
           "health": "healthy",
           "diameter": "7cm",
@@ -4570,6 +4589,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T140000",
         "health-status": {
           "health": "healthy",
           "diameter": "9cm",
@@ -4597,6 +4617,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T150000",
         "health-status": {
           "health": "healthy",
           "diameter": "11cm",
@@ -5697,6 +5718,7 @@
         "registererId": "RAN2612345688",
         "registererContactNo": "9876543220",
         "registeredDate": "2026-03-26",
+        "registeredAt": "20260326T100000",
         "health-status": {
           "health": "healthy",
           "diameter": "15cm",
@@ -5724,6 +5746,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T110000",
         "health-status": {
           "health": "healthy",
           "diameter": "16cm",
@@ -5751,6 +5774,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T140000",
         "health-status": {
           "health": "healthy",
           "diameter": "17cm",
@@ -5778,6 +5802,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T150000",
         "health-status": {
           "health": "healthy",
           "diameter": "19cm",
@@ -5805,6 +5830,7 @@
         "updaterId": "RAN2612345688",
         "updaterContactNo": "9876543220",
         "updatedDate": "2026-03-26",
+        "updatedAt": "20260326T160000",
         "health-status": {
           "health": "healthy",
           "diameter": "20cm",
@@ -7729,6 +7755,7 @@
         "registererId": "RAN2612345691",
         "registererContactNo": "9876543223",
         "registeredDate": "2026-04-16",
+        "registeredAt": "20260416T100000",
         "health-status": {
           "health": "healthy",
           "diameter": "11cm",
@@ -7756,6 +7783,7 @@
         "updaterId": "RAN2612345691",
         "updaterContactNo": "9876543223",
         "updatedDate": "2026-04-16",
+        "updatedAt": "20260416T110000",
         "health-status": {
           "health": "healthy",
           "diameter": "12cm",
@@ -7783,6 +7811,7 @@
         "updaterId": "RAN2612345691",
         "updaterContactNo": "9876543223",
         "updatedDate": "2026-04-16",
+        "updatedAt": "20260416T140000",
         "health-status": {
           "health": "healthy",
           "diameter": "13cm",

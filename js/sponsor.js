@@ -454,10 +454,11 @@ function sponsorLogCardHtml(tree_obj, tree_id, enc_key, enc_entry) {
   var field_obs = entry_data.fieldObservation || {};
   var note_val = field_obs.notes || '—';
   var rec_val = field_obs.recommendations || '—';
-  var date_val = entry_data.registeredDate || entry_data.updatedDate || enc_key || '';
+  var date_val = entry_data.updatedAt || entry_data.registeredAt || entry_data.registeredDate || entry_data.updatedDate || enc_key || '';
+  var disp_date = (function(d) { var s = String(d || ''); var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) || /^(\d{4})(\d{2})(\d{2})/.exec(s); return m ? m[3] + '-' + m[2] + '-' + m[1] : s; })(date_val);
   var surveyed_name = entry_data.registeredBy || entry_data.updatedBy || '—';
   var surveyed_id = entry_data.registererId || entry_data.updaterId || '—';
-  return '<div class="log-entry log-entry-interactive"><div class="log-header"><span>#' + enc_key + '</span><span>' + date_val + '</span></div><div class="log-entry-row" onclick="openSponsorReviewPage(' + q + tree_id + q + ',' + q + date_val + q + ')"><div class="log-dot log-dot-green"></div><div class="log-body"><div class="log-text">Surveyed By: ' + surveyed_name + ', ' + surveyed_id + '</div><div class="log-text">Health: ' + (health_status.health || '—') + '</div><div class="log-text">Height: ' + (health_status.height || '—') + '</div><div class="log-text">Diameter: ' + (health_status.diameter || '—') + '</div><div class="log-text"><span class="log-label-danger">Note:</span> ' + note_val + '</div><div class="log-text"><span class="log-label-danger">Recommendation:</span> ' + rec_val + '</div><div class="log-text"><span class="chip-blue" onclick="event.stopPropagation();openSponsorReviewPage(' + q + tree_id + q + ',' + q + date_val + q + ')"><i class="ti ti-eye"></i> Review</span></div></div></div></div>';
+  return '<div class="log-entry log-entry-interactive"><div class="log-header"><span>#' + enc_key + '</span><span>' + disp_date + '</span></div><div class="log-entry-row" onclick="openSponsorReviewPage(' + q + tree_id + q + ',' + q + date_val + q + ')"><div class="log-dot log-dot-green"></div><div class="log-body"><div class="log-text">Surveyed By: ' + surveyed_name + ', ' + surveyed_id + '</div><div class="log-text">Health: ' + (health_status.health || '—') + '</div><div class="log-text">Height: ' + (health_status.height || '—') + '</div><div class="log-text">Diameter: ' + (health_status.diameter || '—') + '</div><div class="log-text"><span class="log-label-danger">Note:</span> ' + note_val + '</div><div class="log-text"><span class="log-label-danger">Recommendation:</span> ' + rec_val + '</div><div class="log-text"><span class="chip-blue" onclick="event.stopPropagation();openSponsorReviewPage(' + q + tree_id + q + ',' + q + date_val + q + ')"><i class="ti ti-eye"></i> Review</span></div></div></div></div>';
 }
 var treeLogsFrom = 'sponsor-current';
 var treeLogsScroll = '0';
@@ -497,9 +498,14 @@ function openTreeLogs(parent_list, tree_id) {
     enc_keys.sort(function(a_key, b_key) {
       var a_entry = enc_map[a_key] || {};
       var b_entry = enc_map[b_key] || {};
-      var a_date = a_entry.registeredDate || a_entry.updatedDate || a_key || '';
-      var b_date = b_entry.registeredDate || b_entry.updatedDate || b_key || '';
-      return String(b_date).localeCompare(String(a_date));
+    var a_date = a_entry.updatedAt || a_entry.registeredAt || a_entry.registeredDate || a_entry.updatedDate || a_key || '';
+    var b_date = b_entry.updatedAt || b_entry.registeredAt || b_entry.registeredDate || b_entry.updatedDate || b_key || '';
+    var date_cmp = String(b_date).localeCompare(String(a_date));
+    if (date_cmp !== 0) return date_cmp;
+    var a_num = parseInt(a_key, 10);
+    var b_num = parseInt(b_key, 10);
+    var both_num = isNaN(a_num) || isNaN(b_num) ? false : true;
+    return both_num ? b_num - a_num : String(b_key).localeCompare(String(a_key));
     });
     var html_str = '';
     for (var idx = 0; idx < enc_keys.length; idx++) {
