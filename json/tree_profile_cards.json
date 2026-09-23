@@ -2010,7 +2010,7 @@
         "registeredBy": "Kamal",
         "registererId": "RAN2612345684",
         "registererContactNo": "9876543216",
-        "registeredDate": "2026-02-26",
+        "registeredAt": "20260226T100000",
         "health-status": {
           "health": "healthy",
           "diameter": "30cm",
@@ -2037,7 +2037,7 @@
         "updatedBy": "Kamal",
         "updaterId": "RAN2612345684",
         "updaterContactNo": "9876543216",
-        "updatedDate": "2026-02-26",
+        "updatedAt": "20260226T110000",
         "health-status": {
           "health": "healthy",
           "diameter": "31cm",
@@ -2064,7 +2064,7 @@
         "updatedBy": "Kamal",
         "updaterId": "RAN2612345684",
         "updaterContactNo": "9876543216",
-        "updatedDate": "2026-02-26",
+        "updatedAt": "20260226T140000",
         "health-status": {
           "health": "healthy",
           "diameter": "32cm",

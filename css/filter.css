@@ -10,6 +10,8 @@
   --color-text-secondary: #666666;
   --color-border-tertiary: #e0e0e0;
   --color-border-secondary: #cccccc;
+  --color-blue: #1D4ED8;
+  --color-blue-light: #DBEAFE;
   --border-radius-md: 10px;
   --border-radius-lg: 14px;
   --font-sans: 'Inter', sans-serif;
@@ -758,3 +760,10 @@ body {
 .photo-close-btn:hover {
   background: rgba(255, 255, 255, 0.25);
 }
+  .chip-blue { font-size: calc(0.6667rem + 2px); height: calc(1.3333rem + 5px); min-width: 1.3333rem; padding: 0 7px; border-radius: 20px; background: var(--color-blue-light); color: var(--color-blue); display: flex; align-items: center; justify-content: center; gap: 3px; margin-top: 3px; }
+  .log-entry-interactive{ cursor:pointer; align-items:stretch; }
+  .log-entry-row{ display:flex; gap:9px; align-items:center; cursor:pointer; }
+  .log-dot-green{ background:#16a34a; }
+  .log-addr{ font-size:0.7333rem; color:var(--color-text-secondary); }
+  .log-label-danger{ color:#dc2626; }
+  .filter-log-link{ color:#2563eb; text-decoration:underline; cursor:pointer; }

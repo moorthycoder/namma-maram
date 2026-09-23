@@ -50,12 +50,19 @@
           <span class="album-controls">
             <span class="album-count" id="album-count"><span class="album-count-line">0 species</span><span class="album-count-line">0 trees</span></span>
             <button class="album-toggle" id="summary-toggle" type="button" onclick="toggleSummary()"><i class="ti ti-eye"></i></button>
+            <button class="album-toggle" id="logs-back-btn" type="button" onclick="filterLogsBack()" title="Back to results"><i class="ti ti-arrow-left"></i></button>
           </span>
         </div>
 
         <div class="search-overlay" id="search-overlay"><i class="ti ti-loader-2 spin"></i><span>Searching…</span></div>
         <div class="album-summary" id="album-summary"></div>
         <div class="album-grid" id="album-grid"></div>
+      </div>
+      <div class="album-container hidden" id="album-logs">
+        <div class="album-header">
+          <span class="album-title"><button class="album-toggle" type="button" onclick="filterLogsBack()" title="Back to results"><i class="ti ti-arrow-left"></i></button><span id="album-logs-title">Logs</span></span>
+        </div>
+        <div class="album-grid" id="album-logs-list"></div>
       </div>
     </div>
 

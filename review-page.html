@@ -67,7 +67,7 @@ function renderReview() {
     var loggedDatePart = loggedAt.slice(0,8);
     for (var k = 0; k < keys.length; k++) {
       var e = enc[keys[k]] || {};
-      var d = e.registeredDate || e.updatedDate || '';
+      var d = e.updatedAt || e.registeredAt || e.registeredDate || e.updatedDate || '';
       if (d && d.replace(/-/g,'').slice(0,8) === loggedDatePart) { chosen = e; break; }
     }
   }
@@ -102,7 +102,7 @@ function renderReview() {
   var metaEl = document.getElementById('review-meta');
   if (metaEl) {
     var registeredBy = chosen.registeredBy || chosen.updatedBy || '—';
-    var dateVal = chosen.registeredDate || chosen.updatedDate || loggedAt || '—';
+    var dateVal = chosen.updatedAt || chosen.registeredAt || chosen.registeredDate || chosen.updatedDate || loggedAt || '—';
     var healthScore = st['health-score'] != null ? st['health-score'] : '—';
     metaEl.innerHTML = '<div class="review-text">Tree: ' + treeId + ' · Logged: ' + formatLoggedAt(loggedAt || dateVal) + ' · By ' + registeredBy + ' · Score ' + healthScore + '</div>';
   }
