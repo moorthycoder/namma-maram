@@ -1289,6 +1289,21 @@ function openRangerMyCurrent() {
   renderRangerMyTreeCards('ranger-my-current-cards', 'ranger-my-current-empty', current_ids, map);
   goTo('ranger-my-current');
 }
+function openRangerSurveyCurrent() {
+  var role_cfg = getRoleConfig('ranger');
+  var tiles_my = role_cfg.tiles && role_cfg.tiles['my-trees'] || {};
+  var stats_my = role_cfg.stats && role_cfg.stats['my-trees'] || {};
+  var current_list = Array.isArray(tiles_my.current) ? tiles_my.current.slice() : (Array.isArray(stats_my.current) ? stats_my.current.slice() : []);
+  current_list.sort(function(a,b){ var A=(a.addedAt||a.treeId||a).toString(); var B=(b.addedAt||b.treeId||b).toString(); return B.localeCompare(A); });
+  var current_ids = current_list.map(function (e) { return e.treeId || e; }).filter(Boolean);
+  var map = {}; current_list.forEach(function(e){ if(e && e.treeId) map[e.treeId]=e.addedAt||''; });
+  renderRangerMyTreeCards('ranger-my-current-cards', 'ranger-my-current-empty', current_ids, map);
+  var target_el = document.getElementById('ranger-my-current-cards');
+  if (target_el) { target_el.innerHTML = target_el.innerHTML.split('openProfile(').join('rangerSurveyTree('); }
+  var title_el = document.querySelector('#page-ranger-my-current .topbar-title');
+  if (title_el) title_el.textContent = 'Pick a tree to survey';
+  goTo('ranger-my-current');
+}
 
 function openRangerMyPast() {
   var role_cfg = getRoleConfig('ranger');
