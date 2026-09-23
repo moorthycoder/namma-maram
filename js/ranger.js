@@ -1144,12 +1144,21 @@ function rangerLogCardHtml(t, loggedAt, hideLogBox, target_id) {
   var target_str = String(target_id || '');
   var is_survey_requests = target_str.indexOf('survey-requests') > -1 ? true : false;
   var is_register_log = target_str.indexOf('register-log') > -1 ? true : false;
-  var is_survey_log = target_str.indexOf('ranger-logs') > -1 ? true : false;
+  var is_survey_log = target_str.indexOf('ranger-logs') > -1 || target_str.indexOf('this-month-log') > -1 ? true : false;
   var is_submitted = is_survey_requests ? true : target_str.indexOf('submitted') > -1 ? true : false;
   var delete_fn = is_survey_requests ? 'deleteRangerSurveyRequest' : is_register_log ? 'deleteRangerRegisterRequest' : is_survey_log ? 'deleteRangerLogRequest' : '';
   var header_title = is_survey_requests ? 'Survey request' : is_register_log ? 'Register request' : is_survey_log ? 'Survey log' : 'Survey log';
   var delete_btn = (is_submitted && delete_fn) ? '<button class="tcard-delete-btn" type="button" onclick="event.stopPropagation(); ' + delete_fn + '(' + q + t.treeId + q + ')"><i class="ti ti-trash"></i></button>' : '';
   var header_html = (is_submitted && delete_fn) ? '<div class="ranger-card-header"><span class="ranger-card-header-title">' + header_title + '</span>' + delete_btn + '</div>' : '';
+  if (is_survey_log) {
+    var first_key = keys[0] || '';
+    var first_enc = enc[first_key] || {};
+    var field_obs = first_enc.fieldObservation || {};
+    var note_txt = field_obs.notes || '—';
+    var rec_txt = field_obs.recommendations || '—';
+    var survey_header = is_submitted ? '<div class="ranger-log-header"><span></span>' + delete_btn + '</div>' : '';
+    return '<div class="log-entry log-entry-interactive">' + survey_header + '<div class="log-entry-row" onclick="openRangerReviewPage(' + q + t.treeId + q + ',' + q + at + q + ')"><div class="log-dot log-dot-green"></div><div class="log-body"><div class="log-date">' + at + '</div><div class="log-text">' + name_txt + ' · ' + t.treeId + '</div><div class="log-addr">' + addr_txt + '</div><div class="log-text">Health: ' + (st.health || '—') + '</div><div class="log-text">Height: ' + (formatLength(st.height,'height') || '—') + '</div><div class="log-text">Diameter: ' + (formatLength(st.diameter,'diameter') || '—') + '</div><div class="log-text"><span class="log-label-danger">Note:</span> ' + note_txt + '</div><div class="log-text"><span class="log-label-danger">Recommendation:</span> ' + rec_txt + '</div><div class="log-text"><span class="chip-blue" onclick="event.stopPropagation();openRangerReviewPage(' + q + t.treeId + q + ',' + q + at + q + ')"><i class="ti ti-eye"></i> Review</span></div></div></div></div>';
+  }
   return '<div class="sponsor-tree-card" onclick="openRangerReviewPage(' + q + t.treeId + q + ',' + q + at + q + ')">' + header_html +
     '<div class="tree-card-hero" style="background:' + (t.bg || c.bg || '#234712') + '"><div class="tree-card-overlay"></div><div class="tree-card-title"><h3>' + (t.emoji || c.emoji || '🌴') + ' ' + name_txt + ' <span class="tcard-id">' + t.treeId + '</span></h3><p><span class="addr-text">' + addr_txt + '</span></p></div></div>' +
     '<div class="tree-card-body"><div class="tree-card-stats"><div class="tcs"><div class="tcs-label">Health</div><div class="tcs-val">' + (st.health || '—') + '</div></div><div class="tcs"><div class="tcs-label">Height</div><div class="tcs-val">' + (formatLength(st.height||c.height,'height') || '—') + '</div></div><div class="tcs"><div class="tcs-label">Diameter</div><div class="tcs-val">' + (formatLength(st.diameter||c.diameter,'diameter') || '—') + '</div></div></div></div>' +

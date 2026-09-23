@@ -251,6 +251,12 @@
   .tcard-delete-btn:hover{ color:#991b1b; }
   .project-leader-card-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 0 8px; border-bottom:0.5px solid var(--color-border-tertiary); }
   .project-leader-card-header-title{ font-size:0.7333rem; font-weight:500; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:0.5px; }
+  .project-leader-log-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 0 8px; border-bottom:0.5px solid var(--color-border-tertiary); }
+  .log-entry-interactive{ cursor:pointer; align-items:stretch; }
+  .log-entry-row{ display:flex; gap:9px; align-items:center; cursor:pointer; }
+  .log-dot-green{ background:#16a34a; }
+  .log-addr{ font-size:0.7333rem; color:var(--color-text-secondary); }
+  .log-label-danger{ color:#dc2626; }
   .project-leader-list-pad{padding:13px 14px;}
   .project-leader-sort-bar{display:flex;gap:8px;padding:8px 14px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);}
   .project-leader-sort-btn{flex:1;padding:7px;font-size:0.7333rem;}
