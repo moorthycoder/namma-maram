@@ -372,7 +372,7 @@ function runSearch() {
     var scan = function (ids) {
       (ids || []).forEach(function (id) { s[id] = 1; });
     };
-    if (/^\d{6,}/.test(qp)) { scan(searchByPinCode(qp, card_file)); }
+    if (/^\d{6,}/.test(qp)) { scan(searchByPinCode(qp, card_file)); scan(searchByTreeId(qp, card_file)); }
     else {
       scan(searchByPlaceName(qp, card_file, __PLACES || []));
       scan(searchByProjectName(qp, card_file, __PROJECTS || []));
