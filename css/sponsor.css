@@ -324,3 +324,9 @@ body { background: var(--color-background-primary); overflow: hidden; }
   .map-modal-back.open{display:flex;}
   .map-modal-head{display:flex;align-items:center;gap:10px;padding:8px 12px;}
   .map-frame{flex:1;width:100%;border:none;display:block;}
+  .sponsor-log-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 0 8px; border-bottom:0.5px solid var(--color-border-tertiary); }
+  .log-entry-interactive{ cursor:pointer; align-items:stretch; }
+  .log-entry-row{ display:flex; gap:9px; align-items:center; cursor:pointer; }
+  .log-dot-green{ background:#16a34a; }
+  .log-addr{ font-size:0.7333rem; color:var(--color-text-secondary); }
+  .log-label-danger{ color:#dc2626; }
