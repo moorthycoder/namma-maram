@@ -85,12 +85,31 @@ function appendToGobackExclude(treeId) {
   } catch (e) {}
 }
 function goBack(url) {
+  var is_scan_mode = (typeof isOpenedFromScanQR === 'function') ? isOpenedFromScanQR() : false;
+  var scan_back = is_scan_mode ? 'scan-qr.html' : '';
+  if (scan_back) { window.location.href = scan_back; return; }
   var goback = sessionStorage.getItem('gobackFromTreeProfile');
   console.log('[tree-profile] goBack ->', goback);
   if (goback) { window.location.href = goback; return; }
   var parent = url || new URLSearchParams(location.search).get('parent');
   if (parent) { window.location.href = parent; return; }
   if (window.history.length > 1) window.history.back(); else window.location.href = 'filter.html';
+}
+function isOpenedFromScanQR() {
+  var parent_param = new URLSearchParams(location.search).get('parent') || '';
+  var is_scan = parent_param.indexOf('scan-qr') !== -1 ? true : false;
+  return is_scan;
+}
+function hideAllTopBarButtonsExceptComplaint() {
+  var hide_selectors = '.add-sponsor-btn, .sponsor-cta, .add-care-btn, .care-cta, .add-attend-btn, .attend-cta, .add-watch-btn, .watch-cta, .add-survey-btn, .survey-cta';
+  var hide_elements = document.querySelectorAll(hide_selectors);
+  hide_elements.forEach(function(hide_element) { hide_element.classList.add('hidden'); });
+  return true;
+}
+function applyScanModeVisibility() {
+  var is_scan_mode = isOpenedFromScanQR();
+  is_scan_mode ? hideAllTopBarButtonsExceptComplaint() : null;
+  return is_scan_mode;
 }
 function updateLang(lang) {
   var l = lang || filterLang || 'en';
@@ -422,4 +441,4 @@ function getCurrentRoleType() { var urlRole=new URLSearchParams(location.search)
 function isOpenedFromDashboardList(role){ var sponsorArr=['sponsor-waiting-submitted','sponsor-current','sponsor-past','sponsor-next-due','sponsor-seeing','pay-logs-total','pay-logs-this_month','pay-logs','tree-logs','sponsor-pay-total','sponsor-pay-month','sponsor-pay-trees','sponsor-pay-tree']; var caregiverArr=['care-giver-waiting','care-giver-current','care-giver-past','care-giver-seeing','care-giver-checks-due','care-giver-checks-finished','care-giver-logs-approved','care-giver-logs-submitted','tree-logs']; var surveyorArr=['surveyor-my-current','surveyor-my-past','surveyor-tree-name-approved','surveyor-tree-name-submitted','surveyor-place-name-approved','surveyor-place-name-submitted','surveyor-register-log-approved','surveyor-register-log-submitted','surveyor-logs-approved','surveyor-logs-submitted','this-month-covered','this-month-waiting','this-month-log-approved','this-month-log-submitted','surveyor-survey-requests-approved','surveyor-survey-requests-submitted','trees']; var surveyorDashArr=['surveyor-dash']; var dashboardArr=['sponsor-dash','care-giver-dash']; var excludeArr=role==='care-giver' ? [caregiverArr] : role==='sponsor' ? [sponsorArr] : role==='surveyor' ? [surveyorArr] : [sponsorArr,caregiverArr,surveyorArr]; var parent=new URLSearchParams(location.search).get('parent')||''; try{ var goback=sessionStorage.getItem('gobackFromTreeProfile')||''; if(goback) parent+='|'+goback; }catch(e){} for(var i=0;i<excludeArr.length;i++) for(var j=0;j<excludeArr[i].length;j++) if(parent.indexOf(excludeArr[i][j])!==-1) return true; return false; }
 function isOpenedFromSurveyorDashOnly(role){ if(role!=='surveyor') return false; var parent=new URLSearchParams(location.search).get('parent')||''; try{ var goback=sessionStorage.getItem('gobackFromTreeProfile')||''; if(goback) parent+='|'+goback; }catch(e){} var has_dash = parent.indexOf('surveyor-dash')!==-1; var has_list = parent.indexOf('surveyor-my-')!==-1 || parent.indexOf('surveyor-tree-')!==-1 || parent.indexOf('surveyor-place-')!==-1 || parent.indexOf('surveyor-register-')!==-1 || parent.indexOf('surveyor-logs-')!==-1; return has_dash && !has_list; }
 function applyRoleVisibility() { var role=getCurrentRoleType(); var showCare=true; var showSponsor=true; var showSurvey=true; var showWatch=true; var showAttend=false; if(role==='sponsor'){ showCare=false; showSponsor=true; showSurvey=false; showWatch=false; } else if(role==='care-giver'){ showCare=true; showSponsor=false; showSurvey=false; showWatch=false; } else if(role==='surveyor'){ showCare=false; showSponsor=false; showSurvey=true; showWatch=false; } else if(role==='ten-trees-ranger'){ showCare=false; showSponsor=false; showSurvey=false; showWatch=true; } else if(role==='project-member'){ showCare=false; showSponsor=false; showSurvey=false; showWatch=false; showAttend=true; } else if(role==='project-leader'){ showCare=false; showSponsor=false; showSurvey=false; showWatch=false; } if(!role){ showCare=true; showSponsor=true; showSurvey=true; showWatch=true; showAttend=true; } var careBtns=document.querySelectorAll('.add-care-btn, .care-cta'); var sponsorBtns=document.querySelectorAll('.add-sponsor-btn, .sponsor-cta'); var surveyBtns=document.querySelectorAll('.add-survey-btn, .survey-cta'); var watchBtns=document.querySelectorAll('.add-watch-btn, .watch-cta'); var attendBtns=document.querySelectorAll('.add-attend-btn, .attend-cta'); console.log('[tree-profile] role ->', role); careBtns.forEach(function(el){ el.classList.toggle('hidden', !showCare); }); sponsorBtns.forEach(function(el){ el.classList.toggle('hidden', !showSponsor); }); surveyBtns.forEach(function(el){ el.classList.toggle('hidden', !showSurvey); }); watchBtns.forEach(function(el){ el.classList.toggle('hidden', !showWatch); }); attendBtns.forEach(function(el){ el.classList.toggle('hidden', !showAttend); }); if(isOpenedFromDashboardList(role)){ if(role==='care-giver'){ careBtns.forEach(function(el){ el.classList.add('hidden'); }); } else if(role==='sponsor'){ sponsorBtns.forEach(function(el){ el.classList.add('hidden'); }); } else if(role==='surveyor'){ var is_dash_only = typeof isOpenedFromSurveyorDashOnly==='function' ? isOpenedFromSurveyorDashOnly(role) : false; var is_via_filter = (function(){ var p=new URLSearchParams(location.search).get('parent')||''; try{ var g=sessionStorage.getItem('gobackFromTreeProfile')||''; if(g) p+='|'+g; }catch(e){} return p.indexOf('filter.html')!==-1; })(); if(!is_dash_only && !is_via_filter) { surveyBtns.forEach(function(el){ el.classList.add('hidden'); }); } } else if(role==='ten-trees-ranger'){ careBtns.forEach(function(el){ el.classList.add('hidden'); }); sponsorBtns.forEach(function(el){ el.classList.add('hidden'); }); surveyBtns.forEach(function(el){ el.classList.add('hidden'); }); } else { sponsorBtns.forEach(function(el){ el.classList.add('hidden'); }); careBtns.forEach(function(el){ el.classList.add('hidden'); }); surveyBtns.forEach(function(el){ el.classList.add('hidden'); }); watchBtns.forEach(function(el){ el.classList.add('hidden'); }); } } }
-window.render={ init:function(){ storage.syncTreeCards(); console.log('RAM __TREE_DATA', (window.__TREE_DATA||[]).length, (window.__TREE_DATA||[])[0]); albumData=(window.__TREE_DATA||[]).map(normalizeAlbum); console.log('RAM albumData', albumData.length, albumData[0]); renderProfile(); try{ applyRoleVisibility(); }catch(e){} } };
+window.render={ init:function(){ storage.syncTreeCards(); console.log('RAM __TREE_DATA', (window.__TREE_DATA||[]).length, (window.__TREE_DATA||[])[0]); albumData=(window.__TREE_DATA||[]).map(normalizeAlbum); console.log('RAM albumData', albumData.length, albumData[0]); renderProfile(); try{ applyRoleVisibility(); }catch(e){} try{ applyScanModeVisibility(); }catch(e){} } };

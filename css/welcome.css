@@ -183,13 +183,14 @@ body {
   font-weight: 600;
   padding: 0.75rem 2.4rem;
   border-radius: 60px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 10px 22px -6px rgba(59, 109, 17, 0.4);
   cursor: pointer;
   transition: all 0.25s ease;
   text-decoration: none;
   letter-spacing: 0.5px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 12rem;
+  max-width: 100%;
 }
 
 .enter-btn i {
@@ -210,6 +211,49 @@ body {
 }
 
 .enter-btn.pressed {
+  transform: scale(0.96);
+}
+
+/* scan qr button - match enter */
+.scan-qr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-theme), var(--color-theme-dark));
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 0.75rem 2.4rem;
+  border-radius: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 22px -6px rgba(59, 109, 17, 0.4);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  margin-top: 0.75rem;
+  width: 12rem;
+  max-width: 100%;
+}
+
+.scan-qr-btn i {
+  margin-right: 8px;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.scan-qr-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 28px -8px rgba(59, 109, 17, 0.5);
+  background: linear-gradient(135deg, #478415, #234712);
+}
+
+.scan-qr-btn:active {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 8px 14px -6px rgba(30, 61, 15, 0.5);
+}
+
+.scan-qr-btn.pressed {
   transform: scale(0.96);
 }
 
@@ -274,16 +318,23 @@ body {
     font-size: 0.95rem;
     padding: 0.65rem 2rem;
   }
+
+  .scan-qr-btn {
+    font-size: 0.95rem;
+    padding: 0.65rem 2rem;
+  }
 }
 
 /* reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .icon-wrapper,
-  .enter-btn {
+  .enter-btn,
+  .scan-qr-btn {
     transition: none;
     transform: none !important;
   }
-  .enter-btn:hover {
+  .enter-btn:hover,
+  .scan-qr-btn:hover {
     transform: none !important;
   }
 }
