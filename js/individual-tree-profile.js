@@ -85,8 +85,9 @@ function appendToGobackExclude(treeId) {
   } catch (e) {}
 }
 function goBack(url) {
-  var is_scan_mode = (typeof isOpenedFromScanQR === 'function') ? isOpenedFromScanQR() : false;
-  var scan_back = is_scan_mode ? 'scan-qr.html' : '';
+  var parent_param_early = new URLSearchParams(location.search).get('parent') || '';
+  var is_scan_mode = (typeof isOpenedFromScanQR === 'function') ? isOpenedFromScanQR() : (parent_param_early.indexOf('scan-qr') !== -1 ? true : false);
+  var scan_back = is_scan_mode ? (parent_param_early || 'scan-qr.html') : '';
   if (scan_back) { window.location.href = scan_back; return; }
   var goback = sessionStorage.getItem('gobackFromTreeProfile');
   console.log('[tree-profile] goBack ->', goback);

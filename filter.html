@@ -35,10 +35,13 @@
               <button class="clear-btn" type="button" onclick="clearInput('album-place')" disabled>&times;</button>
               <div class="album-suggest" id="album-suggest"></div>
             </div>
-            <div class="clear-wrap">
-              <input class="id-input" id="album-tree" type="text" placeholder="Tree Name" autocomplete="off" oninput="onInput(this)" onkeyup="onInput(this)" />
-              <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
-              <div class="album-suggest" id="album-suggest-tree"></div>
+            <div class="tree-search-row">
+              <div class="clear-wrap tree-search-input">
+                <input class="id-input" id="album-tree" type="text" placeholder="Tree Name" autocomplete="off" oninput="onInput(this)" onkeyup="onInput(this)" />
+                <button class="clear-btn" type="button" onclick="clearInput('album-tree')" disabled>&times;</button>
+                <div class="album-suggest" id="album-suggest-tree"></div>
+              </div>
+              <a href="scan-qr.html?parent=filter.html" class="scan-qr-mini-btn" role="button">Scan QR</a>
             </div>
           </div>
         </form>

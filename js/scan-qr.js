@@ -21,7 +21,10 @@
     const target_element = event_object ? event_object.currentTarget : scan_continue_element;
     target_element ? target_element.classList.add('pressed') : null;
     const tree_id = scan_result_id_element ? scan_result_id_element.textContent.trim() : '625501-06-0001';
-    const profile_url = 'individual-tree-profile.html?treeId=' + encodeURIComponent(tree_id) + '&parent=' + encodeURIComponent('scan-qr.html');
+    const raw_parent = new URLSearchParams(window.location.search).get('parent');
+    const scan_parent = raw_parent ? raw_parent : 'welcome.html';
+    const nested_parent = 'scan-qr.html?parent=' + encodeURIComponent(scan_parent);
+    const profile_url = 'individual-tree-profile.html?treeId=' + encodeURIComponent(tree_id) + '&parent=' + encodeURIComponent(nested_parent);
     setTimeout(() => {
       window.location.assign(profile_url);
     }, 150);
