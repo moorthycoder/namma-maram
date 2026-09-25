@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Namma Maram · Scan Results</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/filter.css" />
+<link rel="stylesheet" href="css/scan-qr-results.css" />
+</head>
+<body>
+<div class="screen">
+  <div class="status-bar dark"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
+  <div class="topbar"><button class="back-btn" type="button" onclick="goBackFromScanResults()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Scan Results</span></div>
+  <div class="scrollable">
+    <div class="results-tree-card"></div>
+  </div>
+
+    <!-- PHOTO FULLSCREEN MODAL -->
+    <div class="map-modal-back photo-modal" id="photo-modal" onclick="closePhotoModal()">
+      <button class="photo-close-btn" type="button" onclick="event.stopPropagation(); closePhotoModal()"><i class="ti ti-x"></i></button>
+      <div id="photo-modal-emoji" class="photo-modal-emoji"></div>
+    </div>
+</div>
+<script src="js/storage.js"></script>
+<script src="js/units.js"></script>
+<script src="js/language.js"></script>
+<script src="js/show-tree-details-in-map.js"></script>
+<script src="js/map.js"></script>
+<script src="js/tree-in-wikipedia.js"></script>
+<script src="js/filter2.js"></script>
+<script src="js/scan-qr-results.js"></script>
+</body>
+</html>
