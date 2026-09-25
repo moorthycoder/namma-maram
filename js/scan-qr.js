@@ -1,9 +1,6 @@
 (function () {
   const scan_btn_element = document.querySelector('.scan-start-btn');
-  const scan_hint_element = document.querySelector('.scan-hint');
-  const scan_result_element = document.querySelector('.scan-result');
-  const scan_continue_element = document.querySelector('.scan-continue-btn');
-  const scan_result_id_element = document.querySelector('.scan-result-id');
+  const scan_scanning_element = document.querySelector('.scan-scanning-text');
 
   const followLink = (scanned_text) => {
     const target_url = (scanned_text || '').trim();
@@ -12,35 +9,19 @@
     return is_valid_link;
   };
 
-  const showScanResult = () => {
-    scan_result_element ? scan_result_element.classList.remove('hidden') : null;
-    return true;
-  };
-
-  const openTreeProfile = (event_object) => {
-    const target_element = event_object ? event_object.currentTarget : scan_continue_element;
-    target_element ? target_element.classList.add('pressed') : null;
-    const tree_id = scan_result_id_element ? scan_result_id_element.textContent.trim() : '625501-06-0001';
-    const raw_parent = new URLSearchParams(window.location.search).get('parent');
-    const scan_parent = raw_parent ? raw_parent : 'welcome.html';
-    const nested_parent = 'scan-qr.html?parent=' + encodeURIComponent(scan_parent);
-    const profile_url = 'individual-tree-profile.html?treeId=' + encodeURIComponent(tree_id) + '&parent=' + encodeURIComponent(nested_parent);
-    setTimeout(() => {
-      window.location.assign(profile_url);
-    }, 150);
-    return true;
-  };
-
   const startQRScan = (event_object) => {
     const target_element = event_object ? event_object.currentTarget : scan_btn_element;
     target_element ? target_element.classList.add('pressed') : null;
     setTimeout(() => {
       target_element ? target_element.classList.remove('pressed') : null;
     }, 150);
-    scan_hint_element ? scan_hint_element.textContent = 'Scanning...' : null;
-    scan_result_element ? scan_result_element.classList.add('hidden') : null;
+    scan_btn_element ? scan_btn_element.classList.add('hidden') : null;
+    scan_scanning_element ? scan_scanning_element.classList.remove('hidden') : null;
     setTimeout(() => {
-      showScanResult();
+      const raw_parent = new URLSearchParams(window.location.search).get('parent');
+      const scan_parent = raw_parent ? raw_parent : 'welcome.html';
+      const results_url = 'scan-qr-results.html?treeId=' + encodeURIComponent('625501-06-0001') + '&parent=' + encodeURIComponent(scan_parent);
+      window.location.assign(results_url);
     }, 3000);
     return true;
   };
@@ -53,7 +34,6 @@
   };
 
   scan_btn_element ? scan_btn_element.addEventListener('click', startQRScan) : null;
-  scan_continue_element ? scan_continue_element.addEventListener('click', openTreeProfile) : null;
   wireScanParamToFollowLink();
 })();
 

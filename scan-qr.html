@@ -8,24 +8,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
 <link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/filter.css" />
 <link rel="stylesheet" href="css/scan-qr.css" />
 </head>
 <body>
 <div class="screen">
   <div class="status-bar dark"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-2"></i></span></div>
   <div class="topbar"><button class="back-btn" type="button" onclick="goBackFromScanQRToWelcome()"><i class="ti ti-arrow-left"></i></button><span class="topbar-title">Scan QR</span></div>
-  <div class="scrollable">
-    <div class="scan-card">
-      <div class="scan-hint">Point camera at the tree tag. Scanner wiring comes next.</div>
-      <div class="scan-frame"><i class="ti ti-scan"></i><span>Camera preview placeholder</span></div>
-      <button class="scan-start-btn" type="button"><i class="ti ti-camera"></i> Start Scan</button>
-      <div class="scan-result hidden">
-        <div class="scan-result-id">625501-06-0001</div>
-        <button class="scan-continue-btn" type="button"><i class="ti ti-arrow-right"></i> Continue</button>
+    <div class="scan-page scan-page-scan active">
+      <div class="scan-card">
+        <div class="scan-hint">Point camera at the tree tag. Scanner wiring comes next.</div>
+        <div class="scan-frame"><i class="ti ti-scan"></i><span>Camera preview placeholder</span></div>
+        <button class="scan-start-btn" type="button"><i class="ti ti-camera"></i> Start Scan</button>
+        <div class="scan-scanning-text hidden">Scanning...</div>
       </div>
     </div>
-  </div>
 </div>
+<script src="js/storage.js"></script>
+<script src="js/units.js"></script>
+<script src="js/language.js"></script>
+<script src="js/show-tree-details-in-map.js"></script>
+<script src="js/map.js"></script>
+<script src="js/tree-in-wikipedia.js"></script>
+<script src="js/filter2.js"></script>
 <script src="js/scan-qr.js"></script>
 </body>
 </html>
