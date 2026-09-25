@@ -151,7 +151,7 @@ function profileCardPanelCardHtml(card, lang_key) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || '');
     return m ? m[3] + '-' + m[2] + '-' + m[1] : (d || '—');
   })(last_enc.updatedDate || last_enc.registeredDate);
-  var meta_html = '<div>survey ' + esc(last_key) + ' · ' + esc(upd_date) + ' · ' + esc(upd) + ' · ' + '<span class="filter-log-link" onclick="event.stopPropagation();openTreeLogs(\'' + card.treeId + '\')">Log list</span></div>';
+  var meta_html = '<div>survey ' + esc(last_key) + ' · ' + esc(upd_date) + ' · ' + esc(upd) + ' · ' + '<span class="filter-log-link" onclick="event.stopPropagation();openSurveyLogListFromFilter(\'' + card.treeId + '\')">Log list</span></div>';
 
   return '<div class="tree-snapshot" onclick="openTreeProfile(\'' + card.treeId + '\')">' +
     '<button type="button" class="card-outgoing-btn" title="Open profile" onclick="event.stopPropagation();openTreeProfile(\'' + card.treeId + '\')"><i class="ti ti-external-link"></i></button>' +
@@ -167,20 +167,6 @@ function profileCardPanelCardHtml(card, lang_key) {
   '</div>';
 }
 
-function filterLogCardHtml(tree_obj, tree_id, enc_key, enc_entry) {
-  var esc = function(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); };
-  var entry_data = enc_entry || {};
-  var health_status = entry_data['health-status'] || {};
-  var field_obs = entry_data.fieldObservation || {};
-  var note_val = field_obs.notes || '—';
-  var rec_val = field_obs.recommendations || '—';
-  var date_val = entry_data.updatedAt || entry_data.registeredAt || entry_data.registeredDate || entry_data.updatedDate || enc_key || '';
-  var surveyed_name = entry_data.registeredBy || entry_data.updatedBy || '—';
-  var surveyed_id = entry_data.registererId || entry_data.updaterId || '—';
-  var disp_date = (function(d) { var s = String(d || ''); var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) || /^(\d{4})(\d{2})(\d{2})/.exec(s); return m ? m[3] + '-' + m[2] + '-' + m[1] : s; })(date_val);
-  return '<div class="log-entry log-entry-interactive"><div class="log-header"><span>#' + esc(enc_key) + '</span><span>' + esc(disp_date) + '</span></div><div class="log-entry-row" onclick="openTreeProfile(' + "'" + tree_id + "'" + ')"><div class="log-dot log-dot-green"></div><div class="log-body"><div class="log-text">Surveyed By: ' + esc(surveyed_name) + ', ' + esc(surveyed_id) + '</div><div class="log-text">Health: ' + esc(health_status.health || '—') + '</div><div class="log-text">Height: ' + esc(health_status.height || '—') + '</div><div class="log-text">Diameter: ' + esc(health_status.diameter || '—') + '</div><div class="log-text"><span class="log-label-danger">Note:</span> ' + esc(note_val) + '</div><div class="log-text"><span class="log-label-danger">Recommendation:</span> ' + esc(rec_val) + '</div><div class="log-text"><span class="chip-blue" onclick="event.stopPropagation();openFilterReviewPage(' + "'" + tree_id + "'" + ',' + "'" + esc(date_val) + "'" + ')"><i class="ti ti-eye"></i> Review</span></div></div></div></div>';
-}
-
 function summaryPanelCardHtml(species_name, count, search_value, scientific_name) {
   return '<span class="chip-big"><span class="album-chip chip-click" title="Filter by species" data-tree-name="' + String(search_value || species_name).replace(/"/g, '&quot;') + '">' + species_name + ' <b>– ' + count + '</b></span>' +
     '<button type="button" class="album-chip-w" title="Open in Wikipedia" onclick="event.stopPropagation();openSpeciesInWikipedia(\'' + String(scientific_name || '').replace(/'/g, "\\'") + '\')">W</button></span>';
@@ -190,108 +176,20 @@ function openMap(tree_ids) {
   showInMap(tree_ids || []);
 }
 
-var filterLogsPlace = '';
-var filterLogsTree = '';
-var filterLogsScroll = '0';
-var filterLogsTreeId = '';
-function filterLogsBack() {
-  var place_val = window.filterLogsPlace || '';
-  var tree_val = window.filterLogsTree || '';
-  var scroll_val = window.filterLogsScroll || '';
-  try {
-    if (!place_val) place_val = sessionStorage.getItem('filterLogsPlace') || '';
-    if (!tree_val) tree_val = sessionStorage.getItem('filterLogsTree') || '';
-    if (!scroll_val) scroll_val = sessionStorage.getItem('filterLogsScroll') || '0';
-  } catch (e) {}
-  var place_el = document.getElementById('album-place');
-  var tree_el = document.getElementById('album-tree');
-  if (place_el) place_el.value = place_val;
-  if (tree_el) tree_el.value = tree_val;
-  try { syncClearButtons(); } catch (e2) {}
-  try { runSearch(); } catch (e3) {}
-  var containers = document.querySelectorAll('.album-container');
-  var search_wrap = containers[0] || null;
-  var logs_wrap = document.getElementById('album-logs');
-  if (logs_wrap) logs_wrap.classList.add('hidden');
-  if (search_wrap) search_wrap.classList.remove('hidden');
-  var hero_back = document.getElementById('main-hero');
-  if (hero_back) hero_back.classList.remove('hidden');
-  var filters_back = document.querySelector('.album-filters');
-  if (filters_back) filters_back.classList.remove('hidden');
-  var container_el = search_wrap || document.querySelector('.album-container');
-  if (container_el) {
-    var target_scroll = parseInt(scroll_val, 10) || 0;
-    container_el.scrollTop = target_scroll;
-    requestAnimationFrame(function() { container_el.scrollTop = target_scroll; });
-  }
-}
-function openTreeLogs(tree_id) {
-  var place_input = (document.getElementById('album-place') || {}).value || '';
-  var tree_input = (document.getElementById('album-tree') || {}).value || '';
+function openSurveyLogListFromFilter(tree_id) {
   var container_node = document.querySelector('.album-container');
   var scroll_pos = container_node ? container_node.scrollTop : 0;
-  window.filterLogsPlace = place_input;
-  window.filterLogsTree = tree_input;
-  window.filterLogsScroll = String(scroll_pos);
-  window.filterLogsTreeId = tree_id || '';
-  try { sessionStorage.setItem('filterLogsPlace', place_input); sessionStorage.setItem('filterLogsTree', tree_input); sessionStorage.setItem('filterLogsScroll', String(scroll_pos)); sessionStorage.setItem('filterLogsTreeId', tree_id || ''); } catch (e) {}
-  var data_list = window.__TREE_DATA || [];
-  var target_tree = null;
-  for (var i = 0; i < data_list.length; i++) { if (data_list[i].treeId === tree_id) { target_tree = data_list[i]; break; } }
-  if (!target_tree) return;
-  var grid_el = document.getElementById('album-logs-list');
-  if (!grid_el) return;
-  var enc_map = target_tree['encounters-list'] || {};
-  var enc_keys = Object.keys(enc_map);
-  enc_keys.sort(function(a_key, b_key) {
-    var a_entry = enc_map[a_key] || {};
-    var b_entry = enc_map[b_key] || {};
-    var a_date = a_entry.updatedAt || a_entry.registeredAt || a_entry.registeredDate || a_entry.updatedDate || a_key || '';
-    var b_date = b_entry.updatedAt || b_entry.registeredAt || b_entry.registeredDate || b_entry.updatedDate || b_key || '';
-    var date_cmp = String(b_date).localeCompare(String(a_date));
-    if (date_cmp !== 0) return date_cmp;
-    var a_num = parseInt(a_key, 10);
-    var b_num = parseInt(b_key, 10);
-    var both_num = isNaN(a_num) || isNaN(b_num) ? false : true;
-    return both_num ? b_num - a_num : String(b_key).localeCompare(String(a_key));
-  });
-  var html_str = '';
-  for (var idx = 0; idx < enc_keys.length; idx++) { html_str += filterLogCardHtml(target_tree, tree_id, enc_keys[idx], enc_map[enc_keys[idx]]); }
-  grid_el.innerHTML = html_str || '<div class="no-trees">No logs yet</div>';
-  var title_el = document.getElementById('album-logs-title');
-  if (title_el) title_el.innerHTML = tree_id + ' — Logs';
-  var containers = document.querySelectorAll('.album-container');
-  var search_wrap = containers[0] || null;
-  var logs_wrap = document.getElementById('album-logs');
-  if (search_wrap) search_wrap.classList.add('hidden');
-  if (logs_wrap) { logs_wrap.classList.remove('hidden'); logs_wrap.scrollTop = 0; }
-  var hero_el = document.getElementById('main-hero');
-  if (hero_el) hero_el.classList.add('hidden');
-  var filters_el = document.querySelector('.album-filters');
-  if (filters_el) filters_el.classList.add('hidden');
-}
-
-function openFilterReviewPage(tree_id, logged_at) {
+  try { sessionStorage.setItem('filterScrollTop', String(scroll_pos)); } catch (scroll_error) {}
   var place_val = (document.getElementById('album-place') || {}).value || '';
   var tree_val = (document.getElementById('album-tree') || {}).value || '';
-  var containers = document.querySelectorAll('.album-container');
-  var search_wrap = containers[0] || null;
-  var logs_wrap = document.getElementById('album-logs');
-  var search_scroll = search_wrap ? search_wrap.scrollTop : 0;
-  var log_scroll = logs_wrap ? logs_wrap.scrollTop : 0;
-  try {
-    search_scroll = parseInt(window.filterLogsScroll || search_scroll, 10) || search_scroll;
-  } catch (e) {}
-  var log_tree = window.filterLogsTreeId || tree_id || '';
-  var qp = new URLSearchParams();
+  var qp = new URLSearchParams(location.search);
   qp.set('place', place_val);
   qp.set('tree', tree_val);
-  qp.set('scroll', String(search_scroll));
-  qp.set('logtree', log_tree);
-  qp.set('logscroll', String(log_scroll));
+  qp.set('scroll', String(scroll_pos));
   var parent_url = encodeURIComponent('filter.html?' + qp.toString());
-  var log_date = logged_at || '';
-  window.location.href = 'review-page.html?treeId=' + encodeURIComponent(tree_id) + '&loggedAt=' + encodeURIComponent(log_date) + '&parent=' + parent_url;
+  try { sessionStorage.setItem('gobackFromSurveyLogList', decodeURIComponent(parent_url)); } catch (goback_error) {}
+  window.location.assign('survey-log-list.html?treeId=' + encodeURIComponent(tree_id) + '&parent=' + parent_url);
+  return true;
 }
 
 function loadSummaryPanel(tree_ids) {
@@ -599,8 +497,6 @@ window.render = {
       kept.delete('place');
       kept.delete('tree');
       kept.delete('scroll');
-      kept.delete('logtree');
-      kept.delete('logscroll');
       history.replaceState(null, '', 'filter.html' + (kept.toString() ? '?' + kept.toString() : ''));
     }
     syncClearButtons();
@@ -609,19 +505,6 @@ window.render = {
     applyFilterPlaceholders();
     runSearch();
     restoreFilterScrollPosition(saved_scroll);
-    var logs_back_init = document.getElementById('logs-back-btn');
-    if (logs_back_init) logs_back_init.classList.add('hidden');
-    var log_tree = qp.get('logtree') || '';
-    var log_scroll = qp.get('logscroll') || '';
-    if (log_tree && typeof openTreeLogs === 'function') {
-      openTreeLogs(log_tree);
-      var logs_wrap = document.getElementById('album-logs');
-      if (logs_wrap) {
-        var target_log_scroll = parseInt(log_scroll, 10) || 0;
-        logs_wrap.scrollTop = target_log_scroll;
-        requestAnimationFrame(function() { logs_wrap.scrollTop = target_log_scroll; });
-      }
-    }
   }
 };
 

@@ -83,6 +83,11 @@ function openTreeLogs(tree_id) {
 
 function filterLogsBack() {
   var parent_page = getSurveyLogParentPage();
+  var is_scan = parent_page.indexOf('scan-qr') !== -1 ? true : false;
+  if (is_scan) { window.location.assign(parent_page); return true; }
+  var goback_page = '';
+  try { goback_page = sessionStorage.getItem('gobackFromSurveyLogList') || ''; } catch (goback_error) {}
+  if (goback_page) { window.location.assign(goback_page); return true; }
   var has_parent = parent_page ? true : false;
   if (has_parent) { window.location.assign(parent_page); return true; }
   var has_history = window.history.length > 1 ? true : false;

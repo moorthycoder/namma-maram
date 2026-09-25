@@ -44,6 +44,7 @@
 
   window.openTreeProfile = openTreeProfileFromResults;
   window.openTreeLogs = openSurveyLogListFromResults;
+  window.openSurveyLogListFromFilter = openSurveyLogListFromResults;
   renderResultsTreeCard();
 })();
 
